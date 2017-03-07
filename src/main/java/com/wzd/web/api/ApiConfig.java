@@ -1,0 +1,38 @@
+//package com.wzd.web.api;
+//
+//import javax.ws.rs.ApplicationPath;
+//
+//import org.glassfish.jersey.server.ResourceConfig;
+///**
+// * 接口注册
+// * @author wzd
+// *
+// */
+//@ApplicationPath("/")
+//public class ApiConfig extends ResourceConfig {
+//
+//	public ApiConfig() {
+//		this.packages(this.getClass().getPackage().getName());
+//		// 注册异常映射
+//		register(HibernateExceptionMapper.class);
+//
+//		// 注册关闭hibernate会话过滤器
+//		register(HibernateCloseSessionFilter.class);
+//
+//		// 注册JSON
+//		register(HibernateObjectMapperResolver.class);
+//		
+//		register(JacksonFeature.class);
+//
+//		// 注册多媒体功能
+//		register(MultiPartFeature.class);
+//
+//		// 注册请求日志过滤器
+//		register(RequestLogDynamicFeature.class);
+//
+//		// 将返回值转换为JsonResponse
+//		register(FormatJsonDynamicFeature.class);
+//		register(CloseJedisFilter.class);
+//	}
+//
+//}
