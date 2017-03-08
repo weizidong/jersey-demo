@@ -52,6 +52,6 @@ public class UserApi {
 	@Path("find")
 	@POST
 	public List<User> getById(User user) {
-		return mapper.selectByExample(user);
+		return mapper.select(user);
 	}
 }
