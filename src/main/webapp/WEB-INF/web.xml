@@ -11,24 +11,21 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<!--用于定义 RESTful Web Service 接口 -->
 	<servlet>
-        <servlet-name>JerseyServlet</servlet-name>
-        <servlet-class>
-            com.sun.jersey.spi.spring.container.servlet.SpringServlet
-        </servlet-class>
-        <init-param>
-            <param-name>
-                com.sun.jersey.config.property.packages
-            </param-name>
-            <param-value>com.wzd.web</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
- 
-    <servlet-mapping>
-        <servlet-name>JerseyServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
-    </servlet-mapping>
+		<servlet-name>JerseyServlet</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>com.wzd.web.api.ApiConfig</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JerseyServlet</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	<!-- 配置filter过滤器 -->
 	<filter>
 		<filter-name>SpringEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
