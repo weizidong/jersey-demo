@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.isea533.mybatis.mapper.CountryMapper;
-import com.isea533.mybatis.model.Country;
+import com.wzd.model.entity.User;
+import com.wzd.model.mapper.UserMapper;
 
 import tk.mybatis.mapper.entity.Example;
 
@@ -28,16 +28,16 @@ public class PageMapperTest extends BasicTest {
 
 	@Test
 	public void test() {
-		CountryMapper countryMapper = sqlSession.getMapper(CountryMapper.class);
-		Example example = new Example(Country.class);
+		UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+		Example example = new Example(User.class);
 		example.createCriteria().andGreaterThan("id", 100);
 		PageHelper.startPage(2, 10);
-		List<Country> countries = countryMapper.selectByExample(example);
-		PageInfo<Country> pageInfo = new PageInfo<Country>(countries);
+		List<User> countries = mapper.selectByExample(example);
+		PageInfo<User> pageInfo = new PageInfo<User>(countries);
 		System.out.println(pageInfo.getTotal());
 
-		countries = countryMapper.selectByExample(example);
-		pageInfo = new PageInfo<Country>(countries);
+		countries = mapper.selectByExample(example);
+		pageInfo = new PageInfo<User>(countries);
 		System.out.println(pageInfo.getTotal());
 	}
 }
