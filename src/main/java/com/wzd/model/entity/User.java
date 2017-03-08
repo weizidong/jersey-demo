@@ -12,22 +12,22 @@ public class User {
     private Integer id;
 
     /**
-     * ï¿½ï¿½ï¿½ï¿½
+     * ĞÕÃû
      */
     private String name;
 
     /**
-     * ï¿½Ô±ï¿½
+     * ĞÔ±ğ
      */
     private Boolean sex;
 
     /**
-     * ï¿½ï¿½ï¿½ï¿½
+     * ÉúÈÕ
      */
     private Date birthday;
 
     /**
-     * ï¿½ï¿½È¡ID
+     * »ñÈ¡ID
      *
      * @return id - ID
      */
@@ -36,7 +36,7 @@ public class User {
     }
 
     /**
-     * ï¿½ï¿½ï¿½ï¿½ID
+     * ÉèÖÃID
      *
      * @param id ID
      */
@@ -45,54 +45,54 @@ public class User {
     }
 
     /**
-     * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
+     * »ñÈ¡ĞÕÃû
      *
-     * @return name - ï¿½ï¿½ï¿½ï¿½
+     * @return name - ĞÕÃû
      */
     public String getName() {
         return name;
     }
 
     /**
-     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * ÉèÖÃĞÕÃû
      *
-     * @param name ï¿½ï¿½ï¿½ï¿½
+     * @param name ĞÕÃû
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     * ï¿½ï¿½È¡ï¿½Ô±ï¿½
+     * »ñÈ¡ĞÔ±ğ
      *
-     * @return sex - ï¿½Ô±ï¿½
+     * @return sex - ĞÔ±ğ
      */
     public Boolean getSex() {
         return sex;
     }
 
     /**
-     * ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½
+     * ÉèÖÃĞÔ±ğ
      *
-     * @param sex ï¿½Ô±ï¿½
+     * @param sex ĞÔ±ğ
      */
     public void setSex(Boolean sex) {
         this.sex = sex;
     }
 
     /**
-     * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
+     * »ñÈ¡ÉúÈÕ
      *
-     * @return birthday - ï¿½ï¿½ï¿½ï¿½
+     * @return birthday - ÉúÈÕ
      */
     public Date getBirthday() {
         return birthday;
     }
 
     /**
-     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * ÉèÖÃÉúÈÕ
      *
-     * @param birthday ï¿½ï¿½ï¿½ï¿½
+     * @param birthday ÉúÈÕ
      */
     public void setBirthday(Date birthday) {
         this.birthday = birthday;

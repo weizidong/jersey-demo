@@ -48,4 +48,10 @@ public class UserApi {
 	public User getById(@PathParam("id") Integer id) {
 		return mapper.selectByPrimaryKey(id);
 	}
+
+	@Path("find")
+	@POST
+	public List<User> getById(User user) {
+		return mapper.selectByExample(user);
+	}
 }
