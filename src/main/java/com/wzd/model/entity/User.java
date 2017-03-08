@@ -1,53 +1,100 @@
 package com.wzd.model.entity;
 
 import java.util.Date;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
 public class User {
-	@Id
-	private Integer id;
-	private String name;
-	private Integer sex;
-	private Date birthday;
+    /**
+     * ID
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    /**
+     * 姓名
+     */
+    private String name;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    /**
+     * 性别
+     */
+    private Boolean sex;
 
-	public String getName() {
-		return name;
-	}
+    /**
+     * 生日
+     */
+    private Date birthday;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * 获取ID
+     *
+     * @return id - ID
+     */
+    public Integer getId() {
+        return id;
+    }
 
-	public Integer getSex() {
-		return sex;
-	}
+    /**
+     * 设置ID
+     *
+     * @param id ID
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setSex(Integer sex) {
-		this.sex = sex;
-	}
+    /**
+     * 获取姓名
+     *
+     * @return name - 姓名
+     */
+    public String getName() {
+        return name;
+    }
 
-	public Date getBirthday() {
-		return birthday;
-	}
+    /**
+     * 设置姓名
+     *
+     * @param name 姓名
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+    /**
+     * 获取性别
+     *
+     * @return sex - 性别
+     */
+    public Boolean getSex() {
+        return sex;
+    }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", sex=" + sex + ", birthday=" + birthday + "]";
-	}
+    /**
+     * 设置性别
+     *
+     * @param sex 性别
+     */
+    public void setSex(Boolean sex) {
+        this.sex = sex;
+    }
 
+    /**
+     * 获取生日
+     *
+     * @return birthday - 生日
+     */
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    /**
+     * 设置生日
+     *
+     * @param birthday 生日
+     */
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 }
