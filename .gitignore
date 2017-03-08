@@ -1,1 +1,6 @@
 /target/
+/.settings
+/src/test/resources/mapper/
+/src/main/resources/mapper/
+/src/main/java/com/wzd/model/mapper/
+/src/main/java/com/wzd/model/entity/

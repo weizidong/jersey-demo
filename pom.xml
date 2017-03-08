@@ -222,7 +222,7 @@
 					<stopKey>stop</stopKey>
 					<stopWait>10</stopWait>
 					<httpConnector>
-						<port>8080</port>
+						<port>80</port>
 						<!-- <host></host> -->
 						<!-- <name></name> -->
 						<!-- <idleTimeout></idleTimeout> -->
