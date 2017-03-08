@@ -18,13 +18,23 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.log4j.Logger;
 
 import com.alibaba.druid.support.json.JSONUtils;
+import com.wzd.utils.PropertiesUtil;
 
 @Priority(5)
 public class RequestLogFilter implements ContainerRequestFilter, ContainerResponseFilter {
 	private static final Logger log = Logger.getLogger(RequestLogFilter.class);
 
 	public static final String REQUEST_LOG_PROPERTY = "REQUEST_LOG_PROPERTY";
-
+	public static String version = "1";
+	public static String page = "index.html";
+	static {
+		try {
+			version = PropertiesUtil.readValue("configs/jdbc.properties", "version");
+			page = PropertiesUtil.readValue("configs/jdbc.properties", "page");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	@Context
 	private ResourceInfo resourceInfo;
 
