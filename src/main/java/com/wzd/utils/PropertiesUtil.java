@@ -7,16 +7,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * 读取properties文件工具
  * 
- * @author LinHaobin
+ * @author wzd
  *
  */
 public class PropertiesUtil {
-	private static final Logger log = Logger.getLogger(PropertiesUtil.class);
+	private static final Logger log = LogManager.getLogger(PropertiesUtil.class);
 
 	/**
 	 * 读取properties的全部信息
