@@ -23,10 +23,10 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>JerseyServlet</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 	<!-- 请求过滤器 -->
-	<filter>
+ 	<filter>
 		<filter-name>UrlFilter</filter-name>
 		<filter-class>com.wzd.web.filter.UrlFilter</filter-class>
 	</filter>
@@ -40,7 +40,7 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>UrlFilter</filter-name>
-		<url-pattern>/rest/*</url-pattern>
+		<url-pattern>/view/*</url-pattern>
 	</filter-mapping>
 	<!-- 配置filter过滤器 -->
 	<filter>

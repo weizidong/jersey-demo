@@ -1,12 +1,15 @@
 package com.wzd.web.filter.log;
 
+import org.dom4j.tree.AbstractEntity;
+
 /**
  * 请求日志 实体类
  * 
  * @author wzd
  *
  */
-public class RequestLogE {
+@SuppressWarnings("serial")
+public class RequestLogE extends AbstractEntity {
 
 	// 请求地址
 	private String uri;

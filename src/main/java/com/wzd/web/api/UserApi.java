@@ -13,43 +13,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.wzd.model.entity.User;
 import com.wzd.model.mapper.UserMapper;
 
-@Path("user")
+@Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserApi {
 	@Autowired
 	private UserMapper mapper;
 
-	@Path("create")
+	@Path("/create")
 	@POST
 	public void create(User user) {
 		mapper.insert(user);
 	}
 
-	@Path("delete/{id}")
+	@Path("/delete/{id}")
 	@POST
 	public void delete(@PathParam("id") Integer id) {
 		mapper.deleteByPrimaryKey(id);
 	}
 
-	@Path("update")
+	@Path("/update")
 	@POST
 	public void update(User user) {
 		mapper.updateByPrimaryKey(user);
 	}
 
-	@Path("all")
+	@Path("/all")
 	@POST
 	public List<User> getAll() {
 		return mapper.selectAll();
 	}
 
-	@Path("get/{id}")
+	@Path("/get/{id}")
 	@POST
 	public User getById(@PathParam("id") Integer id) {
 		return mapper.selectByPrimaryKey(id);
 	}
 
-	@Path("find")
+	@Path("/find")
 	@POST
 	public List<User> getById(User user) {
 		return mapper.select(user);

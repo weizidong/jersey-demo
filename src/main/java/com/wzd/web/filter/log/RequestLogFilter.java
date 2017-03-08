@@ -19,11 +19,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.alibaba.druid.support.json.JSONUtils;
-import com.wzd.web.filter.UrlFilter;
 
 @Priority(5)
 public class RequestLogFilter implements ContainerRequestFilter, ContainerResponseFilter {
-	private static final Logger log = LogManager.getLogger(UrlFilter.class);
+	private static final Logger log = LogManager.getLogger(RequestLogFilter.class);
 
 	public static final String REQUEST_LOG_PROPERTY = "REQUEST_LOG_PROPERTY";
 	@Context
@@ -116,7 +115,7 @@ public class RequestLogFilter implements ContainerRequestFilter, ContainerRespon
 		String line = null;
 		try {
 			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
+				sb.append(line);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
