@@ -32,8 +32,8 @@
 			<property name="mappers" value="${mapper.Mapper}" />
 		</plugin>
 
-		<jdbcConnection driverClass="${driver}" connectionURL="${url}"
-			userId="${username}" password="${password}">
+		<jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}"
+			userId="${jdbc.username}" password="${jdbc.password}">
 		</jdbcConnection>
 
 		<javaModelGenerator targetPackage="${targetModelPackage}"

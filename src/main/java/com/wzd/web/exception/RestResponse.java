@@ -1,0 +1,102 @@
+package com.wzd.web.exception;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import tk.mybatis.mapper.util.StringUtil;
+
+/**
+ * rest 响应结果
+ * 
+ * @author wzd
+ *
+ */
+public class RestResponse {
+
+	// 状态
+	private int code;
+
+	// 返回信息
+	private String msg;
+
+	// 响应数据
+	@JsonInclude(Include.NON_NULL)
+	private Object data;
+
+	public RestResponse() {
+	};
+
+	/**
+	 * 构造函数
+	 * 
+	 * @param responseCode
+	 */
+	public RestResponse(ResponseCodeType responseCode) {
+		this(responseCode, null);
+	}
+
+	/**
+	 * 构造函数
+	 * 
+	 * @param responseCode
+	 * @param msg
+	 */
+	public RestResponse(ResponseCodeType responseCode, String msg) {
+		this.code = responseCode.getCode();
+
+		this.msg = generateMsg(responseCode, msg);
+	}
+
+	/**
+	 * 构造函数
+	 * 
+	 * @param responseCode
+	 * @param msg
+	 */
+	public RestResponse(int responseCode, String msg) {
+		this.code = responseCode;
+
+		this.msg = msg;
+	}
+
+	/**
+	 * 获取数据
+	 * 
+	 * @return
+	 */
+	public Object getData() {
+		return data;
+	}
+
+	/**
+	 * 获取状态
+	 * 
+	 * @return
+	 */
+	public int getCode() {
+		return this.code;
+	}
+
+	/**
+	 * 获取信息
+	 * 
+	 * @return
+	 */
+	public String getMsg() {
+		return this.msg;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
+	}
+
+	@Override
+	public String toString() {
+		return "RestResponse [getData()=" + getData() + ", getCode()=" + getCode() + ", getMsg()=" + getMsg() + "]";
+	}
+
+	public static String generateMsg(ResponseCodeType responseCode, String msg) {
+
+		return responseCode.getMsg() + (StringUtil.isEmpty(msg) ? "" : "<" + msg + ">");
+	}
+}

@@ -5,6 +5,8 @@ import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.web.filter.RequestContextFilter;
+
+import com.wzd.web.filter.log.RequestLogDynamicFeature;
 /**
  * 接口注册
  * @author wzd
@@ -30,13 +32,13 @@ public class ApiConfig extends ResourceConfig {
 //		// 注册JSON
 //		register(HibernateObjectMapperResolver.class);
 //		
-//		register(JacksonFeature.class);
+		register(JacksonFeature.class);
 //
 //		// 注册多媒体功能
 //		register(MultiPartFeature.class);
 //
 //		// 注册请求日志过滤器
-//		register(RequestLogDynamicFeature.class);
+		register(RequestLogDynamicFeature.class);
 //
 //		// 将返回值转换为JsonResponse
 //		register(FormatJsonDynamicFeature.class);
