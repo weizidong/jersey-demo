@@ -5,7 +5,7 @@ import org.dom4j.tree.AbstractEntity;
 /**
  * 请求日志 实体类
  * 
- * @author wzd
+ * @author weizidong
  *
  */
 @SuppressWarnings("serial")

@@ -9,7 +9,7 @@ import javax.ws.rs.core.FeatureContext;
 /**
  * 动态绑定格式化响应对象
  * 
- * @author wzd
+ * @author weizidong
  *
  */
 public class RequestLogDynamicFeature implements DynamicFeature {

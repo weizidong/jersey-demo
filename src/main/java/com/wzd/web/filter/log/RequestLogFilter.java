@@ -18,8 +18,14 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSON;
 
+/**
+ * 日志输出
+ * 
+ * @author weizidong
+ *
+ */
 @Priority(5)
 public class RequestLogFilter implements ContainerRequestFilter, ContainerResponseFilter {
 	private static final Logger log = LogManager.getLogger(RequestLogFilter.class);
@@ -71,10 +77,9 @@ public class RequestLogFilter implements ContainerRequestFilter, ContainerRespon
 		requestLog.setResponse(getResponseParams(responseContext));
 
 		requestLog.setResponseTs(System.currentTimeMillis());
-		log.info("调用接口：" + requestContext.getUriInfo().getPath() + "\t耗时(ms)："
-				+ (requestLog.getResponseTs() - requestLog.getRequestTs()));
-		log.info("参数：" + requestLog.getContent());
-		log.info("结果：" + requestLog.getResponse());
+		log.debug("调用接口：" + requestLog.getUri() + "\t耗时(ms)：" + (requestLog.getResponseTs() - requestLog.getRequestTs()));
+		log.debug("参数：" + requestLog.getContent());
+		log.debug("结果：" + requestLog.getResponse());
 	}
 
 	/**
@@ -92,7 +97,7 @@ public class RequestLogFilter implements ContainerRequestFilter, ContainerRespon
 						|| obj instanceof Boolean || obj instanceof String) {
 					responseJson = String.valueOf(obj);
 				} else {
-					responseJson = JSONUtils.toJSONString(obj);
+					responseJson = JSON.toJSONString(obj);
 				}
 			}
 		} catch (Exception e) {

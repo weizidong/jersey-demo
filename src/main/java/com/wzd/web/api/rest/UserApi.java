@@ -1,4 +1,4 @@
-package com.wzd.web.api;
+package com.wzd.web.api.rest;
 
 import java.util.List;
 
@@ -11,47 +11,42 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wzd.model.entity.User;
-import com.wzd.model.mapper.UserMapper;
+import com.wzd.model.enums.DeleteType;
+import com.wzd.service.UserService;
 
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserApi {
 	@Autowired
-	private UserMapper mapper;
+	private UserService service;
 
 	@Path("/create")
 	@POST
 	public void create(User user) {
-		mapper.insert(user);
+		service.create(user);
 	}
 
-	@Path("/delete/{id}")
+	@Path("/delete/{id}/{type}")
 	@POST
-	public void delete(@PathParam("id") Integer id) {
-		mapper.deleteByPrimaryKey(id);
+	public void delete(@PathParam("id") Integer id, @PathParam("type") Integer type) {
+		service.delete(id, DeleteType.parse(type));
 	}
 
 	@Path("/update")
 	@POST
 	public void update(User user) {
-		mapper.updateByPrimaryKey(user);
+		service.update(user);
 	}
 
-	@Path("/all")
+	@Path("/get/{id}/{type}")
 	@POST
-	public List<User> getAll() {
-		return mapper.selectAll();
-	}
-
-	@Path("/get/{id}")
-	@POST
-	public User getById(@PathParam("id") Integer id) {
-		return mapper.selectByPrimaryKey(id);
+	public User getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
+		return service.findById(id, DeleteType.parse(type));
 	}
 
 	@Path("/find")
 	@POST
 	public List<User> getById(User user) {
-		return mapper.select(user);
+		return service.find(user);
 	}
 }

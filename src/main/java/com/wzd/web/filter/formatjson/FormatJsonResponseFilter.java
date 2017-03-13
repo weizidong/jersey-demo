@@ -16,17 +16,18 @@ import com.wzd.web.exception.RestResponse;
 /**
  * rest响应过滤器，用于将返回值转为RestResponse
  * 
- * @author wzd
+ * @author weizidong
  *
  */
 @Priority(10)
 public class FormatJsonResponseFilter implements ContainerResponseFilter {
+//	private static final Logger log = LogManager.getLogger(FormatJsonResponseFilter.class);
 	@Context
 	private ResourceInfo resourceInfo;
 
 	@Override
-	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-
+	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
+			throws IOException {
 		try {
 
 			MediaType mediaType = responseContext.getMediaType();
@@ -35,7 +36,7 @@ public class FormatJsonResponseFilter implements ContainerResponseFilter {
 			}
 
 			Object responseData = responseContext.getEntity();
-			// log.debug("responseData=" + responseData);
+//			log.debug("responseData=" + responseData);
 
 			RestResponse jsonResponse;
 
@@ -45,7 +46,7 @@ public class FormatJsonResponseFilter implements ContainerResponseFilter {
 				jsonResponse = new RestResponse(ResponseCode.成功);
 				jsonResponse.setData(responseData);
 			}
-			// log.debug("restResponse=" + jsonResponse);
+//			log.debug("restResponse=" + jsonResponse);
 
 			responseContext.setStatus(ResponseCode.成功.getCode());
 

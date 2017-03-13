@@ -8,7 +8,7 @@ import tk.mybatis.mapper.util.StringUtil;
 /**
  * rest 响应结果
  * 
- * @author wzd
+ * @author weizidong
  *
  */
 public class RestResponse {

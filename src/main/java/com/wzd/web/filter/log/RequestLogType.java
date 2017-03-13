@@ -1,9 +1,9 @@
 package com.wzd.web.filter.log;
 
 /**
- * 事务类型
+ * 日志事务类型
  * 
- * @author wzd
+ * @author weizidong
  *
  */
 public enum RequestLogType {
