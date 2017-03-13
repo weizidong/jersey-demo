@@ -6,6 +6,7 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.web.filter.RequestContextFilter;
 
+import com.wzd.web.dto.exception.BaseExceptionMapper;
 import com.wzd.web.filter.formatjson.FormatJsonDynamicFeature;
 import com.wzd.web.filter.log.RequestLogDynamicFeature;
 
@@ -28,6 +29,8 @@ public class ApiConfig extends ResourceConfig {
 		register(RequestLogDynamicFeature.class);
 		// 将返回值转换为JsonResponse
 		register(FormatJsonDynamicFeature.class);
+		// 注册异常转换
+		register(BaseExceptionMapper.class);
 	}
 
 }
