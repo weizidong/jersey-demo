@@ -1,4 +1,4 @@
-package com.wzd.web.exception;
+package com.wzd.web.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -43,7 +43,6 @@ public class RestResponse {
 	 */
 	public RestResponse(ResponseCodeType responseCode, String msg) {
 		this.code = responseCode.getCode();
-
 		this.msg = generateMsg(responseCode, msg);
 	}
 
@@ -55,7 +54,6 @@ public class RestResponse {
 	 */
 	public RestResponse(int responseCode, String msg) {
 		this.code = responseCode;
-
 		this.msg = msg;
 	}
 
@@ -92,7 +90,7 @@ public class RestResponse {
 
 	@Override
 	public String toString() {
-		return "RestResponse [getData()=" + getData() + ", getCode()=" + getCode() + ", getMsg()=" + getMsg() + "]";
+		return "RestResponse [code=" + code + ", msg=" + msg + ", data=" + data + "]";
 	}
 
 	public static String generateMsg(ResponseCodeType responseCode, String msg) {

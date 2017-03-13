@@ -10,8 +10,8 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.wzd.web.exception.ResponseCode;
-import com.wzd.web.exception.RestResponse;
+import com.wzd.web.dto.response.ResponseCode;
+import com.wzd.web.dto.response.RestResponse;
 
 /**
  * rest响应过滤器，用于将返回值转为RestResponse

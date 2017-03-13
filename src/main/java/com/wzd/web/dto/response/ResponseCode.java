@@ -1,4 +1,4 @@
-package com.wzd.web.exception;
+package com.wzd.web.dto.response;
 
 public enum ResponseCode implements ResponseCodeType {
 	
