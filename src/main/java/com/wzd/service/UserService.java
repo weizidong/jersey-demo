@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.jetty.util.security.Credential.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,7 @@ import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.RoleType;
 import com.wzd.model.mapper.UserMapper;
+import com.wzd.utils.Md5Utils;
 
 @Service
 public class UserService {
@@ -34,9 +34,11 @@ public class UserService {
 		user.setDeleted(DeleteType.未删除.getValue());
 		user.setStatus(AuditType.未审核.getValue());
 		user.setType(RoleType.普通用户.getValue());
-		user.setPwd(MD5.digest(user.getPwd()));
+		if (user.getPwd() != null) {
+			user.setPwd(Md5Utils.getMD5(user.getPwd()));
+		}
 		mapper.insert(user);
-		log.debug("创建成功：", user);
+		log.debug("创建成功：" + user);
 	}
 
 	/**
@@ -51,7 +53,7 @@ public class UserService {
 		user.setDeleted(type.getValue());
 		user.setUpdated(new Date());
 		mapper.updateByPrimaryKey(user);
-		log.debug("删除成功：", user);
+		log.debug("删除成功：" + user);
 	}
 
 	/**
@@ -66,9 +68,11 @@ public class UserService {
 			return;
 		}
 		user.setUpdated(new Date());
-		user.setPwd(MD5.digest(user.getPwd()));
+		if (user.getPwd() != null) {
+			user.setPwd(Md5Utils.getMD5(user.getPwd()));
+		}
 		mapper.updateByPrimaryKeySelective(user);
-		log.debug("修改成功：", user);
+		log.debug("修改成功：" + user);
 	}
 
 	/**

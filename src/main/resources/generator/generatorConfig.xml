@@ -31,9 +31,9 @@
 		<plugin type="${mapper.plugin}">
 			<property name="mappers" value="${mapper.Mapper}" />
 		</plugin>
-
-		<jdbcConnection driverClass="${jdbc.driver}" connectionURL="${jdbc.url}"
-			userId="${jdbc.username}" password="${jdbc.password}">
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<jdbcConnection driverClass="${jdbc.driver}"
+			connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}">
 		</jdbcConnection>
 
 		<javaModelGenerator targetPackage="${targetModelPackage}"
