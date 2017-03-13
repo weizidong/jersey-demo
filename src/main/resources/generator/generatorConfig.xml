@@ -32,6 +32,8 @@
 			<property name="mappers" value="${mapper.Mapper}" />
 		</plugin>
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
 		<jdbcConnection driverClass="${jdbc.driver}"
 			connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}">
 		</jdbcConnection>
