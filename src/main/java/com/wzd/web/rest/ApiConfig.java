@@ -1,4 +1,4 @@
-package com.wzd.web.api;
+package com.wzd.web.rest;
 
 import javax.ws.rs.ApplicationPath;
 

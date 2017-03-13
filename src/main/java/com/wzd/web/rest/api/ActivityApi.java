@@ -1,4 +1,4 @@
-package com.wzd.web.api.rest;
+package com.wzd.web.rest.api;
 
 import java.util.List;
 
