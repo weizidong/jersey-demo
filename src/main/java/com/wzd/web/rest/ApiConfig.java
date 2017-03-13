@@ -12,7 +12,7 @@ import com.wzd.web.filter.log.RequestLogDynamicFeature;
 /**
  * 接口注册
  * 
- * @author wzd
+ * @author weizidong
  *
  */
 @ApplicationPath("/rest")

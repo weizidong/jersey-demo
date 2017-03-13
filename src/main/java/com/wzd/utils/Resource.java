@@ -8,7 +8,7 @@ import java.util.Enumeration;
 /**
  * 资源工具类
  * 
- * @author wzd
+ * @author weizidong
  *
  */
 public class Resource {
@@ -16,11 +16,7 @@ public class Resource {
 	private ClassLoader systemClassLoader;
 
 	public Resource() {
-
-		try {
-			systemClassLoader = ClassLoader.getSystemClassLoader();
-		} catch (SecurityException ignored) {
-		}
+		systemClassLoader = ClassLoader.getSystemClassLoader();
 	}
 
 	/**
@@ -78,9 +74,7 @@ public class Resource {
 	public Enumeration<URL> getResources(String resource, ClassLoader[] classLoader) throws IOException {
 		for (ClassLoader cl : classLoader) {
 			if (null != cl) {
-
 				Enumeration<URL> returnValue = cl.getResources(resource);
-
 				// now, some class loaders want this leading "/", so we'll add
 				// it and try again if we didn't find the resource
 				if (null == returnValue)
@@ -94,7 +88,6 @@ public class Resource {
 	}
 
 	private ClassLoader[] getClassLoaders(ClassLoader classLoader) {
-
 		return new ClassLoader[] { classLoader, Thread.currentThread().getContextClassLoader(),
 				getClass().getClassLoader(), systemClassLoader };
 	}

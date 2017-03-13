@@ -15,7 +15,10 @@ import org.apache.logging.log4j.Logger;
 import com.wzd.utils.PropertiesUtil;
 
 /**
- * view请求过滤器
+ * 页面请求过滤分发
+ * 
+ * @author weizidong
+ *
  */
 public class UrlFilter implements Filter {
 	private static final Logger log = LogManager.getLogger(UrlFilter.class);

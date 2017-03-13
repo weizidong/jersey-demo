@@ -10,7 +10,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.User;
 import com.wzd.model.mapper.UserMapper;
-import com.wzd.utils.Md5Utils;
+import com.wzd.utils.Md5Util;
 
 import tk.mybatis.mapper.entity.Example;
 
@@ -44,10 +44,10 @@ public class PageMapperTest extends BasicTest {
 
 	@Test
 	public void test2() {
-		String md5 = Md5Utils.getMD5("123456");
+		String md5 = Md5Util.getMD5("123456");
 		System.out.println(md5);
 		System.out.println(md5.length());
-		String sha = Md5Utils.getSHA("123456");
+		String sha = Md5Util.getSHA("123456");
 		System.out.println(sha);
 		System.out.println(sha.length());
 	}

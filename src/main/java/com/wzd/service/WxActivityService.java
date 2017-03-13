@@ -15,14 +15,14 @@ import com.wzd.model.enums.DeleteType;
 import com.wzd.model.mapper.ActivityMapper;
 
 /**
- * 活动业务
+ * 微信活动业务
  * 
  * @author weizidong
  *
  */
 @Service
-public class ActivityService {
-	private static final Logger log = LogManager.getLogger(ActivityService.class);
+public class WxActivityService {
+	private static final Logger log = LogManager.getLogger(WxActivityService.class);
 	@Autowired
 	private ActivityMapper mapper;
 

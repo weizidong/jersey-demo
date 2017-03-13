@@ -15,14 +15,14 @@ import com.wzd.model.enums.DeleteType;
 import com.wzd.service.ActivityService;
 
 /**
- * 活动接口
+ * 微信活动接口
  * 
  * @author weizidong
  *
  */
 @Path("/activity")
 @Produces(MediaType.APPLICATION_JSON)
-public class ActivityApi {
+public class WxActivityApi {
 	@Autowired
 	private ActivityService service;
 

@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  * @author weizidong
  *
  */
-public class Md5Utils {
+public class Md5Util {
 	/**
 	 * 用MD5算法进行加密
 	 * 
@@ -33,7 +33,7 @@ public class Md5Utils {
 		return encode(str, "SHA");
 	}
 
-	private static String encode(String str, String method) {
+	public static String encode(String str, String method) {
 		MessageDigest md = null;
 		String dstr = null;
 		try {

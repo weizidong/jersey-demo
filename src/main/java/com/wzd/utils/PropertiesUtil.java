@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * 读取properties文件工具
  * 
- * @author wzd
+ * @author weizidong
  *
  */
 public class PropertiesUtil {
@@ -78,18 +78,17 @@ public class PropertiesUtil {
 		try {
 			Properties props = readProperties(filePath);
 			String value = props.getProperty(key);
-			log.info("读取配置【" + key + "】成功: " + value);
+			log.debug("读取配置【" + key + "】成功: " + value);
 			return value;
 		} catch (IOException e) {
-
 			throw new IOException("读取[" + filePath + "]properties文件[" + key + "]错误", e);
 		}
 	}
 
-	// public static <T> T readPropertiesBean(Class<T> beanClass) throws
-	// IOException, IllegalAccessException, IllegalArgumentException,
-	// InvocationTargetException, NoSuchMethodException, SecurityException,
-	// NoSuchFieldException {
+	// public static <T> T readPropertiesBean(Class<T> beanClass)
+	// throws IOException, IllegalAccessException, IllegalArgumentException,
+	// InvocationTargetException,
+	// NoSuchMethodException, SecurityException, NoSuchFieldException {
 	// // class注解
 	// Property filePathAnnotation = beanClass.getAnnotation(Property.class);
 	//
