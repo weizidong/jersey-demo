@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -50,5 +51,10 @@ public class PageMapperTest extends BasicTest {
 		String sha = Md5Util.getSHA("123456");
 		System.out.println(sha);
 		System.out.println(sha.length());
+	}
+	@Test
+	public void test3() {
+		String fullName = "AAA.BBB.CCC.jpg";
+		System.out.println(fullName.substring(fullName.lastIndexOf(".")+1));
 	}
 }
