@@ -94,7 +94,7 @@ public class SessionUtil {
 		}
 		User user = session.getUser();
 		if (user == null) {
-			throw new WebException(ResponseCode.未授权, "当前登陆的不是管理员");
+			throw new WebException(ResponseCode.未授权, "未登录");
 		}
 		return user;
 	}

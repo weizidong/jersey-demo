@@ -12,12 +12,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.wzd.utils.SessionUtil;
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.filter.UrlFilter;
 
 /**
  * rest响应过滤器，用于将返回值转为RestResponse
  * 
- * @author LinHaobin
+ * @author WeiZiDong
  *
  */
 public class ValidateFilter implements ContainerRequestFilter {
@@ -32,8 +34,7 @@ public class ValidateFilter implements ContainerRequestFilter {
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		log.debug("请求：" + request.getRequestURI());
 		if (!SessionUtil.isLogin(request, response)) {
-			response.sendRedirect("/index.html?v=" + version);
-			return;
+			throw new WebException(ResponseCode.未授权, "未登录");
 		}
 	}
 }
