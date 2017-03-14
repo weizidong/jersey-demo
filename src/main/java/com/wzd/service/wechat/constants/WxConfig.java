@@ -1,4 +1,4 @@
-package com.lifesense.healthcenter.service.wechat.constants;
+package com.wzd.service.wechat.constants;
 
 import java.io.InputStream;
 import java.util.Properties;

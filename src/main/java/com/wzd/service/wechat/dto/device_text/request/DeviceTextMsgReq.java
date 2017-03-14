@@ -1,7 +1,7 @@
-package com.lifesense.healthcenter.service.wechat.dto.device_text.request;
+package com.wzd.service.wechat.dto.device_text.request;
 
-import com.lifesense.healthcenter.service.wechat.constants.MsgType;
-import com.lifesense.healthcenter.service.wechat.dto.BaseReqMsg;
+import com.wzd.service.wechat.constants.MsgType;
+import com.wzd.service.wechat.dto.BaseReqMsg;
 
 /*
  * 

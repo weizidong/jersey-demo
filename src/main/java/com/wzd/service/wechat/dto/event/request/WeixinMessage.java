@@ -1,4 +1,4 @@
-package com.lifesense.healthcenter.service.wechat.dto.event.request;
+package com.wzd.service.wechat.dto.event.request;
 
 import java.io.Serializable;
 

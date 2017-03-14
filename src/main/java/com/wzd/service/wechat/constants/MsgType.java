@@ -1,4 +1,4 @@
-package com.lifesense.healthcenter.service.wechat.constants;
+package com.wzd.service.wechat.constants;
 
 /**
  * MsgType类型常量

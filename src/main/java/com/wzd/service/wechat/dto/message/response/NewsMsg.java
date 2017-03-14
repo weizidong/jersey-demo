@@ -1,11 +1,11 @@
-package com.lifesense.healthcenter.service.wechat.dto.message.response;
-
-import com.lifesense.healthcenter.service.wechat.constants.MsgType;
-import com.lifesense.healthcenter.service.wechat.dto.BaseMsg;
-import com.lifesense.healthcenter.service.wechat.dto.MessageBuilder;
+package com.wzd.service.wechat.dto.message.response;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.wzd.service.wechat.constants.MsgType;
+import com.wzd.service.wechat.dto.BaseMsg;
+import com.wzd.service.wechat.dto.MessageBuilder;
 
 /**
  * @author peiyu

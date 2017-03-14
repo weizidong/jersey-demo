@@ -1,8 +1,8 @@
-package com.lifesense.healthcenter.service.wechat.dto.message.response;
+package com.wzd.service.wechat.dto.message.response;
 
 import java.io.Serializable;
 
-import com.lifesense.healthcenter.service.wechat.dto.push.Image;
+import com.wzd.service.wechat.dto.push.Image;
 
 
 

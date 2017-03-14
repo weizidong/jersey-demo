@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * 获取UUID工具类
  * 
- * @author LinHaobin
+ * @author weizidong
  *
  */
 public class UUIDUtil {

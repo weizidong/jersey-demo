@@ -2,21 +2,19 @@ package com.wzd.service;
 
 import java.io.InputStream;
 import java.util.Date;
-import java.util.UUID;
 
-import org.apache.commons.io.FileUtils;
+import javax.servlet.ServletContext;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import com.wzd.model.entity.File;
-import com.wzd.model.mapper.FileMapper;
-import com.wzd.utils.DateUtil;
-import com.wzd.utils.DateUtils;
-import com.wzd.utils.UUIDUtil;
+import com.wzd.model.entity.Files;
+import com.wzd.model.enums.DeleteType;
+import com.wzd.model.mapper.FilesMapper;
+import com.wzd.utils.FileUtil;
 
 /**
  * 文件上传
@@ -27,28 +25,29 @@ import com.wzd.utils.UUIDUtil;
 @Service
 public class FileService {
 	private static final Logger log = LogManager.getLogger(FileService.class);
-	public static final String SERVER_BASE_PATH = System.getProperty("jetty.home") + "/webapps";
-	public static final String LOCAL_BASE_PATH = System.getProperty("user.dird") + "/src/main/webapp";
-	private static final String RESOURCE_URL = "/userfiles/";
 	@Autowired
-	private FileMapper mapper;
+	private FilesMapper mapper;
 
-	public File upload(InputStream fileInputStream, FormDataContentDisposition disposition) {
-		String fileFullName = disposition.getFileName();
-		String storeFileName = UUIDUtil.get();// 文件名uuid生成
+	public Files upload(InputStream file, FormDataContentDisposition disposition, ServletContext context) {
+		log.debug("开始上传文件。。。");
+		Files f = new Files();
+		f.setCreated(new Date());
+		f.setDeleted(DeleteType.未删除.getValue());
+		String fileFullName = disposition.getFileName();// 文件名
 		String storeExt = fileFullName.substring(fileFullName.indexOf("."), fileFullName.length());// 后缀
-		String storeFolder = RESOURCE_URL + File.separator + DateUtils.dateToString(new Date(), DateUtils.PDATE2);
-		String storePath = LOCAL_BASE_PATH + storeFolder + File.separator + storeFileName + storeExt;
-		
-		java.io.File file = new File(ARTICLE_IMAGES_PATH + imageName);
-		try {
-			// 使用common io的文件写入操作
-			FileUtils.copyInputStreamToFile(fileInputStream, file);
-		} catch (IOException ex) {
+		log.debug("开始写入文件。。。");
+		String url = FileUtil.writeFile(FileUtil.LOCAL_BASE_PATH, file, disposition);// 写入文件
+		log.debug("写入文件成功！");
+		f.setName(fileFullName);
+		f.setSuffix(storeExt);
+		f.setUrl(url);
+		mapper.insert(f);
+		log.debug("上传文件成功:" + f);
+		return f;
+	}
 
-		}
-
-		return null;
+	public void delete(Integer id) {
+		// TODO Auto-generated method stub
 	}
 
 }

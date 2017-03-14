@@ -19,16 +19,12 @@ public enum DeleteType {
 	}
 
 	public static DeleteType parse(Integer type) {
-		switch (type) {
-		case 0:
-			return DeleteType.未删除;
-		case 1:
-			return DeleteType.回收站;
-		case 2:
-			return DeleteType.永久删除;
-		default:
-			return DeleteType.回收站;
+		for (DeleteType item : DeleteType.values()) {
+			if (type != null && type == item.getValue()) {
+				return item;
+			}
 		}
+		throw new RuntimeException("值[" + type + "]不是" + DeleteType.class + "有效值。");
 	}
 
 }

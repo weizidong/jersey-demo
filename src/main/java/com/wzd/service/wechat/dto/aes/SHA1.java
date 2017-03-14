@@ -6,7 +6,7 @@
 
 // ------------------------------------------------------------------------
 
-package com.lifesense.healthcenter.service.wechat.dto.aes;
+package com.wzd.service.wechat.dto.aes;
 
 import java.security.MessageDigest;
 import java.util.Arrays;

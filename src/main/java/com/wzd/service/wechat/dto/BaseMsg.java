@@ -1,4 +1,4 @@
-package com.lifesense.healthcenter.service.wechat.dto;
+package com.wzd.service.wechat.dto;
 
 public class BaseMsg {
 

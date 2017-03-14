@@ -1,9 +1,9 @@
-package com.lifesense.healthcenter.service.wechat;
+package com.wzd.service.wechat;
 
 import java.io.IOException;
 import java.util.Map;
 
-import com.lifesense.framework.util.properties.PropertiesUtil;
+import com.wzd.utils.PropertiesUtil;
 
 public class WechartServiceNoService {
 

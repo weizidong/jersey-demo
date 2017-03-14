@@ -1,9 +1,9 @@
-package com.lifesense.healthcenter.service.wechat.dto.push.bp;
+package com.wzd.service.wechat.dto.push.bp;
 
 import java.io.Serializable;
 
-import com.lifesense.healthcenter.service.wechat.dto.push.Data;
-import com.lifesense.healthcenter.service.wechat.dto.push.ValueData;
+import com.wzd.service.wechat.dto.push.Data;
+import com.wzd.service.wechat.dto.push.ValueData;
 
 
 /**

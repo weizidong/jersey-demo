@@ -1,7 +1,7 @@
-package com.lifesense.healthcenter.service.wechat.dto.device_event;
+package com.wzd.service.wechat.dto.device_event;
 
-import com.lifesense.healthcenter.service.wechat.constants.MsgType;
-import com.lifesense.healthcenter.service.wechat.dto.BaseEvent;
+import com.wzd.service.wechat.constants.MsgType;
+import com.wzd.service.wechat.dto.BaseEvent;
 
 
 

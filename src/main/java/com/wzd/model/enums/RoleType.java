@@ -17,4 +17,13 @@ public enum RoleType {
 	public Integer getValue() {
 		return value;
 	}
+
+	public static RoleType parse(Integer type) {
+		for (RoleType item : RoleType.values()) {
+			if (type != null && type == item.getValue()) {
+				return item;
+			}
+		}
+		throw new RuntimeException("值[" + type + "]不是" + RoleType.class + "有效值。");
+	}
 }

@@ -13,8 +13,9 @@ import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.RoleType;
 import com.wzd.model.mapper.UserMapper;
-import com.wzd.utils.Md5Util;
-import com.wzd.web.dto.exception.RestException;
+import com.wzd.utils.MD5Utils;
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
 
 /**
  * 用户业务
@@ -42,7 +43,7 @@ public class UserService {
 		user.setStatus(AuditType.未审核.getValue());
 		user.setType(RoleType.普通用户.getValue());
 		if (user.getPwd() != null) {
-			user.setPwd(Md5Util.getMD5(user.getPwd()));
+			user.setPwd(MD5Utils.getMD5ofStr(user.getPwd()));
 		}
 		mapper.insert(user);
 		log.debug("创建成功：" + user);
@@ -71,11 +72,11 @@ public class UserService {
 	public void update(User user) {
 		log.debug("修改用户。。。");
 		if (user.getId() == null) {
-			throw new RestException();
+			throw new WebException(ResponseCode.不允许为空);
 		}
 		user.setUpdated(new Date());
 		if (user.getPwd() != null) {
-			user.setPwd(Md5Util.getMD5(user.getPwd()));
+			user.setPwd(MD5Utils.getMD5ofStr(user.getPwd()));
 		}
 		mapper.updateByPrimaryKeySelective(user);
 		log.debug("修改成功：" + user);
@@ -115,10 +116,10 @@ public class UserService {
 		param.setUname(user.getUname());
 		User dbUser = mapper.selectOne(param);
 		if (dbUser == null) { // 用户不存在
-			throw new RestException();
+			throw new WebException(ResponseCode.不允许为空);
 		}
-		if (!Md5Util.getMD5(user.getPwd()).equals(dbUser.getPwd())) { // 密码错误
-			throw new RestException();
+		if (!MD5Utils.getMD5ofStr(user.getPwd()).equals(dbUser.getPwd())) { // 密码错误
+			throw new WebException(ResponseCode.不允许为空);
 		}
 		// TODO 保存登录信息
 

@@ -1,6 +1,6 @@
-package com.lifesense.healthcenter.service.wechat.dto.event.request;
+package com.wzd.service.wechat.dto.event.request;
 
-import com.lifesense.healthcenter.service.wechat.dto.BaseEvent;
+import com.wzd.service.wechat.dto.BaseEvent;
 
 public final class LocationEvent extends BaseEvent {
 

@@ -17,4 +17,13 @@ public enum AuditType {
 	public Integer getValue() {
 		return value;
 	}
+
+	public static AuditType parse(Integer type) {
+		for (AuditType item : AuditType.values()) {
+			if (type != null && type == item.getValue()) {
+				return item;
+			}
+		}
+		throw new RuntimeException("值[" + type + "]不是" + AuditType.class + "有效值。");
+	}
 }

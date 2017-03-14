@@ -3,6 +3,7 @@ package com.wzd.web.rest;
 import javax.ws.rs.ApplicationPath;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.web.filter.RequestContextFilter;
 
@@ -18,7 +19,6 @@ import com.wzd.web.filter.log.RequestLogDynamicFeature;
  */
 @ApplicationPath("/rest")
 public class ApiConfig extends ResourceConfig {
-
 	public ApiConfig() {
 		this.packages(this.getClass().getPackage().getName());
 		// 用 Jackson JSON 的提供者来解释 JSON
@@ -31,6 +31,8 @@ public class ApiConfig extends ResourceConfig {
 		register(FormatJsonDynamicFeature.class);
 		// 注册异常转换
 		register(BaseExceptionMapper.class);
+		// 文件上传
+		register(MultiPartFeature.class);
 	}
 
 }

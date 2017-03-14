@@ -1,4 +1,4 @@
-package com.lifesense.healthcenter.service.wechat.dto.user;
+package com.wzd.service.wechat.dto.user;
 
 import java.util.List;
 

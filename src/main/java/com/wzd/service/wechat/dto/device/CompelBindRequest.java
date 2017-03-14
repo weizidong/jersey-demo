@@ -1,4 +1,4 @@
-package com.lifesense.healthcenter.service.wechat.dto.device;
+package com.wzd.service.wechat.dto.device;
 
 import java.io.Serializable;
 

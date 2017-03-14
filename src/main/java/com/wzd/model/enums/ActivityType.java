@@ -17,4 +17,13 @@ public enum ActivityType {
 	public Integer getValue() {
 		return value;
 	}
+
+	public static ActivityType parse(Integer type) {
+		for (ActivityType item : ActivityType.values()) {
+			if (type != null && type == item.getValue()) {
+				return item;
+			}
+		}
+		throw new RuntimeException("值[" + type + "]不是" + ActivityType.class + "有效值。");
+	}
 }

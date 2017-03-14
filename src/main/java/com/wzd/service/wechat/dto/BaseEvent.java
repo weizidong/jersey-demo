@@ -1,6 +1,6 @@
-package com.lifesense.healthcenter.service.wechat.dto;
+package com.wzd.service.wechat.dto;
 
-import com.lifesense.healthcenter.service.wechat.constants.MsgType;
+import com.wzd.service.wechat.constants.MsgType;
 
 public class BaseEvent extends BaseReq {
 

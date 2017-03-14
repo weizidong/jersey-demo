@@ -1,4 +1,4 @@
-package com.lifesense.healthcenter.service.wechat.token.dto;
+package com.wzd.service.wechat.token.dto;
 
 import java.io.Serializable;
 

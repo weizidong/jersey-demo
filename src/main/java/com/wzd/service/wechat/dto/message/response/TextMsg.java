@@ -1,8 +1,8 @@
-package com.lifesense.healthcenter.service.wechat.dto.message.response;
+package com.wzd.service.wechat.dto.message.response;
 
-import com.lifesense.healthcenter.service.wechat.constants.MsgType;
-import com.lifesense.healthcenter.service.wechat.dto.BaseMsg;
-import com.lifesense.healthcenter.service.wechat.dto.MessageBuilder;
+import com.wzd.service.wechat.constants.MsgType;
+import com.wzd.service.wechat.dto.BaseMsg;
+import com.wzd.service.wechat.dto.MessageBuilder;
 
 public final class TextMsg extends BaseMsg {
 

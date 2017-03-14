@@ -1,8 +1,8 @@
-package com.lifesense.healthcenter.service.wechat.dto.device_text.response;
+package com.wzd.service.wechat.dto.device_text.response;
 
-import com.lifesense.healthcenter.service.wechat.constants.MsgType;
-import com.lifesense.healthcenter.service.wechat.constants.XmlResp;
-import com.lifesense.healthcenter.service.wechat.dto.BaseMsg;
+import com.wzd.service.wechat.constants.MsgType;
+import com.wzd.service.wechat.constants.XmlResp;
+import com.wzd.service.wechat.dto.BaseMsg;
 
 /**
  * 来自Wechat端的消息(所有字段)

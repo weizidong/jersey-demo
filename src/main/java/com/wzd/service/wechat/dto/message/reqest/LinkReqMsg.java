@@ -1,7 +1,7 @@
-package com.lifesense.healthcenter.service.wechat.dto.message.reqest;
+package com.wzd.service.wechat.dto.message.reqest;
 
-import com.lifesense.healthcenter.service.wechat.constants.MsgType;
-import com.lifesense.healthcenter.service.wechat.dto.BaseReqMsg;
+import com.wzd.service.wechat.constants.MsgType;
+import com.wzd.service.wechat.dto.BaseReqMsg;
 
 public final class LinkReqMsg extends BaseReqMsg {
 

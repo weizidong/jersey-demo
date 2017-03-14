@@ -1,4 +1,4 @@
-package com.lifesense.healthcenter.service.wechat;
+package com.wzd.service.wechat;
 
 /**
  * 微信公众平台api接口常量
