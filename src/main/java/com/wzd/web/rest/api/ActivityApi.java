@@ -25,34 +25,54 @@ import com.wzd.service.ActivityService;
 public class ActivityApi {
 	@Autowired
 	private ActivityService service;
-
+	/**
+	 * 发起活动
+	 * @param activity
+	 */
 	@Path("/create")
 	@POST
 	public void create(Activity activity) {
 		service.create(activity);
 	}
-
+	/**
+	 * 删除活动
+	 * @param id
+	 * @param type
+	 */
 	@Path("/delete/{id}/{type}")
 	@POST
 	public void delete(@PathParam("id") Integer id, @PathParam("type") Integer type) {
 		service.delete(id, DeleteType.parse(type));
 	}
-
+	/**
+	 * 修改活动
+	 * @param activity
+	 */
 	@Path("/update")
 	@POST
 	public void update(Activity activity) {
 		service.update(activity);
 	}
-
+	/**
+	 * 获取活动详情
+	 * @param id
+	 * @param type
+	 * @return
+	 */
 	@Path("/get/{id}/{type}")
 	@POST
 	public Activity getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
 		return service.findById(id, DeleteType.parse(type));
 	}
-
+	/**
+	 * 获取活动列表
+	 * @param activity
+	 * @return
+	 */
 	@Path("/find")
 	@POST
 	public List<Activity> getById(Activity activity) {
 		return service.find(activity);
 	}
+	
 }
