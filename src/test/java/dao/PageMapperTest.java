@@ -1,5 +1,8 @@
 package dao;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.User;
 import com.wzd.model.mapper.UserMapper;
+import com.wzd.service.wechat.WeixinAPI;
 
 import tk.mybatis.mapper.entity.Example;
 
@@ -42,8 +46,9 @@ public class PageMapperTest extends BasicTest {
 	}
 
 	@Test
-	public void test3() {
-		String fullName = "AAA.BBB.CCC.jpg";
-		System.out.println(fullName.substring(fullName.lastIndexOf(".")+1));
+	public void test3() throws UnsupportedEncodingException {
+		String getCodeUrl = MessageFormat.format(WeixinAPI.AUTHORIZE_URL, "asdasdasdsa",
+				URLEncoder.encode("http://www.baidu.com/view/user/find", "utf-8"), Long.toString(System.currentTimeMillis()));
+		System.out.println(getCodeUrl);
 	}
 }

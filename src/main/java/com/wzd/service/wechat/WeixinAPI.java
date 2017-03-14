@@ -9,6 +9,10 @@ package com.wzd.service.wechat;
 public class WeixinAPI {
 
 	/**
+	 * 授权的URL，http请求方式: GET
+	 */
+	public static final String AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&&redirect_uri={1}&response_type=code&scope=snsapi_base&state={2}#wechat_redirect";
+	/**
 	 * 获取access token的URL，http请求方式: GET
 	 */
 	public static final String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";

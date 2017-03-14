@@ -12,15 +12,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Jackson 工具类
  * 
- * @author LinHaobin
+ * @author WeiZiDong
  * 
  */
 public class JacksonUtils {
-
-	// private static Logger log = LoggerUtil.getLogger(JacksonUtils.class);
-
 	private static final ObjectMapper MAPPER = new ObjectMapper();
-
 	static {
 		MAPPER.configure(Feature.ALLOW_UNQUOTED_FIELD_NAMES, false);
 		MAPPER.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -47,16 +43,11 @@ public class JacksonUtils {
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */
-	public static <T> T toBean(String json, Class<T> clazz)  {
+	public static <T> T toBean(String json, Class<T> clazz) {
 		try {
 			return MAPPER.readValue(json, clazz);
 		} catch (IOException e) {
 			throw new RuntimeException("转换json发生异常", e);
 		}
 	}
-	
-//	public static <T> List<T> toList(String json,Class<T> clazz){
-//		MAPPER
-//	}
-
 }
