@@ -18,7 +18,7 @@ import com.wzd.service.WxActivityService;
 /**
  * 微信活动接口
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @Path("/wxActivity")

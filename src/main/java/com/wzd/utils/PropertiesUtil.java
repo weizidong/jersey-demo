@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * 读取properties文件工具
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 public class PropertiesUtil {

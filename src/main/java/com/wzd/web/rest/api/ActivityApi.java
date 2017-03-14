@@ -17,7 +17,7 @@ import com.wzd.service.ActivityService;
 /**
  * 活动接口
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @Path("/activity")

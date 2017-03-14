@@ -3,7 +3,7 @@ package com.wzd.web.filter.formatjson;
 /**
  * 事务类型
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 public enum FormatJsonType {

@@ -8,16 +8,21 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.wzd.utils.PropertiesUtil;
+import com.wzd.utils.SessionUtil;
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
 
 /**
  * 页面请求过滤分发
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 public class UrlFilter implements Filter {
@@ -40,6 +45,11 @@ public class UrlFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		if (!SessionUtil.isLogin(httpRequest, httpResponse)) {
+			throw new WebException(ResponseCode.未授权, "未登录");
+		}
 		request.getRequestDispatcher("/" + page + "?" + version).forward(request, response);
 	}
 

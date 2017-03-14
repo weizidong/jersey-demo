@@ -18,7 +18,7 @@ import com.wzd.service.UserService;
 /**
  * 用户接口
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @Path("/user")

@@ -23,7 +23,7 @@ import com.alibaba.fastjson.JSON;
 /**
  * 日志输出
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @Priority(5)

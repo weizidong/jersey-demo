@@ -7,7 +7,7 @@ import com.wzd.model.entity.User;
 /**
  * 用户登录状态
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @SuppressWarnings("serial")

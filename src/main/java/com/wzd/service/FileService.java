@@ -19,7 +19,7 @@ import com.wzd.utils.FileUtil;
 /**
  * 文件上传
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @Service

@@ -3,7 +3,7 @@ package com.wzd.model.enums;
 /**
  * 活动类型
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 public enum ActivityType {

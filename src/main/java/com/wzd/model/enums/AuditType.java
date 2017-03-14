@@ -3,7 +3,7 @@ package com.wzd.model.enums;
 /**
  * 审核状态
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 public enum AuditType {

@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 /**
  * 日期工具类 yyyy-MM-dd HH:mm:ss
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 public class DateUtil {

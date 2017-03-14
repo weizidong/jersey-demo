@@ -8,7 +8,7 @@ import java.util.Enumeration;
 /**
  * 资源工具类
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 public class Resource {

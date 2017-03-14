@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * 是否格式化JSON 注解
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @Target(ElementType.METHOD)

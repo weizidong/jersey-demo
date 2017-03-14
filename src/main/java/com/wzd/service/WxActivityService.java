@@ -17,7 +17,7 @@ import com.wzd.model.mapper.ActivityMapper;
 /**
  * 微信活动业务
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @Service

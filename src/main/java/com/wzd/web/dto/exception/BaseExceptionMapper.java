@@ -19,7 +19,7 @@ import com.wzd.web.dto.response.RestResponse;
  * 
  * 将异常转换成RestResponse
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 public class BaseExceptionMapper implements ExceptionMapper<Exception> {

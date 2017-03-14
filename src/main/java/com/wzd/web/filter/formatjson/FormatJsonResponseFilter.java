@@ -16,7 +16,7 @@ import com.wzd.web.dto.response.RestResponse;
 /**
  * rest响应过滤器，用于将返回值转为RestResponse
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @Priority(10)

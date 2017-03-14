@@ -3,7 +3,7 @@ package com.wzd.model.enums;
 /**
  * 删除状态
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 public enum DeleteType {

@@ -20,7 +20,7 @@ import com.wzd.web.dto.response.ResponseCode;
 /**
  * 用户业务
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @Service

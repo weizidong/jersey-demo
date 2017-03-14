@@ -40,7 +40,7 @@ CREATE TABLE `activity` (
   `aud_time` datetime DEFAULT NULL COMMENT '审核时间',
   `audit` int(1) NOT NULL DEFAULT '0' COMMENT '审核状态，0：未审核；1，审核通过；2审核未通过',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='活动实体类\r\n@author weizidong';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='活动实体类\r\n@author WeiZiDong';
 
 -- ----------------------------
 -- Table structure for file
@@ -59,7 +59,7 @@ CREATE TABLE `file` (
   `status` int(1) DEFAULT NULL COMMENT '状态',
   `type` int(1) DEFAULT NULL COMMENT '类型，0：头像；1：附件；2：重要文件',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文件实体类\r\n@author weizidong';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文件实体类\r\n@author WeiZiDong';
 
 -- ----------------------------
 -- Table structure for user
@@ -88,4 +88,4 @@ CREATE TABLE `user` (
   `pic_url` varchar(128) DEFAULT NULL COMMENT '头像',
   `position` varchar(20) DEFAULT NULL COMMENT '岗位',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户实体类\r\n@author weizidong';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户实体类\r\n@author WeiZiDong';

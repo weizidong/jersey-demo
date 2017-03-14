@@ -23,7 +23,7 @@ import com.wzd.web.filter.log.RequestLogType;
 /**
  * 文件上传接口
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 @Path("/file")

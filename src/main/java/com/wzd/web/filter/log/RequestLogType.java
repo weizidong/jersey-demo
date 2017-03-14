@@ -3,7 +3,7 @@ package com.wzd.web.filter.log;
 /**
  * 日志事务类型
  * 
- * @author weizidong
+ * @author WeiZiDong
  *
  */
 public enum RequestLogType {
