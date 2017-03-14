@@ -28,7 +28,6 @@ import com.wzd.web.filter.log.RequestLogType;
  */
 @Path("/file")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class FileApi {
 	@Autowired
 	private FileService service;

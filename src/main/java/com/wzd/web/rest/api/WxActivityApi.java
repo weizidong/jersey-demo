@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wzd.model.entity.Activity;
 import com.wzd.model.enums.DeleteType;
-import com.wzd.service.ActivityService;
+import com.wzd.service.WxActivityService;
 
 /**
  * 微信活动接口
@@ -21,12 +21,12 @@ import com.wzd.service.ActivityService;
  * @author weizidong
  *
  */
-@Path("/activity")
+@Path("/wxActivity")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class WxActivityApi {
 	@Autowired
-	private ActivityService service;
+	private WxActivityService service;
 
 	@Path("/create")
 	@POST
@@ -54,7 +54,7 @@ public class WxActivityApi {
 
 	@Path("/find")
 	@POST
-	public List<Activity> getById(Activity activity) {
+	public List<Activity> f(Activity activity) {
 		return service.find(activity);
 	}
 }

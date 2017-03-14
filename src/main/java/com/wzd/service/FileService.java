@@ -41,6 +41,8 @@ public class FileService {
 		f.setName(fileFullName);
 		f.setSuffix(storeExt);
 		f.setUrl(url);
+		// TODO 获取上传者
+		f.setUserid(1);
 		mapper.insert(f);
 		log.debug("上传文件成功:" + f);
 		return f;

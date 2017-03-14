@@ -2,9 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>服务器端</title>
+<title>文件上传测试</title>
 </head>
 <body>
-不提供页面
+	<form action="/rest/file/upload" method="post"
+		enctype="multipart/form-data">
+		<input type="file" name="file"> <input type="submit"
+			value="提交">
+	</form>
 </body>
 </html>

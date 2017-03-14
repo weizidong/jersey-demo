@@ -3,11 +3,7 @@ package com.wzd.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
-/**
- * 用户实体类
- * @author weizidong
- *
- */
+
 public class User implements Serializable {
     /**
      * ID

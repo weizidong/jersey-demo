@@ -12,8 +12,8 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 public class FileUtil {
 	public static final String SERVER_BASE_PATH = System.getProperty("jetty.home") + "/webapps";
-	public static final String LOCAL_BASE_PATH = System.getProperty("user.dird") + "/src/main/webapp";// 测试用
-	private static final String RESOURCE_URL = "/userfiles/";
+	public static final String LOCAL_BASE_PATH = System.getProperty("user.dir") + "/src/main/webapp";// 测试用
+	private static final String RESOURCE_URL = "/userfiles";
 
 	/**
 	 * 写文件到硬盘，返回相对路径
@@ -74,8 +74,8 @@ public class FileUtil {
 	 * @param fileName
 	 * @return
 	 */
-	public static Boolean delete(String BASE_PATH, String fileName) {
-		File file = new File(BASE_PATH + fileName);
+	public static Boolean delete(String BASE_PATH, String url) {
+		File file = new File(BASE_PATH + url);
 		if (file.isFile() && file.exists()) {
 			file.delete();
 			return true;
@@ -90,8 +90,8 @@ public class FileUtil {
 	 * @param fileDisposition
 	 * @return
 	 */
-	public static Boolean delete(String fileName) {
-		return delete(SERVER_BASE_PATH, fileName);
+	public static Boolean delete(String url) {
+		return delete(SERVER_BASE_PATH, url);
 	}
 
 }
