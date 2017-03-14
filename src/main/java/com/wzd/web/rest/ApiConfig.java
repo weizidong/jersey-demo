@@ -10,7 +10,6 @@ import org.springframework.web.filter.RequestContextFilter;
 import com.wzd.web.dto.exception.BaseExceptionMapper;
 import com.wzd.web.filter.formatjson.FormatJsonDynamicFeature;
 import com.wzd.web.filter.log.RequestLogDynamicFeature;
-import com.wzd.web.filter.validate.ValidateDynamicFeature;
 
 /**
  * 接口注册
@@ -34,7 +33,5 @@ public class ApiConfig extends ResourceConfig {
 		register(BaseExceptionMapper.class);
 		// 文件上传
 		register(MultiPartFeature.class);
-		// 接口校验
-		register(ValidateDynamicFeature.class);
 	}
 }

@@ -16,6 +16,8 @@ public class Session implements Serializable {
 	private String sessionId;
 	// accessToken
 	private String accessToken;
+	// 微信openId
+	private String openId;
 	// 时间戳
 	private long ts;
 	// 登录用户
@@ -37,6 +39,14 @@ public class Session implements Serializable {
 		this.accessToken = accessToken;
 	}
 
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
+
 	public long getTs() {
 		return ts;
 	}
@@ -55,8 +65,8 @@ public class Session implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Session [sessionId=" + sessionId + ", accessToken=" + accessToken + ", ts=" + ts + ", user=" + user
-				+ "]";
+		return "Session [sessionId=" + sessionId + ", accessToken=" + accessToken + ", openId=" + openId + ", ts=" + ts
+				+ ", user=" + user + "]";
 	}
 
 }

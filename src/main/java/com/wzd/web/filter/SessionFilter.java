@@ -20,13 +20,13 @@ import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 
 /**
- * 页面请求过滤分发
+ * Session校验
  * 
  * @author WeiZiDong
  *
  */
-public class UrlFilter implements Filter {
-	private static final Logger log = LogManager.getLogger(UrlFilter.class);
+public class SessionFilter implements Filter {
+	private static final Logger log = LogManager.getLogger(SessionFilter.class);
 	public static String version = "1.0.0";
 	public static String page = "index.html";
 	public static String PROPERTIES = "configs/jdbc.properties";
@@ -47,6 +47,18 @@ public class UrlFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		// TODO 获取请求路径
+		
+		// TODO 获取session
+		
+		// TODO 来自微信
+		
+		// TODO 来自rest接口
+		
+		// TODO 来自view页面请求
+		request.getRequestDispatcher("/" + page + "?" + version).forward(request, response);
+		chain.doFilter(httpRequest, httpResponse);
+		
 		if (!SessionUtil.isLogin(httpRequest, httpResponse)) {
 			throw new WebException(ResponseCode.未授权, "未登录");
 		}

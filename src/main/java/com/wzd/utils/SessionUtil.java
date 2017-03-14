@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.wzd.model.entity.User;
+import com.wzd.service.wechat.WechartServiceNoService;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
@@ -147,4 +148,13 @@ public class SessionUtil {
 		return false;
 	}
 
+	/**
+	 * 生成SessionId
+	 * 
+	 * @param id
+	 * @return
+	 */
+	private static String generateSessionId(String id) {
+		return MD5Utils.getMD5ofStr(SESSION_ID + id);
+	}
 }
