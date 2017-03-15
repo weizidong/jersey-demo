@@ -1,14 +1,19 @@
-package com.wzd.service.wechat.dto;
+package com.wzd.web.param.wechat;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * 来自Wechat端的消息(所有字段)
+ * 
+ * @author WeiZiDong
+ *
  */
 @SuppressWarnings("serial")
-public class WechatMessage implements Serializable {
+@XmlRootElement(name = "xml")
+public class WechatMsg implements Serializable {
 	/**
 	 * 微信公众号ID
 	 */
@@ -431,24 +436,16 @@ public class WechatMessage implements Serializable {
 
 	@Override
 	public String toString() {
-		return "WechatMessage [ToUserName=" + ToUserName + ", FromUserName="
-				+ FromUserName + ", CreateTime=" + CreateTime + ", Content="
-				+ Content + ", PicUrl=" + PicUrl + ", MediaId=" + MediaId
-				+ ", Format=" + Format + ", Recognition=" + Recognition
-				+ ", ThumbMediaId=" + ThumbMediaId + ", Location_X="
-				+ Location_X + ", Location_Y=" + Location_Y + ", Scale="
-				+ Scale + ", Label=" + Label + ", Title=" + Title
-				+ ", Description=" + Description + ", Url=" + Url + ", Ticket="
-				+ Ticket + ", Latitude=" + Latitude + ", Longitude="
-				+ Longitude + ", Precision=" + Precision + ", MsgID=" + MsgID
-				+ ", MsgType=" + MsgType + ", Event=" + Event + ", EventKey="
-				+ EventKey + ", SessionID=" + SessionID + ", OpenID=" + OpenID
-				+ ", DeviceType=" + DeviceType + ", DeviceID=" + DeviceID
-				+ ", Status=" + Status + ", Encrypt=" + Encrypt
-				+ ", TotalCount=" + TotalCount + ", FilterCount=" + FilterCount
-				+ ", SentCount=" + SentCount + ", ErrorCount=" + ErrorCount
-				+ ", KfAccount=" + KfAccount + ", OpType=" + OpType + "]";
+		return "WechatMessage [ToUserName=" + ToUserName + ", FromUserName=" + FromUserName + ", CreateTime="
+				+ CreateTime + ", Content=" + Content + ", PicUrl=" + PicUrl + ", MediaId=" + MediaId + ", Format="
+				+ Format + ", Recognition=" + Recognition + ", ThumbMediaId=" + ThumbMediaId + ", Location_X="
+				+ Location_X + ", Location_Y=" + Location_Y + ", Scale=" + Scale + ", Label=" + Label + ", Title="
+				+ Title + ", Description=" + Description + ", Url=" + Url + ", Ticket=" + Ticket + ", Latitude="
+				+ Latitude + ", Longitude=" + Longitude + ", Precision=" + Precision + ", MsgID=" + MsgID + ", MsgType="
+				+ MsgType + ", Event=" + Event + ", EventKey=" + EventKey + ", SessionID=" + SessionID + ", OpenID="
+				+ OpenID + ", DeviceType=" + DeviceType + ", DeviceID=" + DeviceID + ", Status=" + Status + ", Encrypt="
+				+ Encrypt + ", TotalCount=" + TotalCount + ", FilterCount=" + FilterCount + ", SentCount=" + SentCount
+				+ ", ErrorCount=" + ErrorCount + ", KfAccount=" + KfAccount + ", OpType=" + OpType + "]";
 	}
 
-	
 }

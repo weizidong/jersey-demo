@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 微信网页授权，获取access_token的返回对象
  * 
- * @author lujuzhi
+ * @author WeiZiDong
  * 
  */
 @SuppressWarnings("serial")

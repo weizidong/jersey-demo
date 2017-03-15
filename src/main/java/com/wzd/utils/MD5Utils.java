@@ -70,11 +70,4 @@ public class MD5Utils {
         return getMD5ofStr(inputStr, times).equals(MD5Code);  
     }  
   
-    /** 
-     * 提供一个测试的主函数 
-     */  
-    public static void main(String[] args) {  
-//        System.out.println("1111:" + getMD5ofStr("ae969f625be849f4879482f29632bfd9111111"));  
-        //System.out.println("1111:" + getMD5ofStr("1111", 4));  
-    }  
 }

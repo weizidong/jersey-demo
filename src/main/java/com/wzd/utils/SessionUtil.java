@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.wzd.model.entity.User;
-import com.wzd.service.wechat.WechartServiceNoService;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
@@ -82,7 +81,8 @@ public class SessionUtil {
 		}
 		String url = request.getRequestURI();
 		String token = MD5Utils.getMD5ofStr(session.getAccessToken() + url);
-		return SignatureUtil.checkSignature(token, signature, timestamp, nonce);
+		return false;
+//		return SignatureUtil.checkSignature(token, signature, timestamp, nonce);
 	}
 
 	/**

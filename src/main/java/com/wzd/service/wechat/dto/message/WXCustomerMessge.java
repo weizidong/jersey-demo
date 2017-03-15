@@ -3,7 +3,7 @@
 //import java.io.Serializable;
 //
 //import com.lifesense.healthcenter.utils.CachedClient;
-//import com.lifesense.healthcenter.utils.StringUtil;
+//import com.wzd.utils.StringUtil;
 //
 ///**
 // * 微信客服
