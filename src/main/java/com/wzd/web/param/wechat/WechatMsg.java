@@ -27,7 +27,7 @@ public class WechatMsg implements Serializable {
 	/**
 	 * 消息创建时间
 	 */
-	private long CreateTime;
+	private Long CreateTime;
 
 	/** ==========文本消息内容 **/
 	private String Content = "";
