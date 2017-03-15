@@ -11,8 +11,8 @@ import javax.xml.bind.Unmarshaller;
 /**
  * Jaxb2工具类
  * 
- * @author zhuc
- * @create 2013-3-29 下午2:40:14
+ * @author WeiZiDong
+ *
  */
 public class JaxbUtil {
 

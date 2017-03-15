@@ -26,7 +26,7 @@ public class FileUtil {
 		String fileFullName = disposition.getFileName();
 		String storeFileName = UUIDUtil.get();// 文件名uuid生成
 		String storeExt = fileFullName.substring(fileFullName.indexOf("."), fileFullName.length());// 后缀
-		String storeFolder = RESOURCE_URL + File.separator + DateUtils.dateToString(new Date(), DateUtils.PDATE2);
+		String storeFolder = RESOURCE_URL + File.separator + DateUtil.dateToString(new Date(), DateUtil.PDATE2);
 		String storePath = BASE_PATH + storeFolder + File.separator + storeFileName + storeExt;
 
 		try {

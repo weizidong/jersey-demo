@@ -16,7 +16,8 @@ import net.sf.ehcache.Element;
  */
 public class EhcacheUtil {
 	private static final String path = "/ehcache.xml";
-	private static final String LOGIN_SESSION = "loginSession";
+	public static final String LOGIN_SESSION = "loginSession";
+	public static final String TOKEN = "token";
 
 	private URL url;
 

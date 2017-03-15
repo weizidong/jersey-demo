@@ -9,13 +9,13 @@ package com.wzd.service.wechat;
 public class FwAPI {
 
 	/**
-	 * 授权的URL，http请求方式: GET
-	 */
-	public static final String AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&&redirect_uri={1}&response_type=code&scope=snsapi_base&state={2}#wechat_redirect";
-	/**
 	 * 获取access token的URL，http请求方式: GET
 	 */
 	public static final String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
+	/**
+	 * 授权的URL，http请求方式: GET
+	 */
+	public static final String AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&&redirect_uri={1}&response_type=code&scope=snsapi_base&state={2}#wechat_redirect";
 	/**
 	 * 自定义菜单创建接口，http请求方式：POST（请使用https协议）
 	 */
@@ -126,5 +126,5 @@ public class FwAPI {
 	public static final String GET_BINDED_DEVCIE = "https://api.weixin.qq.com/device/get_bind_device?access_token={0}&openid={1}";
 
 	/** -----------微信设备接口-----------end **/
-
+	
 }
