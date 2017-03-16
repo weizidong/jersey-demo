@@ -1,8 +1,6 @@
 package dao;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.MessageFormat;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,7 +11,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.User;
 import com.wzd.model.mapper.UserMapper;
-import com.wzd.service.wechat.base.FwAPI;
 
 import tk.mybatis.mapper.entity.Example;
 

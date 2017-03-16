@@ -81,8 +81,7 @@ public class SessionUtil {
 		}
 		String url = request.getRequestURI();
 		String token = MD5Utils.getMD5ofStr(session.getAccessToken() + url);
-		return false;
-//		return SignatureUtil.checkSignature(token, signature, timestamp, nonce);
+		return SignatureUtil.checkSignature(token, signature, timestamp, nonce);
 	}
 
 	/**
@@ -103,9 +102,10 @@ public class SessionUtil {
 	/**
 	 * 保存用户信息
 	 */
-	public static String saveSession(Session session, HttpServletRequest request, HttpServletResponse response) {
+	public static String saveSession(User user, HttpServletRequest request, HttpServletResponse response) {
+		Session session = new Session(user);
 		// 写入cookie
-		String sessionId = session.getSessionId();
+		String sessionId = generateSessionId(user.getId());
 		String token = session.getAccessToken();
 		// 写入自动登陆
 		CookieUtil.setCookie(SESSION_ID, sessionId, -1, request, response);
@@ -148,13 +148,4 @@ public class SessionUtil {
 		return false;
 	}
 
-	/**
-	 * 生成SessionId
-	 * 
-	 * @param id
-	 * @return
-	 */
-	private static String generateSessionId(String id) {
-		return MD5Utils.getMD5ofStr(SESSION_ID + id);
-	}
 }

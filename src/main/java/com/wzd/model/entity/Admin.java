@@ -3,6 +3,7 @@ package com.wzd.model.entity;
 import java.io.Serializable;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class Admin implements Serializable {
 	private Integer id; // ID
 	private String userid; // 成员UserID。对应管理端的帐号，企业内必须唯一。不区分大小写，长度为1~64个字节
