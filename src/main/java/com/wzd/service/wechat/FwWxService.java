@@ -1,7 +1,5 @@
 package com.wzd.service.wechat;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -12,7 +10,6 @@ import com.wzd.service.wechat.event.Event;
 import com.wzd.service.wechat.msg.WxMsgReceiver;
 import com.wzd.service.wechat.utils.AesException;
 import com.wzd.service.wechat.utils.WXBizMsgCrypt;
-import com.wzd.service.wechat.utils.WeChatXmlUtil;
 import com.wzd.utils.Configs;
 import com.wzd.utils.HttpUtils;
 import com.wzd.web.dto.exception.WebException;
@@ -31,7 +28,7 @@ public class FwWxService {
 	private static WXBizMsgCrypt wxcpt = null;
 
 	// 获取加密协议
-	private static WXBizMsgCrypt wxcpt() {
+	public static WXBizMsgCrypt wxcpt() {
 		try {
 			if (wxcpt == null) {
 				wxcpt = new WXBizMsgCrypt(Configs.bToken, Configs.bEncodingAESKey, Configs.bAppid);
@@ -43,31 +40,9 @@ public class FwWxService {
 	}
 
 	/**
-	 * 处理服务号回调过来的内容(明文传输)
-	 * 
-	 * @param msg_signature
-	 * @param timestamp
-	 * @param nonce
-	 * @param echostr
-	 * @param xml
-	 * @param request
+	 * 处理服务号回调过来的内容
 	 */
-	public String push(String msg_signature, String timestamp, String nonce, String sReqData, HttpServletRequest request) {
-		log.debug("接收到服务号推送的消息。。。");
-		// URL解码
-		String sReqMsgSig = HttpUtils.ParseUrl(msg_signature);
-		String sReqTimeStamp = HttpUtils.ParseUrl(timestamp);
-		String sReqNonce = HttpUtils.ParseUrl(nonce);
-		// 对用户回复的消息解密
-		String sMsg;
-		try {
-			sMsg = wxcpt().DecryptMsg(sReqMsgSig, sReqTimeStamp, sReqNonce, sReqData);
-		} catch (AesException e) {
-			throw new WebException(ResponseCode.不允许此方法, "解密回复信息密文失败！");
-		}
-		log.debug("解密结果：" + sMsg);
-		// 解析xml
-		WechatMsg msg = WeChatXmlUtil.xmlToBean(sMsg, WechatMsg.class);
+	public String push(WechatMsg msg) {
 		switch (msg.getMsgType().toLowerCase()) {
 		case MsgType.TEXT: // 文本消息处理
 			return WxMsgReceiver.text(msg);
@@ -98,12 +73,6 @@ public class FwWxService {
 
 	/**
 	 * 验证回调URL
-	 * 
-	 * @param msg_signature
-	 * @param timestamp
-	 * @param nonce
-	 * @param echostr
-	 * @return
 	 */
 	public String VerifyURL(String msg_signature, String timestamp, String nonce, String echostr) {
 		String sVerifyMsgSig = HttpUtils.ParseUrl("msg_signature");
