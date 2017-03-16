@@ -51,7 +51,7 @@ public class WxDep extends BaseResp implements Serializable {
 
 	@Override
 	public String toString() {
-		return "WxDep [id=" + id + ", name=" + name + ", parentid=" + parentid + ", order=" + order + "]";
+		return super.toString() + ", id=" + id + ", name=" + name + ", parentid=" + parentid + ", order=" + order + "}";
 	}
 
 }

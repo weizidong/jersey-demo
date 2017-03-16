@@ -25,7 +25,7 @@ public class WxDepList extends BaseResp implements Serializable {
 
 	@Override
 	public String toString() {
-		return "WxDepList [department=" + department + "]";
+		return super.toString() + ", department=" + department + "}";
 	}
 
 }

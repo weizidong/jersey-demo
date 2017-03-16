@@ -1,8 +1,10 @@
 package com.wzd.service.wechat.department;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 import com.wzd.client.RestClientUtil;
+import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.service.wechat.token.Token;
 import com.wzd.utils.Configs;
@@ -15,14 +17,19 @@ import com.wzd.web.dto.exception.WebException;
  *
  */
 public class WxDepService {
+	// 获取token
+	private String getToken() {
+		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
+		return token.getAccess_token();
+	}
+
 	/**
 	 * 创建部门
 	 */
-	public WxDep createDep(WxDep dep) {
-		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
-		String path = MessageFormat.format(QyAPI.CREATE_DEPARTMENT, token.getAccess_token());
+	public WxDep create(WxDep dep) {
+		String path = MessageFormat.format(QyAPI.CREATE_DEPARTMENT, getToken());
 		WxDep resp = RestClientUtil.postJson(path, dep, WxDep.class);
-		if (resp.getErrcode() != 0 && resp.getId() == null) {
+		if (resp.getErrcode() != 0) {
 			throw new WebException(resp.getErrcode(), resp.getErrmsg());
 		}
 		dep.setId(resp.getId());
@@ -32,11 +39,10 @@ public class WxDepService {
 	/**
 	 * 更新部门
 	 */
-	public void updateDep(WxDep dep) {
-		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
-		String path = MessageFormat.format(QyAPI.UPDATE_DEPARTMENT, token.getAccess_token());
-		WxDep resp = RestClientUtil.postJson(path, dep, WxDep.class);
-		if (resp.getErrcode() != 0 && resp.getId() == null) {
+	public void update(WxDep dep) {
+		String path = MessageFormat.format(QyAPI.UPDATE_DEPARTMENT, getToken());
+		BaseResp resp = RestClientUtil.postJson(path, dep, BaseResp.class);
+		if (resp.getErrcode() != 0) {
 			throw new WebException(resp.getErrcode(), resp.getErrmsg());
 		}
 	}
@@ -44,11 +50,10 @@ public class WxDepService {
 	/**
 	 * 删除部门
 	 */
-	public void deleteDep(Integer id) {
-		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
-		String path = MessageFormat.format(QyAPI.DELETE_DEPARTMENT, token.getAccess_token(), id);
-		WxDep resp = RestClientUtil.get(path, WxDep.class);
-		if (resp.getErrcode() != 0 && resp.getId() == null) {
+	public void delete(Integer depId) {
+		String path = MessageFormat.format(QyAPI.DELETE_DEPARTMENT, getToken(), depId);
+		BaseResp resp = RestClientUtil.get(path, BaseResp.class);
+		if (resp.getErrcode() != 0) {
 			throw new WebException(resp.getErrcode(), resp.getErrmsg());
 		}
 	}
@@ -56,13 +61,12 @@ public class WxDepService {
 	/**
 	 * 获取部门列表
 	 */
-	public WxDepList getDepList(Integer depId) {
-		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
-		String path = MessageFormat.format(QyAPI.LIST_DEPARTMENT, token.getAccess_token(), depId);
+	public List<WxDep> getDepList(Integer depId) {
+		String path = MessageFormat.format(QyAPI.LIST_DEPARTMENT, getToken(), depId);
 		WxDepList resp = RestClientUtil.get(path, WxDepList.class);
 		if (resp.getErrcode() != 0) {
 			throw new WebException(resp.getErrcode(), resp.getErrmsg());
 		}
-		return resp;
+		return resp.getDepartment();
 	}
 }
