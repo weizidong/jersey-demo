@@ -106,11 +106,11 @@ public class QyAPI {
 	/**
 	 * 获取部门成员，Https请求方式: GET
 	 */
-	public static final String USER_SIMPLELIST = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token={0}&department_id={1}&fetch_child={2}&status=0";
+	public static final String USER_SIMPLELIST = "https://qyapi.weixin.qq.com/cgi-bin/user/simplelist?access_token={0}&department_id={1}&fetch_child=0&status=0";
 	/**
 	 * 获取部门成员(详情)，Https请求方式: GET
 	 */
-	public static final String USER_LIST = "https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token={0}&department_id={1}&fetch_child={1}&status=0";
+	public static final String USER_LIST = "https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token={0}&department_id={1}&fetch_child=0&status=0";
 	/**
 	 * 创建标签，Https请求方式: POST
 	 */

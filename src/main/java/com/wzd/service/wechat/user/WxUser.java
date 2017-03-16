@@ -105,8 +105,8 @@ public class WxUser extends BaseResp {
 
 	@Override
 	public String toString() {
-		return "WxUser [userid=" + userid + ", name=" + name + ", department=" + department + ", position=" + position + ", mobile=" + mobile + ", gender=" + gender + ", email="
-				+ email + ", weixinid=" + weixinid + ", avatar_mediaid=" + avatar_mediaid + ", extattr=" + extattr + "]";
+		return super.toString() + ", userid:" + userid + ", name:" + name + ", department:" + department + ", position:" + position + ", mobile:" + mobile + ", gender:" + gender
+				+ ", email:" + email + ", weixinid:" + weixinid + ", avatar_mediaid:" + avatar_mediaid + ", extattr:" + extattr + "}";
 	}
 
 }

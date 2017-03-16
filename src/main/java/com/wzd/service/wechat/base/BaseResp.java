@@ -58,7 +58,7 @@ public class BaseResp implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BaseResp [errcode=" + errcode + ", errmsg=" + errmsg + ", invaliduser=" + invaliduser + ", invalidparty=" + invalidparty + ", invalidtag=" + invalidtag + "]";
+		return "{errcode=" + errcode + ", errmsg=" + errmsg + ", invaliduser=" + invaliduser + ", invalidparty=" + invalidparty + ", invalidtag=" + invalidtag;
 	}
 
 }
