@@ -15,6 +15,15 @@ public class BaseResp implements Serializable {
 	private String invaliduser;
 	private String invalidparty;
 	private String invalidtag;
+	private String invalidlist;
+
+	public String getInvalidlist() {
+		return invalidlist;
+	}
+
+	public void setInvalidlist(String invalidlist) {
+		this.invalidlist = invalidlist;
+	}
 
 	public Integer getErrcode() {
 		return errcode;
@@ -58,7 +67,8 @@ public class BaseResp implements Serializable {
 
 	@Override
 	public String toString() {
-		return "{errcode=" + errcode + ", errmsg=" + errmsg + ", invaliduser=" + invaliduser + ", invalidparty=" + invalidparty + ", invalidtag=" + invalidtag;
+		return "{errcode=" + errcode + ", errmsg=" + errmsg + ", invaliduser=" + invaliduser + ", invalidparty=" + invalidparty + ", invalidtag=" + invalidtag + ", invalidlist="
+				+ invalidlist;
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
- * 微信同步--->成员列表
+ * 企业号--->成员列表
  * 
  * @author WeiZiDong
  *
