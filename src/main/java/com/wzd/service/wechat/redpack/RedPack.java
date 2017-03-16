@@ -1,5 +1,12 @@
 package com.wzd.service.wechat.redpack;
 
+import java.util.Date;
+
+import com.wzd.utils.Configs;
+import com.wzd.utils.DateUtil;
+import com.wzd.utils.IpUtil;
+import com.wzd.utils.UUIDUtil;
+
 /**
  * 红包
  * 
@@ -24,6 +31,31 @@ public class RedPack {
 	private String scene_id; // 场景id
 	private String risk_info; // 活动信息
 	private String consume_mch_id; // 资金授权商户号
+
+	public RedPack() {
+		super();
+	}
+
+	public RedPack(String send_name, String re_openid, Integer total_amount, String wishing, String act_name, String remark, String risk_info, String scene_id) {
+		super();
+		this.nonce_str = UUIDUtil.get();
+		this.mch_id = Configs.get("mch_id");
+		this.mch_billno = this.mch_id + DateUtil.dateToString(new Date(), DateUtil.PDATE) + System.currentTimeMillis() / 1000;
+		this.wxappid = Configs.get("weixinappid");
+		this.send_name = send_name;
+		this.re_openid = re_openid;
+		this.total_amount = total_amount;
+		this.wishing = wishing;
+		this.client_ip = IpUtil.getClient_Ip();
+		this.act_name = act_name;
+		this.remark = remark;
+		this.scene_id = scene_id;
+		this.risk_info = risk_info;
+	}
+
+	public RedPack(String send_name, String re_openid, Integer total_amount, String wishing, String act_name, String remark, String risk_info) {
+		this(send_name, re_openid, total_amount, wishing, act_name, remark, risk_info, SceneType.企业内部福利.getValue());
+	}
 
 	public String getNonce_str() {
 		return nonce_str;

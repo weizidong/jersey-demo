@@ -1,5 +1,8 @@
 package com.wzd.utils;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -39,8 +42,7 @@ public class IpUtil {
 	 */
 	public static final String getServerHostname(HttpServletRequest request) {
 		StringBuffer url = request.getRequestURL();
-		String contextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).append("/")
-				.toString();
+		String contextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).append("/").toString();
 		return contextUrl;
 	}
 
@@ -57,4 +59,15 @@ public class IpUtil {
 		return contextUrl;
 	}
 
+	// 获得本机ip
+	public static String getClient_Ip() {
+		String ip = "";
+		try {
+			InetAddress address = InetAddress.getLocalHost();
+			ip = address.getHostAddress();
+		} catch (UnknownHostException e) {
+			System.out.println("服务器未连网");
+		}
+		return ip;
+	}
 }

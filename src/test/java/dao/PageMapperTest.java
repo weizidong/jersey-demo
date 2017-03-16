@@ -47,8 +47,6 @@ public class PageMapperTest extends BasicTest {
 
 	@Test
 	public void test3() throws UnsupportedEncodingException {
-		String getCodeUrl = MessageFormat.format(FwAPI.AUTHORIZE_URL, "asdasdasdsa",
-				URLEncoder.encode("http://www.baidu.com/view/user/find", "utf-8"), Long.toString(System.currentTimeMillis()));
-		System.out.println(getCodeUrl);
+		System.out.println(System.currentTimeMillis() / 1000);
 	}
 }
