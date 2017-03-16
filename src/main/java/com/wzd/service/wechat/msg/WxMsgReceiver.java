@@ -1,5 +1,6 @@
 package com.wzd.service.wechat.msg;
 
+import com.wzd.service.wechat.base.XmlResp;
 import com.wzd.web.param.wechat.WechatMsg;
 
 /**
@@ -14,7 +15,8 @@ public class WxMsgReceiver {
 	 * 
 	 * @param msg
 	 */
-	public static void text(WechatMsg msg) {
-		
+	public static String text(WechatMsg msg) {
+		// TODO 处理文本消息
+		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "asdasdasdasdasd");
 	}
 }

@@ -9,6 +9,10 @@ import com.wzd.service.wechat.news.News;
  */
 public class XmlResp {
 	/**
+	 * 回复success
+	 */
+	public static final String SUCCESS = "success";
+	/**
 	 * 回复文本消息
 	 */
 	private static final String TEXT = new StringBuilder()

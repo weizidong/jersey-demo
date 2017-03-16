@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
+import com.wzd.web.filter.formatjson.FormatJson;
+import com.wzd.web.filter.formatjson.FormatJsonType;
 
 /**
  * 接收微信推送接口
@@ -35,9 +37,10 @@ public class WechatApi {
 	 */
 	@Path("/qy")
 	@POST
-	public void qyPush(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
+	@FormatJson(FormatJsonType.NOTSUPPORTED)
+	public String qyPush(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
 			@Context HttpServletRequest request, String data) {
-		qyService.push(msg_signature, timestamp, nonce, data, request);
+		return qyService.push(msg_signature, timestamp, nonce, data, request);
 	}
 
 	/**
@@ -55,9 +58,10 @@ public class WechatApi {
 	 */
 	@Path("/fw")
 	@POST
-	public void fwPush(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
+	@FormatJson(FormatJsonType.NOTSUPPORTED)
+	public String fwPush(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
 			@Context HttpServletRequest request, String xml) {
-		fwService.push(msg_signature, timestamp, nonce, xml, request);
+		return fwService.push(msg_signature, timestamp, nonce, xml, request);
 	}
 
 	/**
@@ -67,6 +71,6 @@ public class WechatApi {
 	@GET
 	public String fwVerifyURL(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
 			@QueryParam("echostr") String echostr) {
-		return qyService.VerifyURL(msg_signature, timestamp, nonce, echostr);
+		return fwService.VerifyURL(msg_signature, timestamp, nonce, echostr);
 	}
 }
