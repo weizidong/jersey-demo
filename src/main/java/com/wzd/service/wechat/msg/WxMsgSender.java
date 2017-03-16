@@ -7,5 +7,5 @@ package com.wzd.service.wechat.msg;
  *
  */
 public class WxMsgSender {
-
+	
 }

@@ -15,6 +15,6 @@ public class WxMsgReceiver {
 	 * @param msg
 	 */
 	public static void text(WechatMsg msg) {
-
+		
 	}
 }
