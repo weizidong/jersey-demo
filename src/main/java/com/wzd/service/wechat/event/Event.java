@@ -10,27 +10,42 @@ import com.wzd.web.param.wechat.WechatMsg;
  *
  */
 public class Event {
-
+	/**
+	 * 处理事件
+	 * 
+	 * @param msg
+	 */
 	public static void push(WechatMsg msg) {
-		String event = msg.getEvent();
-		if (event.equals(MsgType.Event.CLICK)) {
-
+		switch (msg.getEvent().toUpperCase()) {
+		case MsgType.Event.SUBSCRIBE: // 关注事件
+			subscribe(msg);
+			break;
+		case MsgType.Event.UNSUBSCRIBE: // 取消关注事件
+			unsubscribe(msg);
+			break;
+		case MsgType.Event.ENTER_AGENT: // 成员进入应用
+			enter_agent(msg);
+			break;
+		default:
+			break;
 		}
-		if (event.equals(MsgType.Event.LOCATION)) {
+	}
 
-		}
-		if (event.equals(MsgType.Event.SCAN)) {
+	// 处理成员进入应用
+	private static void enter_agent(WechatMsg msg) {
+		// TODO Auto-generated method stub
 
-		}
-		if (event.equals(MsgType.Event.SUBSCRIBE)) {
+	}
 
-		}
-		if (event.equals(MsgType.Event.UNSUBSCRIBE)) {
+	// 处理取消关注事件
+	private static void unsubscribe(WechatMsg msg) {
+		// TODO Auto-generated method stub
 
-		}
-		if (event.equals(MsgType.Event.VIEW)) {
+	}
 
-		}
+	// 处理关注事件
+	private static void subscribe(WechatMsg msg) {
+		// TODO Auto-generated method stub
 
 	}
 }

@@ -24,6 +24,14 @@ public class MsgType {
 	 */
 	public static final String VIDEO = "video";
 	/**
+	 * file消息
+	 */
+	public static final String FILE = "file";
+	/**
+	 * 音乐消息
+	 */
+	public static final String MUSIC = "music";
+	/**
 	 * 小视频消息
 	 */
 	public static final String SHORTVIDEO = "shortvideo";
@@ -39,6 +47,14 @@ public class MsgType {
 	 * 事件推送
 	 */
 	public static final String EVENT = "event";
+	/**
+	 * news消息
+	 */
+	public static final String NEWS = "news";
+	/**
+	 * mpnews消息
+	 */
+	public static final String MPNEWS = "mpnews";
 
 	/**
 	 * 事件具体类型
@@ -50,11 +66,11 @@ public class MsgType {
 		/**
 		 * 订阅
 		 */
-		public static final String SUBSCRIBE = "subscribe";
+		public static final String SUBSCRIBE = "SUBSCRIBE";
 		/**
 		 * 取消订阅
 		 */
-		public static final String UNSUBSCRIBE = "unsubscribe";
+		public static final String UNSUBSCRIBE = "UNSUBSCRIBE";
 		/**
 		 * 扫码
 		 */
@@ -71,5 +87,37 @@ public class MsgType {
 		 * 点击菜单跳转链接
 		 */
 		public static final String VIEW = "VIEW";
+		/**
+		 * 扫码推事件
+		 */
+		public static final String SCANCODE_PUSH = "SCANCODE_PUSH";
+		/**
+		 * 扫码推事件且弹出“消息接收中”提示框
+		 */
+		public static final String SCANCODE_WAITMSG = "SCANCODE_WAITMSG";
+		/**
+		 * 弹出系统拍照发图
+		 */
+		public static final String PIC_SYSPHOTO = "PIC_SYSPHOTO";
+		/**
+		 * 弹出拍照或者相册发图
+		 */
+		public static final String PIC_PHOTO_OR_ALBUM = "PIC_PHOTO_OR_ALBUM";
+		/**
+		 * 弹出微信相册发图器
+		 */
+		public static final String PIC_WEIXIN = "PIC_WEIXIN";
+		/**
+		 * 弹出地理位置选择器
+		 */
+		public static final String LOCATION_SELECT = "LOCATION_SELECT";
+		/**
+		 * 成员进入应用
+		 */
+		public static final String ENTER_AGENT = "ENTER_AGENT";
+		/**
+		 * 异步任务完成
+		 */
+		public static final String BATCH_JOB_RESULT = "BATCH_JOB_RESULT";
 	}
 }

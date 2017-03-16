@@ -1,25 +1,19 @@
 package com.wzd.service.wechat;
 
-import java.text.MessageFormat;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.wzd.client.RestClientUtil;
 import com.wzd.service.wechat.base.MsgType;
-import com.wzd.service.wechat.base.QyAPI;
-import com.wzd.service.wechat.department.WxDep;
-import com.wzd.service.wechat.department.WxDepList;
-import com.wzd.service.wechat.token.Token;
+import com.wzd.service.wechat.event.Event;
+import com.wzd.service.wechat.msg.WxMsgReceiver;
 import com.wzd.service.wechat.utils.AesException;
 import com.wzd.service.wechat.utils.WXBizMsgCrypt;
 import com.wzd.service.wechat.utils.WeChatXmlUtil;
 import com.wzd.utils.Configs;
 import com.wzd.utils.HttpUtils;
-import com.wzd.utils.JaxbUtil;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.wechat.WechatMsg;
@@ -51,7 +45,7 @@ public class QyWxService {
 	 * 处理企业号回调过来的内容
 	 */
 	public void push(String msg_signature, String timestamp, String nonce, String sReqData, HttpServletRequest request) {
-		log.debug("接收到企业号退烧红的消息。。。");
+		log.debug("接收到企业号推送的消息。。。");
 		// URL解码
 		String sReqMsgSig = HttpUtils.ParseUrl(msg_signature);
 		String sReqTimeStamp = HttpUtils.ParseUrl(timestamp);
@@ -64,32 +58,33 @@ public class QyWxService {
 			throw new WebException(ResponseCode.不允许此方法, "解密回复信息密文失败！");
 		}
 		log.debug("解密结果：" + sMsg);
-		// 处理解密结果
+		// 解析xml
 		WechatMsg msg = WeChatXmlUtil.xmlToBean(sMsg, WechatMsg.class);
-		String type = msg.getMsgType();
-		if (type.equals(MsgType.TEXT)) { // 文本消息处理
-
-		}
-		if (type.equals(MsgType.IMAGE)) { // 图片消息处理
-
-		}
-		if (type.equals(MsgType.VOICE)) { // 语音消息处理
-
-		}
-		if (type.equals(MsgType.VIDEO)) { // 视频消息处理
-
-		}
-		if (type.equals(MsgType.SHORTVIDEO)) { // 小视频消息处理
-
-		}
-		if (type.equals(MsgType.LOCATION)) { // 地理位置消息处理
-
-		}
-		if (type.equals(MsgType.LINK)) { // 链接消息处理
-
-		}
-		if (type.equals(MsgType.EVENT)) { // 事件处理
-
+		switch (msg.getMsgType().toLowerCase()) {
+		case MsgType.TEXT: // 文本消息处理
+			WxMsgReceiver.text(msg);
+			break;
+		case MsgType.IMAGE: // 图片消息处理
+			// TODO 图片消息处理
+			break;
+		case MsgType.VOICE: // 语音消息处理
+			// TODO 语音消息处理
+			break;
+		case MsgType.VIDEO: // 视频消息处理
+			// TODO 视频消息处理
+			break;
+		case MsgType.SHORTVIDEO: // 小视频消息处理
+			// TODO 小视频消息处理
+			break;
+		case MsgType.LOCATION: // 地理位置消息处理
+			// TODO 地理位置消息处理
+			break;
+		case MsgType.LINK: // 链接消息处理
+			// TODO 链接消息处理
+			break;
+		case MsgType.EVENT: // 事件处理
+			Event.push(msg);
+			break;
 		}
 	}
 
