@@ -43,7 +43,7 @@ public class QyWxService {
 	}
 
 	/**
-	 * 处理企业号回调过来的内容
+	 * 处理企业号回调过来的内容(密文传输)
 	 */
 	public String push(String msg_signature, String timestamp, String nonce, String sReqData, HttpServletRequest request) {
 		log.debug("接收到企业号推送的消息。。。");
@@ -56,36 +56,43 @@ public class QyWxService {
 		try {
 			sMsg = wxcpt().DecryptMsg(sReqMsgSig, sReqTimeStamp, sReqNonce, sReqData);
 		} catch (AesException e) {
-			throw new WebException(ResponseCode.不允许此方法, "解密回复信息密文失败！");
+			throw new WebException(ResponseCode.不允许此方法, "解密回复信息密文失败！", e);
 		}
 		log.debug("解密结果：" + sMsg);
 		// 解析xml
 		WechatMsg msg = WeChatXmlUtil.xmlToBean(sMsg, WechatMsg.class);
+		String msgResp;
 		switch (msg.getMsgType().toLowerCase()) {
 		case MsgType.TEXT: // 文本消息处理
-			return WxMsgReceiver.text(msg);
+			msgResp = WxMsgReceiver.text(msg);
 		case MsgType.IMAGE: // 图片消息处理
 			// TODO 图片消息处理
-			return XmlResp.SUCCESS;
+			msgResp = XmlResp.SUCCESS;
 		case MsgType.VOICE: // 语音消息处理
 			// TODO 语音消息处理
-			return XmlResp.SUCCESS;
+			msgResp = XmlResp.SUCCESS;
 		case MsgType.VIDEO: // 视频消息处理
 			// TODO 视频消息处理
-			return XmlResp.SUCCESS;
+			msgResp = XmlResp.SUCCESS;
 		case MsgType.SHORTVIDEO: // 小视频消息处理
 			// TODO 小视频消息处理
-			return XmlResp.SUCCESS;
+			msgResp = XmlResp.SUCCESS;
 		case MsgType.LOCATION: // 地理位置消息处理
 			// TODO 地理位置消息处理
-			return XmlResp.SUCCESS;
+			msgResp = XmlResp.SUCCESS;
 		case MsgType.LINK: // 链接消息处理
 			// TODO 链接消息处理
-			return XmlResp.SUCCESS;
+			msgResp = XmlResp.SUCCESS;
 		case MsgType.EVENT: // 事件处理
-			return Event.push(msg);
+			msgResp = Event.push(msg);
 		default:
-			return XmlResp.SUCCESS;
+			msgResp = XmlResp.SUCCESS;
+		}
+		// 回包加密
+		try {
+			return wxcpt.EncryptMsg(msgResp, sReqTimeStamp, sReqNonce);
+		} catch (Exception e) {
+			throw new WebException(ResponseCode.不允许此方法, "回包加密失败失败！", e);
 		}
 	}
 

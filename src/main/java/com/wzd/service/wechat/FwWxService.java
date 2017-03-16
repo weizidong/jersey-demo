@@ -43,7 +43,7 @@ public class FwWxService {
 	}
 
 	/**
-	 * 处理服务号回调过来的内容
+	 * 处理服务号回调过来的内容(明文传输)
 	 * 
 	 * @param msg_signature
 	 * @param timestamp
