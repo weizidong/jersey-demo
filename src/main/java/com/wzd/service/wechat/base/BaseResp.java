@@ -12,6 +12,9 @@ import java.io.Serializable;
 public class BaseResp implements Serializable {
 	private Integer errcode;
 	private String errmsg;
+	private String invaliduser;
+	private String invalidparty;
+	private String invalidtag;
 
 	public Integer getErrcode() {
 		return errcode;
@@ -29,9 +32,33 @@ public class BaseResp implements Serializable {
 		this.errmsg = errmsg;
 	}
 
+	public String getInvaliduser() {
+		return invaliduser;
+	}
+
+	public void setInvaliduser(String invaliduser) {
+		this.invaliduser = invaliduser;
+	}
+
+	public String getInvalidparty() {
+		return invalidparty;
+	}
+
+	public void setInvalidparty(String invalidparty) {
+		this.invalidparty = invalidparty;
+	}
+
+	public String getInvalidtag() {
+		return invalidtag;
+	}
+
+	public void setInvalidtag(String invalidtag) {
+		this.invalidtag = invalidtag;
+	}
+
 	@Override
 	public String toString() {
-		return "BaseReq [errcode=" + errcode + ", errmsg=" + errmsg + "]";
+		return "BaseResp [errcode=" + errcode + ", errmsg=" + errmsg + ", invaliduser=" + invaliduser + ", invalidparty=" + invalidparty + ", invalidtag=" + invalidtag + "]";
 	}
 
 }

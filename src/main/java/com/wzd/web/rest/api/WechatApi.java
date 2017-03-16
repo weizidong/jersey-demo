@@ -79,8 +79,10 @@ public class WechatApi {
 	/**
 	 * 验证回调URL
 	 */
-	@Path("/qy")
 	@GET
+	@Path("/qy")
+	@FormatJson(FormatJsonType.NOTSUPPORTED)
+	@RequestLog(RequestLogType.NOTSUPPORTED)
 	public String qyVerifyURL(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
 			@QueryParam("echostr") String echostr) {
 		return qyService.VerifyURL(msg_signature, timestamp, nonce, echostr);
@@ -89,8 +91,8 @@ public class WechatApi {
 	/**
 	 * 服务号回调过来的信息(明文传输)
 	 */
-	@Path("/fw")
 	@POST
+	@Path("/fw")
 	@FormatJson(FormatJsonType.NOTSUPPORTED)
 	@RequestLog(RequestLogType.NOTSUPPORTED)
 	public String fwPush(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
@@ -106,8 +108,10 @@ public class WechatApi {
 	/**
 	 * 验证回调URL
 	 */
-	@Path("/fw")
 	@GET
+	@Path("/fw")
+	@FormatJson(FormatJsonType.NOTSUPPORTED)
+	@RequestLog(RequestLogType.NOTSUPPORTED)
 	public String fwVerifyURL(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
 			@QueryParam("echostr") String echostr) {
 		return fwService.VerifyURL(msg_signature, timestamp, nonce, echostr);

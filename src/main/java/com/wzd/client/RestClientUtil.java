@@ -48,14 +48,12 @@ public class RestClientUtil {
 
 	public static <T> T postForm(String path, MultivaluedMap<String, String> formParam, Class<T> beanClass) {
 		Form form = new Form(formParam);
-		String json = buildWebTarget(path).request(MediaType.APPLICATION_JSON_TYPE)
-				.post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE), String.class);
+		String json = buildWebTarget(path).request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE), String.class);
 		return JSON.parseObject(json, beanClass);
 	}
 
 	public static <T> T postJson(String path, Object param, Class<T> beanClass) {
-		String json = buildWebTarget(path).request(MediaType.APPLICATION_JSON_TYPE)
-				.post(Entity.entity(param, MediaType.APPLICATION_JSON_TYPE), String.class);
+		String json = buildWebTarget(path).request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(param, MediaType.APPLICATION_JSON_TYPE), String.class);
 		return JSON.parseObject(json, beanClass);
 	}
 

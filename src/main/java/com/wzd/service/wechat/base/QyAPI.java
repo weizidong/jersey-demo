@@ -12,6 +12,10 @@ public class QyAPI {
 	 */
 	public static final String GETTOKEN = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={0}&corpsecret={1}";
 	/**
+	 * 发送消息，Https请求方式: GET
+	 */
+	public static final String SEND_MSG = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token={0}";
+	/**
 	 * 企业获取code，Https请求方式: GET
 	 */
 	public static final String AUTHORIZE = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri={1}&response_type=code&scope=snsapi_base&state={2}#wechat_redirect";
