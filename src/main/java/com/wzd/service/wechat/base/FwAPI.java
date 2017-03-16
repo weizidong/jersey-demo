@@ -1,4 +1,4 @@
-package com.wzd.service.wechat;
+package com.wzd.service.wechat.base;
 
 /**
  * 微信公众平台api接口常量

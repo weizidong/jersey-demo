@@ -13,7 +13,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.User;
 import com.wzd.model.mapper.UserMapper;
-import com.wzd.service.wechat.FwAPI;
+import com.wzd.service.wechat.base.FwAPI;
 
 import tk.mybatis.mapper.entity.Example;
 

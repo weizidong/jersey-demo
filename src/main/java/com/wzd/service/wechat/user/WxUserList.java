@@ -1,4 +1,4 @@
-package com.wzd.service.wechat.admin;
+package com.wzd.service.wechat.user;
 
 import java.util.List;
 
@@ -11,7 +11,8 @@ import com.wzd.service.wechat.base.BaseResp;
  * @author WeiZiDong
  *
  */
-public class AdminList extends BaseResp {
+@SuppressWarnings("serial")
+public class WxUserList extends BaseResp {
 	private List<Admin> userlist;
 
 	public List<Admin> getUserlist() {

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.wzd.service.wechat.FwAPI;
+import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.utils.Configs;
 import com.wzd.utils.IpUtil;
 import com.wzd.utils.SessionUtil;

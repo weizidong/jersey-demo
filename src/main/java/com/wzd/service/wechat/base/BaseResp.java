@@ -1,6 +1,15 @@
 package com.wzd.service.wechat.base;
 
-public class BaseResp {
+import java.io.Serializable;
+
+/**
+ * 微信返回结果基类
+ * 
+ * @author WeiZiDong
+ *
+ */
+@SuppressWarnings("serial")
+public class BaseResp implements Serializable {
 	private Integer errcode;
 	private String errmsg;
 

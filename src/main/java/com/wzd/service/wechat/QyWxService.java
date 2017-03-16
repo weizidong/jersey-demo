@@ -9,14 +9,17 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.wzd.client.RestClientUtil;
+import com.wzd.service.wechat.base.MsgType;
+import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.service.wechat.department.WxDep;
 import com.wzd.service.wechat.department.WxDepList;
 import com.wzd.service.wechat.token.Token;
+import com.wzd.service.wechat.utils.AesException;
+import com.wzd.service.wechat.utils.WXBizMsgCrypt;
+import com.wzd.service.wechat.utils.WeChatXmlUtil;
 import com.wzd.utils.Configs;
 import com.wzd.utils.HttpUtils;
 import com.wzd.utils.JaxbUtil;
-import com.wzd.utils.wechat.AesException;
-import com.wzd.utils.wechat.WXBizMsgCrypt;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.wechat.WechatMsg;
@@ -53,10 +56,6 @@ public class QyWxService {
 		String sReqMsgSig = HttpUtils.ParseUrl(msg_signature);
 		String sReqTimeStamp = HttpUtils.ParseUrl(timestamp);
 		String sReqNonce = HttpUtils.ParseUrl(nonce);
-		log.debug("sReqMsgSig=" + sReqMsgSig);
-		log.debug("sReqTimeStamp=" + sReqTimeStamp);
-		log.debug("sReqNonce=" + sReqNonce);
-		log.debug("sReqData=" + sReqData);
 		// 对用户回复的消息解密
 		String sMsg;
 		try {
@@ -66,8 +65,32 @@ public class QyWxService {
 		}
 		log.debug("解密结果：" + sMsg);
 		// 处理解密结果
-		WechatMsg msg = JaxbUtil.converyToJavaBean(sMsg, WechatMsg.class);
-		log.debug("解析结果：" + msg);
+		WechatMsg msg = WeChatXmlUtil.xmlToBean(sMsg, WechatMsg.class);
+		String type = msg.getMsgType();
+		if (type.equals(MsgType.TEXT)) { // 文本消息处理
+
+		}
+		if (type.equals(MsgType.IMAGE)) { // 图片消息处理
+
+		}
+		if (type.equals(MsgType.VOICE)) { // 语音消息处理
+
+		}
+		if (type.equals(MsgType.VIDEO)) { // 视频消息处理
+
+		}
+		if (type.equals(MsgType.SHORTVIDEO)) { // 小视频消息处理
+
+		}
+		if (type.equals(MsgType.LOCATION)) { // 地理位置消息处理
+
+		}
+		if (type.equals(MsgType.LINK)) { // 链接消息处理
+
+		}
+		if (type.equals(MsgType.EVENT)) { // 事件处理
+
+		}
 	}
 
 	/**
@@ -87,58 +110,6 @@ public class QyWxService {
 		}
 		log.debug("验证回调URL结果：" + sEchoStr);
 		return sEchoStr;
-	}
-
-	/**
-	 * 创建部门
-	 */
-	public WxDep createDep(WxDep dep) {
-		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
-		String path = MessageFormat.format(QyAPI.CREATE_DEPARTMENT, token.getAccess_token());
-		WxDep resp = RestClientUtil.postJson(path, dep, WxDep.class);
-		if (resp.getErrcode() != 0 && resp.getId() == null) {
-			throw new WebException(resp.getErrcode(), resp.getErrmsg());
-		}
-		dep.setId(resp.getId());
-		return dep;
-	}
-
-	/**
-	 * 更新部门
-	 */
-	public void updateDep(WxDep dep) {
-		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
-		String path = MessageFormat.format(QyAPI.UPDATE_DEPARTMENT, token.getAccess_token());
-		WxDep resp = RestClientUtil.postJson(path, dep, WxDep.class);
-		if (resp.getErrcode() != 0 && resp.getId() == null) {
-			throw new WebException(resp.getErrcode(), resp.getErrmsg());
-		}
-	}
-
-	/**
-	 * 删除部门
-	 */
-	public void deleteDep(Integer id) {
-		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
-		String path = MessageFormat.format(QyAPI.DELETE_DEPARTMENT, token.getAccess_token(), id);
-		WxDep resp = RestClientUtil.get(path, WxDep.class);
-		if (resp.getErrcode() != 0 && resp.getId() == null) {
-			throw new WebException(resp.getErrcode(), resp.getErrmsg());
-		}
-	}
-
-	/**
-	 * 获取部门列表
-	 */
-	public WxDepList getDepList(Integer depId) {
-		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
-		String path = MessageFormat.format(QyAPI.LIST_DEPARTMENT, token.getAccess_token(), depId);
-		WxDepList resp = RestClientUtil.get(path, WxDepList.class);
-		if (resp.getErrcode() != 0) {
-			throw new WebException(resp.getErrcode(), resp.getErrmsg());
-		}
-
-		return resp;
 	}
 
 }

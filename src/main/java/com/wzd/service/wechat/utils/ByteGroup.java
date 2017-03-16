@@ -1,4 +1,4 @@
-package com.wzd.utils.wechat;
+package com.wzd.service.wechat.utils;
 
 import java.util.ArrayList;
 

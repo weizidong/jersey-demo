@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import com.wzd.utils.wechat.WXBizMsgCrypt;
+import com.wzd.service.wechat.utils.WXBizMsgCrypt;
 
 public class Sample {
 

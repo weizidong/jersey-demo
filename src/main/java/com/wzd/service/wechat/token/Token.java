@@ -1,6 +1,5 @@
 package com.wzd.service.wechat.token;
 
-import java.io.Serializable;
 import java.text.MessageFormat;
 
 import com.wzd.client.RestClientUtil;
@@ -15,7 +14,7 @@ import com.wzd.web.dto.exception.WebException;
  *
  */
 @SuppressWarnings("serial")
-public class Token extends BaseResp implements Serializable {
+public class Token extends BaseResp {
 
 	// 访问令牌
 	private String access_token;

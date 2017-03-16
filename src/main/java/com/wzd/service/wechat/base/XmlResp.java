@@ -1,4 +1,4 @@
-package com.wzd.service.wechat.constants;
+package com.wzd.service.wechat.base;
 
 
 /**

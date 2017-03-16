@@ -1,4 +1,4 @@
-package com.wzd.service.wechat;
+package com.wzd.service.wechat.base;
 
 /**
  * 企业号API接口
