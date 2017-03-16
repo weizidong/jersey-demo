@@ -40,7 +40,7 @@ public class SessionFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		// 请求
-		String requestUrl = httpRequest.getRequestURI().substring(1);
+		String requestUrl = httpRequest.getRequestURI();
 		// 加载静态文件
 		if (requestUrl.startsWith("/view/")) {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
@@ -48,8 +48,8 @@ public class SessionFilter implements Filter {
 		}
 		// 域名
 		String hostname = IpUtil.getServerHostname(httpRequest);
+		log.debug("域名：" + hostname);
 		log.debug("请求：" + requestUrl);
-
 		String debug = request.getParameter("debug");
 		if (debug != null) {
 			chain.doFilter(httpRequest, httpResponse);
@@ -166,8 +166,8 @@ public class SessionFilter implements Filter {
 	 */
 	private void authorize(String appid, String redirectUri, HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse) throws IOException {
-		String getCodeUrl = MessageFormat.format(FwAPI.AUTHORIZE_URL, appid,
-				URLEncoder.encode(redirectUri, "utf-8"), Long.toString(System.currentTimeMillis()));
+		String getCodeUrl = MessageFormat.format(FwAPI.AUTHORIZE_URL, appid, URLEncoder.encode(redirectUri, "utf-8"),
+				Long.toString(System.currentTimeMillis()));
 		log.debug("授权:" + getCodeUrl);
 		httpResponse.sendRedirect(getCodeUrl);
 	}

@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.wzd.model.entity.User;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
@@ -87,12 +86,12 @@ public class SessionUtil {
 	/**
 	 * 获取当前登陆的账号
 	 */
-	public static User getUser(HttpServletRequest request) {
+	public static Object getUser(HttpServletRequest request) {
 		Session session = getSession(request);
 		if (session == null) {
 			throw new WebException(ResponseCode.未授权, "未登录");
 		}
-		User user = session.getUser();
+		Object user = session.getUser();
 		if (user == null) {
 			throw new WebException(ResponseCode.未授权, "未登录");
 		}
@@ -102,10 +101,10 @@ public class SessionUtil {
 	/**
 	 * 保存用户信息
 	 */
-	public static String saveSession(User user, HttpServletRequest request, HttpServletResponse response) {
-		Session session = new Session(user);
+	public static String saveSession(Object user, HttpServletRequest request, HttpServletResponse response) {
+		Session session = new Session();
 		// 写入cookie
-		String sessionId = generateSessionId(user.getId());
+		String sessionId = generateSessionId(System.currentTimeMillis());
 		String token = session.getAccessToken();
 		// 写入自动登陆
 		CookieUtil.setCookie(SESSION_ID, sessionId, -1, request, response);
@@ -148,4 +147,13 @@ public class SessionUtil {
 		return false;
 	}
 
+	/**
+	 * 生成SessionId
+	 * 
+	 * @param id
+	 * @return
+	 */
+	private static String generateSessionId(Long id) {
+		return MD5Utils.getMD5ofStr(SESSION_ID + id);
+	}
 }

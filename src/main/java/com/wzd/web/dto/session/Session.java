@@ -2,8 +2,6 @@ package com.wzd.web.dto.session;
 
 import java.io.Serializable;
 
-import com.wzd.model.entity.User;
-
 /**
  * 用户登录状态
  * 
@@ -19,9 +17,9 @@ public class Session implements Serializable {
 	// 微信openId
 	private String openId;
 	// 时间戳
-	private long ts;
+	private Long ts;
 	// 登录用户
-	private User user;
+	private Object user;
 
 	public String getSessionId() {
 		return sessionId;
@@ -55,11 +53,11 @@ public class Session implements Serializable {
 		this.ts = ts;
 	}
 
-	public User getUser() {
+	public Object getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Object user) {
 		this.user = user;
 	}
 
