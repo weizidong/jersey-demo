@@ -24,7 +24,6 @@ import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.utils.Configs;
 import com.wzd.utils.IpUtil;
-import com.wzd.utils.SignatureUtil;
 import com.wzd.utils.StringUtil;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
