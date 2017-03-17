@@ -3,6 +3,7 @@ package com.wzd.model.dao;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
@@ -14,6 +15,7 @@ import com.wzd.model.mapper.AdminMapper;
  * @author WeiZiDong
  *
  */
+@Service
 public class AdminDao {
 	@Autowired
 	private AdminMapper mapper;

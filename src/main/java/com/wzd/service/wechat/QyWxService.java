@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.wzd.client.RestClientUtil;
 import com.wzd.model.dao.AdminDao;
 import com.wzd.model.entity.Admin;
+import com.wzd.model.enums.APPType;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.service.wechat.base.XmlResp;
@@ -122,14 +123,15 @@ public class QyWxService {
 			throw new WebException(ResponseCode.未授权, "不是企业成员");
 		}
 		// 企业成员
+		Session session = new Session();
 		if (user.getUserId() != null) {
-			Session session = new Session();
 			session.setAccessToken(SignatureUtil.generateToke());
+			session.setSessionId(user.getUserId());
+			session.setAppType(APPType.企业号.getValue());
 			Admin admin = dao.getByUserId(user.getUserId());
 			session.setUser(admin);
-			return session;
 		}
-		return null;
+		return session;
 	}
 
 }

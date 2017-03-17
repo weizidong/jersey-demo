@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.wzd.client.RestClientUtil;
 import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.service.wechat.base.QyAPI;
@@ -18,6 +20,7 @@ import com.wzd.web.dto.exception.WebException;
  * @author WeiZiDong
  *
  */
+@Service
 public class WxUserService {
 	// 获取token
 	private String getToken() {

@@ -8,6 +8,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.web.filter.RequestContextFilter;
 
 import com.wzd.web.dto.exception.BaseExceptionMapper;
+import com.wzd.web.filter.authority.AuthorityFilter;
 import com.wzd.web.filter.formatjson.FormatJsonDynamicFeature;
 import com.wzd.web.filter.log.RequestLogDynamicFeature;
 
@@ -33,5 +34,7 @@ public class ApiConfig extends ResourceConfig {
 		register(BaseExceptionMapper.class);
 		// 文件上传
 		register(MultiPartFeature.class);
+		// 接口校验
+		register(AuthorityFilter.class);
 	}
 }

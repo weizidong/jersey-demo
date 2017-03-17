@@ -1,6 +1,7 @@
 package com.wzd.model.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.wzd.model.mapper.ActivityMapper;
 
@@ -10,6 +11,8 @@ import com.wzd.model.mapper.ActivityMapper;
  * @author WeiZiDong
  *
  */
+
+@Service
 public class ActivityDao {
 	@Autowired
 	private ActivityMapper mapper;

@@ -18,6 +18,8 @@ public class Session implements Serializable {
 	private Long ts;
 	// 登录用户
 	private Object user;
+	// 请求来源
+	private String appType;
 
 	public String getSessionId() {
 		return sessionId;
@@ -35,11 +37,11 @@ public class Session implements Serializable {
 		this.accessToken = accessToken;
 	}
 
-	public long getTs() {
+	public Long getTs() {
 		return ts;
 	}
 
-	public void setTs(long ts) {
+	public void setTs(Long ts) {
 		this.ts = ts;
 	}
 
@@ -51,9 +53,17 @@ public class Session implements Serializable {
 		this.user = user;
 	}
 
+	public String getAppType() {
+		return appType;
+	}
+
+	public void setAppType(String appType) {
+		this.appType = appType;
+	}
+
 	@Override
 	public String toString() {
-		return "{sessionId:" + sessionId + ", accessToken:" + accessToken + ", ts:" + ts + ", user:" + user + "}";
+		return "{sessionId:" + sessionId + ", accessToken:" + accessToken + ", ts:" + ts + ", user:" + user + ", appType:" + appType + "}";
 	}
 
 }

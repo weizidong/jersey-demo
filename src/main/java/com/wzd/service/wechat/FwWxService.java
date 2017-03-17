@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.wzd.client.RestClientUtil;
 import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.User;
+import com.wzd.model.enums.APPType;
 import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
@@ -116,7 +117,9 @@ public class FwWxService {
 			throw new WebException(token.getErrcode(), token.getErrmsg());
 		}
 		Session session = new Session();
+		session.setSessionId(token.getOpenid());
 		session.setAccessToken(token.getAccess_token());
+		session.setAppType(APPType.服务号.getValue());
 		User user = dao.getByOpenId(token.getOpenid());
 		// 无用户，创建
 		if (user == null) {
