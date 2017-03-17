@@ -56,6 +56,11 @@ public class Token extends BaseResp {
 		this.openid = openid;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + ", access_token=" + access_token + ", expires_in=" + expires_in + ", timestamp=" + timestamp + ", openid=" + openid + "}";
+	}
+
 	public static Token get(String path, String appid, String secrect) {
 		Token token = (Token) EhcacheUtil.getInstance().get(EhcacheUtil.TOKEN, appid);
 		if (token != null && System.currentTimeMillis() - token.getTimestamp() > token.getExpires_in() * 1000) {
@@ -65,6 +70,7 @@ public class Token extends BaseResp {
 		if (token.getErrcode() != null) {
 			throw new WebException(token.getErrcode(), token.getErrmsg());
 		}
+		token.setTimestamp(System.currentTimeMillis());
 		EhcacheUtil.getInstance().put(EhcacheUtil.TOKEN, appid, token);
 		return token;
 	}

@@ -2,6 +2,7 @@ package com.wzd.service.wechat.user;
 
 import java.util.List;
 
+import com.wzd.model.entity.Admin;
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
@@ -12,13 +13,13 @@ import com.wzd.service.wechat.base.BaseResp;
  */
 @SuppressWarnings("serial")
 public class WxUserList extends BaseResp {
-	private List<WxUser> userlist;
+	private List<Admin> userlist;
 
-	public List<WxUser> getUserlist() {
+	public List<Admin> getUserlist() {
 		return userlist;
 	}
 
-	public void setUserlist(List<WxUser> userlist) {
+	public void setUserlist(List<Admin> userlist) {
 		this.userlist = userlist;
 	}
 

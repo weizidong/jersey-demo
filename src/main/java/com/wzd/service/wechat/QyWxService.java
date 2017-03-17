@@ -1,6 +1,7 @@
 package com.wzd.service.wechat;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,10 +15,13 @@ import com.wzd.model.enums.APPType;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.service.wechat.base.XmlResp;
+import com.wzd.service.wechat.department.WxDep;
+import com.wzd.service.wechat.department.WxDepService;
 import com.wzd.service.wechat.event.Event;
 import com.wzd.service.wechat.msg.WxMsgReceiver;
 import com.wzd.service.wechat.token.Token;
 import com.wzd.service.wechat.user.QyUser;
+import com.wzd.service.wechat.user.WxUserService;
 import com.wzd.service.wechat.utils.AesException;
 import com.wzd.service.wechat.utils.WXBizMsgCrypt;
 import com.wzd.utils.Configs;
@@ -40,6 +44,10 @@ public class QyWxService {
 	private static WXBizMsgCrypt wxcpt = null;
 	@Autowired
 	private AdminDao dao;
+	@Autowired
+	private WxUserService userservice;
+	@Autowired
+	private WxDepService depService;
 
 	// 获取加密协议
 	public static WXBizMsgCrypt wxcpt() {
@@ -132,6 +140,19 @@ public class QyWxService {
 			session.setUser(admin);
 		}
 		return session;
+	}
+
+	/**
+	 * 同步
+	 */
+	public void sync() {
+		List<WxDep> deps = depService.getDepList(null);
+		for (WxDep dep : deps) {
+			List<Admin> admins = userservice.list(dep.getId());
+			for (Admin admin : admins) {
+				dao.create(admin);
+			}
+		}
 	}
 
 }

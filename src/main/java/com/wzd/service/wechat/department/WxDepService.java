@@ -3,6 +3,8 @@ package com.wzd.service.wechat.department;
 import java.text.MessageFormat;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.wzd.client.RestClientUtil;
 import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.service.wechat.base.QyAPI;
@@ -16,6 +18,7 @@ import com.wzd.web.dto.exception.WebException;
  * @author WeiZiDong
  *
  */
+@Service
 public class WxDepService {
 	// 获取token
 	private String getToken() {

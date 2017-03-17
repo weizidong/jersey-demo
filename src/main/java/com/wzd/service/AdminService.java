@@ -74,4 +74,11 @@ public class AdminService {
 		return null;
 	}
 
+	/**
+	 * 同步企业号人员
+	 */
+	public void sync() {
+		// TODO Auto-generated method stub
+	}
+
 }

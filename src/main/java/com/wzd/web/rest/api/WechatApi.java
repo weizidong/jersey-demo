@@ -77,6 +77,15 @@ public class WechatApi {
 	}
 
 	/**
+	 * 同步企业号
+	 */
+	@GET
+	@Path("/sync")
+	public void sync() {
+		qyService.sync();
+	}
+
+	/**
 	 * 验证回调URL
 	 */
 	@GET
@@ -116,4 +125,5 @@ public class WechatApi {
 			@QueryParam("echostr") String echostr) {
 		return fwService.VerifyURL(msg_signature, timestamp, nonce, echostr);
 	}
+
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.wzd.client.RestClientUtil;
+import com.wzd.model.entity.Admin;
 import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.service.wechat.token.Token;
@@ -89,7 +90,7 @@ public class WxUserService {
 	/**
 	 * 获取部门成员
 	 */
-	public List<WxUser> simpleList(Integer depId) {
+	public List<Admin> simpleList(Integer depId) {
 		String path = MessageFormat.format(QyAPI.USER_SIMPLELIST, getToken(), depId);
 		WxUserList resp = RestClientUtil.get(path, WxUserList.class);
 		if (resp.getErrcode() != 0) {
@@ -101,7 +102,7 @@ public class WxUserService {
 	/**
 	 * 获取部门成员(详情)
 	 */
-	public List<WxUser> list(Integer depId) {
+	public List<Admin> list(Integer depId) {
 		String path = MessageFormat.format(QyAPI.USER_LIST, getToken(), depId);
 		WxUserList resp = RestClientUtil.get(path, WxUserList.class);
 		if (resp.getErrcode() != 0) {
