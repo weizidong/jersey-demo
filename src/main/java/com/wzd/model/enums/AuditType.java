@@ -1,5 +1,8 @@
 package com.wzd.model.enums;
 
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
+
 /**
  * 审核状态
  * 
@@ -24,6 +27,6 @@ public enum AuditType {
 				return item;
 			}
 		}
-		throw new RuntimeException("值[" + type + "]不是" + AuditType.class + "有效值。");
+		throw new WebException(ResponseCode.不允许此方法, "值[" + type + "]不是" + DeleteType.class + "有效值。");
 	}
 }

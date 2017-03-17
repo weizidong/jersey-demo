@@ -10,18 +10,16 @@
     <result column="deleted" jdbcType="INTEGER" property="deleted" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="type" jdbcType="INTEGER" property="type" />
     <result column="name" jdbcType="CHAR" property="name" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="auth" jdbcType="VARCHAR" property="auth" />
-    <result column="uname" jdbcType="VARCHAR" property="uname" />
-    <result column="pwd" jdbcType="CHAR" property="pwd" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="id_card" jdbcType="VARCHAR" property="idCard" />
     <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="dep_id" jdbcType="INTEGER" property="depId" />
     <result column="dep_name" jdbcType="VARCHAR" property="depName" />
+    <result column="dep_address" jdbcType="VARCHAR" property="depAddress" />
+    <result column="dep_tel" jdbcType="VARCHAR" property="depTel" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />

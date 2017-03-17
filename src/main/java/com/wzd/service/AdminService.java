@@ -5,58 +5,73 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wzd.model.dao.WxActivityDao;
-import com.wzd.model.entity.Wxactivity;
+import com.wzd.model.dao.AdminDao;
+import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
+import com.wzd.service.wechat.user.WxUserService;
 import com.wzd.web.dto.PageDto;
 import com.wzd.web.param.PageParam;
 
 /**
- * 微信活动业务
+ * 管理员业务
  * 
  * @author WeiZiDong
  *
  */
 @Service
-public class WxActivityService {
-	private static final Logger log = LogManager.getLogger(WxActivityService.class);
+public class AdminService {
+	private static final Logger log = LogManager.getLogger(AdminService.class);
 	@Autowired
-	private WxActivityDao dao;
+	private AdminDao dao;
+	@Autowired
+	private WxUserService wxService;
 
 	/**
-	 * 创建活动
+	 * 登录
 	 */
-	public void create(Wxactivity activity) {
+	public void login(Admin admin) {
 		// TODO Auto-generated method stub
+
 	}
 
 	/**
-	 * 删除活动
+	 * 创建
+	 */
+	public void create(Admin admin) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * 删除
 	 */
 	public void delete(Integer id, DeleteType type) {
 		// TODO Auto-generated method stub
+
 	}
 
 	/**
-	 * 修改活动
+	 * 修改
 	 */
-	public void update(Wxactivity activity) {
+	public void update(Admin admin) {
 		// TODO Auto-generated method stub
+
 	}
 
 	/**
-	 * 根据id查询
+	 * 查询详情
 	 */
-	public Wxactivity findById(Integer id, DeleteType type) {
+	public Admin findById(Integer id, DeleteType parse) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	 * 条件查询所有
+	 * 条件分页查询
 	 */
 	public PageDto find(PageParam param) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

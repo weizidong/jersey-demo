@@ -9,32 +9,41 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wzd.model.entity.Wxactivity;
+import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
-import com.wzd.service.WxActivityService;
+import com.wzd.service.AdminService;
 import com.wzd.web.dto.PageDto;
 import com.wzd.web.param.PageParam;
 
 /**
- * 微信活动接口
+ * 管理员接口
  * 
  * @author WeiZiDong
  *
  */
-@Path("/wxActivity")
+@Path("/admin")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class WxActivityApi {
+public class AdminApi {
 	@Autowired
-	private WxActivityService service;
+	private AdminService service;
 
 	/**
-	 * 发起
+	 * 登录
+	 */
+	@Path("/login")
+	@POST
+	public void login(Admin admin) {
+		service.login(admin);
+	}
+
+	/**
+	 * 创建
 	 */
 	@Path("/create")
 	@POST
-	public void create(Wxactivity activity) {
-		service.create(activity);
+	public void create(Admin admin) {
+		service.create(admin);
 	}
 
 	/**
@@ -54,19 +63,19 @@ public class WxActivityApi {
 	 */
 	@Path("/update")
 	@POST
-	public void update(Wxactivity activity) {
-		service.update(activity);
+	public void update(Admin admin) {
+		service.update(admin);
 	}
 
 	/**
-	 * 查询详情
+	 * 查询指定id用户
 	 * 
 	 * @param type
 	 *            删除类型，0：不刪；1：回收站；2：永久
 	 */
 	@Path("/get/{id}/{type}")
 	@POST
-	public Wxactivity getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
+	public Admin getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
 		return service.findById(id, DeleteType.parse(type));
 	}
 
@@ -75,7 +84,7 @@ public class WxActivityApi {
 	 */
 	@Path("/find")
 	@POST
-	public PageDto find(PageParam param) {
+	public PageDto getById(PageParam param) {
 		return service.find(param);
 	}
 }

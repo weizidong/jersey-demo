@@ -1,5 +1,6 @@
 package com.wzd.web.param;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -8,9 +9,10 @@ import java.util.Arrays;
  * @author WeiZiDong
  *
  */
-public class PageParam {
-	private Integer page; // 当前页
-	private Integer pageSize;// 每页条数
+@SuppressWarnings("serial")
+public class PageParam implements Serializable {
+	private Integer page = 1; // 当前页
+	private Integer pageSize = 10;// 每页条数
 	private String[] sort;// 排序字段
 	private String[] order; // 排序顺序
 	private String[] filed;// 筛选字段
@@ -66,9 +68,8 @@ public class PageParam {
 
 	@Override
 	public String toString() {
-		return "PageParam [page=" + page + ", pageSize=" + pageSize + ", sort=" + Arrays.toString(sort) + ", order="
-				+ Arrays.toString(order) + ", filed=" + Arrays.toString(filed) + ", keyWord=" + Arrays.toString(keyWord)
-				+ "]";
+		return "[page=" + page + ", pageSize=" + pageSize + ", sort=" + Arrays.toString(sort) + ", order=" + Arrays.toString(order) + ", filed=" + Arrays.toString(filed)
+				+ ", keyWord=" + Arrays.toString(keyWord) + "]";
 	}
 
 }

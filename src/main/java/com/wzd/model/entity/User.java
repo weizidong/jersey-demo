@@ -33,11 +33,6 @@ public class User implements Serializable {
     private Integer status;
 
     /**
-     * 类型，0：管理员，1：普通用户，2：访客
-     */
-    private Integer type;
-
-    /**
      * 姓名
      */
     private String name;
@@ -51,16 +46,6 @@ public class User implements Serializable {
      * 权限
      */
     private String auth;
-
-    /**
-     * 账号
-     */
-    private String uname;
-
-    /**
-     * 密码
-     */
-    private String pwd;
 
     /**
      * 性别，0：未知，1：男，2：女
@@ -84,16 +69,22 @@ public class User implements Serializable {
     private String phone;
 
     /**
-     * 部门ID
-     */
-    @Column(name = "dep_id")
-    private Integer depId;
-
-    /**
      * 部门名称
      */
     @Column(name = "dep_name")
     private String depName;
+
+    /**
+     * 单位地址
+     */
+    @Column(name = "dep_address")
+    private String depAddress;
+
+    /**
+     * 单位电话
+     */
+    @Column(name = "dep_tel")
+    private String depTel;
 
     /**
      * 电子邮箱
@@ -214,24 +205,6 @@ public class User implements Serializable {
     }
 
     /**
-     * 获取类型，0：管理员，1：普通用户，2：访客
-     *
-     * @return type - 类型，0：管理员，1：普通用户，2：访客
-     */
-    public Integer getType() {
-        return type;
-    }
-
-    /**
-     * 设置类型，0：管理员，1：普通用户，2：访客
-     *
-     * @param type 类型，0：管理员，1：普通用户，2：访客
-     */
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    /**
      * 获取姓名
      *
      * @return name - 姓名
@@ -283,42 +256,6 @@ public class User implements Serializable {
      */
     public void setAuth(String auth) {
         this.auth = auth;
-    }
-
-    /**
-     * 获取账号
-     *
-     * @return uname - 账号
-     */
-    public String getUname() {
-        return uname;
-    }
-
-    /**
-     * 设置账号
-     *
-     * @param uname 账号
-     */
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
-
-    /**
-     * 获取密码
-     *
-     * @return pwd - 密码
-     */
-    public String getPwd() {
-        return pwd;
-    }
-
-    /**
-     * 设置密码
-     *
-     * @param pwd 密码
-     */
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
     }
 
     /**
@@ -394,24 +331,6 @@ public class User implements Serializable {
     }
 
     /**
-     * 获取部门ID
-     *
-     * @return dep_id - 部门ID
-     */
-    public Integer getDepId() {
-        return depId;
-    }
-
-    /**
-     * 设置部门ID
-     *
-     * @param depId 部门ID
-     */
-    public void setDepId(Integer depId) {
-        this.depId = depId;
-    }
-
-    /**
      * 获取部门名称
      *
      * @return dep_name - 部门名称
@@ -427,6 +346,42 @@ public class User implements Serializable {
      */
     public void setDepName(String depName) {
         this.depName = depName;
+    }
+
+    /**
+     * 获取单位地址
+     *
+     * @return dep_address - 单位地址
+     */
+    public String getDepAddress() {
+        return depAddress;
+    }
+
+    /**
+     * 设置单位地址
+     *
+     * @param depAddress 单位地址
+     */
+    public void setDepAddress(String depAddress) {
+        this.depAddress = depAddress;
+    }
+
+    /**
+     * 获取单位电话
+     *
+     * @return dep_tel - 单位电话
+     */
+    public String getDepTel() {
+        return depTel;
+    }
+
+    /**
+     * 设置单位电话
+     *
+     * @param depTel 单位电话
+     */
+    public void setDepTel(String depTel) {
+        this.depTel = depTel;
     }
 
     /**
@@ -530,18 +485,16 @@ public class User implements Serializable {
         sb.append(", deleted=").append(deleted);
         sb.append(", updated=").append(updated);
         sb.append(", status=").append(status);
-        sb.append(", type=").append(type);
         sb.append(", name=").append(name);
         sb.append(", openid=").append(openid);
         sb.append(", auth=").append(auth);
-        sb.append(", uname=").append(uname);
-        sb.append(", pwd=").append(pwd);
         sb.append(", sex=").append(sex);
         sb.append(", idCard=").append(idCard);
         sb.append(", birthday=").append(birthday);
         sb.append(", phone=").append(phone);
-        sb.append(", depId=").append(depId);
         sb.append(", depName=").append(depName);
+        sb.append(", depAddress=").append(depAddress);
+        sb.append(", depTel=").append(depTel);
         sb.append(", email=").append(email);
         sb.append(", address=").append(address);
         sb.append(", picUrl=").append(picUrl);
@@ -568,18 +521,16 @@ public class User implements Serializable {
             && (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()))
             && (this.getUpdated() == null ? other.getUpdated() == null : this.getUpdated().equals(other.getUpdated()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getOpenid() == null ? other.getOpenid() == null : this.getOpenid().equals(other.getOpenid()))
             && (this.getAuth() == null ? other.getAuth() == null : this.getAuth().equals(other.getAuth()))
-            && (this.getUname() == null ? other.getUname() == null : this.getUname().equals(other.getUname()))
-            && (this.getPwd() == null ? other.getPwd() == null : this.getPwd().equals(other.getPwd()))
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
             && (this.getIdCard() == null ? other.getIdCard() == null : this.getIdCard().equals(other.getIdCard()))
             && (this.getBirthday() == null ? other.getBirthday() == null : this.getBirthday().equals(other.getBirthday()))
             && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
-            && (this.getDepId() == null ? other.getDepId() == null : this.getDepId().equals(other.getDepId()))
             && (this.getDepName() == null ? other.getDepName() == null : this.getDepName().equals(other.getDepName()))
+            && (this.getDepAddress() == null ? other.getDepAddress() == null : this.getDepAddress().equals(other.getDepAddress()))
+            && (this.getDepTel() == null ? other.getDepTel() == null : this.getDepTel().equals(other.getDepTel()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getAddress() == null ? other.getAddress() == null : this.getAddress().equals(other.getAddress()))
             && (this.getPicUrl() == null ? other.getPicUrl() == null : this.getPicUrl().equals(other.getPicUrl()))
@@ -596,18 +547,16 @@ public class User implements Serializable {
         result = prime * result + ((getDeleted() == null) ? 0 : getDeleted().hashCode());
         result = prime * result + ((getUpdated() == null) ? 0 : getUpdated().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getOpenid() == null) ? 0 : getOpenid().hashCode());
         result = prime * result + ((getAuth() == null) ? 0 : getAuth().hashCode());
-        result = prime * result + ((getUname() == null) ? 0 : getUname().hashCode());
-        result = prime * result + ((getPwd() == null) ? 0 : getPwd().hashCode());
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
         result = prime * result + ((getIdCard() == null) ? 0 : getIdCard().hashCode());
         result = prime * result + ((getBirthday() == null) ? 0 : getBirthday().hashCode());
         result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
-        result = prime * result + ((getDepId() == null) ? 0 : getDepId().hashCode());
         result = prime * result + ((getDepName() == null) ? 0 : getDepName().hashCode());
+        result = prime * result + ((getDepAddress() == null) ? 0 : getDepAddress().hashCode());
+        result = prime * result + ((getDepTel() == null) ? 0 : getDepTel().hashCode());
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getAddress() == null) ? 0 : getAddress().hashCode());
         result = prime * result + ((getPicUrl() == null) ? 0 : getPicUrl().hashCode());

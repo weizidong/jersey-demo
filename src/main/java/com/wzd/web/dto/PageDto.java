@@ -1,12 +1,15 @@
 package com.wzd.web.dto;
 
+import java.io.Serializable;
+
 /**
  * 分页查询返回实体
  * 
  * @author WeiZiDong
  *
  */
-public class PageDto {
+@SuppressWarnings("serial")
+public class PageDto implements Serializable {
 	private Long total;// 总数量
 	private Object list;// 结果
 

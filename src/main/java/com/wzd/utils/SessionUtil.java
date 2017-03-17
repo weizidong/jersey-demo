@@ -99,14 +99,23 @@ public class SessionUtil {
 	}
 
 	/**
+	 * 更新Session
+	 */
+	public static void updateSession(Session session, HttpServletRequest request) {
+		session.setTs(System.currentTimeMillis());
+		// 添加到request
+		request.setAttribute(SESSION_ID, session);
+		// 写入缓存
+		ehcache.putSession(session.getSessionId(), session);
+	}
+
+	/**
 	 * 保存用户信息
 	 */
-	public static String saveSession(Object user, HttpServletRequest request, HttpServletResponse response) {
-		Session session = new Session();
-		// 写入cookie
+	public static String saveSession(Session session, HttpServletRequest request, HttpServletResponse response) {
 		String sessionId = generateSessionId(System.currentTimeMillis());
 		String token = session.getAccessToken();
-		// 写入自动登陆
+		// 写入cookie
 		CookieUtil.setCookie(SESSION_ID, sessionId, -1, request, response);
 		CookieUtil.setCookie(ACCESS_TOKEN, token, -1, request, response);
 		// 设置新的session

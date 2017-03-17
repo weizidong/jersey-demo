@@ -2,6 +2,8 @@ package com.wzd.service.wechat.base;
 
 import java.io.Serializable;
 
+import javax.persistence.Transient;
+
 /**
  * 微信返回结果基类
  * 
@@ -10,11 +12,17 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class BaseResp implements Serializable {
+	@Transient
 	private Integer errcode;
+	@Transient
 	private String errmsg;
+	@Transient
 	private String invaliduser;
+	@Transient
 	private String invalidparty;
+	@Transient
 	private String invalidtag;
+	@Transient
 	private String invalidlist;
 
 	public String getInvalidlist() {
