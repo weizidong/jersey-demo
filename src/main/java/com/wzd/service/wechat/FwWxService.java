@@ -1,19 +1,28 @@
 package com.wzd.service.wechat;
 
+import java.text.MessageFormat;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wzd.client.RestClientUtil;
+import com.wzd.model.dao.UserDao;
+import com.wzd.model.entity.User;
+import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
 import com.wzd.service.wechat.event.Event;
 import com.wzd.service.wechat.msg.WxMsgReceiver;
+import com.wzd.service.wechat.token.Token;
 import com.wzd.service.wechat.utils.AesException;
 import com.wzd.service.wechat.utils.WXBizMsgCrypt;
 import com.wzd.utils.Configs;
 import com.wzd.utils.HttpUtils;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
+import com.wzd.web.dto.session.Session;
 import com.wzd.web.param.wechat.WechatMsg;
 
 /**
@@ -26,6 +35,8 @@ import com.wzd.web.param.wechat.WechatMsg;
 public class FwWxService {
 	private static final Logger log = LogManager.getLogger(FwWxService.class);
 	private static WXBizMsgCrypt wxcpt = null;
+	@Autowired
+	private UserDao dao;
 
 	// 获取加密协议
 	public static WXBizMsgCrypt wxcpt() {
@@ -37,6 +48,12 @@ public class FwWxService {
 			throw new WebException(ResponseCode.未授权, "AES签名错误");
 		}
 		return wxcpt;
+	}
+
+	// 获取token
+	private String getToken() {
+		Token token = Token.get(FwAPI.TOKEN_URL, Configs.bAppid, Configs.bSecret);
+		return token.getAccess_token();
 	}
 
 	/**
@@ -88,6 +105,29 @@ public class FwWxService {
 		}
 		log.debug("验证回调URL结果：" + sEchoStr);
 		return sEchoStr;
+	}
+
+	/**
+	 * 拉取用户信息
+	 */
+	public Session getUserInfo(String code) {
+		Token token = RestClientUtil.get(MessageFormat.format(FwAPI.GET_ACCESS_TOKEN_URL, Configs.bAppid, Configs.bSecret, code), Token.class);
+		if (token.getErrcode() != null) {
+			throw new WebException(token.getErrcode(), token.getErrmsg());
+		}
+		Session session = new Session();
+		session.setAccessToken(token.getAccess_token());
+		User user = dao.getByOpenId(token.getOpenid());
+		// 无用户，创建
+		if (user == null) {
+			// 拉取用户信息
+			user = RestClientUtil.get(MessageFormat.format(FwAPI.GET_USERINFO_URL, token.getAccess_token(), token.getOpenid()), User.class);
+			dao.create(user);
+		} else {
+			dao.login(user);
+		}
+		session.setUser(user);
+		return session;
 	}
 
 }

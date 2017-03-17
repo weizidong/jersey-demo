@@ -28,4 +28,12 @@ public class AdminDao {
 		mapper.insert(admin);
 		return admin;
 	}
+
+	/**
+	 * 根据UserId获取用户信息
+	 */
+	public Admin getByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

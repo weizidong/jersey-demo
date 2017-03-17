@@ -27,6 +27,6 @@ public enum ActivityType {
 				return item;
 			}
 		}
-		throw new WebException(ResponseCode.不允许此方法, "值[" + type + "]不是" + DeleteType.class + "有效值。");
+		throw new WebException(ResponseCode.不允许此方法, "值[" + type + "]不是" + ActivityType.class + "有效值。");
 	}
 }

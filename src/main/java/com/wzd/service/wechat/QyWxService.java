@@ -1,19 +1,30 @@
 package com.wzd.service.wechat;
 
+import java.text.MessageFormat;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wzd.client.RestClientUtil;
+import com.wzd.model.dao.AdminDao;
+import com.wzd.model.entity.Admin;
 import com.wzd.service.wechat.base.MsgType;
+import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.service.wechat.base.XmlResp;
 import com.wzd.service.wechat.event.Event;
 import com.wzd.service.wechat.msg.WxMsgReceiver;
+import com.wzd.service.wechat.token.Token;
+import com.wzd.service.wechat.user.QyUser;
 import com.wzd.service.wechat.utils.AesException;
 import com.wzd.service.wechat.utils.WXBizMsgCrypt;
 import com.wzd.utils.Configs;
 import com.wzd.utils.HttpUtils;
+import com.wzd.utils.SignatureUtil;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
+import com.wzd.web.dto.session.Session;
 import com.wzd.web.param.wechat.WechatMsg;
 
 /**
@@ -26,6 +37,8 @@ import com.wzd.web.param.wechat.WechatMsg;
 public class QyWxService {
 	private static final Logger log = LogManager.getLogger(QyWxService.class);
 	private static WXBizMsgCrypt wxcpt = null;
+	@Autowired
+	private AdminDao dao;
 
 	// 获取加密协议
 	public static WXBizMsgCrypt wxcpt() {
@@ -37,6 +50,12 @@ public class QyWxService {
 			throw new WebException(ResponseCode.未授权, "AES签名错误");
 		}
 		return wxcpt;
+	}
+
+	// 获取token
+	private static String getToken() {
+		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
+		return token.getAccess_token();
 	}
 
 	/**
@@ -88,6 +107,29 @@ public class QyWxService {
 		}
 		log.debug("验证回调URL结果：" + sEchoStr);
 		return sEchoStr;
+	}
+
+	/**
+	 * 根据code获取成员信息
+	 */
+	public Session getUserInfo(String code) {
+		QyUser user = RestClientUtil.get(MessageFormat.format(QyAPI.GETUSERINFO, getToken(), code), QyUser.class);
+		if (user.getErrcode() != null) {
+			throw new WebException(user.getErrcode(), user.getErrmsg());
+		}
+		// 非企业成员
+		if (user.getOpenId() != null) {
+			throw new WebException(ResponseCode.未授权, "不是企业成员");
+		}
+		// 企业成员
+		if (user.getUserId() != null) {
+			Session session = new Session();
+			session.setAccessToken(SignatureUtil.generateToke());
+			Admin admin = dao.getByUserId(user.getUserId());
+			session.setUser(admin);
+			return session;
+		}
+		return null;
 	}
 
 }

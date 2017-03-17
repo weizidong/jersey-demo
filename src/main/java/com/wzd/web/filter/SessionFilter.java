@@ -15,16 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.wzd.service.wechat.FwWxService;
+import com.wzd.service.wechat.QyWxService;
 import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.base.QyAPI;
-import com.wzd.service.wechat.token.Token;
 import com.wzd.utils.Configs;
 import com.wzd.utils.IpUtil;
 import com.wzd.utils.SessionUtil;
 import com.wzd.utils.StringUtil;
-import com.wzd.web.dto.exception.WebException;
-import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
 
 /**
@@ -35,6 +35,10 @@ import com.wzd.web.dto.session.Session;
  */
 public class SessionFilter implements Filter {
 	private static final Logger log = LogManager.getLogger(SessionFilter.class);
+	@Autowired
+	private QyWxService qyService;
+	@Autowired
+	private FwWxService fwService;
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -49,54 +53,52 @@ public class SessionFilter implements Filter {
 		if (!StringUtil.isEmpty(queryString)) {
 			requestUrl += "?" + queryString;
 		}
+		// app识别标志,服务号：S,企业号：B
+		String appType = request.getParameter("appType");
+		// 回调授权code
+		String code = request.getParameter("code");
 		log.debug("域名：" + hostname);
 		log.debug("请求：" + requestUrl);
+		log.debug("appType：" + appType);
+		log.debug("code：" + code);
+		// 授权成功，回调,
+		if (!StringUtil.isEmpty(code) && !StringUtil.isEmpty(appType)) {
+			// 授权用时
+			Long authorizeTs = System.currentTimeMillis() - Long.valueOf(request.getParameter("state"));
+			log.debug("微信授权成功!\t用时：" + authorizeTs);
+			// 换取Token
+			Session session = null;
+			// 企业号换取Token
+			if (appType.equals("S")) {
+				session = qyService.getUserInfo(code);
+			}
+			// 服务号换取Token
+			if (appType.equals("B")) {
+				session = fwService.getUserInfo(code);
+			}
+			// 保存会话信息
+			if (session != null) {
+				SessionUtil.saveSession(session, httpRequest, httpResponse);
+			}
+			return;
+		}
+		// 获取session
+		Session session = SessionUtil.getSession(httpRequest);
+		if ("S".equals(appType) && session == null) {// 企业号未授权
+			authorize(QyAPI.AUTHORIZE, Configs.sCorpID, hostname + requestUrl, httpResponse);
+			return;
+		}
+		if ("B".equals(appType) && session == null) {// 服务号未授权
+			authorize(FwAPI.AUTHORIZE_URL, Configs.bAppid, hostname + requestUrl, httpResponse);
+			return;
+		}
 		// 加载静态文件
 		if (requestUrl.startsWith("/view/")) {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
 			return;
 		}
-		String debug = request.getParameter("debug");
-		if (debug != null) {
-			chain.doFilter(httpRequest, httpResponse);
-			return;
-		}
-		// 回调授权code
-		String code = request.getParameter("code");
-		// app识别标志,服务号：S,企业号：B
-		String appType = request.getParameter("appType");
-		// 授权成功，回调,
-		if (!StringUtil.isEmpty(code)) {
-			// 授权用时
-			Long authorizeTs = System.currentTimeMillis() - Long.valueOf(request.getParameter("state"));
-			log.debug("微信授权成功!\t用时：" + authorizeTs);
-			// 换取Token
-			Token token = null;
-			if (appType.equals("S")) {// 企业号换取Token
-				token = Token.getAccessTokenByCode(WechartServiceNoService.getAppid(), WechartServiceNoService.getSecret(), code);
-			}
-			if (appType.equals("B")) {// 服务号换取Token
-				token = Token.getAccessTokenByCode(WechartServiceNoService.getAppid(), WechartServiceNoService.getSecret(), code);
-			}
-			if (null == token) {
-				log.debug("通过code换取网页授权access_token失败");
-				return;
-			}
-			// 保存会话信息
-			return;
-		}
-		// 获取session
-		Session session = SessionUtil.getSession(httpRequest);
-		if (appType.equals("S") && session == null) {// 企业号未授权
-			authorize(QyAPI.AUTHORIZE, Configs.sCorpID, hostname + requestUrl, httpResponse);
-			return;
-		}
-		if (appType.equals("B") && session == null) {// 服务号未授权
-			authorize(FwAPI.AUTHORIZE_URL, Configs.bAppid, hostname + requestUrl, httpResponse);
-			return;
-		}
 		// 更新Session
-		SessionUtil.updateSession(session);
+		SessionUtil.updateSession(session, httpRequest);
 		chain.doFilter(httpRequest, httpResponse);
 	}
 
@@ -116,5 +118,4 @@ public class SessionFilter implements Filter {
 		log.debug("授权:" + getCodeUrl);
 		httpResponse.sendRedirect(getCodeUrl);
 	}
-
 }

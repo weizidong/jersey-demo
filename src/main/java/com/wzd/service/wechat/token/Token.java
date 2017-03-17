@@ -15,15 +15,14 @@ import com.wzd.web.dto.exception.WebException;
  */
 @SuppressWarnings("serial")
 public class Token extends BaseResp {
-
 	// 访问令牌
 	private String access_token;
-
 	// 令牌有效时间，单位：秒
 	private Long expires_in;
-
 	// 获取令牌时间
 	private Long timestamp;
+	// 用户唯一标识，请注意，在未关注公众号时，用户访问公众号的网页，也会产生一个用户和公众号唯一的OpenID
+	private String openid;
 
 	public String getAccess_token() {
 		return access_token;
@@ -47,6 +46,14 @@ public class Token extends BaseResp {
 
 	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 
 	public static Token get(String path, String appid, String secrect) {

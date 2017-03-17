@@ -20,7 +20,7 @@ public class FwAPI {
 	/**
 	 * 授权的URL，http请求方式: GET
 	 */
-	public static final String AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&&redirect_uri={1}&response_type=code&scope=snsapi_base&state={2}#wechat_redirect";
+	public static final String AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&&redirect_uri={1}&response_type=code&scope=snsapi_userinfo&state={2}#wechat_redirect";
 	/**
 	 * 自定义菜单创建接口，http请求方式：POST（请使用https协议）
 	 */
