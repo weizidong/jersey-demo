@@ -112,11 +112,11 @@ public class SessionFilter implements Filter {
 			return;
 		}
 		// 非网站主页需要检测数据签名
-		if (!APPType.网站主页.getValue().equals(appType) && session != null) {
+		if (!APPType.网站主页.getValue().equals(appType) && session != null && !SessionUtil.isDebug(httpRequest)) {
 			SessionUtil.checkSignature(session, httpRequest, httpResponse);
 		}
 		// 管理平台需要检测Session超时
-		if (APPType.管理平台.getValue().equals(appType) && session != null) {
+		if (APPType.管理平台.getValue().equals(appType) && session != null && !SessionUtil.isDebug(httpRequest)) {
 			SessionUtil.checkTs(session, httpRequest, httpResponse);
 		}
 		// 更新Session

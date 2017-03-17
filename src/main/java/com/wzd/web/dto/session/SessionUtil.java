@@ -34,6 +34,11 @@ public class SessionUtil {
 		return CookieUtil.getCookieValue(request, SESSION_ID);
 	}
 
+	public static Boolean isDebug(HttpServletRequest request) {
+		String debug = request.getParameter("debug");
+		return debug != null && debug.equals("weizidong");
+	}
+
 	/**
 	 * 获取Session
 	 */
@@ -41,7 +46,7 @@ public class SessionUtil {
 		Session session = null;
 		// debug模式固定Session
 		String debug = request.getParameter("debug");
-		if (debug != null && debug.equals("weizidong")) {
+		if (isDebug(request)) {
 			session = new Session();
 			session.setSessionId(MD5Utils.getMD5ofStr(debug));
 			session.setAccessToken(MD5Utils.getMD5ofStr(debug, 2));
