@@ -35,7 +35,7 @@ import com.wzd.web.param.wechat.WechatMsg;
  */
 @Path("/wechat")
 @Produces(MediaType.TEXT_XML)
-@Consumes(MediaType.TEXT_XML)
+@Consumes(MediaType.APPLICATION_JSON)
 public class WechatApi {
 	private static final Logger log = LogManager.getLogger(WechatApi.class);
 	@Autowired
@@ -50,6 +50,7 @@ public class WechatApi {
 	@Path("/qy")
 	@FormatJson(FormatJsonType.NOTSUPPORTED)
 	@RequestLog(RequestLogType.NOTSUPPORTED)
+	@Consumes(MediaType.TEXT_XML)
 	public String qyPush(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce, String data) {
 		log.debug("接收到企业号推送的消息。。。");
 		// URL解码
@@ -104,6 +105,7 @@ public class WechatApi {
 	@Path("/fw")
 	@FormatJson(FormatJsonType.NOTSUPPORTED)
 	@RequestLog(RequestLogType.NOTSUPPORTED)
+	@Consumes(MediaType.TEXT_XML)
 	public String fwPush(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
 			@Context HttpServletRequest request, String data) {
 		log.debug("接收到服务号推送的消息。。。");
