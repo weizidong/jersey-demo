@@ -30,7 +30,7 @@ public class WxDepService {
 	/**
 	 * 创建部门
 	 */
-	public WxDep create(WxDep dep) {
+	public Department create(Department dep) {
 		String path = MessageFormat.format(QyAPI.CREATE_DEPARTMENT, getToken());
 		WxDep resp = RestClientUtil.postJson(path, dep, WxDep.class);
 		if (resp.getErrcode() != 0) {

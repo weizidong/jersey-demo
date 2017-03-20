@@ -52,7 +52,7 @@ public class FwWxService {
 	}
 
 	// 获取token
-	private String getToken() {
+	public String getToken() {
 		Token token = Token.get(FwAPI.TOKEN_URL, Configs.bAppid, Configs.bSecret);
 		return token.getAccess_token();
 	}

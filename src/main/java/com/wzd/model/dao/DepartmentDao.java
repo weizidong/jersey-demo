@@ -1,10 +1,14 @@
 package com.wzd.model.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.wzd.model.entity.Department;
 import com.wzd.model.mapper.DepartmentMapper;
+
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * 部门数据库操作
@@ -20,8 +24,8 @@ public class DepartmentDao {
 	/**
 	 * 创建
 	 */
-	public void create(Department department) {
-		mapper.insert(department);
+	public void create(Department dep) {
+		mapper.insert(dep);
 	}
 
 	/**
@@ -57,5 +61,21 @@ public class DepartmentDao {
 			update(dep);
 		}
 
+	}
+
+	/**
+	 * 获取全部
+	 */
+	public List<Department> findAll() {
+		Example e = new Example(Department.class);
+		e.setOrderByClause("parentid asc,orders asc");
+		return mapper.selectByExample(e);
+	}
+
+	public List<Department> findByParentid(Integer parentid) {
+		Example e = new Example(Department.class);
+		e.createCriteria().andEqualTo("parentid", parentid);
+		e.setOrderByClause("orders asc");
+		return mapper.selectByExample(e);
 	}
 }
