@@ -11,9 +11,15 @@ import java.util.Date;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 public class FileUtil {
-	public static final String SERVER_BASE_PATH = System.getProperty("jetty.home") + "/webapps";
-	public static final String LOCAL_BASE_PATH = System.getProperty("user.dir") + "/src/main/webapp";// 测试用
 	private static final String RESOURCE_URL = "/userfiles";
+
+	public static String basePath() {
+		String basePath = System.getProperty("jetty.home");
+		if (basePath == null) {
+			return System.getProperty("user.dir") + "/src/main/webapp";
+		}
+		return basePath + "/webapps";
+	}
 
 	/**
 	 * 写文件到硬盘，返回相对路径
@@ -65,7 +71,7 @@ public class FileUtil {
 	 * @return
 	 */
 	public static String writeFile(InputStream file, FormDataContentDisposition fileDisposition) {
-		return writeFile(SERVER_BASE_PATH, file, fileDisposition);
+		return writeFile(basePath(), file, fileDisposition);
 	}
 
 	/**
@@ -91,7 +97,7 @@ public class FileUtil {
 	 * @return
 	 */
 	public static Boolean delete(String url) {
-		return delete(SERVER_BASE_PATH, url);
+		return delete(basePath(), url);
 	}
 
 }

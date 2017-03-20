@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-03-20 15:36:49
+Date: 2017-03-20 17:52:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,7 +21,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `activity`;
 CREATE TABLE `activity` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created` datetime NOT NULL COMMENT '创建时间',
   `deleted` int(1) NOT NULL DEFAULT '0' COMMENT '删除标志，0：未删除，1：回收站，2：永久删除',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态，0：未开始，1：进行中，2：已结束',
@@ -58,9 +58,9 @@ CREATE TABLE `admin` (
   `avatar` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '头像url。注：如果要获取小图将url最后的"/0"改成"/64"即可',
   `status` int(1) DEFAULT NULL COMMENT '关注状态: 1=已关注，2=已冻结，4=未关注',
   `extattr` varchar(999) CHARACTER SET utf8 DEFAULT NULL COMMENT '扩展属性',
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created` datetime NOT NULL COMMENT '创建时间',
   `deleted` int(1) NOT NULL DEFAULT '0' COMMENT '删除标志，0：正常，1：回收站，2：永久删除',
-  `updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `auth` varchar(128) CHARACTER SET utf8 DEFAULT NULL COMMENT '权限',
   `openid` varchar(36) CHARACTER SET utf8 DEFAULT NULL COMMENT '微信唯一标志',
   `uname` varchar(30) CHARACTER SET utf8 DEFAULT NULL COMMENT '账号',
@@ -94,8 +94,8 @@ CREATE TABLE `entryform` (
   `activityId` int(11) NOT NULL COMMENT '活动ID',
   `time` datetime NOT NULL COMMENT '报名时间',
   `type` int(2) DEFAULT NULL COMMENT '类型',
-  `created` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated` datetime DEFAULT NULL COMMENT '修改时间',
+  `created` datetime NOT NULL COMMENT '创建时间',
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted` int(1) DEFAULT NULL COMMENT '删除标志，0：未删除；1：回收站；2：永久删除',
   `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态，0：未到场；1：已到场；',
   PRIMARY KEY (`id`)
@@ -112,7 +112,7 @@ CREATE TABLE `files` (
   `fk` int(11) DEFAULT NULL COMMENT '外键',
   `suffix` varchar(10) DEFAULT NULL COMMENT '后缀名',
   `userId` int(11) NOT NULL COMMENT '上传者',
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上传时间',
+  `created` datetime NOT NULL COMMENT '上传时间',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted` int(1) NOT NULL DEFAULT '0' COMMENT '删除标志，0：未删除；1：回收站；2：永久删除',
   `status` int(1) DEFAULT NULL COMMENT '状态',
@@ -136,7 +136,7 @@ CREATE TABLE `tag` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
+  `created` datetime NOT NULL COMMENT '注册时间',
   `deleted` int(1) NOT NULL DEFAULT '0' COMMENT '删除标志，0：正常，1：回收站，2：永久删除',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态，0：未审核，1：审核通过，2：审核未通过',
@@ -167,8 +167,8 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `wxactivity`;
 CREATE TABLE `wxactivity` (
   `id` int(11) NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `created` datetime NOT NULL COMMENT '创建时间',
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted` int(1) NOT NULL DEFAULT '0' COMMENT '删除标志，0：未删除；1：回收站；2：永久删除',
   `status` int(1) DEFAULT NULL COMMENT '状态',
   `type` int(2) DEFAULT NULL COMMENT '类型',

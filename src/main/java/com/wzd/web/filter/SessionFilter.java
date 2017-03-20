@@ -98,13 +98,11 @@ public class SessionFilter implements Filter {
 		if (APPType.管理平台.getValue().equals(appType) && SessinId == null) {
 			throw new WebException(ResponseCode.未登录, "未登录");
 		}
-		Session session;
+		Session session = SessionUtil.getSession(httpRequest);
 		// 网站主页创建Session
-		if (appType == null && SessinId == null) {
+		if (appType == null || SessinId == null || session == null) {
 			session = SessionUtil.generateSession(appType, null, null, null);
 			SessionUtil.saveSession(session, httpRequest, httpResponse);
-		} else {
-			session = SessionUtil.getSession(httpRequest);
 		}
 		// 加载静态文件
 		if (StringUtil.isEmpty(requestUrl) || requestUrl.endsWith(".html") || requestUrl.startsWith("/view/")) {
