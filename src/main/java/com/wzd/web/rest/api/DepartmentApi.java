@@ -12,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wzd.model.entity.Activity;
 import com.wzd.model.entity.Department;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.DepartmentService;
@@ -67,7 +66,7 @@ public class DepartmentApi {
 	 */
 	@Path("/get/{id}/{type}")
 	@POST
-	public Activity getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
+	public Department getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
 		return service.findById(id, DeleteType.parse(type));
 	}
 
@@ -87,7 +86,7 @@ public class DepartmentApi {
 	@POST
 	public Department findTree(@PathParam("parentId") Integer parentId) {
 		Department dep = new Department();
-		dep.setId(parentId == null ? 0 : parentId);
+		dep.setId(parentId == null ? 1 : parentId);
 		return service.findTree(dep);
 	}
 

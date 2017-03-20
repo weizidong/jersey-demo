@@ -15,6 +15,7 @@ import com.wzd.service.wechat.department.WxDep;
 @SuppressWarnings("serial")
 public class Department extends WxDep {
 	private String admin;
+	private Integer deleted;
 	@Transient
 	private List<Department> child;
 
@@ -34,6 +35,14 @@ public class Department extends WxDep {
 		this.child = child;
 	}
 
+	public Integer getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -41,6 +50,7 @@ public class Department extends WxDep {
 		sb.append("Hash : ").append(hashCode());
 		sb.append(", id:").append(super.getId());
 		sb.append(", name:").append(super.getName());
+		sb.append(", deleted:").append(deleted);
 		sb.append(", parentid:").append(super.getParentid());
 		sb.append(", order:").append(super.getOrder());
 		sb.append(", admin:").append(admin);
@@ -63,6 +73,7 @@ public class Department extends WxDep {
 		Department other = (Department) that;
 		return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
 				&& (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+				&& (this.getDeleted() == null ? other.getDeleted() == null : this.getDeleted().equals(other.getDeleted()))
 				&& (this.getParentid() == null ? other.getParentid() == null : this.getParentid().equals(other.getParentid()))
 				&& (this.getOrder() == null ? other.getOrder() == null : this.getOrder().equals(other.getOrder()))
 				&& (this.getAdmin() == null ? other.getAdmin() == null : this.getAdmin().equals(other.getAdmin()))
@@ -75,6 +86,7 @@ public class Department extends WxDep {
 		int result = 1;
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+		result = prime * result + ((getDeleted() == null) ? 0 : getDeleted().hashCode());
 		result = prime * result + ((getParentid() == null) ? 0 : getParentid().hashCode());
 		result = prime * result + ((getOrder() == null) ? 0 : getOrder().hashCode());
 		result = prime * result + ((getAdmin() == null) ? 0 : getAdmin().hashCode());

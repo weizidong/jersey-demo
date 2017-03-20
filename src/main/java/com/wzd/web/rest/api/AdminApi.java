@@ -17,6 +17,7 @@ import com.wzd.model.enums.DeleteType;
 import com.wzd.service.AdminService;
 import com.wzd.web.dto.PageDto;
 import com.wzd.web.param.PageParam;
+import com.wzd.web.param.delete.DeleteParam;
 
 /**
  * 管理员接口
@@ -55,10 +56,19 @@ public class AdminApi {
 	 * @param type
 	 *            删除类型，0：不刪；1：回收站；2：永久
 	 */
-	@Path("/delete/{id}/{type}")
+	@Path("/delete/{userid}/{type}")
 	@POST
-	public void delete(@PathParam("id") Integer id, @PathParam("type") Integer type) {
-		service.delete(id, DeleteType.parse(type));
+	public void delete(@PathParam("userid") String userid, @PathParam("type") Integer type) {
+		service.delete(userid, DeleteType.parse(type));
+	}
+
+	/**
+	 * 批量删除成员
+	 */
+	@Path("/deleteBatch")
+	@POST
+	public void delete(DeleteParam param) {
+		service.delete(param);
 	}
 
 	/**

@@ -4,13 +4,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wzd.model.dao.DepartmentDao;
-import com.wzd.model.entity.Activity;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Department;
 import com.wzd.model.enums.DeleteType;
@@ -26,7 +23,6 @@ import com.wzd.web.dto.session.SessionUtil;
  */
 @Service
 public class DepartmentService {
-	private static final Logger log = LogManager.getLogger(DepartmentService.class);
 	@Autowired
 	private DepartmentDao dao;
 	@Autowired
@@ -46,7 +42,8 @@ public class DepartmentService {
 	 * 删除部门
 	 */
 	public void delete(Integer id, DeleteType type) {
-		// TODO Auto-generated method stub
+		wxService.delete(id);
+		dao.delete(id, type);
 	}
 
 	/**
@@ -59,9 +56,8 @@ public class DepartmentService {
 	/**
 	 * 根据id查询
 	 */
-	public Activity findById(Integer id, DeleteType type) {
-		// TODO Auto-generated method stub
-		return null;
+	public Department findById(Integer id, DeleteType type) {
+		return dao.getById(id, type);
 	}
 
 	/**
@@ -79,7 +75,7 @@ public class DepartmentService {
 			return null;
 		}
 		if (StringUtil.isEmpty(dep.getName())) {
-			dep = dao.getById(dep.getId() == null ? 0 : dep.getId());
+			dep = dao.getById(dep.getId() == null ? 0 : dep.getId(), DeleteType.parse(dep.getDeleted()));
 		}
 		if (dep == null) {
 			return null;
@@ -93,4 +89,5 @@ public class DepartmentService {
 		}
 		return dep;
 	}
+
 }

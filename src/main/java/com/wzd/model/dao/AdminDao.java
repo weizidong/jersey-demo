@@ -75,4 +75,18 @@ public class AdminDao {
 		admin.setDeleted(type.getValue());
 		return admin;
 	}
+
+	/**
+	 * 刪除
+	 */
+	public void delete(String userid, DeleteType type) {
+		Admin admin = new Admin();
+		admin.setUserid(userid);
+		if (type == DeleteType.永久删除) {
+			mapper.delete(admin);
+		} else {
+			admin.setDeleted(type.getValue());
+			update(admin);
+		}
+	}
 }

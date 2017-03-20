@@ -5,8 +5,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +21,7 @@ import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.PageParam;
+import com.wzd.web.param.delete.DeleteParam;
 
 /**
  * 管理员业务
@@ -32,7 +31,6 @@ import com.wzd.web.param.PageParam;
  */
 @Service
 public class AdminService {
-	private static final Logger log = LogManager.getLogger(AdminService.class);
 	@Autowired
 	private AdminDao dao;
 	@Autowired
@@ -62,14 +60,23 @@ public class AdminService {
 	 * 创建
 	 */
 	public void create(Admin admin) {
-		// TODO Auto-generated method stub
-
+		wxService.create(admin);
+		admin.setDepartments(admin.getDepartment());
+		dao.create(admin);
 	}
 
 	/**
 	 * 删除
 	 */
-	public void delete(Integer id, DeleteType type) {
+	public void delete(String userid, DeleteType type) {
+		wxService.delete(userid);
+		dao.delete(userid, type);
+	}
+
+	/**
+	 * 批量删除
+	 */
+	public void delete(DeleteParam param) {
 		// TODO Auto-generated method stub
 
 	}
