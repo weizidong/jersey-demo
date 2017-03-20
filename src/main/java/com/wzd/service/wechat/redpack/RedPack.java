@@ -22,15 +22,15 @@ public class RedPack {
 	private String send_name; // 商户名称
 	private String re_openid; // 用户openid
 	private Integer total_amount; // 付款金额
-	private Integer total_num; // 红包发放总人数
-	private String amt_type; // 红包金额设置方式
+	private Integer total_num = 1; // 红包发放总人数
+	private String amt_type = "ALL_RAND"; // 红包金额设置方式
 	private String wishing; // 红包祝福语
 	private String client_ip; // Ip地址
 	private String act_name; // 活动名称
 	private String remark; // 备注
 	private String scene_id; // 场景id
 	private String risk_info; // 活动信息
-	private String consume_mch_id; // 资金授权商户号
+	private String consume_mch_id = ""; // 资金授权商户号
 
 	public RedPack() {
 		super();

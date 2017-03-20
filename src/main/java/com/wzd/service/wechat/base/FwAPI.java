@@ -12,7 +12,7 @@ public class FwAPI {
 	 * 获取access token的URL，http请求方式: GET
 	 */
 	public static final String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
-	
+
 	/**
 	 * 发送消息，http请求方式: POST
 	 */
@@ -104,6 +104,14 @@ public class FwAPI {
 	 * 获取微信用户信息
 	 */
 	public static final String GET_USER_INFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN";
+	/**
+	 * 发放普通红包,请求方式:POST
+	 */
+	public static final String SEND_REDPACK = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack";
+	/**
+	 * 发放裂变红包,请求方式 :POST
+	 */
+	public static final String SEND_GROUP_REDPACK = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack";
 
 	// 获取生成临时带参数二维码的ticket
 	public static final String WX_GET_QRCODE_TICKET_URL = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={0}";
@@ -119,17 +127,4 @@ public class FwAPI {
 
 	public static final String GET_UPLOAD_URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token={0}&type={1}";
 
-	/** -----------微信设备接口-----------start **/
-
-	// 强制绑定用户和设备
-	public static final String COMPEL_BIND_DEVICE_URL = "https://api.weixin.qq.com/device/compel_bind?access_token={0}";
-
-	// 强制解绑用户和设备
-	public static final String COMPEL_UNBIND_DEVICE_URL = "https://api.weixin.qq.com/device/compel_unbind?access_token={0}";
-
-	// 获取绑定的设备id
-	public static final String GET_BINDED_DEVCIE = "https://api.weixin.qq.com/device/get_bind_device?access_token={0}&openid={1}";
-
-	/** -----------微信设备接口-----------end **/
-	
 }
