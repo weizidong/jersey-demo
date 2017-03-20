@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-03-17 19:28:52
+Date: 2017-03-20 15:36:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -47,8 +47,7 @@ CREATE TABLE `activity` (
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `userid` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT '成员UserID。对应管理端的帐号',
+  `userid` varchar(20) CHARACTER SET utf8 NOT NULL COMMENT '成员UserID。对应管理端的帐号',
   `name` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT '成员名称',
   `departments` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '成员所属部门id列表',
   `position` varchar(20) CHARACTER SET utf8 DEFAULT NULL COMMENT '职位信息',
@@ -68,8 +67,22 @@ CREATE TABLE `admin` (
   `pwd` varchar(32) CHARACTER SET utf8 DEFAULT NULL COMMENT '密码',
   `loginTime` datetime DEFAULT NULL COMMENT '登录时间',
   `audit` int(1) NOT NULL DEFAULT '0' COMMENT '审核状态,0：未审核；1：审核通过；2：审核未通过；',
+  PRIMARY KEY (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='管理员实体类\r\n@author weizidong';
+
+-- ----------------------------
+-- Table structure for department
+-- ----------------------------
+DROP TABLE IF EXISTS `department`;
+CREATE TABLE `department` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '部门id，整型。指定时必须大于1，不指定时则自动生成',
+  `name` varchar(20) DEFAULT NULL COMMENT '部门名称。长度限制为32个字（汉字或英文字母），字符不能包括\\:*?"<>｜',
+  `parentid` int(11) NOT NULL DEFAULT '1' COMMENT '父亲部门id。根部门id为1',
+  `orders` int(11) DEFAULT NULL COMMENT '在父部门中的次序值。order值小的排序靠前。',
+  `admin` varchar(20) DEFAULT NULL COMMENT '创建者',
+  `deleted` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COMMENT='管理员实体类\r\n@author weizidong';
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for entryform
@@ -105,7 +118,17 @@ CREATE TABLE `files` (
   `status` int(1) DEFAULT NULL COMMENT '状态',
   `type` int(1) DEFAULT NULL COMMENT '类型，0：头像；1：附件；2：重要文件',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='文件实体类\r\n@author weizidong';
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='文件实体类\r\n@author weizidong';
+
+-- ----------------------------
+-- Table structure for tag
+-- ----------------------------
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE `tag` (
+  `tagid` int(11) NOT NULL AUTO_INCREMENT COMMENT '标签id，整型，指定此参数时新增的标签会生成对应的标签id，不指定时则以目前最大的id自增。',
+  `tagname` varchar(32) DEFAULT NULL COMMENT '标签名称，长度限制为32个字（汉字或英文字母），标签名不可与其他标签重名。',
+  PRIMARY KEY (`tagid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user

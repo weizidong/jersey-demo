@@ -2,8 +2,9 @@ package com.wzd.service;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,7 +29,10 @@ public class FileService {
 	@Autowired
 	private FilesMapper mapper;
 
-	public Files upload(InputStream file, FormDataContentDisposition disposition, ServletContext context) {
+	/**
+	 * 上传文件
+	 */
+	public Files upload(InputStream file, FormDataContentDisposition disposition, HttpServletRequest request) {
 		log.debug("开始上传文件。。。");
 		Files f = new Files();
 		f.setCreated(new Date());
@@ -48,8 +52,19 @@ public class FileService {
 		return f;
 	}
 
+	/**
+	 * 删除文件
+	 */
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * 获取文件列表
+	 */
+	public List<Files> list() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

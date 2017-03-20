@@ -1,8 +1,10 @@
 package com.wzd.web.rest.api;
 
 import java.io.InputStream;
+import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -39,8 +41,8 @@ public class FileApi {
 	@Path("/upload")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@RequestLog(RequestLogType.NOTSUPPORTED)
-	public Files upload(@FormDataParam("file") InputStream file, @FormDataParam("file") FormDataContentDisposition disposition, @Context ServletContext context) {
-		return service.upload(file, disposition, context);
+	public Files upload(@FormDataParam("file") InputStream file, @FormDataParam("file") FormDataContentDisposition disposition, @Context HttpServletRequest request) {
+		return service.upload(file, disposition, request);
 	}
 
 	/**
@@ -48,8 +50,16 @@ public class FileApi {
 	 */
 	@POST
 	@Path("/delete/{id}")
-	public void deleteImage(@PathParam("id") Integer id) {
+	public void delete(@PathParam("id") Integer id) {
 		service.delete(id);
 	}
 
+	/**
+	 * 文件列表
+	 */
+	@POST
+	@Path("/list")
+	public List<Files> list() {
+		return service.list();
+	}
 }
