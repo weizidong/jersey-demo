@@ -3,7 +3,6 @@ package com.wzd.web.rest.api;
 import java.io.InputStream;
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

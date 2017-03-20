@@ -1,7 +1,5 @@
 package com.wzd.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,6 @@ import com.wzd.web.param.PageParam;
  */
 @Service
 public class UserService {
-	private static final Logger log = LogManager.getLogger(UserService.class);
 	@Autowired
 	private UserDao dao;
 
@@ -27,7 +24,7 @@ public class UserService {
 	 * 创建
 	 */
 	public void create(User user) {
-		// TODO Auto-generated method stub
+		dao.create(user);
 
 	}
 
