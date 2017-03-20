@@ -56,6 +56,10 @@ public class SessionFilter implements Filter {
 		if (!StringUtil.isEmpty(queryString)) {
 			requestUrl += "?" + queryString;
 		}
+		// debug模式
+		if (SessionUtil.isDebug(httpRequest)) {
+			SessionUtil.openDebug(httpRequest, httpResponse);
+		}
 		// 请求来源
 		String appType = request.getParameter("appType");
 		// 回调授权code
@@ -114,11 +118,11 @@ public class SessionFilter implements Filter {
 			return;
 		}
 		// 非网站主页需要检测数据签名
-		if (!APPType.网站主页.getValue().equals(appType) && session != null && !SessionUtil.isDebug(httpRequest)) {
+		if (!APPType.网站主页.getValue().equals(appType) && session != null) {
 			SessionUtil.checkSignature(session, httpRequest, httpResponse);
 		}
 		// 管理平台需要检测Session超时
-		if (APPType.管理平台.getValue().equals(appType) && session != null && !SessionUtil.isDebug(httpRequest)) {
+		if (APPType.管理平台.getValue().equals(appType) && session != null) {
 			SessionUtil.checkTs(session, httpRequest, httpResponse);
 		}
 		// 更新Session

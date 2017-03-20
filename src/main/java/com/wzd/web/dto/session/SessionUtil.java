@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.wzd.model.dao.AdminDao;
+import com.wzd.model.dao.UserDao;
+import com.wzd.model.enums.APPType;
 import com.wzd.utils.CookieUtil;
 import com.wzd.utils.EhcacheUtil;
 import com.wzd.utils.MD5Utils;
@@ -34,9 +37,42 @@ public class SessionUtil {
 		return CookieUtil.getCookieValue(request, SESSION_ID);
 	}
 
+	/**
+	 * 验证debug模式
+	 */
 	public static Boolean isDebug(HttpServletRequest request) {
 		String debug = request.getParameter("debug");
 		return debug != null && debug.equals("weizidong");
+	}
+
+	/**
+	 * 开启debug模式
+	 */
+	public static void openDebug(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+		String appType = httpRequest.getParameter("appType");
+		String SessinId = SessionUtil.getSessionIdByCookie(httpRequest);
+		Session session = getSession(httpRequest);
+		if (SessinId != null && session != null) {
+			return;
+		}
+		String sessionId = null;
+		String accessToken = null;
+		Object user = null;
+		if (APPType.企业号.getValue().equals(appType)) {
+			sessionId = "weizidong";
+			AdminDao dao = new AdminDao();
+			user = dao.getByUserId(sessionId);
+		}
+		if (APPType.服务号.getValue().equals(appType)) {
+			sessionId = "oPDWLv0ogagbw1PocuklciM2Ea0M";
+			UserDao dao = new UserDao();
+			user = dao.getByOpenId(SessinId);
+		}
+		if (APPType.管理平台.getValue().equals(appType)) {
+			AdminDao dao = new AdminDao();
+			user = dao.getByUserId("weizidong");
+		}
+		saveSession(generateSession(appType, sessionId, accessToken, user), httpRequest, httpResponse);
 	}
 
 	/**
@@ -155,4 +191,5 @@ public class SessionUtil {
 		session.setUser(user);
 		return session;
 	}
+
 }
