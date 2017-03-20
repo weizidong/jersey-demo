@@ -5,8 +5,7 @@
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <id column="userid" jdbcType="VARCHAR" property="userid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="departments" jdbcType="VARCHAR" property="departments" />
     <result column="position" jdbcType="VARCHAR" property="position" />

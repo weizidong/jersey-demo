@@ -3,7 +3,7 @@ package com.wzd.model.dao;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.wzd.model.entity.Files;
 import com.wzd.model.enums.DeleteType;
@@ -15,7 +15,7 @@ import com.wzd.model.mapper.FilesMapper;
  * @author WeiZiDong
  *
  */
-@Service
+@Component
 public class FileDao {
 	@Autowired
 	private FilesMapper mapper;
@@ -30,4 +30,12 @@ public class FileDao {
 		mapper.insert(file);
 		return file;
 	}
+
+	/**
+	 * 删除
+	 */
+	public void delete(Integer id) {
+		mapper.deleteByPrimaryKey(id);
+	}
+
 }

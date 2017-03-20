@@ -9,6 +9,13 @@ import javax.persistence.Id;
 
 import com.wzd.service.wechat.user.FwUser;
 
+/**
+ * 用户
+ * 
+ * @author WeiZiDong
+ *
+ */
+@SuppressWarnings("serial")
 public class User extends FwUser {
 	/**
 	 * ID
@@ -95,8 +102,6 @@ public class User extends FwUser {
 	 * 登录时间
 	 */
 	private Date login;
-
-	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 获取ID

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.wzd.client.RestClientUtil;
+import com.wzd.model.entity.Department;
 import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.service.wechat.token.Token;
@@ -64,7 +65,7 @@ public class WxDepService {
 	/**
 	 * 获取部门列表
 	 */
-	public List<WxDep> getDepList(Integer depId) {
+	public List<Department> getDepList(Integer depId) {
 		String path = MessageFormat.format(QyAPI.LIST_DEPARTMENT, getToken(), depId);
 		WxDepList resp = RestClientUtil.get(path, WxDepList.class);
 		if (resp.getErrcode() != 0) {

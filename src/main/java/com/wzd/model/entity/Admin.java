@@ -1,22 +1,21 @@
 package com.wzd.model.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wzd.service.wechat.user.WxUser;
 
+/**
+ * 管理员
+ * 
+ * @author WeiZiDong
+ *
+ */
+@SuppressWarnings("serial")
 public class Admin extends WxUser {
-	/**
-	 * ID
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-
 	/**
 	 * 成员所属部门id列表
 	 */
@@ -45,16 +44,19 @@ public class Admin extends WxUser {
 	/**
 	 * 微信唯一标志
 	 */
+	@JsonIgnore
 	private String openid;
 
 	/**
 	 * 账号
 	 */
+	@JsonIgnore
 	private String uname;
 
 	/**
 	 * 密码
 	 */
+	@JsonIgnore
 	private String pwd;
 
 	/**
@@ -67,27 +69,6 @@ public class Admin extends WxUser {
 	 * 审核状态,0：未审核；1：审核通过；2：审核未通过；
 	 */
 	private Integer audit;
-
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 获取ID
-	 *
-	 * @return id - ID
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * 设置ID
-	 *
-	 * @param id
-	 *            ID
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	/**
 	 * 获取成员所属部门id列表
@@ -106,6 +87,16 @@ public class Admin extends WxUser {
 	 */
 	public void setDepartments(String departments) {
 		this.departments = departments;
+	}
+
+	/**
+	 * 设置成员所属部门id列表
+	 *
+	 * @param departments
+	 *            成员所属部门id列表
+	 */
+	public void setDepartments(List<Integer> department) {
+		this.departments = department.toString().replaceAll("[\\,\\[\\]]", "|").replaceAll(" ", "");
 	}
 
 	/**
@@ -285,7 +276,6 @@ public class Admin extends WxUser {
 		sb.append(getClass().getSimpleName());
 		sb.append(" [");
 		sb.append("Hash = ").append(hashCode());
-		sb.append(", id=").append(id);
 		sb.append(", userid=").append(super.getUserid());
 		sb.append(", name=").append(super.getName());
 		sb.append(", departments=").append(departments);
@@ -322,8 +312,7 @@ public class Admin extends WxUser {
 			return false;
 		}
 		Admin other = (Admin) that;
-		return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-				&& (this.getUserid() == null ? other.getUserid() == null : this.getUserid().equals(other.getUserid()))
+		return (this.getUserid() == null ? other.getUserid() == null : this.getUserid().equals(other.getUserid()))
 				&& (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
 				&& (this.getDepartments() == null ? other.getDepartments() == null : this.getDepartments().equals(other.getDepartments()))
 				&& (this.getPosition() == null ? other.getPosition() == null : this.getPosition().equals(other.getPosition()))
@@ -349,7 +338,6 @@ public class Admin extends WxUser {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		result = prime * result + ((getUserid() == null) ? 0 : getUserid().hashCode());
 		result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
 		result = prime * result + ((getDepartments() == null) ? 0 : getDepartments().hashCode());

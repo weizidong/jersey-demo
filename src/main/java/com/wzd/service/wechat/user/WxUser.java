@@ -2,8 +2,10 @@ package com.wzd.service.wechat.user;
 
 import java.util.List;
 
+import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
@@ -14,6 +16,7 @@ import com.wzd.service.wechat.base.BaseResp;
  */
 @SuppressWarnings("serial")
 public class WxUser extends BaseResp {
+	@Id
 	private String userid; // 成员UserID。对应管理端的帐号，企业内必须唯一。不区分大小写，长度为1~64个字节
 	private String name; // 成员名称。长度为1~64个字节
 	@Transient
@@ -25,6 +28,7 @@ public class WxUser extends BaseResp {
 	private String weixinid; // 微信号。企业内必须唯一。（注意：是微信号，不是微信的名字）
 	private String avatar; // 头像url。注：如果要获取小图将url最后的"/0"改成"/64"即可
 	@Transient
+	@JsonIgnore
 	private String avatar_mediaid; // 成员头像的mediaid，通过多媒体接口上传图片获得的mediaid
 	private Integer status; // 关注状态: 1=已关注，2=已冻结，4=未关注
 	private String extattr; // 扩展属性。扩展属性需要在WEB管理端创建后才生效，否则忽略未知属性的赋值

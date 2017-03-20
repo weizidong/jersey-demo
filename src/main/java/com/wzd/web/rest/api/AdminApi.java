@@ -1,7 +1,6 @@
 package com.wzd.web.rest.api;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -87,15 +86,6 @@ public class AdminApi {
 	@POST
 	public PageDto getById(PageParam param) {
 		return service.find(param);
-	}
-
-	/**
-	 * 同步企业号人员
-	 */
-	@Path("/sync")
-	@GET
-	public void sync() {
-		service.sync();
 	}
 
 }

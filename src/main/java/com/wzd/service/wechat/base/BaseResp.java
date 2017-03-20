@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 微信返回结果基类
  * 
@@ -13,16 +15,22 @@ import javax.persistence.Transient;
 @SuppressWarnings("serial")
 public class BaseResp implements Serializable {
 	@Transient
+	@JsonIgnore
 	private Integer errcode;
 	@Transient
+	@JsonIgnore
 	private String errmsg;
 	@Transient
+	@JsonIgnore
 	private String invaliduser;
 	@Transient
+	@JsonIgnore
 	private String invalidparty;
 	@Transient
+	@JsonIgnore
 	private String invalidtag;
 	@Transient
+	@JsonIgnore
 	private String invalidlist;
 
 	public String getInvalidlist() {

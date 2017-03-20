@@ -82,8 +82,8 @@ public class WechatApi {
 	 */
 	@GET
 	@Path("/sync")
-	public void sync() {
-		qyService.sync();
+	public String sync() {
+		return qyService.sync();
 	}
 
 	/**

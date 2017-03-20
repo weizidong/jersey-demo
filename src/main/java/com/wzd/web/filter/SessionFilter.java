@@ -100,15 +100,19 @@ public class SessionFilter implements Filter {
 		}
 		Session session;
 		// 网站主页创建Session
-		if (APPType.网站主页.getValue().equals(appType) && SessinId == null) {
+		if (appType == null && SessinId == null) {
 			session = SessionUtil.generateSession(appType, null, null, null);
 			SessionUtil.saveSession(session, httpRequest, httpResponse);
 		} else {
 			session = SessionUtil.getSession(httpRequest);
 		}
 		// 加载静态文件
-		if (requestUrl.startsWith("/view/")) {
+		if (StringUtil.isEmpty(requestUrl) || requestUrl.endsWith(".html") || requestUrl.startsWith("/view/")) {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
+			return;
+		}
+		if (requestUrl.equals("favicon.ico")) {
+			request.getRequestDispatcher("/favicon.ico?" + Configs.version).forward(request, response);
 			return;
 		}
 		// 非网站主页需要检测数据签名

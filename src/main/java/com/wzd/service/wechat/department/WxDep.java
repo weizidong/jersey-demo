@@ -2,6 +2,10 @@ package com.wzd.service.wechat.department;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+
+import org.springframework.data.annotation.Id;
+
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
@@ -12,9 +16,11 @@ import com.wzd.service.wechat.base.BaseResp;
  */
 @SuppressWarnings("serial")
 public class WxDep extends BaseResp implements Serializable {
+	@Id
 	private Integer id; // 部门id，整型。指定时必须大于1，不指定时则自动生成
 	private String name; // 部门名称。长度限制为32个字（汉字或英文字母），字符不能包括\:*?"<>｜
 	private Integer parentid; // 父亲部门id。根部门id为1
+	@Column(name = "orders")
 	private Integer order; // 在父部门中的次序值。order值小的排序靠前。
 
 	public Integer getId() {
