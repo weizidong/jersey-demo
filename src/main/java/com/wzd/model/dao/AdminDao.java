@@ -65,4 +65,14 @@ public class AdminDao {
 			update(admin);
 		}
 	}
+
+	/**
+	 * 根据用户名获取用户信息
+	 */
+	public Admin getByUname(String uname, DeleteType type) {
+		Admin admin = new Admin();
+		admin.setUname(uname);
+		admin.setDeleted(type.getValue());
+		return admin;
+	}
 }

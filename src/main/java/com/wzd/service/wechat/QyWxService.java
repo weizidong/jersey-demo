@@ -146,7 +146,7 @@ public class QyWxService {
 	}
 
 	/**
-	 * 同步
+	 * 同步部门和部门成员
 	 */
 	public String sync() {
 		List<Department> deps = depService.getDepList(null);

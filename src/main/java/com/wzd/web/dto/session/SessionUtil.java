@@ -75,7 +75,7 @@ public class SessionUtil {
 	public static void checkTs(Session session, HttpServletRequest request, HttpServletResponse response) {
 		if (System.currentTimeMillis() - session.getTs() > COOKIE_MAX_AGE * 1000) {
 			removeSession(session.getSessionId(), request, response);
-			throw new WebException(ResponseCode.Session超时);
+			throw new WebException(ResponseCode.登录超时);
 		}
 	}
 

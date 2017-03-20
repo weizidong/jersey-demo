@@ -1,5 +1,10 @@
 package com.wzd.service;
 
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +12,16 @@ import org.springframework.stereotype.Service;
 
 import com.wzd.model.dao.AdminDao;
 import com.wzd.model.entity.Admin;
+import com.wzd.model.enums.APPType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.wechat.user.WxUserService;
+import com.wzd.utils.MD5Utils;
+import com.wzd.utils.StringUtil;
 import com.wzd.web.dto.PageDto;
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
+import com.wzd.web.dto.session.Session;
+import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -29,9 +41,21 @@ public class AdminService {
 	/**
 	 * 登录
 	 */
-	public void login(Admin admin) {
-		// TODO Auto-generated method stub
-
+	public void login(Admin admin, HttpServletRequest request, HttpServletResponse response) {
+		Admin dbAdmin = dao.getByUname(admin.getUname(), DeleteType.未删除);
+		if (dbAdmin == null) {
+			throw new WebException(ResponseCode.用户不存在);
+		}
+		String pwd = admin.getPwd();
+		if (StringUtil.isEmpty(pwd) || !MD5Utils.getMD5ofStr(pwd).equals(dbAdmin.getPwd())) {
+			throw new WebException(ResponseCode.密码错误);
+		}
+		// 更新登录时间
+		dbAdmin.setLogintime(new Date());
+		dao.update(dbAdmin);
+		// 保存Session
+		Session session = SessionUtil.generateSession(APPType.管理平台.getValue(), null, null, dbAdmin);
+		SessionUtil.saveSession(session, request, response);
 	}
 
 	/**
@@ -72,13 +96,6 @@ public class AdminService {
 	public PageDto find(PageParam param) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	/**
-	 * 同步企业号人员
-	 */
-	public void sync() {
-		// TODO Auto-generated method stub
 	}
 
 }
