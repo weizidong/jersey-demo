@@ -12,13 +12,15 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
 public class FileUtil {
 	private static final String RESOURCE_URL = "/userfiles";
+	private static String BASE_PATH = "";
 
-	public static String basePath() {
+	static {
 		String basePath = System.getProperty("jetty.home");
 		if (basePath == null) {
-			return System.getProperty("user.dir") + "/src/main/webapp";
+			BASE_PATH = System.getProperty("user.dir") + "/src/main/webapp";
+		} else {
+			BASE_PATH = basePath + "/webapps";
 		}
-		return basePath + "/webapps";
 	}
 
 	/**
@@ -28,13 +30,12 @@ public class FileUtil {
 	 * @param fileDisposition
 	 * @return
 	 */
-	public static String writeFile(String BASE_PATH, InputStream file, FormDataContentDisposition disposition) {
+	public static String writeFile(InputStream file, FormDataContentDisposition disposition) {
 		String fileFullName = disposition.getFileName();
 		String storeFileName = UUIDUtil.get();// 文件名uuid生成
 		String storeExt = fileFullName.substring(fileFullName.indexOf("."), fileFullName.length());// 后缀
 		String storeFolder = RESOURCE_URL + File.separator + DateUtil.dateToString(new Date(), DateUtil.PDATE2);
 		String storePath = BASE_PATH + storeFolder + File.separator + storeFileName + storeExt;
-
 		try {
 
 			File storeDirPath = new File(BASE_PATH + storeFolder);
@@ -64,23 +65,12 @@ public class FileUtil {
 	}
 
 	/**
-	 * 根路径设定为SERVER_BASE_PATH
-	 * 
-	 * @param file
-	 * @param fileDisposition
-	 * @return
-	 */
-	public static String writeFile(InputStream file, FormDataContentDisposition fileDisposition) {
-		return writeFile(basePath(), file, fileDisposition);
-	}
-
-	/**
 	 * 删除文件
 	 * 
 	 * @param fileName
 	 * @return
 	 */
-	public static Boolean delete(String BASE_PATH, String url) {
+	public static Boolean delete(String url) {
 		File file = new File(BASE_PATH + url);
 		if (file.isFile() && file.exists()) {
 			file.delete();
@@ -88,16 +78,4 @@ public class FileUtil {
 		}
 		return false;
 	}
-
-	/**
-	 * 根路径设定为SERVER_BASE_PATH
-	 * 
-	 * @param file
-	 * @param fileDisposition
-	 * @return
-	 */
-	public static Boolean delete(String url) {
-		return delete(basePath(), url);
-	}
-
 }

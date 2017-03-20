@@ -40,7 +40,7 @@ public class FileService {
 		String fileFullName = disposition.getFileName();// 文件名
 		String storeExt = fileFullName.substring(fileFullName.indexOf("."), fileFullName.length());// 后缀
 		log.debug("开始写入文件。。。");
-		String url = FileUtil.writeFile(FileUtil.basePath(), file, disposition);// 写入文件
+		String url = FileUtil.writeFile(file, disposition);// 写入文件
 		log.debug("写入文件成功！");
 		f.setName(fileFullName);
 		f.setSuffix(storeExt);
