@@ -34,7 +34,7 @@ public class UserDao {
 	 * 更新用户
 	 */
 	public void update(User user) {
-		// TODO Auto-generated method stub
+		// TODO 更新用户
 
 	}
 

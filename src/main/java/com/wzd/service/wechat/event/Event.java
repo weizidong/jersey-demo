@@ -31,21 +31,21 @@ public class Event {
 
 	// 处理成员进入应用
 	private static String enter_agent(WechatMsg msg) {
-		// TODO Auto-generated method stub
+		// TODO 处理成员进入应用
 		return XmlResp.SUCCESS;
 
 	}
 
-	// 处理取消关注事件
+	// 处理成员进入应用
 	private static String unsubscribe(WechatMsg msg) {
-		// TODO Auto-generated method stub
+		// TODO 处理成员进入应用
 		return XmlResp.SUCCESS;
 
 	}
 
 	// 处理关注事件
 	private static String subscribe(WechatMsg msg) {
-		// TODO Auto-generated method stub
+		// TODO 处理关注事件
 		return XmlResp.SUCCESS;
 
 	}

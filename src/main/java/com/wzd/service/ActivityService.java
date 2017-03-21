@@ -31,21 +31,21 @@ public class ActivityService {
 	 * 删除活动
 	 */
 	public void delete(Integer id, DeleteType type) {
-		// TODO Auto-generated method stub
+		// TODO 删除活动
 	}
 
 	/**
 	 * 修改活动
 	 */
 	public void update(Activity activity) {
-		// TODO Auto-generated method stub
+		// TODO 修改活动
 	}
 
 	/**
 	 * 根据id查询
 	 */
 	public Activity findById(Integer id, DeleteType type) {
-		// TODO Auto-generated method stub
+		// TODO 根据id查询
 		return null;
 	}
 
@@ -53,7 +53,7 @@ public class ActivityService {
 	 * 条件查询所有
 	 */
 	public PageDto find(PageParam param) {
-		// TODO Auto-generated method stub
+		// TODO 条件查询所有
 		return null;
 	}
 }

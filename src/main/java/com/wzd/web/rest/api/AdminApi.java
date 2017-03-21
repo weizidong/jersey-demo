@@ -16,8 +16,8 @@ import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.AdminService;
 import com.wzd.web.dto.PageDto;
+import com.wzd.web.param.IdListParam;
 import com.wzd.web.param.PageParam;
-import com.wzd.web.param.delete.DeleteParam;
 
 /**
  * 管理员接口
@@ -67,7 +67,7 @@ public class AdminApi {
 	 */
 	@Path("/deleteBatch")
 	@POST
-	public void delete(DeleteParam param) {
+	public void delete(IdListParam<String> param) {
 		service.delete(param);
 	}
 

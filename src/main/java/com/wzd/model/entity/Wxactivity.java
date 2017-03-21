@@ -209,7 +209,7 @@ public class Wxactivity implements Serializable {
 	/**
 	 * 获取状态
 	 *
-	 * @return status - 状态
+	 * @return status - 状态,停用(0), 启用(1)
 	 */
 	public Integer getStatus() {
 		return status;

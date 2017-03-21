@@ -36,4 +36,13 @@ public class WxActivityDao {
 		example.createCriteria().andIn("id", ids);
 		return mapper.selectByExample(example);
 	}
+
+	/**
+	 * 根据口令查找活动
+	 */
+	public Wxactivity findByCommand(String command) {
+		Wxactivity activity = new Wxactivity();
+		activity.setCommand(command);
+		return mapper.selectOne(activity);
+	}
 }

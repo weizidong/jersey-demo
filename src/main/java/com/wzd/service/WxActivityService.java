@@ -42,21 +42,21 @@ public class WxActivityService {
 	 * 删除活动
 	 */
 	public void delete(Integer id, DeleteType type, Admin admin) {
-		// TODO Auto-generated method stub
+		// TODO 删除活动
 	}
 
 	/**
 	 * 修改活动
 	 */
 	public void update(Wxactivity activity, Admin admin) {
-		// TODO Auto-generated method stub
+		// TODO 修改活动
 	}
 
 	/**
 	 * 根据id查询
 	 */
 	public Wxactivity findById(Integer id, DeleteType type) {
-		// TODO Auto-generated method stub
+		// TODO 根据id查询
 		return null;
 	}
 
@@ -64,7 +64,7 @@ public class WxActivityService {
 	 * 条件查询所有
 	 */
 	public PageDto find(PageParam param) {
-		// TODO Auto-generated method stub
+		// TODO 条件查询所有
 		return null;
 	}
 
@@ -72,15 +72,14 @@ public class WxActivityService {
 	 * 审核
 	 */
 	public void auditing(AuditType parse, Admin user) {
-		// TODO Auto-generated method stub
-
+		// TODO 审核
 	}
 
 	/**
 	 * 暂停/启用
 	 */
 	public void changeState(StateType parse, Admin user) {
-		// TODO Auto-generated method stub
+		// TODO 暂停/启用
 
 	}
 
@@ -114,7 +113,7 @@ public class WxActivityService {
 	 * 导出参加活动的人员
 	 */
 	public void exportUser(Integer id, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+		// TODO 导出参加活动的人员
 
 	}
 }

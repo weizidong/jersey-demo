@@ -20,8 +20,8 @@ import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
 import com.wzd.web.dto.session.SessionUtil;
+import com.wzd.web.param.IdListParam;
 import com.wzd.web.param.PageParam;
-import com.wzd.web.param.delete.DeleteParam;
 
 /**
  * 管理员业务
@@ -76,8 +76,8 @@ public class AdminService {
 	/**
 	 * 批量删除
 	 */
-	public void delete(DeleteParam param) {
-		// TODO Auto-generated method stub
+	public void delete(IdListParam<String> param) {
+		// TODO 批量删除
 
 	}
 
@@ -85,7 +85,7 @@ public class AdminService {
 	 * 修改
 	 */
 	public void update(Admin admin) {
-		// TODO Auto-generated method stub
+		// TODO 修改
 
 	}
 
@@ -93,7 +93,7 @@ public class AdminService {
 	 * 查询详情
 	 */
 	public Admin findById(Integer id, DeleteType parse) {
-		// TODO Auto-generated method stub
+		// TODO 查询详情
 		return null;
 	}
 
@@ -101,7 +101,7 @@ public class AdminService {
 	 * 条件分页查询
 	 */
 	public PageDto find(PageParam param) {
-		// TODO Auto-generated method stub
+		// TODO 条件分页查询
 		return null;
 	}
 

@@ -56,14 +56,14 @@ public class FileService {
 	 * 删除文件
 	 */
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		// TODO 删除文件
 	}
 
 	/**
 	 * 获取文件列表
 	 */
 	public List<Files> list() {
-		// TODO Auto-generated method stub
+		// TODO 获取文件列表
 		return null;
 	}
 

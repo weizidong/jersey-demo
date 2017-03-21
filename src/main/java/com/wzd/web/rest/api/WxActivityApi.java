@@ -10,7 +10,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wzd.model.entity.Admin;
@@ -20,9 +19,9 @@ import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.StateType;
 import com.wzd.service.WxActivityService;
 import com.wzd.utils.PoiExcelUtils;
-import com.wzd.web.dto.IdListParam;
 import com.wzd.web.dto.PageDto;
 import com.wzd.web.dto.session.SessionUtil;
+import com.wzd.web.param.IdListParam;
 import com.wzd.web.param.PageParam;
 
 /**

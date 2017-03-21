@@ -32,7 +32,7 @@ public class UserService {
 	 * 删除
 	 */
 	public void delete(Integer id, DeleteType type) {
-		// TODO Auto-generated method stub
+		// TODO 删除
 
 	}
 
@@ -40,7 +40,7 @@ public class UserService {
 	 * 修改
 	 */
 	public void update(User user) {
-		// TODO Auto-generated method stub
+		// TODO 修改
 
 	}
 
@@ -48,7 +48,7 @@ public class UserService {
 	 * 查询指定id用户
 	 */
 	public User findById(Integer id, DeleteType type) {
-		// TODO Auto-generated method stub
+		// TODO 查询指定id用户
 		return null;
 	}
 
@@ -56,7 +56,7 @@ public class UserService {
 	 * 条件查询列表
 	 */
 	public PageDto find(PageParam param) {
-		// TODO Auto-generated method stub
+		// TODO 条件查询列表
 		return null;
 	}
 }

@@ -1,4 +1,4 @@
-package com.wzd.web.dto;
+package com.wzd.web.param;
 
 import java.util.List;
 

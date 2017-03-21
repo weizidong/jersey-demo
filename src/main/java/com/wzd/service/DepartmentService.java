@@ -50,7 +50,7 @@ public class DepartmentService {
 	 * 修改部门
 	 */
 	public void update(Department dep) {
-		// TODO Auto-generated method stub
+		// TODO 修改部门
 	}
 
 	/**
