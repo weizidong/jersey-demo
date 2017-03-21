@@ -27,7 +27,7 @@ import com.wzd.web.dto.session.Session;
 import com.wzd.web.param.wechat.WechatMsg;
 
 /**
- * 服务号超卓服务
+ * 服务号操作服务
  * 
  * @author WeiZiDong
  *
