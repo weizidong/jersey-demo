@@ -1,10 +1,12 @@
 package com.wzd.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.AdminDao;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.APPType;
+import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.wechat.user.WxUserService;
 import com.wzd.utils.MD5Utils;
@@ -102,6 +105,21 @@ public class AdminService {
 	 */
 	public PageInfo<Admin> find(PageParam param) {
 		// TODO 条件分页查询
+		return null;
+	}
+
+	/**
+	 * 审核
+	 */
+	public void auditing(AuditType parse, Admin user) {
+		// TODO 审核
+	}
+
+	/**
+	 * 批量导出管理员
+	 */
+	public HSSFWorkbook export(List<Integer> ids, HttpServletResponse response) {
+		// TODO 批量导出管理员
 		return null;
 	}
 

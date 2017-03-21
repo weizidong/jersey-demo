@@ -3,6 +3,7 @@ package com.wzd.web.rest.api;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,6 +25,7 @@ import com.wzd.service.DepartmentService;
  */
 @Path("/department")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class DepartmentApi {
 	@Autowired
 	private DepartmentService service;

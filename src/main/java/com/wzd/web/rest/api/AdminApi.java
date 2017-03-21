@@ -14,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Admin;
+import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.AdminService;
+import com.wzd.utils.PoiExcelUtils;
+import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.IdListParam;
 import com.wzd.web.param.PageParam;
 
@@ -101,4 +104,23 @@ public class AdminApi {
 		return service.find(param);
 	}
 
+	/**
+	 * 审核
+	 * 
+	 * @param type
+	 *            审核类型,1：审核通过；2：审核未通过
+	 */
+	@Path("/audit/{type}")
+	@POST
+	public void auditing(@PathParam("type") Integer type, @Context HttpServletRequest request) {
+		service.auditing(AuditType.parse(type), (Admin) SessionUtil.getUser(request));
+	}
+	/**
+	 * 批量导出管理员
+	 */
+	@Path("/export")
+	@POST
+	public void export(IdListParam<Integer> param, @Context HttpServletResponse response) {
+		PoiExcelUtils.writeWorkbook(response, service.export(param.getIds(), response));
+	}
 }
