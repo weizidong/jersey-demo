@@ -27,6 +27,6 @@ public enum FileType {
 				return item;
 			}
 		}
-		throw new WebException(ResponseCode.不允许此方法, "值[" + type + "]不是" + FileType.class + "有效值。");
+		throw new WebException(ResponseCode.类型错误, "值[" + type + "]不是" + FileType.class + "有效值。");
 	}
 }

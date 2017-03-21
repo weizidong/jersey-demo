@@ -35,7 +35,7 @@ public class Files implements Serializable {
 	 * 外键
 	 */
 	@JsonIgnore
-	private Integer fk;
+	private String fk;
 
 	/**
 	 * 后缀名
@@ -46,7 +46,7 @@ public class Files implements Serializable {
 	 * 上传者
 	 */
 	@Column(name = "userId")
-	private Integer userid;
+	private String userid;
 
 	/**
 	 * 上传时间
@@ -135,7 +135,7 @@ public class Files implements Serializable {
 	 *
 	 * @return fk - 外键
 	 */
-	public Integer getFk() {
+	public String getFk() {
 		return fk;
 	}
 
@@ -145,7 +145,7 @@ public class Files implements Serializable {
 	 * @param fk
 	 *            外键
 	 */
-	public void setFk(Integer fk) {
+	public void setFk(String fk) {
 		this.fk = fk;
 	}
 
@@ -173,7 +173,7 @@ public class Files implements Serializable {
 	 *
 	 * @return userId - 上传者
 	 */
-	public Integer getUserid() {
+	public String getUserid() {
 		return userid;
 	}
 
@@ -183,7 +183,7 @@ public class Files implements Serializable {
 	 * @param userid
 	 *            上传者
 	 */
-	public void setUserid(Integer userid) {
+	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 

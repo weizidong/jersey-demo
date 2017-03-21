@@ -12,10 +12,10 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.AdminService;
-import com.wzd.web.dto.PageDto;
 import com.wzd.web.param.IdListParam;
 import com.wzd.web.param.PageParam;
 
@@ -97,7 +97,7 @@ public class AdminApi {
 	 */
 	@Path("/find")
 	@POST
-	public PageDto getById(PageParam param) {
+	public PageInfo<Admin> getById(PageParam param) {
 		return service.find(param);
 	}
 

@@ -62,7 +62,7 @@ public class WechatApi {
 		try {
 			sMsg = QyWxService.wxcpt().DecryptMsg(sReqMsgSig, sReqTimeStamp, sReqNonce, data);
 		} catch (AesException e) {
-			throw new WebException(ResponseCode.不允许此方法, "解密回复信息密文失败！");
+			throw new WebException(ResponseCode.解密失败, "解密回复信息密文失败！");
 		}
 		log.debug("参数：\n" + sMsg);
 		// 解析xml
@@ -73,7 +73,7 @@ public class WechatApi {
 		try {
 			return QyWxService.wxcpt().EncryptMsg(rMsg, sReqTimeStamp, sReqNonce);
 		} catch (Exception e) {
-			throw new WebException(ResponseCode.不允许此方法, "回包加密失败失败！");
+			throw new WebException(ResponseCode.加密失败, "回包加密失败失败！");
 		}
 	}
 

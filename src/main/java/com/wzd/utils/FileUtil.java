@@ -1,15 +1,21 @@
 package com.wzd.utils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Date;
 
+import org.apache.commons.io.FileUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 
+import com.wzd.model.entity.Files;
+
+/**
+ * 文件工具类
+ * 
+ * @author WeiZiDong
+ *
+ */
 public class FileUtil {
 	private static final String RESOURCE_URL = "/userfiles";
 	private static String BASE_PATH = "";
@@ -25,57 +31,44 @@ public class FileUtil {
 
 	/**
 	 * 写文件到硬盘，返回相对路径
-	 * 
-	 * @param file
-	 * @param fileDisposition
-	 * @return
 	 */
-	public static String writeFile(InputStream file, FormDataContentDisposition disposition) {
-		String fileFullName = disposition.getFileName();
-		String storeFileName = UUIDUtil.get();// 文件名uuid生成
-		String storeExt = fileFullName.substring(fileFullName.indexOf("."), fileFullName.length());// 后缀
-		String storeFolder = RESOURCE_URL + File.separator + DateUtil.dateToString(new Date(), DateUtil.PDATE2);
-		String storePath = BASE_PATH + storeFolder + File.separator + storeFileName + storeExt;
+	public static Files writeFile(InputStream file, FormDataContentDisposition disposition) {
 		try {
-
-			File storeDirPath = new File(BASE_PATH + storeFolder);
-
-			if (!storeDirPath.exists()) {
-				storeDirPath.mkdirs();
+			// 文件全称
+			String fullName = new String(disposition.getFileName().getBytes("ISO8859-1"), "UTF-8");
+			// 文件名UUID生成
+			String fileName = UUIDUtil.get();
+			// 后缀
+			String ext = fullName.substring(fullName.lastIndexOf("."), fullName.length());
+			// 相对路径
+			String folder = RESOURCE_URL + File.separator + DateUtil.dateToString(new Date(), DateUtil.PDATE2);
+			// 绝对路径
+			String path = BASE_PATH + folder + File.separator + fileName + ext;
+			// 生成目录
+			File store = new File(BASE_PATH + folder);
+			if (!store.exists()) {
+				store.mkdirs();
 			}
-			storeDirPath = null;
-			storeDirPath = new File(storePath);
-
-			OutputStream outputStream = new FileOutputStream(storeDirPath);
-
-			int length = 0;
-			byte[] buff = new byte[256];
-			while (-1 != (length = file.read(buff))) {
-				outputStream.write(buff, 0, length);
-			}
-			file.close();
-			outputStream.close();
-			return storeFolder + File.separator + storeFileName + storeExt;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			store = new File(path);
+			FileUtils.copyInputStreamToFile(file, store);
+			// 返回值
+			Files f = new Files();
+			f.setName(fullName);
+			f.setSuffix(ext);
+			f.setUrl(folder + File.separator + fileName + ext);
+			return f;
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new RuntimeException("写文件失败", e);
 		}
-		return null;
 	}
 
 	/**
 	 * 删除文件
-	 * 
-	 * @param fileName
-	 * @return
 	 */
-	public static Boolean delete(String url) {
+	public static void delete(String url) {
 		File file = new File(BASE_PATH + url);
 		if (file.isFile() && file.exists()) {
 			file.delete();
-			return true;
 		}
-		return false;
 	}
 }

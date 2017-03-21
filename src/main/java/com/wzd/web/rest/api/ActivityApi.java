@@ -8,10 +8,10 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Activity;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.ActivityService;
-import com.wzd.web.dto.PageDto;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -73,7 +73,7 @@ public class ActivityApi {
 	 */
 	@Path("/find")
 	@POST
-	public PageDto find(PageParam param) {
+	public PageInfo<Activity> find(PageParam param) {
 		return service.find(param);
 	}
 

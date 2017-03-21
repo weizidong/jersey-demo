@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.AdminDao;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.APPType;
@@ -15,7 +16,6 @@ import com.wzd.model.enums.DeleteType;
 import com.wzd.service.wechat.user.WxUserService;
 import com.wzd.utils.MD5Utils;
 import com.wzd.utils.StringUtil;
-import com.wzd.web.dto.PageDto;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
@@ -100,7 +100,7 @@ public class AdminService {
 	/**
 	 * 条件分页查询
 	 */
-	public PageDto find(PageParam param) {
+	public PageInfo<Admin> find(PageParam param) {
 		// TODO 条件分页查询
 		return null;
 	}

@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Wxactivity;
 import com.wzd.model.enums.AuditType;
@@ -19,7 +20,6 @@ import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.StateType;
 import com.wzd.service.WxActivityService;
 import com.wzd.utils.PoiExcelUtils;
-import com.wzd.web.dto.PageDto;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.IdListParam;
 import com.wzd.web.param.PageParam;
@@ -84,7 +84,7 @@ public class WxActivityApi {
 	 */
 	@Path("/find")
 	@POST
-	public PageDto find(PageParam param) {
+	public PageInfo<Wxactivity> find(PageParam param) {
 		return service.find(param);
 	}
 

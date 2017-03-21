@@ -3,10 +3,10 @@ package com.wzd.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.ActivityDao;
 import com.wzd.model.entity.Activity;
 import com.wzd.model.enums.DeleteType;
-import com.wzd.web.dto.PageDto;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -52,7 +52,7 @@ public class ActivityService {
 	/**
 	 * 条件查询所有
 	 */
-	public PageDto find(PageParam param) {
+	public PageInfo<Activity> find(PageParam param) {
 		// TODO 条件查询所有
 		return null;
 	}

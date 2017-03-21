@@ -8,6 +8,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.WxActivityDao;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Wxactivity;
@@ -15,7 +16,6 @@ import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.StateType;
 import com.wzd.utils.PoiExcelUtils;
-import com.wzd.web.dto.PageDto;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.PageParam;
@@ -63,7 +63,7 @@ public class WxActivityService {
 	/**
 	 * 条件查询所有
 	 */
-	public PageDto find(PageParam param) {
+	public PageInfo<Wxactivity> find(PageParam param) {
 		// TODO 条件查询所有
 		return null;
 	}

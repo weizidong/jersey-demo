@@ -40,7 +40,9 @@ public enum ResponseCode implements ResponseCodeType {
 
 	导出失败(605, "导出失败"),
 
-	生成Excel表格数据失败(606, "生成Excel表格数据失败");
+	生成Excel表格数据失败(606, "生成Excel表格数据失败"),
+
+	加密失败(607, "加密失败"), 解密失败(608, "解密失败"), 类型错误(609, "类型错误");
 
 	private int code;
 

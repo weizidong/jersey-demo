@@ -2,6 +2,17 @@ package com.wzd.web.param;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import com.wzd.model.entity.Files;
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
+
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 /**
  * 分页查询参数
@@ -72,4 +83,38 @@ public class PageParam implements Serializable {
 				+ ", keyWord=" + Arrays.toString(keyWord) + "]";
 	}
 
+	/**
+	 * 设置参数到Example
+	 */
+	public static void setCondition(Example e, PageParam param, Class<Files> clazz) {
+		// 所有的字段名
+		List<String> fields = Arrays.stream(clazz.getFields()).map(field -> field.getName()).collect(Collectors.toList());
+		// 筛选条件
+		if (!ArrayUtils.isEmpty(param.getFiled()) && !ArrayUtils.isEmpty(param.getKeyWord())) {
+			Criteria c = e.createCriteria();
+			for (int i = 0; i < param.getFiled().length; i++) {
+				String filed = param.getFiled()[i];
+				if (!fields.contains(filed)) {
+					throw new WebException(ResponseCode.资源不存在, "筛选字段名[" + filed + "]错误");
+				} else if (("|" + filed + "|").indexOf("|name|nickname|title|place|command|") != -1) {
+					c.andLike(filed, param.getKeyWord()[i]);
+				} else {
+					c.andEqualTo(filed, param.getKeyWord()[i]);
+				}
+			}
+		}
+		// 排序条件
+		if (!ArrayUtils.isEmpty(param.getOrder()) && !ArrayUtils.isEmpty(param.getSort())) {
+			StringBuilder orderStr = new StringBuilder();
+			for (int i = 0; i < param.getSort().length; i++) {
+				String filed = param.getSort()[i];
+				if (!fields.contains(filed)) {
+					throw new WebException(ResponseCode.资源不存在, "排序字段名[" + filed + "]错误");
+				} else {
+					orderStr.append(filed + " " + param.getOrder()[i]);
+				}
+			}
+			e.setOrderByClause(orderStr.toString());
+		}
+	}
 }

@@ -3,10 +3,12 @@ package com.wzd.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.UserDao;
+import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.User;
+import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
-import com.wzd.web.dto.PageDto;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -55,8 +57,15 @@ public class UserService {
 	/**
 	 * 条件查询列表
 	 */
-	public PageDto find(PageParam param) {
+	public PageInfo<User> find(PageParam param) {
 		// TODO 条件查询列表
 		return null;
+	}
+
+	/**
+	 * 审核
+	 */
+	public void auditing(AuditType parse, Admin user) {
+		// TODO 审核
 	}
 }
