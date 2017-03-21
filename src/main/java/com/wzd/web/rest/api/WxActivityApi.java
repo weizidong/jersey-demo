@@ -1,6 +1,7 @@
 package com.wzd.web.rest.api;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -9,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wzd.model.entity.Admin;
@@ -17,6 +19,8 @@ import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.StateType;
 import com.wzd.service.WxActivityService;
+import com.wzd.utils.PoiExcelUtils;
+import com.wzd.web.dto.IdListParam;
 import com.wzd.web.dto.PageDto;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.PageParam;
@@ -107,5 +111,23 @@ public class WxActivityApi {
 	@POST
 	public void changeState(@PathParam("type") Integer type, @Context HttpServletRequest request) {
 		service.changeState(StateType.parse(type), (Admin) SessionUtil.getUser(request));
+	}
+
+	/**
+	 * 批量导出活动详情
+	 */
+	@Path("/export")
+	@POST
+	public void export(IdListParam<Integer> param, @Context HttpServletResponse response) {
+		PoiExcelUtils.writeWorkbook(response, service.export(param.getIds(), response));
+	}
+
+	/**
+	 * 导出参加活动的人员
+	 */
+	@Path("/exportUser/{id}")
+	@POST
+	public void exportUser(@PathParam("id") Integer id, @Context HttpServletResponse response) {
+		service.exportUser(id, response);
 	}
 }

@@ -3,6 +3,7 @@ package com.wzd.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +11,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.IOUtils;
@@ -28,6 +31,9 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.util.CellRangeAddress;
+
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
 
 /**
  * Excel工具类
@@ -288,6 +294,8 @@ public class PoiExcelUtils {
 			cell.setCellValue((String) cellValue);
 		} else if (cellValue instanceof Boolean) {
 			cell.setCellValue((Boolean) cellValue);
+		} else if (cellValue instanceof Date) {
+			cell.setCellValue(DateUtil.formatDate((Date) cellValue, DateUtil.P_DATETIME));
 		} else if (cellValue instanceof Calendar) {
 			cell.setCellValue((Calendar) cellValue);
 		} else if (cellValue instanceof Double) {
@@ -993,5 +1001,32 @@ public class PoiExcelUtils {
 			return "";
 		}
 		return strCell;
+	}
+
+	/**
+	 * 导出Excel数据表格
+	 * 
+	 * @param response
+	 *            {@link HttpServletResponse}
+	 * @param workbook
+	 *            {@link HSSFWorkbook}
+	 */
+	public static void writeWorkbook(HttpServletResponse response, HSSFWorkbook workbook) {
+		response.reset();
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("multipart/form-data");
+		String fileName = System.currentTimeMillis() + ".xls";
+		response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+		OutputStream out = null;
+		try {
+			out = response.getOutputStream();
+			workbook.write(out);
+			workbook.close();
+		} catch (Exception e) {
+			throw new WebException(ResponseCode.导出失败);
+		} finally {
+			// 使用的是org.apache.commons.io.IOUtils
+			IOUtils.closeQuietly(out);
+		}
 	}
 }

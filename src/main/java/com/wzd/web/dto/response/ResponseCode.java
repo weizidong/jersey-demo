@@ -36,7 +36,11 @@ public enum ResponseCode implements ResponseCodeType {
 
 	用户不存在(603, "用户不存在"),
 
-	密码错误(604, "密码错误");
+	密码错误(604, "密码错误"),
+
+	导出失败(605, "导出失败"),
+
+	生成Excel表格数据失败(606, "生成Excel表格数据失败");
 
 	private int code;
 
