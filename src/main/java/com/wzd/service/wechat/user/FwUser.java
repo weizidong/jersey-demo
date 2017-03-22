@@ -2,6 +2,7 @@ package com.wzd.service.wechat.user;
 
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
@@ -12,6 +13,7 @@ import com.wzd.service.wechat.base.BaseResp;
  */
 @SuppressWarnings("serial")
 public class FwUser extends BaseResp {
+	@JsonIgnore
 	private String openid; // 用户的唯一标识
 	private String nickname; // 用户昵称
 	private String sex; // 用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
@@ -20,8 +22,10 @@ public class FwUser extends BaseResp {
 	private String country; // 国家，如中国为CN
 	private String headimgurl; // 用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
 	@Transient
+	@JsonIgnore
 	private String privilege; // 用户特权信息，json 数组，如微信沃卡用户为（chinaunicom）
 	@Transient
+	@JsonIgnore
 	private String unionid; // 只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
 
 	public String getOpenid() {

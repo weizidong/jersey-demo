@@ -23,7 +23,6 @@ import com.wzd.service.wechat.QyWxService;
 import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.utils.Configs;
-import com.wzd.utils.IpUtil;
 import com.wzd.utils.StringUtil;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
@@ -48,7 +47,7 @@ public class SessionFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		// 域名
-		String hostname = IpUtil.getServerHostname(httpRequest);
+		String hostname = Configs.hostname;
 		// 请求
 		String requestUrl = httpRequest.getRequestURI().substring(1);
 		// 参数
@@ -60,10 +59,18 @@ public class SessionFilter implements Filter {
 		String appType = request.getParameter("appType");
 		// 回调授权code
 		String code = request.getParameter("code");
-		log.debug("域名：" + hostname);
 		log.debug("请求：" + requestUrl);
 		log.debug("appType：" + appType);
 		log.debug("code：" + code);
+		// 微信回调不检测
+		if (requestUrl.startsWith("rest/wechat/")) {
+			chain.doFilter(httpRequest, httpResponse);
+			return;
+		}
+		// debug模式
+		if (SessionUtil.isDebug(httpRequest)) {
+			SessionUtil.openDebug(httpRequest, httpResponse);
+		}
 		// 授权成功，回调,
 		if (!StringUtil.isEmpty(code) && !StringUtil.isEmpty(appType)) {
 			// 授权用时
@@ -80,6 +87,7 @@ public class SessionFilter implements Filter {
 			}
 			// 保存会话信息
 			SessionUtil.saveSession(session, httpRequest, httpResponse);
+			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
 		// 获取SessionId
@@ -98,25 +106,27 @@ public class SessionFilter implements Filter {
 		if (APPType.管理平台.getValue().equals(appType) && SessinId == null) {
 			throw new WebException(ResponseCode.未登录, "未登录");
 		}
-		Session session;
+		Session session = SessionUtil.getSession(httpRequest);
 		// 网站主页创建Session
-		if (APPType.网站主页.getValue().equals(appType) && SessinId == null) {
+		if (appType == null || SessinId == null || session == null) {
 			session = SessionUtil.generateSession(appType, null, null, null);
 			SessionUtil.saveSession(session, httpRequest, httpResponse);
-		} else {
-			session = SessionUtil.getSession(httpRequest);
 		}
 		// 加载静态文件
-		if (requestUrl.startsWith("/view/")) {
+		if (StringUtil.isEmpty(requestUrl) || requestUrl.endsWith(".html") || requestUrl.startsWith("view/")) {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
 			return;
 		}
+		if (requestUrl.equals("favicon.ico")) {
+			request.getRequestDispatcher("/favicon.ico?" + Configs.version).forward(request, response);
+			return;
+		}
 		// 非网站主页需要检测数据签名
-		if (!APPType.网站主页.getValue().equals(appType) && session != null && !SessionUtil.isDebug(httpRequest)) {
+		if (!APPType.网站主页.getValue().equals(appType) && session != null) {
 			SessionUtil.checkSignature(session, httpRequest, httpResponse);
 		}
 		// 管理平台需要检测Session超时
-		if (APPType.管理平台.getValue().equals(appType) && session != null && !SessionUtil.isDebug(httpRequest)) {
+		if (APPType.管理平台.getValue().equals(appType) && session != null) {
 			SessionUtil.checkTs(session, httpRequest, httpResponse);
 		}
 		// 更新Session

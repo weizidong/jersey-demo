@@ -24,29 +24,36 @@ public class Event {
 			return unsubscribe(msg);
 		case MsgType.Event.ENTER_AGENT: // 成员进入应用
 			return enter_agent(msg);
+		case MsgType.Event.CLICK: // 成员点击菜单事件
+			return click(msg);
 		default:
 			return XmlResp.SUCCESS;
 		}
 	}
 
+	// 成员点击菜单事件
+	private static String click(WechatMsg msg) {
+		// TODO 成员点击菜单事件
+		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "点击菜单:" + msg.getEventKey());
+	}
+
 	// 处理成员进入应用
 	private static String enter_agent(WechatMsg msg) {
-		// TODO Auto-generated method stub
-		return XmlResp.SUCCESS;
-
+		// TODO 处理成员进入应用
+		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "成员进入应用");
 	}
 
 	// 处理取消关注事件
 	private static String unsubscribe(WechatMsg msg) {
-		// TODO Auto-generated method stub
-		return XmlResp.SUCCESS;
+		// TODO 处理取消关注事件
+		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "取消关注事件");
 
 	}
 
 	// 处理关注事件
 	private static String subscribe(WechatMsg msg) {
-		// TODO Auto-generated method stub
-		return XmlResp.SUCCESS;
+		// TODO 处理关注事件
+		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "关注事件");
 
 	}
 }

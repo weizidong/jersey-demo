@@ -3,7 +3,7 @@ package com.wzd.model.dao;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
@@ -15,7 +15,7 @@ import com.wzd.model.mapper.AdminMapper;
  * @author WeiZiDong
  *
  */
-@Service
+@Component
 public class AdminDao {
 	@Autowired
 	private AdminMapper mapper;
@@ -36,7 +36,71 @@ public class AdminDao {
 	 * 根据UserId获取用户信息
 	 */
 	public Admin getByUserId(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		Admin admin = new Admin();
+		admin.setUserid(userId);
+		return mapper.selectOne(admin);
+	}
+
+	/**
+	 * 修改(更新不为null的值)
+	 */
+	public void update(Admin admin) {
+		mapper.updateByPrimaryKeySelective(admin);
+	}
+
+	/**
+	 * 修改(更新全部字段)
+	 */
+	public void updateAll(Admin admin) {
+		mapper.updateByPrimaryKey(admin);
+	}
+
+	/**
+	 * 修改或创建
+	 */
+	public void save(Admin admin) {
+		if (getByUserId(admin.getUserid()) == null) {
+			create(admin);
+		} else {
+			update(admin);
+		}
+	}
+
+	/**
+	 * 根据用户名获取用户信息
+	 */
+	public Admin getByUname(String uname, DeleteType type) {
+		Admin admin = new Admin();
+		admin.setUname(uname);
+		admin.setDeleted(type.getValue());
+		return admin;
+	}
+
+	/**
+	 * 刪除
+	 */
+	public void delete(String userid, DeleteType type) {
+		Admin admin = new Admin();
+		admin.setUserid(userid);
+		if (type == DeleteType.永久删除) {
+			mapper.delete(admin);
+		} else {
+			admin.setDeleted(type.getValue());
+			update(admin);
+		}
+	}
+
+	/**
+	 * 根据UserId或者email查找
+	 */
+	public Admin find(String userid, String email) {
+		Admin admin = new Admin();
+		if (userid != null) {
+			admin.setUserid(userid);
+		}
+		if (email != null) {
+			admin.setEmail(email);
+		}
+		return mapper.selectOne(admin);
 	}
 }

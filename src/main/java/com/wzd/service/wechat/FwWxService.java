@@ -11,6 +11,7 @@ import com.wzd.client.RestClientUtil;
 import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.APPType;
+import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
@@ -20,14 +21,14 @@ import com.wzd.service.wechat.token.Token;
 import com.wzd.service.wechat.utils.AesException;
 import com.wzd.service.wechat.utils.WXBizMsgCrypt;
 import com.wzd.utils.Configs;
-import com.wzd.utils.HttpUtils;
+import com.wzd.utils.SignatureUtil;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
 import com.wzd.web.param.wechat.WechatMsg;
 
 /**
- * 服务号超卓服务
+ * 服务号操作服务
  * 
  * @author WeiZiDong
  *
@@ -38,6 +39,8 @@ public class FwWxService {
 	private static WXBizMsgCrypt wxcpt = null;
 	@Autowired
 	private UserDao dao;
+	@Autowired
+	private WxMsgReceiver receiver;
 
 	// 获取加密协议
 	public static WXBizMsgCrypt wxcpt() {
@@ -63,7 +66,7 @@ public class FwWxService {
 	public String push(WechatMsg msg) {
 		switch (msg.getMsgType().toLowerCase()) {
 		case MsgType.TEXT: // 文本消息处理
-			return WxMsgReceiver.text(msg);
+			return receiver.text(msg);
 		case MsgType.IMAGE: // 图片消息处理
 			// TODO 图片消息处理
 			return XmlResp.SUCCESS;
@@ -92,20 +95,14 @@ public class FwWxService {
 	/**
 	 * 验证回调URL
 	 */
-	public String VerifyURL(String msg_signature, String timestamp, String nonce, String echostr) {
-		String sVerifyMsgSig = HttpUtils.ParseUrl("msg_signature");
-		String sVerifyTimeStamp = HttpUtils.ParseUrl("timestamp");
-		String sVerifyNonce = HttpUtils.ParseUrl("nonce");
-		String sVerifyEchoStr = HttpUtils.ParseUrl("echostr");
+	public String VerifyURL(String signature, String timestamp, String nonce, String echostr) {
 		log.debug("验证回调URL...");
-		String sEchoStr = null;
-		try {
-			sEchoStr = wxcpt().VerifyURL(sVerifyMsgSig, sVerifyTimeStamp, sVerifyNonce, sVerifyEchoStr);
-		} catch (AesException e) {
-			e.printStackTrace();
+		Boolean check = SignatureUtil.checkSignature(Configs.bToken, signature, timestamp, nonce);
+		log.debug("验证回调URL结果：" + check);
+		if (check) {
+			return echostr;
 		}
-		log.debug("验证回调URL结果：" + sEchoStr);
-		return sEchoStr;
+		return null;
 	}
 
 	/**
@@ -131,6 +128,33 @@ public class FwWxService {
 		}
 		session.setUser(user);
 		return session;
+	}
+
+	/**
+	 * 获取菜单
+	 */
+	public String getFwMenu() {
+		return RestClientUtil.get(MessageFormat.format(FwAPI.MENU_GET_URL, getToken()), String.class);
+	}
+
+	/**
+	 * 创建菜单
+	 */
+	public void createFwMenu(String menu) {
+		BaseResp resp = RestClientUtil.postJson(MessageFormat.format(FwAPI.MENU_CREATE_URL, getToken()), menu, BaseResp.class);
+		if (resp.getErrcode() != 0) {
+			throw new WebException(resp.getErrcode(), resp.getErrmsg());
+		}
+	}
+
+	/**
+	 * 删除菜单
+	 */
+	public void deleteFwMenu() {
+		BaseResp resp = RestClientUtil.get(MessageFormat.format(FwAPI.MENU_DELETE_URL, getToken()), BaseResp.class);
+		if (resp == null || resp.getErrcode() != 0) {
+			throw new WebException(ResponseCode.错误请求, "删除失败");
+		}
 	}
 
 }

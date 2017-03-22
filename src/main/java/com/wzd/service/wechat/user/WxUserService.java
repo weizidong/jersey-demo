@@ -110,4 +110,5 @@ public class WxUserService {
 		}
 		return resp.getUserlist();
 	}
+
 }

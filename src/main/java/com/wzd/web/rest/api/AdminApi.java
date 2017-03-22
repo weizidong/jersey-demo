@@ -1,19 +1,25 @@
 package com.wzd.web.rest.api;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Admin;
+import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.AdminService;
-import com.wzd.web.dto.PageDto;
+import com.wzd.utils.PoiExcelUtils;
+import com.wzd.web.dto.session.SessionUtil;
+import com.wzd.web.param.IdListParam;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -34,8 +40,8 @@ public class AdminApi {
 	 */
 	@Path("/login")
 	@POST
-	public void login(Admin admin) {
-		service.login(admin);
+	public void login(Admin admin, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+		service.login(admin, request, response);
 	}
 
 	/**
@@ -53,10 +59,19 @@ public class AdminApi {
 	 * @param type
 	 *            删除类型，0：不刪；1：回收站；2：永久
 	 */
-	@Path("/delete/{id}/{type}")
+	@Path("/delete/{userid}/{type}")
 	@POST
-	public void delete(@PathParam("id") Integer id, @PathParam("type") Integer type) {
-		service.delete(id, DeleteType.parse(type));
+	public void delete(@PathParam("userid") String userid, @PathParam("type") Integer type) {
+		service.delete(userid, DeleteType.parse(type));
+	}
+
+	/**
+	 * 批量删除成员
+	 */
+	@Path("/deleteBatch")
+	@POST
+	public void delete(IdListParam<String> param) {
+		service.delete(param);
 	}
 
 	/**
@@ -85,17 +100,28 @@ public class AdminApi {
 	 */
 	@Path("/find")
 	@POST
-	public PageDto getById(PageParam param) {
+	public PageInfo<Admin> getById(PageParam param) {
 		return service.find(param);
 	}
 
 	/**
-	 * 同步企业号人员
+	 * 审核
+	 * 
+	 * @param type
+	 *            审核类型,1：审核通过；2：审核未通过
 	 */
-	@Path("/sync")
-	@GET
-	public void sync() {
-		service.sync();
+	@Path("/audit/{type}")
+	@POST
+	public void auditing(@PathParam("type") Integer type, @Context HttpServletRequest request) {
+		service.auditing(AuditType.parse(type), (Admin) SessionUtil.getUser(request));
 	}
 
+	/**
+	 * 批量导出管理员
+	 */
+	@Path("/export")
+	@POST
+	public void export(IdListParam<Integer> param, @Context HttpServletResponse response) {
+		PoiExcelUtils.writeWorkbook(response, service.export(param.getIds(), response));
+	}
 }

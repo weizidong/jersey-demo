@@ -1,18 +1,23 @@
 package com.wzd.web.rest.api;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.pagehelper.PageInfo;
+import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.User;
+import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.UserService;
-import com.wzd.web.dto.PageDto;
+import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -75,7 +80,19 @@ public class UserApi {
 	 */
 	@Path("/find")
 	@POST
-	public PageDto getById(PageParam param) {
+	public PageInfo<User> getById(PageParam param) {
 		return service.find(param);
+	}
+
+	/**
+	 * 审核
+	 * 
+	 * @param type
+	 *            审核类型,1：审核通过；2：审核未通过
+	 */
+	@Path("/audit/{type}")
+	@POST
+	public void auditing(@PathParam("type") Integer type, @Context HttpServletRequest request) {
+		service.auditing(AuditType.parse(type), (Admin) SessionUtil.getUser(request));
 	}
 }

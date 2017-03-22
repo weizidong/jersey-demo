@@ -3,6 +3,7 @@ package com.wzd.service.wechat.department;
 import java.io.Serializable;
 import java.util.List;
 
+import com.wzd.model.entity.Department;
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
@@ -13,13 +14,13 @@ import com.wzd.service.wechat.base.BaseResp;
  */
 @SuppressWarnings("serial")
 public class WxDepList extends BaseResp implements Serializable {
-	private List<WxDep> department;
+	private List<Department> department;
 
-	public List<WxDep> getDepartment() {
+	public List<Department> getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(List<WxDep> department) {
+	public void setDepartment(List<Department> department) {
 		this.department = department;
 	}
 

@@ -1,5 +1,6 @@
 package com.wzd.web.rest.api;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -8,10 +9,10 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Activity;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.ActivityService;
-import com.wzd.web.dto.PageDto;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -22,6 +23,7 @@ import com.wzd.web.param.PageParam;
  */
 @Path("/activity")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class ActivityApi {
 	@Autowired
 	private ActivityService service;
@@ -73,7 +75,7 @@ public class ActivityApi {
 	 */
 	@Path("/find")
 	@POST
-	public PageDto find(PageParam param) {
+	public PageInfo<Activity> find(PageParam param) {
 		return service.find(param);
 	}
 

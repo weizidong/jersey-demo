@@ -1,19 +1,26 @@
 package com.wzd.model.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+import com.wzd.model.entity.Activity;
 import com.wzd.model.mapper.ActivityMapper;
 
 /**
- * 活动数据库操作
+ * 线下活动数据库操作
  * 
  * @author WeiZiDong
  *
  */
-
-@Service
+@Component
 public class ActivityDao {
 	@Autowired
 	private ActivityMapper mapper;
+
+	/**
+	 * 创建
+	 */
+	public void create(Activity activity) {
+		mapper.insert(activity);
+	}
 }

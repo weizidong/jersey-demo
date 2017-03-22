@@ -10,7 +10,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum AuthType {
-	文章(11);
+	所有权限(0);
 	private Integer value;
 
 	private AuthType(Integer value) {

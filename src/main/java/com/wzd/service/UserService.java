@@ -1,14 +1,14 @@
 package com.wzd.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.UserDao;
+import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.User;
+import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
-import com.wzd.web.dto.PageDto;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -19,7 +19,6 @@ import com.wzd.web.param.PageParam;
  */
 @Service
 public class UserService {
-	private static final Logger log = LogManager.getLogger(UserService.class);
 	@Autowired
 	private UserDao dao;
 
@@ -27,7 +26,7 @@ public class UserService {
 	 * 创建
 	 */
 	public void create(User user) {
-		// TODO Auto-generated method stub
+		dao.create(user);
 
 	}
 
@@ -35,7 +34,7 @@ public class UserService {
 	 * 删除
 	 */
 	public void delete(Integer id, DeleteType type) {
-		// TODO Auto-generated method stub
+		// TODO 删除
 
 	}
 
@@ -43,7 +42,7 @@ public class UserService {
 	 * 修改
 	 */
 	public void update(User user) {
-		// TODO Auto-generated method stub
+		// TODO 修改
 
 	}
 
@@ -51,15 +50,22 @@ public class UserService {
 	 * 查询指定id用户
 	 */
 	public User findById(Integer id, DeleteType type) {
-		// TODO Auto-generated method stub
+		// TODO 查询指定id用户
 		return null;
 	}
 
 	/**
 	 * 条件查询列表
 	 */
-	public PageDto find(PageParam param) {
-		// TODO Auto-generated method stub
+	public PageInfo<User> find(PageParam param) {
+		// TODO 条件查询列表
 		return null;
+	}
+
+	/**
+	 * 审核
+	 */
+	public void auditing(AuditType parse, Admin user) {
+		// TODO 审核
 	}
 }

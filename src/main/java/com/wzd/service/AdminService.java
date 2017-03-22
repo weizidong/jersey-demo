@@ -1,15 +1,29 @@
 package com.wzd.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.AdminDao;
 import com.wzd.model.entity.Admin;
+import com.wzd.model.enums.APPType;
+import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.wechat.user.WxUserService;
-import com.wzd.web.dto.PageDto;
+import com.wzd.utils.MD5Utils;
+import com.wzd.utils.StringUtil;
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
+import com.wzd.web.dto.session.Session;
+import com.wzd.web.dto.session.SessionUtil;
+import com.wzd.web.param.IdListParam;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -20,7 +34,6 @@ import com.wzd.web.param.PageParam;
  */
 @Service
 public class AdminService {
-	private static final Logger log = LogManager.getLogger(AdminService.class);
 	@Autowired
 	private AdminDao dao;
 	@Autowired
@@ -29,24 +42,46 @@ public class AdminService {
 	/**
 	 * 登录
 	 */
-	public void login(Admin admin) {
-		// TODO Auto-generated method stub
-
+	public void login(Admin admin, HttpServletRequest request, HttpServletResponse response) {
+		Admin dbAdmin = dao.getByUname(admin.getUname(), DeleteType.未删除);
+		if (dbAdmin == null) {
+			throw new WebException(ResponseCode.用户不存在);
+		}
+		String pwd = admin.getPwd();
+		if (StringUtil.isEmpty(pwd) || !MD5Utils.getMD5ofStr(pwd).equals(dbAdmin.getPwd())) {
+			throw new WebException(ResponseCode.密码错误);
+		}
+		// 更新登录时间
+		dbAdmin.setLogintime(new Date());
+		dao.update(dbAdmin);
+		// 保存Session
+		Session session = SessionUtil.generateSession(APPType.管理平台.getValue(), null, null, dbAdmin);
+		SessionUtil.saveSession(session, request, response);
 	}
+
 
 	/**
 	 * 创建
 	 */
 	public void create(Admin admin) {
-		// TODO Auto-generated method stub
-
+		wxService.create(admin);
+		admin.setDepartments(admin.getDepartment());
+		dao.create(admin);
 	}
 
 	/**
 	 * 删除
 	 */
-	public void delete(Integer id, DeleteType type) {
-		// TODO Auto-generated method stub
+	public void delete(String userid, DeleteType type) {
+		wxService.delete(userid);
+		dao.delete(userid, type);
+	}
+
+	/**
+	 * 批量删除
+	 */
+	public void delete(IdListParam<String> param) {
+		// TODO 批量删除
 
 	}
 
@@ -54,7 +89,7 @@ public class AdminService {
 	 * 修改
 	 */
 	public void update(Admin admin) {
-		// TODO Auto-generated method stub
+		// TODO 修改
 
 	}
 
@@ -62,23 +97,31 @@ public class AdminService {
 	 * 查询详情
 	 */
 	public Admin findById(Integer id, DeleteType parse) {
-		// TODO Auto-generated method stub
+		// TODO 查询详情
 		return null;
 	}
 
 	/**
 	 * 条件分页查询
 	 */
-	public PageDto find(PageParam param) {
-		// TODO Auto-generated method stub
+	public PageInfo<Admin> find(PageParam param) {
+		// TODO 条件分页查询
 		return null;
 	}
 
 	/**
-	 * 同步企业号人员
+	 * 审核
 	 */
-	public void sync() {
-		// TODO Auto-generated method stub
+	public void auditing(AuditType parse, Admin user) {
+		// TODO 审核
+	}
+
+	/**
+	 * 批量导出管理员
+	 */
+	public HSSFWorkbook export(List<Integer> ids, HttpServletResponse response) {
+		// TODO 批量导出管理员
+		return null;
 	}
 
 }

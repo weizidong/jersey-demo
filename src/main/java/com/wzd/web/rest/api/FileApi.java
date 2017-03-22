@@ -1,8 +1,6 @@
 package com.wzd.web.rest.api;
 
-import java.io.InputStream;
-
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -11,14 +9,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Files;
+import com.wzd.model.enums.DeleteType;
 import com.wzd.service.FileService;
 import com.wzd.web.filter.log.RequestLog;
 import com.wzd.web.filter.log.RequestLogType;
+import com.wzd.web.param.IdListParam;
+import com.wzd.web.param.PageParam;
 
 /**
  * 文件接口
@@ -39,17 +40,34 @@ public class FileApi {
 	@Path("/upload")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@RequestLog(RequestLogType.NOTSUPPORTED)
-	public Files upload(@FormDataParam("file") InputStream file, @FormDataParam("file") FormDataContentDisposition disposition, @Context ServletContext context) {
-		return service.upload(file, disposition, context);
+	public Files upload(FormDataMultiPart form, @Context HttpServletRequest request) {
+		return service.upload(form, request);
 	}
 
 	/**
 	 * 删除文件
 	 */
 	@POST
-	@Path("/delete/{id}")
-	public void deleteImage(@PathParam("id") Integer id) {
-		service.delete(id);
+	@Path("/delete/{id}/{type}")
+	public void delete(@PathParam("id") Integer id, @PathParam("type") Integer type) {
+		service.delete(id, DeleteType.parse(type));
 	}
 
+	/**
+	 * 批量删除文件
+	 */
+	@POST
+	@Path("/deleteAll")
+	public void deleteAll(IdListParam<Integer> param) {
+		service.delete(param);
+	}
+
+	/**
+	 * 条件查询文件列表
+	 */
+	@POST
+	@Path("/list")
+	public PageInfo<Files> list(PageParam param) {
+		return service.list(param);
+	}
 }

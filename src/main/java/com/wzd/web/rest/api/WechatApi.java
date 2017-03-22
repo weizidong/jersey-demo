@@ -2,6 +2,7 @@ package com.wzd.web.rest.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -62,7 +63,7 @@ public class WechatApi {
 		try {
 			sMsg = QyWxService.wxcpt().DecryptMsg(sReqMsgSig, sReqTimeStamp, sReqNonce, data);
 		} catch (AesException e) {
-			throw new WebException(ResponseCode.不允许此方法, "解密回复信息密文失败！");
+			throw new WebException(ResponseCode.解密失败, "解密回复信息密文失败！");
 		}
 		log.debug("参数：\n" + sMsg);
 		// 解析xml
@@ -73,7 +74,7 @@ public class WechatApi {
 		try {
 			return QyWxService.wxcpt().EncryptMsg(rMsg, sReqTimeStamp, sReqNonce);
 		} catch (Exception e) {
-			throw new WebException(ResponseCode.不允许此方法, "回包加密失败失败！");
+			throw new WebException(ResponseCode.加密失败, "回包加密失败失败！");
 		}
 	}
 
@@ -82,8 +83,8 @@ public class WechatApi {
 	 */
 	@GET
 	@Path("/sync")
-	public void sync() {
-		qyService.sync();
+	public String sync() {
+		return qyService.sync();
 	}
 
 	/**
@@ -123,9 +124,41 @@ public class WechatApi {
 	@Path("/fw")
 	@FormatJson(FormatJsonType.NOTSUPPORTED)
 	@RequestLog(RequestLogType.NOTSUPPORTED)
-	public String fwVerifyURL(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
+	public String fwVerifyURL(@QueryParam("signature") String signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
 			@QueryParam("echostr") String echostr) {
-		return fwService.VerifyURL(msg_signature, timestamp, nonce, echostr);
+		return fwService.VerifyURL(signature, timestamp, nonce, echostr);
+	}
+
+	/**
+	 * 获取服务号自定义菜单
+	 */
+	@GET
+	@Path("/fwMenu")
+	@FormatJson(FormatJsonType.NOTSUPPORTED)
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getFwMenu() {
+		return fwService.getFwMenu();
+	}
+
+	/**
+	 * 创建服务号自定义菜单
+	 */
+	@POST
+	@Path("/fwMenu")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void createFwMenu(String menu) {
+		fwService.createFwMenu(menu);
+	}
+
+	/**
+	 * 删除服务号自定义菜单
+	 */
+	@DELETE
+	@Path("/fwMenu")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void deleteFwMenu() {
+		fwService.deleteFwMenu();
 	}
 
 }

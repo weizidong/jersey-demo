@@ -3,7 +3,7 @@ package com.wzd.model.dao;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.AuditType;
@@ -16,7 +16,7 @@ import com.wzd.model.mapper.UserMapper;
  * @author WeiZiDong
  *
  */
-@Service
+@Component
 public class UserDao {
 	@Autowired
 	private UserMapper mapper;
@@ -34,7 +34,7 @@ public class UserDao {
 	 * 更新用户
 	 */
 	public void update(User user) {
-		// TODO Auto-generated method stub
+		// TODO 更新用户
 
 	}
 
