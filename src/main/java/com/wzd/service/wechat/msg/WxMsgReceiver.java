@@ -1,5 +1,8 @@
 package com.wzd.service.wechat.msg;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +13,8 @@ import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.StateType;
 import com.wzd.service.wechat.base.XmlResp;
+import com.wzd.service.wechat.news.News;
+import com.wzd.utils.Configs;
 import com.wzd.web.param.wechat.WechatMsg;
 
 /**
@@ -29,6 +34,27 @@ public class WxMsgReceiver {
 	 * @param msg
 	 */
 	public String text(WechatMsg msg) {
+		/*
+		 * 以下是测试代码
+		 */
+		if (msg.getContent().equals("图文")) {
+			List<News> news = new ArrayList<>();
+			for (int i = 0; i < 8; i++) {
+				News n = new News();
+				if (i == 0) {
+					n.setPicUrl(Configs.hostname + "userfiles/2017/03/22/360+200.png");
+				} else {
+					n.setPicUrl(Configs.hostname + "userfiles/2017/03/22/200+200.png");
+				}
+				n.setDescription("文字描述" + i);
+				n.setTitle("题目" + i);
+				n.setUrl(Configs.hostname);
+				news.add(n);
+			}
+			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), news);
+		}
+		// =============================结束
+
 		Wxactivity activity = dao.findByCommand(msg.getContent());
 		if (activity == null || AuditType.审核通过.getValue() != activity.getAudit() || DeleteType.未删除.getValue() != activity.getDeleted()
 				|| StateType.启用.getValue() != activity.getStatus()) {
