@@ -22,7 +22,7 @@ public class QyAPI {
 	/**
 	 * 登录授权页，Https请求方式: GET
 	 */
-	public static final String LOGINPAGE = "https://qy.weixin.qq.com/cgi-bin/loginpage?corp_id={0}&redirect_uri={1}&state={2}&usertype=member ";
+	public static final String LOGINPAGE = "https://qy.weixin.qq.com/cgi-bin/loginpage?corp_id={0}&redirect_uri={1}&state={2}&usertype=all";
 	/**
 	 * 根据code获取成员信息，Https请求方式：GET
 	 */

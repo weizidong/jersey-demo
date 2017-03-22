@@ -32,21 +32,21 @@ public class Event {
 	// 处理成员进入应用
 	private static String enter_agent(WechatMsg msg) {
 		// TODO 处理成员进入应用
-		return XmlResp.SUCCESS;
+		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "成员进入应用");
 
 	}
 
-	// 处理成员进入应用
+	// 处理取消关注事件
 	private static String unsubscribe(WechatMsg msg) {
-		// TODO 处理成员进入应用
-		return XmlResp.SUCCESS;
+		// TODO 处理取消关注事件
+		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "取消关注事件");
 
 	}
 
 	// 处理关注事件
 	private static String subscribe(WechatMsg msg) {
 		// TODO 处理关注事件
-		return XmlResp.SUCCESS;
+		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "关注事件");
 
 	}
 }

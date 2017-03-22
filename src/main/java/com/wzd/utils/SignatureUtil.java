@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * 数字签名工具类
  * 
- * @author lujuzhi
+ * @author WeiZiDong
  * 
  */
 public class SignatureUtil {
@@ -26,28 +26,18 @@ public class SignatureUtil {
 	 * @return
 	 */
 	public static boolean checkSignature(String token, String signature, String timestamp, String nonce) {
-
 		if (StringUtil.isEmpty(token) || StringUtil.isEmpty(signature) || StringUtil.isEmpty(timestamp) || StringUtil.isEmpty(nonce)) {
 			return false;
 		}
-
 		// 这里的token是个人端登录或注册用户时生成，在需要验证登录的接口中传入此token
 		String[] tmpArr = { token, timestamp, nonce };
-
 		// 将token、timestamp、nonce三个参数进行字典序排序
 		Arrays.sort(tmpArr);
-
 		// 将三个参数字符串拼接成一个字符串
 		String tmpStr = ArrayToString(tmpArr);
-
+		// 进行sha1加密
 		tmpStr = SHA1Encode(tmpStr);
-
-		if (StringUtil.equalsIgnoreCase(tmpStr, signature)) {
-			return true;
-		}
-
-		return false;
-
+		return StringUtil.equalsIgnoreCase(tmpStr, signature);
 	}
 
 	/**

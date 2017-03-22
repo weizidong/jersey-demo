@@ -59,22 +59,6 @@ public class AdminService {
 		SessionUtil.saveSession(session, request, response);
 	}
 
-	/**
-	 * 扫码登录
-	 */
-	public void login2(String auth_code, HttpServletRequest request, HttpServletResponse response) {
-		Admin admin = wxService.getLoginInfo(auth_code);
-		Admin dbAdmin = dao.find(admin.getUserid(), admin.getEmail());
-		if (dbAdmin == null) {
-			throw new WebException(ResponseCode.用户不存在);
-		}
-		// 更新登录时间
-		dbAdmin.setLogintime(new Date());
-		dao.update(dbAdmin);
-		// 保存Session
-		Session session = SessionUtil.generateSession(APPType.管理平台.getValue(), null, null, dbAdmin);
-		SessionUtil.saveSession(session, request, response);
-	}
 
 	/**
 	 * 创建

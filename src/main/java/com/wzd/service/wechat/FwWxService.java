@@ -20,7 +20,7 @@ import com.wzd.service.wechat.token.Token;
 import com.wzd.service.wechat.utils.AesException;
 import com.wzd.service.wechat.utils.WXBizMsgCrypt;
 import com.wzd.utils.Configs;
-import com.wzd.utils.HttpUtils;
+import com.wzd.utils.SignatureUtil;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
@@ -38,6 +38,8 @@ public class FwWxService {
 	private static WXBizMsgCrypt wxcpt = null;
 	@Autowired
 	private UserDao dao;
+	@Autowired
+	private WxMsgReceiver receiver;
 
 	// 获取加密协议
 	public static WXBizMsgCrypt wxcpt() {
@@ -63,7 +65,7 @@ public class FwWxService {
 	public String push(WechatMsg msg) {
 		switch (msg.getMsgType().toLowerCase()) {
 		case MsgType.TEXT: // 文本消息处理
-			return WxMsgReceiver.text(msg);
+			return receiver.text(msg);
 		case MsgType.IMAGE: // 图片消息处理
 			// TODO 图片消息处理
 			return XmlResp.SUCCESS;
@@ -92,20 +94,14 @@ public class FwWxService {
 	/**
 	 * 验证回调URL
 	 */
-	public String VerifyURL(String msg_signature, String timestamp, String nonce, String echostr) {
-		String sVerifyMsgSig = HttpUtils.ParseUrl("msg_signature");
-		String sVerifyTimeStamp = HttpUtils.ParseUrl("timestamp");
-		String sVerifyNonce = HttpUtils.ParseUrl("nonce");
-		String sVerifyEchoStr = HttpUtils.ParseUrl("echostr");
+	public String VerifyURL(String signature, String timestamp, String nonce, String echostr) {
 		log.debug("验证回调URL...");
-		String sEchoStr = null;
-		try {
-			sEchoStr = wxcpt().VerifyURL(sVerifyMsgSig, sVerifyTimeStamp, sVerifyNonce, sVerifyEchoStr);
-		} catch (AesException e) {
-			e.printStackTrace();
+		Boolean check = SignatureUtil.checkSignature(Configs.bToken, signature, timestamp, nonce);
+		log.debug("验证回调URL结果：" + check);
+		if (check) {
+			return echostr;
 		}
-		log.debug("验证回调URL结果：" + sEchoStr);
-		return sEchoStr;
+		return null;
 	}
 
 	/**

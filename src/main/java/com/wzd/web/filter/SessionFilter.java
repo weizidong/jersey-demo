@@ -55,11 +55,13 @@ public class SessionFilter implements Filter {
 		if (!StringUtil.isEmpty(queryString)) {
 			requestUrl += "?" + queryString;
 		}
-		// 扫码登录
-		if (requestUrl.startsWith("loginScan")) {
-			authorize(QyAPI.LOGINPAGE, Configs.sCorpID, hostname + "rest/wechat/login", httpResponse);
-			return;
-		}
+		// 请求来源
+		String appType = request.getParameter("appType");
+		// 回调授权code
+		String code = request.getParameter("code");
+		log.debug("请求：" + requestUrl);
+		log.debug("appType：" + appType);
+		log.debug("code：" + code);
 		// 微信回调不检测
 		if (requestUrl.startsWith("rest/wechat/")) {
 			chain.doFilter(httpRequest, httpResponse);
@@ -69,13 +71,6 @@ public class SessionFilter implements Filter {
 		if (SessionUtil.isDebug(httpRequest)) {
 			SessionUtil.openDebug(httpRequest, httpResponse);
 		}
-		// 请求来源
-		String appType = request.getParameter("appType");
-		// 回调授权code
-		String code = request.getParameter("code");
-		log.debug("请求：" + requestUrl);
-		log.debug("appType：" + appType);
-		log.debug("code：" + code);
 		// 授权成功，回调,
 		if (!StringUtil.isEmpty(code) && !StringUtil.isEmpty(appType)) {
 			// 授权用时
@@ -92,6 +87,7 @@ public class SessionFilter implements Filter {
 			}
 			// 保存会话信息
 			SessionUtil.saveSession(session, httpRequest, httpResponse);
+			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
 		// 获取SessionId

@@ -51,6 +51,8 @@ public class QyWxService {
 	private WxUserService userservice;
 	@Autowired
 	private WxDepService depService;
+	@Autowired
+	private WxMsgReceiver receiver;
 
 	// 获取加密协议
 	public static WXBizMsgCrypt wxcpt() {
@@ -76,7 +78,7 @@ public class QyWxService {
 	public String push(WechatMsg msg) {
 		switch (msg.getMsgType().toLowerCase()) {
 		case MsgType.TEXT: // 文本消息处理
-			return WxMsgReceiver.text(msg);
+			return receiver.text(msg);
 		case MsgType.IMAGE: // 图片消息处理
 			// TODO 图片消息处理
 			return XmlResp.SUCCESS;
