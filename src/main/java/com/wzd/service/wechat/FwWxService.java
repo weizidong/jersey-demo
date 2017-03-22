@@ -11,6 +11,7 @@ import com.wzd.client.RestClientUtil;
 import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.APPType;
+import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
@@ -42,7 +43,7 @@ public class FwWxService {
 	private WxMsgReceiver receiver;
 
 	// 获取加密协议
-	public static WXBizMsgCrypt wxcpt() {
+	private static WXBizMsgCrypt wxcpt() {
 		try {
 			if (wxcpt == null) {
 				wxcpt = new WXBizMsgCrypt(Configs.bToken, Configs.bEncodingAESKey, Configs.bAppid);
@@ -54,7 +55,7 @@ public class FwWxService {
 	}
 
 	// 获取token
-	public String getToken() {
+	private String getToken() {
 		Token token = Token.get(FwAPI.TOKEN_URL, Configs.bAppid, Configs.bSecret);
 		return token.getAccess_token();
 	}
@@ -127,6 +128,33 @@ public class FwWxService {
 		}
 		session.setUser(user);
 		return session;
+	}
+
+	/**
+	 * 获取菜单
+	 */
+	public String getFwMenu() {
+		return RestClientUtil.get(MessageFormat.format(FwAPI.MENU_GET_URL, getToken()), String.class);
+	}
+
+	/**
+	 * 创建菜单
+	 */
+	public void createFwMenu(String menu) {
+		BaseResp resp = RestClientUtil.postJson(MessageFormat.format(FwAPI.MENU_CREATE_URL, getToken()), menu, BaseResp.class);
+		if (resp.getErrcode() != 0) {
+			throw new WebException(resp.getErrcode(), resp.getErrmsg());
+		}
+	}
+
+	/**
+	 * 删除菜单
+	 */
+	public void deleteFwMenu() {
+		BaseResp resp = RestClientUtil.get(MessageFormat.format(FwAPI.MENU_DELETE_URL, getToken()), BaseResp.class);
+		if (resp == null || resp.getErrcode() != 0) {
+			throw new WebException(ResponseCode.错误请求, "删除失败");
+		}
 	}
 
 }

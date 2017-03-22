@@ -2,6 +2,7 @@ package com.wzd.web.rest.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -126,6 +127,38 @@ public class WechatApi {
 	public String fwVerifyURL(@QueryParam("signature") String signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce,
 			@QueryParam("echostr") String echostr) {
 		return fwService.VerifyURL(signature, timestamp, nonce, echostr);
+	}
+
+	/**
+	 * 获取服务号自定义菜单
+	 */
+	@GET
+	@Path("/fwMenu")
+	@FormatJson(FormatJsonType.NOTSUPPORTED)
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getFwMenu() {
+		return fwService.getFwMenu();
+	}
+
+	/**
+	 * 创建服务号自定义菜单
+	 */
+	@POST
+	@Path("/fwMenu")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void createFwMenu(String menu) {
+		fwService.createFwMenu(menu);
+	}
+
+	/**
+	 * 删除服务号自定义菜单
+	 */
+	@DELETE
+	@Path("/fwMenu")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void deleteFwMenu() {
+		fwService.deleteFwMenu();
 	}
 
 }

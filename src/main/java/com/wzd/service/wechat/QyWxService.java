@@ -54,7 +54,9 @@ public class QyWxService {
 	@Autowired
 	private WxMsgReceiver receiver;
 
-	// 获取加密协议
+	/**
+	 * 获取加密协议
+	 */
 	public static WXBizMsgCrypt wxcpt() {
 		try {
 			if (wxcpt == null) {
