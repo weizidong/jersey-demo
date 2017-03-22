@@ -23,7 +23,6 @@ import com.wzd.service.wechat.QyWxService;
 import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.utils.Configs;
-import com.wzd.utils.IpUtil;
 import com.wzd.utils.StringUtil;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
@@ -48,13 +47,23 @@ public class SessionFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		// 域名
-		String hostname = IpUtil.getServerHostname(httpRequest);
+		String hostname = Configs.hostname;
 		// 请求
 		String requestUrl = httpRequest.getRequestURI().substring(1);
 		// 参数
 		String queryString = httpRequest.getQueryString();
 		if (!StringUtil.isEmpty(queryString)) {
 			requestUrl += "?" + queryString;
+		}
+		// 扫码登录
+		if (requestUrl.startsWith("loginScan")) {
+			authorize(QyAPI.LOGINPAGE, Configs.sCorpID, hostname + "rest/wechat/login", httpResponse);
+			return;
+		}
+		// 微信回调不检测
+		if (requestUrl.startsWith("rest/wechat/")) {
+			chain.doFilter(httpRequest, httpResponse);
+			return;
 		}
 		// debug模式
 		if (SessionUtil.isDebug(httpRequest)) {
@@ -64,7 +73,6 @@ public class SessionFilter implements Filter {
 		String appType = request.getParameter("appType");
 		// 回调授权code
 		String code = request.getParameter("code");
-		log.debug("域名：" + hostname);
 		log.debug("请求：" + requestUrl);
 		log.debug("appType：" + appType);
 		log.debug("code：" + code);
@@ -109,7 +117,7 @@ public class SessionFilter implements Filter {
 			SessionUtil.saveSession(session, httpRequest, httpResponse);
 		}
 		// 加载静态文件
-		if (StringUtil.isEmpty(requestUrl) || requestUrl.endsWith(".html") || requestUrl.startsWith("/view/")) {
+		if (StringUtil.isEmpty(requestUrl) || requestUrl.endsWith(".html") || requestUrl.startsWith("view/")) {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
 			return;
 		}

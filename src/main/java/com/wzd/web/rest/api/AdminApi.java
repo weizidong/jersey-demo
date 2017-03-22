@@ -115,6 +115,7 @@ public class AdminApi {
 	public void auditing(@PathParam("type") Integer type, @Context HttpServletRequest request) {
 		service.auditing(AuditType.parse(type), (Admin) SessionUtil.getUser(request));
 	}
+
 	/**
 	 * 批量导出管理员
 	 */

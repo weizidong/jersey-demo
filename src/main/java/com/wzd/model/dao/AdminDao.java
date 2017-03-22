@@ -89,4 +89,18 @@ public class AdminDao {
 			update(admin);
 		}
 	}
+
+	/**
+	 * 根据UserId或者email查找
+	 */
+	public Admin find(String userid, String email) {
+		Admin admin = new Admin();
+		if (userid != null) {
+			admin.setUserid(userid);
+		}
+		if (email != null) {
+			admin.setEmail(email);
+		}
+		return mapper.selectOne(admin);
+	}
 }

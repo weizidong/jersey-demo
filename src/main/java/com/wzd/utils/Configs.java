@@ -23,6 +23,10 @@ public class Configs {
 	 */
 	public static String version = "1.0.0";
 	/**
+	 * 本机域名
+	 */
+	public static String hostname = "127.0.0.1";
+	/**
 	 * 企业号唯一凭证
 	 */
 	public static String sCorpID = "";
@@ -59,6 +63,7 @@ public class Configs {
 		try {
 			propMap = PropertiesUtil.readPropertiesForMap(PROPERTIES);
 			version = propMap.get("version");
+			hostname = propMap.get("hostname");
 			sCorpID = propMap.get("sCorpID");
 			sSecret = propMap.get("sSecret");
 			sEncodingAESKey = propMap.get("sEncodingAESKey");

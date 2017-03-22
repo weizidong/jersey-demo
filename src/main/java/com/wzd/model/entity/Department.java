@@ -47,8 +47,7 @@ public class Department extends WxDep {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\n {");
-		sb.append("Hash : ").append(hashCode());
-		sb.append(", id:").append(super.getId());
+		sb.append("id:").append(super.getId());
 		sb.append(", name:").append(super.getName());
 		sb.append(", deleted:").append(deleted);
 		sb.append(", parentid:").append(super.getParentid());

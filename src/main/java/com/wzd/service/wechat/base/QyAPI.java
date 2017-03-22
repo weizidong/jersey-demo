@@ -20,6 +20,10 @@ public class QyAPI {
 	 */
 	public static final String AUTHORIZE = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri={1}&response_type=code&scope=snsapi_base&state={2}#wechat_redirect";
 	/**
+	 * 登录授权页，Https请求方式: GET
+	 */
+	public static final String LOGINPAGE = "https://qy.weixin.qq.com/cgi-bin/loginpage?corp_id={0}&redirect_uri={1}&state={2}&usertype=member ";
+	/**
 	 * 根据code获取成员信息，Https请求方式：GET
 	 */
 	public static final String GETUSERINFO = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token={0}&code={1}";

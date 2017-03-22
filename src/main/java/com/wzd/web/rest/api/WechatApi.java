@@ -1,6 +1,7 @@
 package com.wzd.web.rest.api;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.wzd.service.AdminService;
 import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
 import com.wzd.service.wechat.utils.AesException;
@@ -42,6 +44,8 @@ public class WechatApi {
 	private QyWxService qyService;
 	@Autowired
 	private FwWxService fwService;
+	@Autowired
+	private AdminService service;
 
 	/**
 	 * 企业号回调过来的信息(密文传输)
@@ -75,6 +79,15 @@ public class WechatApi {
 		} catch (Exception e) {
 			throw new WebException(ResponseCode.加密失败, "回包加密失败失败！");
 		}
+	}
+
+	/**
+	 * 扫码登录
+	 */
+	@Path("/login")
+	@POST
+	public void login2(@QueryParam("auth_code") String auth_code, @Context HttpServletRequest request, @Context HttpServletResponse response) {
+		service.login2(auth_code, request, response);
 	}
 
 	/**

@@ -7,9 +7,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.SslConfigurator;
-import org.junit.Test;
 
-import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.utils.SignUtil;
 import com.wzd.service.wechat.utils.WeChatXmlUtil;
 
@@ -34,9 +32,9 @@ public class RedPackService {
 		client.target(url).request(MediaType.TEXT_XML).post(Entity.entity(WeChatXmlUtil.beanToXML(redPack), MediaType.TEXT_XML));
 	}
 
-	@Test
-	public void test() {
-		RedPack redPack = new RedPack("红包name", "oPDWLv0ogagbw1PocuklciM2Ea0M", 1, "红包wishing", "红包act_name", "红包remark", "红包risk_info");
-		sendRedPack(FwAPI.SEND_REDPACK, redPack);
-	}
+//	@Test
+//	public void test() {
+//		RedPack redPack = new RedPack("红包name", "oPDWLv0ogagbw1PocuklciM2Ea0M", 1, "红包wishing", "红包act_name", "红包remark", "红包risk_info");
+//		sendRedPack(FwAPI.SEND_REDPACK, redPack);
+//	}
 }

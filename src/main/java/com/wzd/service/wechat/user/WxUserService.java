@@ -110,4 +110,20 @@ public class WxUserService {
 		}
 		return resp.getUserlist();
 	}
+
+	/**
+	 * 获取登录成员信息
+	 * 
+	 * @return
+	 */
+	public Admin getLoginInfo(String auth_code) {
+		String path = MessageFormat.format(QyAPI.GET_LOGIN_INFO, getToken());
+		Map<String, Object> param = new HashMap<>();
+		param.put("auth_code", auth_code);
+		LoginQyUser resp = RestClientUtil.postJson(path, param, LoginQyUser.class);
+		if (resp != null) {
+			return resp.getUser_info();
+		}
+		return null;
+	}
 }

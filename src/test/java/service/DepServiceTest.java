@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wzd.model.entity.Department;
+import com.wzd.model.enums.DeleteType;
 import com.wzd.service.DepartmentService;
 
 import dao.BasicTest;
@@ -16,6 +17,7 @@ public class DepServiceTest extends BasicTest {
 	public void test1() {
 		Department dep = new Department();
 		dep.setId(1);
+		dep.setDeleted(DeleteType.未删除.getValue());
 		dep = service.findTree(dep);
 		System.out.println(dep);
 	}

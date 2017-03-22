@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-03-20 17:52:36
+Date: 2017-03-22 11:45:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -109,9 +109,9 @@ CREATE TABLE `files` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `name` varchar(50) DEFAULT NULL COMMENT '文件名',
   `url` varchar(200) DEFAULT NULL COMMENT 'url地址',
-  `fk` int(11) DEFAULT NULL COMMENT '外键',
+  `fk` varchar(20) DEFAULT NULL COMMENT '外键',
   `suffix` varchar(10) DEFAULT NULL COMMENT '后缀名',
-  `userId` int(11) NOT NULL COMMENT '上传者',
+  `userId` varchar(20) NOT NULL COMMENT '上传者',
   `created` datetime NOT NULL COMMENT '上传时间',
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `deleted` int(1) NOT NULL DEFAULT '0' COMMENT '删除标志，0：未删除；1：回收站；2：永久删除',
