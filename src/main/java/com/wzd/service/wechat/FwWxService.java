@@ -43,7 +43,7 @@ public class FwWxService {
 	private WxMsgReceiver receiver;
 
 	// 获取加密协议
-	private static WXBizMsgCrypt wxcpt() {
+	public static WXBizMsgCrypt wxcpt() {
 		try {
 			if (wxcpt == null) {
 				wxcpt = new WXBizMsgCrypt(Configs.bToken, Configs.bEncodingAESKey, Configs.bAppid);
