@@ -5,9 +5,9 @@
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="userid" jdbcType="VARCHAR" property="userid" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userid" jdbcType="VARCHAR" property="userid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="departments" jdbcType="VARCHAR" property="departments" />
     <result column="position" jdbcType="VARCHAR" property="position" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="gender" jdbcType="CHAR" property="gender" />
@@ -16,14 +16,14 @@
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="extattr" jdbcType="VARCHAR" property="extattr" />
+    <result column="departments" jdbcType="VARCHAR" property="departments" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="deleted" jdbcType="INTEGER" property="deleted" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="auth" jdbcType="VARCHAR" property="auth" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
-    <result column="uname" jdbcType="VARCHAR" property="uname" />
     <result column="pwd" jdbcType="VARCHAR" property="pwd" />
-    <result column="loginTime" jdbcType="TIMESTAMP" property="logintime" />
+    <result column="login" jdbcType="TIMESTAMP" property="login" />
     <result column="audit" jdbcType="INTEGER" property="audit" />
   </resultMap>
 </mapper>

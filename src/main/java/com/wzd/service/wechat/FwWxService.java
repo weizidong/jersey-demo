@@ -2,6 +2,7 @@ package com.wzd.service.wechat;
 
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -164,7 +165,11 @@ public class FwWxService {
 			return XmlResp.SUCCESS;
 		}
 		FwUserList resp = FwUserApi.getList(next_openid);
-		FwUserApi.getList(next_openid).getOpenids().forEach(openid -> dao.save(FwUserApi.get(openid)));
+		List<String> openids = resp.getOpenids();
+		if (openids == null || openids.size() == 0) {
+			return XmlResp.SUCCESS;
+		}
+		openids.forEach(openid -> dao.save(FwUserApi.get(openid)));
 		return syncUser(resp.getNext_openid() == null ? "OVER" : resp.getNext_openid());
 	}
 }

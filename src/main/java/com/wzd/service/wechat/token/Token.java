@@ -63,7 +63,7 @@ public class Token extends BaseResp {
 
 	public static Token get(String path, String appid, String secrect) {
 		Token token = (Token) EhcacheUtil.getInstance().get(EhcacheUtil.TOKEN, appid);
-		if (token != null && System.currentTimeMillis() - token.getTimestamp() > token.getExpires_in() * 1000) {
+		if (token != null && System.currentTimeMillis() - token.getTimestamp() < token.getExpires_in() * 1000) {
 			return token;
 		}
 		token = RestClientUtil.get(MessageFormat.format(path, appid, secrect), Token.class);

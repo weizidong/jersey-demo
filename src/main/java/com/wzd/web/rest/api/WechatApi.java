@@ -163,9 +163,9 @@ public class WechatApi {
 	 * 同步服务号
 	 */
 	@GET
-	@Path("/sync")
+	@Path("/syncFw")
 	public String syncFw() {
-		return fwService.syncUser(null);
+		return fwService.syncUser("");
 	}
 
 }

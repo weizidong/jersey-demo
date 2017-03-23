@@ -7,7 +7,6 @@ import com.wzd.model.dao.AdminDao;
 import com.wzd.model.dao.UserDao;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
-import com.wzd.service.wechat.user.QyUserApi;
 import com.wzd.utils.Configs;
 import com.wzd.utils.StringUtil;
 import com.wzd.web.param.wechat.WechatMsg;
@@ -24,8 +23,6 @@ public class Event {
 	private UserDao userDao;
 	@Autowired
 	private AdminDao adminDao;
-	@Autowired
-	private QyUserApi userService;
 
 	/**
 	 * 处理事件

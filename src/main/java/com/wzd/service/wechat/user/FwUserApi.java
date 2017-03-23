@@ -27,7 +27,7 @@ public class FwUserApi {
 	public static User get(String openid) {
 		String path = MessageFormat.format(FwAPI.USER_INFO, FwWxService.getToken(), openid);
 		User resp = RestClientUtil.get(path, User.class);
-		if (resp.getErrcode() != 0) {
+		if (resp.getErrcode()  != null) {
 			throw new WebException(resp.getErrcode(), resp.getErrmsg());
 		}
 		return resp;
