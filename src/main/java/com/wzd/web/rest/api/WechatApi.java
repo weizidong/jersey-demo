@@ -82,7 +82,7 @@ public class WechatApi {
 	 * 同步企业号
 	 */
 	@GET
-	@Path("/sync")
+	@Path("/syncQy")
 	public String sync() {
 		return qyService.sync();
 	}

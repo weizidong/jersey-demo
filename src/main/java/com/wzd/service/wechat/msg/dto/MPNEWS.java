@@ -13,6 +13,11 @@ import java.util.List;
 public class MPNEWS implements Serializable {
 	private List<ARTICLE> articles;
 
+	public MPNEWS(List<ARTICLE> articles) {
+		super();
+		this.articles = articles;
+	}
+
 	public List<ARTICLE> getArticles() {
 		return articles;
 	}

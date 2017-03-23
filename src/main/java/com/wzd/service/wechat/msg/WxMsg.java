@@ -1,7 +1,10 @@
 package com.wzd.service.wechat.msg;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.wzd.service.wechat.base.MsgType;
+import com.wzd.service.wechat.msg.dto.ARTICLE;
 import com.wzd.service.wechat.msg.dto.FILE;
 import com.wzd.service.wechat.msg.dto.IMAGE;
 import com.wzd.service.wechat.msg.dto.MPNEWS;
@@ -36,6 +39,38 @@ public class WxMsg implements Serializable {
 	private FILE file; // file消息
 	private NEWS news; // news消息
 	private MPNEWS mpnews; // mpnews消息
+
+	public WxMsg(String touser, String toparty, String totag, String msgtype, Integer agentid, Integer safe, TEXT text, IMAGE image, VOICE voice, VIDEO video, MUSIC music,
+			WXCARD wxcard, FILE file, NEWS news, MPNEWS mpnews) {
+		super();
+		this.touser = touser;
+		this.toparty = toparty;
+		this.totag = totag;
+		this.msgtype = msgtype;
+		this.agentid = agentid;
+		this.safe = safe;
+		this.text = text;
+		this.image = image;
+		this.voice = voice;
+		this.video = video;
+		this.music = music;
+		this.wxcard = wxcard;
+		this.file = file;
+		this.news = news;
+		this.mpnews = mpnews;
+	}
+
+	public WxMsg(String touser, TEXT text) {
+		this(touser, null, null, MsgType.TEXT, null, null, text, null, null, null, null, null, null, null, null);
+	}
+
+	public WxMsg(String touser, NEWS news) {
+		this(touser, null, null, MsgType.NEWS, null, null, null, null, null, null, null, null, null, news, null);
+	}
+
+	public WxMsg(String touser, MPNEWS mpnews) {
+		this(touser, null, null, MsgType.MPNEWS, null, null, null, null, null, null, null, null, null, null, mpnews);
+	}
 
 	public String getTouser() {
 		return touser;
@@ -162,6 +197,27 @@ public class WxMsg implements Serializable {
 		return "[touser=" + touser + ", toparty=" + toparty + ", totag=" + totag + ", msgtype=" + msgtype + ", agentid=" + agentid + ", safe=" + safe + ", text=" + text
 				+ ", image=" + image + ", voice=" + voice + ", video=" + video + ", music=" + music + ", wxcard=" + wxcard + ", file=" + file + ", news=" + news + ", mpnews="
 				+ mpnews + "]";
+	}
+
+	/**
+	 * 生成text消息
+	 */
+	public static WxMsg generateText(String touser, String content) {
+		return new WxMsg(touser, new TEXT(content));
+	}
+
+	/**
+	 * 生成news消息
+	 */
+	public static WxMsg generateNews(String touser, List<ARTICLE> articles) {
+		return new WxMsg(touser, new NEWS(articles));
+	}
+
+	/**
+	 * 生成mpNews消息
+	 */
+	public static WxMsg generateMpNews(String touser, List<ARTICLE> articles) {
+		return new WxMsg(touser, new MPNEWS(articles));
 	}
 
 }

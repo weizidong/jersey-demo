@@ -58,6 +58,7 @@ public class WxMsgReceiver {
 		Wxactivity activity = dao.findByCommand(msg.getContent());
 		if (activity == null || AuditType.审核通过.getValue() != activity.getAudit() || DeleteType.未删除.getValue() != activity.getDeleted()
 				|| StateType.启用.getValue() != activity.getStatus()) {
+			WxMsgSender.sendTextToFw(WxMsg.generateText(msg.getFromUserName(), "你才" + msg.getContent()));
 			return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "找不到活动,文字消息处理");
 		}
 		// TODO 验证是否重复

@@ -47,7 +47,7 @@ public class FwUserList extends BaseResp {
 	}
 
 	public List<String> getOpenids() {
-		return data.get("openid");
+		return data == null ? null : data.get("openid");
 	}
 
 	public void setData(List<String> openids) {
