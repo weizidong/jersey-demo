@@ -49,7 +49,7 @@ public class VIDEO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "VIDEO [media_id=" + media_id + ", thumb_media_id=" + thumb_media_id + ", title=" + title + ", description=" + description + "]";
+		return "[media_id=" + media_id + ", thumb_media_id=" + thumb_media_id + ", title=" + title + ", description=" + description + "]";
 	}
 
 }

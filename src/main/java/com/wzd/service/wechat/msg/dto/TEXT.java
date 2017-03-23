@@ -22,7 +22,7 @@ public class TEXT implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TEXT [content=" + content + "]";
+		return "[content=" + content + "]";
 	}
 
 }

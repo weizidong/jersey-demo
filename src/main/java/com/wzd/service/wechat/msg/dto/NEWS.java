@@ -23,7 +23,7 @@ public class NEWS implements Serializable {
 
 	@Override
 	public String toString() {
-		return "NEWS [articles=" + articles + "]";
+		return "[articles=" + articles + "]";
 	}
 
 }

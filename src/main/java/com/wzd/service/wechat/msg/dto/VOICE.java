@@ -22,7 +22,7 @@ public class VOICE implements Serializable {
 
 	@Override
 	public String toString() {
-		return "VOICE [media_id=" + media_id + "]";
+		return "[media_id=" + media_id + "]";
 	}
 
 }

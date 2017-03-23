@@ -24,10 +24,6 @@ public class WxMsgSender {
 
 	/**
 	 * 发送消息
-	 * 
-	 * @param path
-	 * @param token
-	 * @param msg
 	 */
 	private static void sendText(String path, String token, WxMsg msg) {
 		String uri = MessageFormat.format(path, token);
@@ -40,8 +36,6 @@ public class WxMsgSender {
 
 	/**
 	 * 推送消息到企业号
-	 * 
-	 * @param msg
 	 */
 	public static void sendTextToQy(WxMsg msg) {
 		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
@@ -50,8 +44,6 @@ public class WxMsgSender {
 
 	/**
 	 * 推送消息到服务号
-	 * 
-	 * @param msg
 	 */
 	public static void sendTextToFw(WxMsg msg) {
 		Token token = Token.get(FwAPI.TOKEN, Configs.bAppid, Configs.bSecret);

@@ -159,7 +159,7 @@ public class WxMsg implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BaseMsg [touser=" + touser + ", toparty=" + toparty + ", totag=" + totag + ", msgtype=" + msgtype + ", agentid=" + agentid + ", safe=" + safe + ", text=" + text
+		return "[touser=" + touser + ", toparty=" + toparty + ", totag=" + totag + ", msgtype=" + msgtype + ", agentid=" + agentid + ", safe=" + safe + ", text=" + text
 				+ ", image=" + image + ", voice=" + voice + ", video=" + video + ", music=" + music + ", wxcard=" + wxcard + ", file=" + file + ", news=" + news + ", mpnews="
 				+ mpnews + "]";
 	}

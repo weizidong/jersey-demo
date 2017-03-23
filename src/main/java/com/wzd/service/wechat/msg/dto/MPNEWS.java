@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * mpnews消息体
+ * mpNews消息体
  * 
  * @author WeiZiDong
  *
@@ -23,7 +23,7 @@ public class MPNEWS implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MPNEWS [articles=" + articles + "]";
+		return "[articles=" + articles + "]";
 	}
 
 }

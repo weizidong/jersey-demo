@@ -22,7 +22,7 @@ public class FILE implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FILE [media_id=" + media_id + "]";
+		return "[media_id=" + media_id + "]";
 	}
 
 }

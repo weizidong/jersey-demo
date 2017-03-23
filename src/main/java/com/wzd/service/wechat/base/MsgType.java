@@ -36,25 +36,29 @@ public abstract class MsgType {
 	 */
 	public static final String LINK = "link";
 	/**
-	 * file消息
+	 * file消息(发送)
 	 */
 	public static final String FILE = "file";
 	/**
-	 * 音乐消息
+	 * 音乐消息(发送)
 	 */
 	public static final String MUSIC = "music";
+	/**
+	 * news消息(发送)
+	 */
+	public static final String NEWS = "news";
+	/**
+	 * mpNews消息(发送)
+	 */
+	public static final String MPNEWS = "mpnews";
+	/**
+	 * 卡券消息(发送)
+	 */
+	public static final String WXCARD = "wxcard";
 	/**
 	 * 事件推送
 	 */
 	public static final String EVENT = "event";
-	/**
-	 * news消息
-	 */
-	public static final String NEWS = "news";
-	/**
-	 * mpnews消息
-	 */
-	public static final String MPNEWS = "mpnews";
 
 	/**
 	 * 事件具体类型

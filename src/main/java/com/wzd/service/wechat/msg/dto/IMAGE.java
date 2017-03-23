@@ -22,7 +22,7 @@ public class IMAGE implements Serializable {
 
 	@Override
 	public String toString() {
-		return "IMAGE [media_id=" + media_id + "]";
+		return "[media_id=" + media_id + "]";
 	}
 
 }

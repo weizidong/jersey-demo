@@ -3,7 +3,7 @@ package com.wzd.service.wechat.msg.dto;
 import java.io.Serializable;
 
 /**
- * news消息和mpnews消息的消息内容
+ * news消息和mpNews消息的消息内容
  * 
  * @author WeiZiDong
  *
@@ -104,7 +104,7 @@ public class ARTICLE implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ARTICLE [title=" + title + ", description=" + description + ", url=" + url + ", picurl=" + picurl + ", thumb_media_id=" + thumb_media_id + ", author=" + author
+		return "[title=" + title + ", description=" + description + ", url=" + url + ", picurl=" + picurl + ", thumb_media_id=" + thumb_media_id + ", author=" + author
 				+ ", content_source_url=" + content_source_url + ", content=" + content + ", digest=" + digest + ", show_cover_pic=" + show_cover_pic + "]";
 	}
 

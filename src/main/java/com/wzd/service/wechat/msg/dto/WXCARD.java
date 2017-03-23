@@ -31,7 +31,7 @@ public class WXCARD implements Serializable {
 
 	@Override
 	public String toString() {
-		return "WXCARD [card_id=" + card_id + ", card_ext=" + card_ext + "]";
+		return "[card_id=" + card_id + ", card_ext=" + card_ext + "]";
 	}
 
 }

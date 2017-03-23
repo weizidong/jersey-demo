@@ -2,7 +2,6 @@ package com.wzd.service.wechat;
 
 import java.text.MessageFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
