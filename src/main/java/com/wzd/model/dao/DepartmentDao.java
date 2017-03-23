@@ -26,6 +26,7 @@ public class DepartmentDao {
 	 * 创建
 	 */
 	public void create(Department dep) {
+		dep.setDeleted(DeleteType.未删除.getValue());
 		mapper.insert(dep);
 	}
 

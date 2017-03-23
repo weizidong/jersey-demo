@@ -32,7 +32,7 @@ public class WxDepService {
 	 */
 	public Department create(Department dep) {
 		String path = MessageFormat.format(QyAPI.CREATE_DEPARTMENT, getToken());
-		WxDep resp = RestClientUtil.postJson(path, dep, WxDep.class);
+		Department resp = RestClientUtil.postJson(path, dep, Department.class);
 		if (resp.getErrcode() != 0) {
 			throw new WebException(resp.getErrcode(), resp.getErrmsg());
 		}
@@ -43,7 +43,7 @@ public class WxDepService {
 	/**
 	 * 更新部门
 	 */
-	public void update(WxDep dep) {
+	public void update(Department dep) {
 		String path = MessageFormat.format(QyAPI.UPDATE_DEPARTMENT, getToken());
 		BaseResp resp = RestClientUtil.postJson(path, dep, BaseResp.class);
 		if (resp.getErrcode() != 0) {

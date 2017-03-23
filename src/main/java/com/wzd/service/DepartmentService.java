@@ -34,7 +34,7 @@ public class DepartmentService {
 	public void create(Department dep, HttpServletRequest request) {
 		Admin admin = (Admin) SessionUtil.getUser(request);
 		dep = wxService.create(dep);
-		dep.setAdmin(admin.getUserid());
+		dep.setAdmin(admin.getId());
 		dao.create(dep);
 	}
 

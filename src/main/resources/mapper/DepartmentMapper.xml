@@ -9,7 +9,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="parentid" jdbcType="INTEGER" property="parentid" />
     <result column="orders" jdbcType="INTEGER" property="orders" />
-    <result column="admin" jdbcType="VARCHAR" property="admin" />
+    <result column="admin" jdbcType="INTEGER" property="admin" />
     <result column="deleted" jdbcType="INTEGER" property="deleted" />
   </resultMap>
 </mapper>
