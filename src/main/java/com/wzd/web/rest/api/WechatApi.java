@@ -135,7 +135,6 @@ public class WechatApi {
 	@GET
 	@Path("/fwMenu")
 	@FormatJson(FormatJsonType.NOTSUPPORTED)
-	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getFwMenu() {
 		return fwService.getFwMenu();
@@ -146,7 +145,7 @@ public class WechatApi {
 	 */
 	@POST
 	@Path("/fwMenu")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.TEXT_PLAIN)
 	public void createFwMenu(String menu) {
 		fwService.createFwMenu(menu);
 	}
@@ -156,7 +155,6 @@ public class WechatApi {
 	 */
 	@DELETE
 	@Path("/fwMenu")
-	@Produces(MediaType.TEXT_PLAIN)
 	public void deleteFwMenu() {
 		fwService.deleteFwMenu();
 	}

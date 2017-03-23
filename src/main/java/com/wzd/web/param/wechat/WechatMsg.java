@@ -39,6 +39,7 @@ public class WechatMsg implements Serializable {
 	private String Event; // 事件类型
 	/** ==========事件KEY值 **/
 	private String EventKey; // 事件KEY值，qrscene_为前缀，后面为二维码的参数值
+	private String MenuId; // 点击事件的菜单ID
 	/** ==========SCAN/subscribe **/
 	private String Ticket; // 二维码的ticket，可用来换取二维码图片
 	private String ScanCodeInfo; // 二扫描信息
@@ -233,6 +234,14 @@ public class WechatMsg implements Serializable {
 		EventKey = eventKey;
 	}
 
+	public String getMenuId() {
+		return MenuId;
+	}
+
+	public void setMenuId(String menuId) {
+		MenuId = menuId;
+	}
+
 	public String getTicket() {
 		return Ticket;
 	}
@@ -374,10 +383,10 @@ public class WechatMsg implements Serializable {
 		return "[ToUserName=" + ToUserName + ", FromUserName=" + FromUserName + ", CreateTime=" + CreateTime + ", MsgId=" + MsgId + ", MsgType=" + MsgType + ", AgentID=" + AgentID
 				+ ", Content=" + Content + ", PicUrl=" + PicUrl + ", MediaId=" + MediaId + ", Format=" + Format + ", Recognition=" + Recognition + ", ThumbMediaId=" + ThumbMediaId
 				+ ", Location_X=" + Location_X + ", Location_Y=" + Location_Y + ", Scale=" + Scale + ", Label=" + Label + ", Title=" + Title + ", Description=" + Description
-				+ ", Url=" + Url + ", Event=" + Event + ", EventKey=" + EventKey + ", Ticket=" + Ticket + ", ScanCodeInfo=" + ScanCodeInfo + ", ScanType=" + ScanType
-				+ ", ScanResult=" + ScanResult + ", SendPicsInfo=" + SendPicsInfo + ", Count=" + Count + ", PicList=" + PicList + ", PicMd5Sum=" + PicMd5Sum + ", Latitude="
-				+ Latitude + ", Longitude=" + Longitude + ", Precision=" + Precision + ", Poiname=" + Poiname + ", SendLocationInfo=" + SendLocationInfo + ", JobId=" + JobId
-				+ ", JobType=" + JobType + ", ErrCode=" + ErrCode + ", ErrMsg=" + ErrMsg + "]";
+				+ ", Url=" + Url + ", Event=" + Event + ", EventKey=" + EventKey + ", MenuId=" + MenuId + ", Ticket=" + Ticket + ", ScanCodeInfo=" + ScanCodeInfo + ", ScanType="
+				+ ScanType + ", ScanResult=" + ScanResult + ", SendPicsInfo=" + SendPicsInfo + ", Count=" + Count + ", PicList=" + PicList + ", PicMd5Sum=" + PicMd5Sum
+				+ ", Latitude=" + Latitude + ", Longitude=" + Longitude + ", Precision=" + Precision + ", Poiname=" + Poiname + ", SendLocationInfo=" + SendLocationInfo
+				+ ", JobId=" + JobId + ", JobType=" + JobType + ", ErrCode=" + ErrCode + ", ErrMsg=" + ErrMsg + "]";
 	}
 
 }

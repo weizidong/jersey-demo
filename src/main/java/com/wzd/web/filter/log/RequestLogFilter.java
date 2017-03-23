@@ -61,8 +61,7 @@ public class RequestLogFilter implements ContainerRequestFilter, ContainerRespon
 	}
 
 	@Override
-	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
-			throws IOException {
+	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
 
 		Object requestLogProperty = requestContext.getProperty(RequestLogFilter.REQUEST_LOG_PROPERTY);
 
@@ -93,8 +92,7 @@ public class RequestLogFilter implements ContainerRequestFilter, ContainerRespon
 		String responseJson = "";
 		try {
 			if (obj != null) {
-				if (obj instanceof Integer || obj instanceof Double || obj instanceof Float || obj instanceof Long
-						|| obj instanceof Boolean || obj instanceof String) {
+				if (obj instanceof Integer || obj instanceof Double || obj instanceof Float || obj instanceof Long || obj instanceof Boolean || obj instanceof String) {
 					responseJson = String.valueOf(obj);
 				} else {
 					responseJson = JSON.toJSONString(obj);
@@ -120,7 +118,7 @@ public class RequestLogFilter implements ContainerRequestFilter, ContainerRespon
 		String line = null;
 		try {
 			while ((line = reader.readLine()) != null) {
-				sb.append(line);
+				sb.append(line.replaceAll(" ", "") + "\n");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
