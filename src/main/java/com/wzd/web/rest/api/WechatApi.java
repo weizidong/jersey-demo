@@ -159,4 +159,13 @@ public class WechatApi {
 		fwService.deleteFwMenu();
 	}
 
+	/**
+	 * 同步服务号
+	 */
+	@GET
+	@Path("/sync")
+	public String syncFw() {
+		return fwService.syncUser(null);
+	}
+
 }

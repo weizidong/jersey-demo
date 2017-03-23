@@ -28,7 +28,7 @@ public class WxMsgSender {
 	private static void sendText(String path, String token, WxMsg msg) {
 		String uri = MessageFormat.format(path, token);
 		BaseResp resp = RestClientUtil.postJson(uri, msg, BaseResp.class);
-		if (resp == null || resp.getErrcode() != 0) {
+		if (resp != null && resp.getErrcode() != 0) {
 			log.error(resp);
 			throw new WebException(resp.getErrcode(), resp.getErrmsg());
 		}

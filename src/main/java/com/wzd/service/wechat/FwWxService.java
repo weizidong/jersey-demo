@@ -159,15 +159,12 @@ public class FwWxService {
 	/**
 	 * 同步服务号获取用户列表
 	 */
-	public void syncUser(String next_openid) {
+	public String syncUser(String next_openid) {
 		if (next_openid != null && next_openid.equals("OVER")) {
-			return;
+			return XmlResp.SUCCESS;
 		}
 		FwUserList resp = FwUserApi.getList(next_openid);
-		resp.getOpenids().forEach(openid -> {
-			// TODO 获取用户详情，并更新到本地
-
-		});
-		syncUser(resp.getNext_openid() == null ? "OVER" : resp.getNext_openid());
+		FwUserApi.getList(next_openid).getOpenids().forEach(openid -> dao.save(FwUserApi.get(openid)));
+		return syncUser(resp.getNext_openid() == null ? "OVER" : resp.getNext_openid());
 	}
 }

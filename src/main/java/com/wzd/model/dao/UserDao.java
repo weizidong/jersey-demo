@@ -30,11 +30,10 @@ public class UserDao {
 	}
 
 	/**
-	 * 更新用户
+	 * 更新用户(所有不为空的字段)
 	 */
 	public void update(User user) {
-		// TODO 更新用户
-
+		mapper.updateByPrimaryKeySelective(user);
 	}
 
 	/**
@@ -52,5 +51,18 @@ public class UserDao {
 		user.setStatus(AuditType.未审核.getValue());
 		user.setUpdated(new Date());
 		mapper.insert(user);
+	}
+
+	/**
+	 * 创建或更新user
+	 */
+	public void save(User user) {
+		User db = getByOpenId(user.getOpenid());
+		if (db == null) {
+			create(user);
+		} else {
+			user.setId(db.getId());
+			update(user);
+		}
 	}
 }
