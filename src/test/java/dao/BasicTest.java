@@ -6,7 +6,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 
- * @author wzd
+ * @author WeiZiDong
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)

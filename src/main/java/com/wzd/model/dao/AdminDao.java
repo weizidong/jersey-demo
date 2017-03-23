@@ -67,11 +67,11 @@ public class AdminDao {
 	}
 
 	/**
-	 * 根据用户名获取用户信息
+	 * 根据电话号码获取用户信息
 	 */
-	public Admin getByUname(String uname, DeleteType type) {
+	public Admin getByMobile(String mobile, DeleteType type) {
 		Admin admin = new Admin();
-		admin.setUname(uname);
+		admin.setMobile(mobile);
 		admin.setDeleted(type.getValue());
 		return admin;
 	}

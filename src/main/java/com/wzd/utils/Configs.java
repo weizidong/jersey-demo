@@ -43,6 +43,10 @@ public class Configs {
 	 */
 	public static String sToken = "";
 	/**
+	 * 服务号原始ID
+	 */
+	public static String bId = "";
+	/**
 	 * 服务号唯一凭证
 	 */
 	public static String bAppid = "";
@@ -68,6 +72,7 @@ public class Configs {
 			sSecret = propMap.get("sSecret");
 			sEncodingAESKey = propMap.get("sEncodingAESKey");
 			sToken = propMap.get("sToken");
+			bId = propMap.get("bId");
 			bAppid = propMap.get("bAppid");
 			bSecret = propMap.get("bSecret");
 			bEncodingAESKey = propMap.get("bEncodingAESKey");

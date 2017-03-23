@@ -99,7 +99,7 @@ public class SessionFilter implements Filter {
 		}
 		// 服务号未授权
 		if (APPType.服务号.getValue().equals(appType) && SessinId == null) {
-			authorize(FwAPI.AUTHORIZE_URL, Configs.bAppid, hostname + requestUrl, httpResponse);
+			authorize(FwAPI.AUTHORIZE, Configs.bAppid, hostname + requestUrl, httpResponse);
 			return;
 		}
 		// 管理平台未登录

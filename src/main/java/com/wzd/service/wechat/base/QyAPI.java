@@ -6,7 +6,7 @@ package com.wzd.service.wechat.base;
  * @author WeiZiDong
  *
  */
-public class QyAPI {
+public abstract class QyAPI {
 	/**
 	 * 获取AccessToken，Https请求方式: GET
 	 */

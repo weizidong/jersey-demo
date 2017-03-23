@@ -21,8 +21,8 @@ import com.wzd.service.wechat.department.WxDepService;
 import com.wzd.service.wechat.event.Event;
 import com.wzd.service.wechat.msg.WxMsgReceiver;
 import com.wzd.service.wechat.token.Token;
-import com.wzd.service.wechat.user.QyUser;
-import com.wzd.service.wechat.user.WxUserService;
+import com.wzd.service.wechat.user.QyUserApi;
+import com.wzd.service.wechat.user.dto.QyUser;
 import com.wzd.service.wechat.utils.AesException;
 import com.wzd.service.wechat.utils.WXBizMsgCrypt;
 import com.wzd.utils.Configs;
@@ -48,11 +48,11 @@ public class QyWxService {
 	@Autowired
 	private DepartmentDao depDao;
 	@Autowired
-	private WxUserService userservice;
-	@Autowired
 	private WxDepService depService;
 	@Autowired
 	private WxMsgReceiver receiver;
+	@Autowired
+	private Event event;
 
 	/**
 	 * 获取加密协议
@@ -69,7 +69,7 @@ public class QyWxService {
 	}
 
 	// 获取token
-	private static String getToken() {
+	public static String getToken() {
 		Token token = Token.get(QyAPI.GETTOKEN, Configs.sCorpID, Configs.sSecret);
 		return token.getAccess_token();
 	}
@@ -79,28 +79,22 @@ public class QyWxService {
 	 */
 	public String push(WechatMsg msg) {
 		switch (msg.getMsgType().toLowerCase()) {
-		case MsgType.TEXT: // 文本消息处理
+		case MsgType.TEXT:
 			return receiver.text(msg);
-		case MsgType.IMAGE: // 图片消息处理
-			// TODO 图片消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.VOICE: // 语音消息处理
-			// TODO 语音消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.VIDEO: // 视频消息处理
-			// TODO 视频消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.SHORTVIDEO: // 小视频消息处理
-			// TODO 小视频消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.LOCATION: // 地理位置消息处理
-			// TODO 地理位置消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.LINK: // 链接消息处理
-			// TODO 链接消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.EVENT: // 事件处理
-			return Event.push(msg);
+		case MsgType.IMAGE:
+			return receiver.img(msg);
+		case MsgType.VOICE:
+			return receiver.voice(msg);
+		case MsgType.VIDEO:
+			return receiver.video(msg);
+		case MsgType.SHORTVIDEO:
+			return receiver.shortvideo(msg);
+		case MsgType.LOCATION:
+			return receiver.location(msg);
+		case MsgType.LINK:
+			return receiver.link(msg);
+		case MsgType.EVENT:
+			return event.push(msg);
 		default:
 			return XmlResp.SUCCESS;
 		}
@@ -156,9 +150,8 @@ public class QyWxService {
 		List<Department> deps = depService.getDepList(null);
 		deps.forEach(dep -> {
 			depDao.save(dep);
-			List<Admin> admins = userservice.list(dep.getId());
+			List<Admin> admins = QyUserApi.list(dep.getId());
 			admins.forEach(admin -> {
-				admin.setDepartments(admin.getDepartment());
 				adminDao.save(admin);
 			});
 		});

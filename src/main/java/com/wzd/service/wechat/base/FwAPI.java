@@ -1,109 +1,93 @@
 package com.wzd.service.wechat.base;
 
 /**
- * 微信公众平台api接口常量
+ * 微信公众平台API接口常量
  * 
  * @author WeiZiDong
  * 
  */
-public class FwAPI {
+public abstract class FwAPI {
+	// ======================== 微信网页授权 ============================
+	/**
+	 * 用户同意授权，获取code，请求方式: GET
+	 */
+	public static final String AUTHORIZE = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri={1}&response_type=code&scope=SCOPE&state={2}#wechat_redirect";
+	/**
+	 * 通过code换取网页授权access_token，请求方式: GET
+	 */
+	public static final String ACCESS_TOKEN = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code";
+	/**
+	 * 通过code换取网页授权access_token，请求方式: GET
+	 */
+	public static final String REFRESH_TOKEN = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid={0}&grant_type=refresh_token&refresh_token={1}";
+	/**
+	 * 拉取用户信息(需scope为 snsapi_userinfo)，请求方式: GET
+	 */
+	public static final String USERINFO = "https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN ";
 
+	// ======================== ACCESS_TOKEN ============================
 	/**
-	 * 获取access token的URL，http请求方式: GET
+	 * 获取access_token，请求方式: GET
 	 */
-	public static final String TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
+	public static final String TOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
 
+	// ======================== 自定义菜单 ============================
 	/**
-	 * 发送消息，http请求方式: POST
+	 * 自定义菜单创建接口，请求方式: POST
 	 */
-	public static final String SEND_MSG = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}";
+	public static final String CREATE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}";
 	/**
-	 * 授权的URL，http请求方式: GET
+	 * 自定义菜单查询接口，请求方式: GET
 	 */
-	public static final String AUTHORIZE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&&redirect_uri={1}&response_type=code&scope=snsapi_userinfo&state={2}#wechat_redirect";
+	public static final String GET_MENU = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token={0}";
 	/**
-	 * 自定义菜单创建接口，http请求方式：POST（请使用https协议）
+	 * 自定义菜单删除接口，请求方式: GET
 	 */
-	public static final String MENU_CREATE_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}";
+	public static final String DELETE_MENU = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token={0}";
+	// ======================== 消息 ============================
 	/**
-	 * 自定义菜单查询接口，http请求方式：GET
+	 * 发送模板消息，请求方式: POST
 	 */
-	public static final String MENU_GET_URL = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token={0}";
+	public static final String SEND_TEMPLATE = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}";
 	/**
-	 * 自定义菜单删除接口，http请求方式：GET
+	 * 客服接口-发消息，请求方式: POST
 	 */
-	public static final String MENU_DELETE_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token={0}";
+	public static final String SEND_CUSTOM = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}";
 	/**
-	 * 发送客服消息URL
+	 * 根据OpenID列表群发【订阅号不可用，服务号认证后可用】，请求方式: POST
 	 */
-	public static final String CUSTOMER_SERVICE_URL = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={0}";
-
+	public static final String SEND_MASS = "https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token={0}";
+	// ======================== 用户 ============================
 	/**
-	 * 第三方发送消息给设备主人的微信端，并最终送达设备的URL
+	 * 获取用户基本信息（包括UnionID机制），请求方式: GET
 	 */
-	public static final String TRANSMSG_URL = "https://api.weixin.qq.com/device/transmsg?access_token={0}";
-
+	public static final String USER_INFO = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN";
 	/**
-	 * 获取设备绑定openid的URL
+	 * 批量获取用户基本信息，请求方式: POST
 	 */
-	public static final String GET_DEVICE_OPENID_URL = "http://api.weixin.qq.com/device/get_openid?access_token={0}&device_type={1}&device_id={2}";
-
+	public static final String BATCHGET_INFO = "https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token={0}";
 	/**
-	 * 上传媒体文件
+	 * 获取用户列表，请求方式: GET
 	 */
-	public static final String UPLOAD_MEDIA_URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token={0}&type={1}";
-
+	public static final String GET_USER = "https://api.weixin.qq.com/cgi-bin/user/get?access_token={0}&next_openid={1}";
 	/**
-	 * 通过code换取网页授权access_token的URL
+	 * 设置用户备注名，请求方式: POST
 	 */
-	public static final String GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code";
-
+	public static final String UPDATEREMARK = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token={0}";
+	// ======================== 素材 ============================
 	/**
-	 * 刷新access_token，由于access_token拥有较短的有效期，当access_token超时后，
-	 * 可以使用refresh_token进行刷新，refresh_token拥有较长的有效期（7天、30天、60天、90天），
-	 * 当refresh_token失效的后，需要用户重新授权。
+	 * 新增永久图文素材,请求方式:POST
 	 */
-	public static final String REFRESH_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/refresh_token?appid={0}&grant_type=refresh_token&refresh_token={1}";
-
+	public static final String ADD_NEWS = "https://api.weixin.qq.com/cgi-bin/material/add_news?access_token={0}";
 	/**
-	 * 获取用户信息(需scope为snsapi_userinfo)
+	 * 上传图文消息内的图片获取URL【订阅号与服务号认证后均可用】,请求方式:POST
 	 */
-	public static final String GET_USERINFO_URL = "https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN";
-
+	public static final String UPLOADIMG = "https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token={0}";
 	/**
-	 * 创建二维码ticket
+	 * 上传图文消息素材【订阅号与服务号认证后均可用】,请求方式:POST
 	 */
-	public static final String CREATE_TICKET_URL = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={0}";
-
-	/**
-	 * 批量创建二维码
-	 */
-	public static final String CREATE_QRCODE_URL = "https://api.weixin.qq.com/device/create_qrcode?access_token={0}";
-
-	/**
-	 * 设备授权url
-	 */
-	public static final String AUTHORIZE_DEVICE_URL = "https://api.weixin.qq.com/device/authorize_device?access_token={0}";
-
-	/**
-	 * 设备状态查询
-	 */
-	public static final String GET_DEVICE_STAT = "httpS://api.weixin.qq.com/device/get_stat?access_token={0}&device_id={1}";
-
-	/**
-	 * 网页授权获取用户信息
-	 */
-	public static final String AUTHORIZE_USERINFO_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri={1}&response_type=code&scope=snsapi_userinfo&state={2}#wechat_redirect";
-
-	/**
-	 * 发送模板消息URL
-	 */
-	public static final String TEMPLATE_SERVICE_URL = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}";
-
-	/**
-	 * 获取微信用户信息
-	 */
-	public static final String GET_USER_INFO_URL = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN";
+	public static final String UPLOADNEWS = "https://api.weixin.qq.com/cgi-bin/media/uploadnews?access_token={0}";
+	// ======================== 红包 ============================
 	/**
 	 * 发放普通红包,请求方式:POST
 	 */
@@ -112,19 +96,4 @@ public class FwAPI {
 	 * 发放裂变红包,请求方式 :POST
 	 */
 	public static final String SEND_GROUP_REDPACK = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack";
-
-	// 获取生成临时带参数二维码的ticket
-	public static final String WX_GET_QRCODE_TICKET_URL = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={0}";
-
-	// 获取生成临时带参数二维码
-	public static final String WX_GET_QRCODE_URL = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={0}";
-
-	// 获得jsapi_ticket
-	public static final String GET_JSAPI_TICKET_URL = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token={0}&type=1";
-
-	// （微信）下载多媒体
-	public static final String GET_DOWNLOAD_URL = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}";
-
-	public static final String GET_UPLOAD_URL = "http://file.api.weixin.qq.com/cgi-bin/media/upload?access_token={0}&type={1}";
-
 }

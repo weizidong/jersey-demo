@@ -1,6 +1,8 @@
 package com.wzd.service.wechat;
 
 import java.text.MessageFormat;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,12 +20,11 @@ import com.wzd.service.wechat.base.XmlResp;
 import com.wzd.service.wechat.event.Event;
 import com.wzd.service.wechat.msg.WxMsgReceiver;
 import com.wzd.service.wechat.token.Token;
-import com.wzd.service.wechat.utils.AesException;
-import com.wzd.service.wechat.utils.WXBizMsgCrypt;
+import com.wzd.service.wechat.user.FwUserApi;
+import com.wzd.service.wechat.user.dto.FwUserList;
 import com.wzd.utils.Configs;
 import com.wzd.utils.SignatureUtil;
 import com.wzd.web.dto.exception.WebException;
-import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
 import com.wzd.web.param.wechat.WechatMsg;
 
@@ -36,27 +37,32 @@ import com.wzd.web.param.wechat.WechatMsg;
 @Service
 public class FwWxService {
 	private static final Logger log = LogManager.getLogger(FwWxService.class);
-	private static WXBizMsgCrypt wxcpt = null;
 	@Autowired
 	private UserDao dao;
 	@Autowired
 	private WxMsgReceiver receiver;
+	@Autowired
+	private Event event;
 
 	// 获取加密协议
-	public static WXBizMsgCrypt wxcpt() {
-		try {
-			if (wxcpt == null) {
-				wxcpt = new WXBizMsgCrypt(Configs.bToken, Configs.bEncodingAESKey, Configs.bAppid);
-			}
-		} catch (AesException e) {
-			throw new WebException(ResponseCode.未授权, "AES签名错误");
-		}
-		return wxcpt;
-	}
+	// private static WXBizMsgCrypt wxcpt = null;
+	// public static WXBizMsgCrypt wxcpt() {
+	// try {
+	// if (wxcpt == null) {
+	// wxcpt = new WXBizMsgCrypt(Configs.bToken, Configs.bEncodingAESKey,
+	// Configs.bAppid);
+	// }
+	// } catch (AesException e) {
+	// throw new WebException(ResponseCode.未授权, "AES签名错误");
+	// }
+	// return wxcpt;
+	// }
 
-	// 获取token
-	private String getToken() {
-		Token token = Token.get(FwAPI.TOKEN_URL, Configs.bAppid, Configs.bSecret);
+	/**
+	 * 获取token
+	 */
+	public static String getToken() {
+		Token token = Token.get(FwAPI.TOKEN, Configs.bAppid, Configs.bSecret);
 		return token.getAccess_token();
 	}
 
@@ -65,28 +71,22 @@ public class FwWxService {
 	 */
 	public String push(WechatMsg msg) {
 		switch (msg.getMsgType().toLowerCase()) {
-		case MsgType.TEXT: // 文本消息处理
+		case MsgType.TEXT:
 			return receiver.text(msg);
-		case MsgType.IMAGE: // 图片消息处理
-			// TODO 图片消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.VOICE: // 语音消息处理
-			// TODO 语音消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.VIDEO: // 视频消息处理
-			// TODO 视频消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.SHORTVIDEO: // 小视频消息处理
-			// TODO 小视频消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.LOCATION: // 地理位置消息处理
-			// TODO 地理位置消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.LINK: // 链接消息处理
-			// TODO 链接消息处理
-			return XmlResp.SUCCESS;
-		case MsgType.EVENT: // 事件处理
-			return Event.push(msg);
+		case MsgType.IMAGE:
+			return receiver.img(msg);
+		case MsgType.VOICE:
+			return receiver.voice(msg);
+		case MsgType.VIDEO:
+			return receiver.video(msg);
+		case MsgType.SHORTVIDEO:
+			return receiver.shortvideo(msg);
+		case MsgType.LOCATION:
+			return receiver.location(msg);
+		case MsgType.LINK:
+			return receiver.link(msg);
+		case MsgType.EVENT:
+			return event.push(msg);
 		default:
 			return XmlResp.SUCCESS;
 		}
@@ -96,9 +96,8 @@ public class FwWxService {
 	 * 验证回调URL
 	 */
 	public String VerifyURL(String signature, String timestamp, String nonce, String echostr) {
-		log.debug("验证回调URL...");
 		Boolean check = SignatureUtil.checkSignature(Configs.bToken, signature, timestamp, nonce);
-		log.debug("验证回调URL结果：" + check);
+		log.debug("验证回调URL：" + check);
 		if (check) {
 			return echostr;
 		}
@@ -106,10 +105,10 @@ public class FwWxService {
 	}
 
 	/**
-	 * 拉取用户信息
+	 * 根据Code拉取用户信息
 	 */
 	public Session getUserInfo(String code) {
-		Token token = RestClientUtil.get(MessageFormat.format(FwAPI.GET_ACCESS_TOKEN_URL, Configs.bAppid, Configs.bSecret, code), Token.class);
+		Token token = RestClientUtil.get(MessageFormat.format(FwAPI.ACCESS_TOKEN, Configs.bAppid, Configs.bSecret, code), Token.class);
 		if (token.getErrcode() != null) {
 			throw new WebException(token.getErrcode(), token.getErrmsg());
 		}
@@ -121,7 +120,8 @@ public class FwWxService {
 		// 无用户，创建
 		if (user == null) {
 			// 拉取用户信息
-			user = RestClientUtil.get(MessageFormat.format(FwAPI.GET_USERINFO_URL, token.getAccess_token(), token.getOpenid()), User.class);
+			user = FwUserApi.get(token.getAccess_token(), token.getOpenid());
+			user.setLogin(new Date());
 			dao.create(user);
 		} else {
 			dao.login(user);
@@ -134,14 +134,14 @@ public class FwWxService {
 	 * 获取菜单
 	 */
 	public String getFwMenu() {
-		return RestClientUtil.get(MessageFormat.format(FwAPI.MENU_GET_URL, getToken()), String.class);
+		return RestClientUtil.get(MessageFormat.format(FwAPI.GET_MENU, getToken()), String.class);
 	}
 
 	/**
 	 * 创建菜单
 	 */
 	public void createFwMenu(String menu) {
-		BaseResp resp = RestClientUtil.postJson(MessageFormat.format(FwAPI.MENU_CREATE_URL, getToken()), menu, BaseResp.class);
+		BaseResp resp = RestClientUtil.postJson(MessageFormat.format(FwAPI.CREATE_MENU, getToken()), menu, BaseResp.class);
 		if (resp.getErrcode() != 0) {
 			throw new WebException(resp.getErrcode(), resp.getErrmsg());
 		}
@@ -151,10 +151,24 @@ public class FwWxService {
 	 * 删除菜单
 	 */
 	public void deleteFwMenu() {
-		BaseResp resp = RestClientUtil.get(MessageFormat.format(FwAPI.MENU_DELETE_URL, getToken()), BaseResp.class);
+		BaseResp resp = RestClientUtil.get(MessageFormat.format(FwAPI.DELETE_MENU, getToken()), BaseResp.class);
 		if (resp == null || resp.getErrcode() != 0) {
-			throw new WebException(ResponseCode.错误请求, "删除失败");
+			throw new WebException(resp.getErrcode(), resp.getErrmsg());
 		}
 	}
 
+	/**
+	 * 同步服务号获取用户列表
+	 */
+	public void syncUser(String next_openid) {
+		if (next_openid != null && next_openid.equals("OVER")) {
+			return;
+		}
+		FwUserList resp = FwUserApi.getList(next_openid);
+		resp.getOpenids().forEach(openid -> {
+			// TODO 获取用户详情，并更新到本地
+
+		});
+		syncUser(resp.getNext_openid() == null ? "OVER" : resp.getNext_openid());
+	}
 }

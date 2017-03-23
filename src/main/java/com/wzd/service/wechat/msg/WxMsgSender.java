@@ -54,8 +54,8 @@ public class WxMsgSender {
 	 * @param msg
 	 */
 	public static void sendTextToFw(WxMsg msg) {
-		Token token = Token.get(FwAPI.TOKEN_URL, Configs.bAppid, Configs.bSecret);
-		sendText(FwAPI.SEND_MSG, token.getAccess_token(), msg);
+		Token token = Token.get(FwAPI.TOKEN, Configs.bAppid, Configs.bSecret);
+		sendText(FwAPI.SEND_CUSTOM, token.getAccess_token(), msg);
 	}
 
 }

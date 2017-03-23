@@ -2,8 +2,8 @@ package com.wzd.service.wechat.tag;
 
 import java.util.List;
 
+import com.wzd.model.entity.User;
 import com.wzd.service.wechat.base.BaseResp;
-import com.wzd.service.wechat.user.WxUser;
 
 /**
  * 企业号--->标签成员列表
@@ -13,14 +13,14 @@ import com.wzd.service.wechat.user.WxUser;
  */
 @SuppressWarnings("serial")
 public class WxTagUserList extends BaseResp {
-	private List<WxUser> userlist; // 企业成员ID列表，注意：userlist、partylist不能同时为空
+	private List<User> userlist; // 企业成员ID列表，注意：userlist、partylist不能同时为空
 	private List<Integer> partylist; // 企业部门ID列表，注意：userlist、partylist不能同时为空
 
-	public List<WxUser> getUserlist() {
+	public List<User> getUserlist() {
 		return userlist;
 	}
 
-	public void setUserlist(List<WxUser> userlist) {
+	public void setUserlist(List<User> userlist) {
 		this.userlist = userlist;
 	}
 

@@ -1,7 +1,15 @@
 package com.wzd.service.wechat.event;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.wzd.model.dao.AdminDao;
+import com.wzd.model.dao.UserDao;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
+import com.wzd.service.wechat.user.QyUserApi;
+import com.wzd.utils.Configs;
+import com.wzd.utils.StringUtil;
 import com.wzd.web.param.wechat.WechatMsg;
 
 /**
@@ -10,49 +18,82 @@ import com.wzd.web.param.wechat.WechatMsg;
  * @author WeiZiDong
  *
  */
+@Component
 public class Event {
+	@Autowired
+	private UserDao userDao;
+	@Autowired
+	private AdminDao adminDao;
+	@Autowired
+	private QyUserApi userService;
+
 	/**
 	 * 处理事件
 	 * 
 	 * @param msg
 	 */
-	public static String push(WechatMsg msg) {
+	public String push(WechatMsg msg) {
 		switch (msg.getEvent().toUpperCase()) {
-		case MsgType.Event.SUBSCRIBE: // 关注事件
+		case MsgType.Event.SUBSCRIBE:
 			return subscribe(msg);
-		case MsgType.Event.UNSUBSCRIBE: // 取消关注事件
+		case MsgType.Event.UNSUBSCRIBE:
 			return unsubscribe(msg);
-		case MsgType.Event.ENTER_AGENT: // 成员进入应用
-			return enter_agent(msg);
-		case MsgType.Event.CLICK: // 成员点击菜单事件
+		case MsgType.Event.SCAN:
+			return scan(msg);
+		case MsgType.Event.LOCATION:
+			return location(msg);
+		case MsgType.Event.CLICK:
 			return click(msg);
+		case MsgType.Event.VIEW:
+			return view(msg);
 		default:
 			return XmlResp.SUCCESS;
 		}
 	}
 
-	// 成员点击菜单事件
-	private static String click(WechatMsg msg) {
-		// TODO 成员点击菜单事件
+	/**
+	 * 点击菜单跳转链接时的事件推送
+	 */
+	private String view(WechatMsg msg) {
+		// TODO 点击菜单跳转链接时的事件推送
+		return XmlResp.SUCCESS;
+	}
+
+	/**
+	 * 上报地理位置事件
+	 */
+	private String location(WechatMsg msg) {
+		// TODO 上报地理位置事件
+		return XmlResp.SUCCESS;
+	}
+
+	/**
+	 * 扫描带参数二维码事件
+	 */
+	private String scan(WechatMsg msg) {
+		// TODO 扫描带参数二维码事件
+		return XmlResp.SUCCESS;
+	}
+
+	// 自定义菜单事件
+	private String click(WechatMsg msg) {
+		// TODO 自定义菜单事件
 		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "点击菜单:" + msg.getEventKey());
 	}
 
-	// 处理成员进入应用
-	private static String enter_agent(WechatMsg msg) {
-		// TODO 处理成员进入应用
-		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "成员进入应用");
-	}
-
-	// 处理取消关注事件
-	private static String unsubscribe(WechatMsg msg) {
-		// TODO 处理取消关注事件
+	// 取消关注事件
+	private String unsubscribe(WechatMsg msg) {
+		// TODO 取消关注事件
 		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "取消关注事件");
 
 	}
 
-	// 处理关注事件
-	private static String subscribe(WechatMsg msg) {
-		// TODO 处理关注事件
+	// 关注事件
+	private String subscribe(WechatMsg msg) {
+		// TODO 关注事件
+		// 关注服务号
+		if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.bId)) {
+		}
 		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "关注事件");
 
 	}

@@ -6,7 +6,7 @@ package com.wzd.service.wechat.base;
  * @author WeiZiDong
  *
  */
-public class MsgType {
+public abstract class MsgType {
 	/**
 	 * 文本消息
 	 */
@@ -24,14 +24,6 @@ public class MsgType {
 	 */
 	public static final String VIDEO = "video";
 	/**
-	 * file消息
-	 */
-	public static final String FILE = "file";
-	/**
-	 * 音乐消息
-	 */
-	public static final String MUSIC = "music";
-	/**
 	 * 小视频消息
 	 */
 	public static final String SHORTVIDEO = "shortvideo";
@@ -43,6 +35,14 @@ public class MsgType {
 	 * 链接消息
 	 */
 	public static final String LINK = "link";
+	/**
+	 * file消息
+	 */
+	public static final String FILE = "file";
+	/**
+	 * 音乐消息
+	 */
+	public static final String MUSIC = "music";
 	/**
 	 * 事件推送
 	 */
@@ -62,7 +62,7 @@ public class MsgType {
 	 * @author WeiZiDong
 	 *
 	 */
-	public static class Event {
+	public static abstract class Event {
 		/**
 		 * 订阅
 		 */

@@ -1,4 +1,4 @@
-package com.wzd.service.wechat.user;
+package com.wzd.service.wechat.user.dto;
 
 import com.wzd.service.wechat.base.BaseResp;
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.AuditType;
-import com.wzd.model.enums.DeleteType;
 import com.wzd.model.mapper.UserMapper;
 
 /**
@@ -50,8 +49,6 @@ public class UserDao {
 	 * 创建用户
 	 */
 	public void create(User user) {
-		user.setCreated(new Date());
-		user.setDeleted(DeleteType.未删除.getValue());
 		user.setStatus(AuditType.未审核.getValue());
 		user.setUpdated(new Date());
 		mapper.insert(user);

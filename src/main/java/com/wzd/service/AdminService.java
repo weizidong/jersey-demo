@@ -16,7 +16,7 @@ import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.APPType;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
-import com.wzd.service.wechat.user.WxUserService;
+import com.wzd.service.wechat.user.QyUserApi;
 import com.wzd.utils.MD5Utils;
 import com.wzd.utils.StringUtil;
 import com.wzd.web.dto.exception.WebException;
@@ -36,14 +36,12 @@ import com.wzd.web.param.PageParam;
 public class AdminService {
 	@Autowired
 	private AdminDao dao;
-	@Autowired
-	private WxUserService wxService;
 
 	/**
 	 * 登录
 	 */
 	public void login(Admin admin, HttpServletRequest request, HttpServletResponse response) {
-		Admin dbAdmin = dao.getByUname(admin.getUname(), DeleteType.未删除);
+		Admin dbAdmin = dao.getByMobile(admin.getMobile(), DeleteType.未删除);
 		if (dbAdmin == null) {
 			throw new WebException(ResponseCode.用户不存在);
 		}
@@ -52,20 +50,18 @@ public class AdminService {
 			throw new WebException(ResponseCode.密码错误);
 		}
 		// 更新登录时间
-		dbAdmin.setLogintime(new Date());
+		dbAdmin.setLogin(new Date());
 		dao.update(dbAdmin);
 		// 保存Session
 		Session session = SessionUtil.generateSession(APPType.管理平台.getValue(), null, null, dbAdmin);
 		SessionUtil.saveSession(session, request, response);
 	}
 
-
 	/**
 	 * 创建
 	 */
 	public void create(Admin admin) {
-		wxService.create(admin);
-		admin.setDepartments(admin.getDepartment());
+		QyUserApi.create(admin);
 		dao.create(admin);
 	}
 
@@ -73,7 +69,7 @@ public class AdminService {
 	 * 删除
 	 */
 	public void delete(String userid, DeleteType type) {
-		wxService.delete(userid);
+		QyUserApi.delete(userid);
 		dao.delete(userid, type);
 	}
 
