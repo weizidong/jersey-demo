@@ -53,9 +53,9 @@ public class FileUtil {
 			FileUtils.copyInputStreamToFile(file, store);
 			// 返回值
 			Files f = new Files();
-			f.setName(fullName);
-			f.setSuffix(ext);
+			f.setName(fullName.substring(0, fullName.length() - 4));
 			f.setUrl(folder + File.separator + fileName + ext);
+			f.setSuffix(ext.substring(1));
 			return f;
 		} catch (IOException e) {
 			throw new RuntimeException("写文件失败", e);

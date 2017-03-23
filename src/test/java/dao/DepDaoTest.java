@@ -20,4 +20,9 @@ public class DepDaoTest extends BasicTest {
 		});
 	}
 
+	@Test
+	public void text2() {
+		String s = "123123156465465.jpg";
+		System.out.println(s.substring(0, s.length() - 4));
+	}
 }

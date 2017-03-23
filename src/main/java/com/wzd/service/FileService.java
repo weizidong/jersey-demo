@@ -44,18 +44,12 @@ public class FileService {
 	 */
 	public Files upload(FormDataMultiPart form, HttpServletRequest request) {
 		log.debug("开始上传文件。。。");
-		// 获取文件流
 		FormDataBodyPart filePart = form.getField("file");
-		// 获取文件类型
 		Integer type = form.getField("type").getValueAs(Integer.class);
 		FileType.parse(type);
-		// 把表单内容转换成流
 		InputStream file = filePart.getValueAs(InputStream.class);
 		FormDataContentDisposition disposition = filePart.getFormDataContentDisposition();
-		// 写入文件
-		log.debug("开始写入文件。。。");
 		Files f = FileUtil.writeFile(file, disposition);
-		log.debug("写入文件成功！");
 		f.setType(type);
 		if (APPType.企业号.getValue().equals(request.getParameter("appType")) || APPType.管理平台.getValue().equals(request.getParameter("appType"))) {
 			Admin user = (Admin) SessionUtil.getUser(request);
@@ -65,7 +59,6 @@ public class FileService {
 			User user = (User) SessionUtil.getUser(request);
 			f.setUserid(user.getId().toString());
 		}
-		// 入库
 		dao.create(f);
 		log.debug("上传文件成功:" + f);
 		return f;

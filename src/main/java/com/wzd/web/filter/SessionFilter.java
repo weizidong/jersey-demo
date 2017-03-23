@@ -117,8 +117,8 @@ public class SessionFilter implements Filter {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
 			return;
 		}
-		if (requestUrl.equals("favicon.ico")) {
-			request.getRequestDispatcher("/favicon.ico?" + Configs.version).forward(request, response);
+		if (requestUrl.equals("favicon.ico") || requestUrl.startsWith("userfiles/")) {
+			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
 		// 非网站主页需要检测数据签名
