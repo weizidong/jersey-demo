@@ -60,6 +60,12 @@ public class User extends BaseResp {
 	private String auth; // 权限
 	private Long score; // 积分
 	// 关联属性
+	@Transient
+	private Integer msg_time;// 未读消息个数
+	@Transient
+	private Integer welf_time;// 福利个数
+	@Transient
+	private Integer act_time;// 活动个数
 
 	public Integer getId() {
 		return id;
@@ -293,13 +299,37 @@ public class User extends BaseResp {
 		this.score = score;
 	}
 
+	public Integer getMsg_time() {
+		return msg_time;
+	}
+
+	public void setMsg_time(Integer msg_time) {
+		this.msg_time = msg_time;
+	}
+
+	public Integer getWelf_time() {
+		return welf_time;
+	}
+
+	public void setWelf_time(Integer welf_time) {
+		this.welf_time = welf_time;
+	}
+
+	public Integer getAct_time() {
+		return act_time;
+	}
+
+	public void setAct_time(Integer act_time) {
+		this.act_time = act_time;
+	}
+
 	@Override
 	public String toString() {
 		return "[id=" + id + ", subscribe=" + subscribe + ", openid=" + openid + ", city=" + city + ", country=" + country + ", province=" + province + ", language=" + language
 				+ ", subscribe_time=" + subscribe_time + ", unionid=" + unionid + ", groupid=" + groupid + ", tagid_list=" + tagid_list + ", headimgurl=" + headimgurl
 				+ ", nickname=" + nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone + ", address="
 				+ address + ", name=" + name + ", dep_id=" + dep_id + ", id_card=" + id_card + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor + ", login="
-				+ login + ", updated=" + updated + ", auth=" + auth + ", score=" + score + "]";
+				+ login + ", updated=" + updated + ", auth=" + auth + ", score=" + score + ", msg_time=" + msg_time + ", welf_time=" + welf_time + ", act_time=" + act_time + "]";
 	}
 
 }

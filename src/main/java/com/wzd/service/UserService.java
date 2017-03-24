@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
+import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
+import com.wzd.model.enums.HistoryType;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -20,13 +22,15 @@ import com.wzd.web.param.PageParam;
 @Service
 public class UserService {
 	@Autowired
-	private UserDao dao;
+	private UserDao userDao;
+	@Autowired
+	private HistoryDao historyDao;
 
 	/**
 	 * 创建
 	 */
 	public void create(User user) {
-		dao.create(user);
+		userDao.create(user);
 
 	}
 
@@ -67,5 +71,18 @@ public class UserService {
 	 */
 	public void auditing(AuditType parse, Admin user) {
 		// TODO 审核
+	}
+
+	/**
+	 * 获取我的信息
+	 */
+	public User mine(User user) {
+		Integer num = historyDao.getCount(user.getId(), HistoryType.系统消息, DeleteType.未删除);
+		user.setMsg_time(num);
+		num = historyDao.getCount(user.getId(), HistoryType.福利, DeleteType.未删除);
+		user.setWelf_time(num);
+		num = historyDao.getCount(user.getId(), HistoryType.活动, DeleteType.未删除);
+		user.setAct_time(num);
+		return null;
 	}
 }

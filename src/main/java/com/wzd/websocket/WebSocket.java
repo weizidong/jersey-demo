@@ -6,38 +6,40 @@ import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/websocket")
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.SocketType;
+import com.wzd.service.SocketService;
+
+@ServerEndpoint("/websocket/{userid}")
 public class WebSocket {
+	private static final Logger log = LogManager.getLogger(WebSocket.class);
+	@Autowired
+	private SocketService service;
+
 	@OnMessage
-	public void onMessage(String message, Session session) throws IOException, InterruptedException {
-
-		// Print the client message for testing purposes
-		System.out.println("Received: " + message);
-
-		// Send the first message to the client
-		session.getBasicRemote().sendText("This is the first server message");
-
-		// Send 3 messages to the client every 5 seconds
-		int sentMessages = 0;
-		while (sentMessages < 3) {
-			Thread.sleep(5000);
-			session.getBasicRemote().sendText("This is an intermediate server message. Count: " + sentMessages);
-			sentMessages++;
-		}
-
-		// Send a final message to the client
-		session.getBasicRemote().sendText("This is the last server message");
+	public void onMessage(String message, @PathParam("userid") Integer userid, Session session) throws IOException, InterruptedException {
+		log.debug("接到websocket：", userid, "===>", message);
+		service.push(JSON.parseObject(message, SocketMsg.class), session);
 	}
 
 	@OnOpen
-	public void onOpen() {
-		System.out.println("Client connected");
+	public void onOpen(@PathParam("userid") String userid, Session session) {
+		log.debug("开启websocket：", userid);
+		service.save(userid, session);
+		service.send(session, new SocketMsg(SocketType.开启.getValue(), null));
 	}
 
 	@OnClose
-	public void onClose() {
-		System.out.println("Connection closed");
+	public void onClose(@PathParam("userid") String userid, Session session) {
+		log.debug("关闭websocket：", userid);
+		service.clear(userid);
+		service.send(session, new SocketMsg(SocketType.开启.getValue(), null));
 	}
 }

@@ -2,6 +2,7 @@ package com.wzd.web.rest.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -73,6 +74,19 @@ public class UserApi {
 	@POST
 	public User getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
 		return service.findById(id, DeleteType.parse(type));
+	}
+
+	/**
+	 * 获取我的资料
+	 * 
+	 * @param type
+	 *            删除类型，0：不刪；1：回收站；2：永久
+	 */
+	@Path("/mine")
+	@GET
+	public User find(@Context HttpServletRequest request) {
+		User user = (User) SessionUtil.getUser(request);
+		return service.mine(user);
 	}
 
 	/**
