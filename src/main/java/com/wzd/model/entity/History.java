@@ -3,6 +3,7 @@ package com.wzd.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,8 @@ public class History implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	// 自有属性
-	private String user_id;// 用户Id
+	@Column(name = "user_id")
+	private String userId;// 用户Id
 	private String title;// 标题
 	private String content;// 内容
 	private Integer score;// 积分
@@ -38,12 +40,12 @@ public class History implements Serializable {
 		this.id = id;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getTitle() {
@@ -104,8 +106,8 @@ public class History implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", user_id=" + user_id + ", title=" + title + ", content=" + content + ", score=" + score + ", ticket=" + ticket + ", recording=" + recording
-				+ ", type=" + type + ", deleled=" + deleled + "]";
+		return "[id=" + id + ", userId=" + userId + ", title=" + title + ", content=" + content + ", score=" + score + ", ticket=" + ticket + ", recording=" + recording + ", type="
+				+ type + ", deleled=" + deleled + "]";
 	}
 
 }

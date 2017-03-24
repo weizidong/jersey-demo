@@ -5,28 +5,33 @@
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="deleted" jdbcType="INTEGER" property="deleted" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="nickname" jdbcType="CHAR" property="nickname" />
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="subscribe" jdbcType="INTEGER" property="subscribe" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
-    <result column="auth" jdbcType="VARCHAR" property="auth" />
-    <result column="sex" jdbcType="CHAR" property="sex" />
-    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
-    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="dep_name" jdbcType="VARCHAR" property="depName" />
-    <result column="dep_address" jdbcType="VARCHAR" property="depAddress" />
-    <result column="dep_tel" jdbcType="VARCHAR" property="depTel" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl" />
-    <result column="position" jdbcType="VARCHAR" property="position" />
-    <result column="login" jdbcType="TIMESTAMP" property="login" />
-    <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="subscribe_time" jdbcType="BIGINT" property="subscribeTime" />
+    <result column="unionid" jdbcType="VARCHAR" property="unionid" />
+    <result column="groupid" jdbcType="INTEGER" property="groupid" />
+    <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="marriage" jdbcType="INTEGER" property="marriage" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="dep_id" jdbcType="INTEGER" property="depId" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="audit" jdbcType="INTEGER" property="audit" />
+    <result column="auditor" jdbcType="CHAR" property="auditor" />
+    <result column="login" jdbcType="TIMESTAMP" property="login" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="auth" jdbcType="VARCHAR" property="auth" />
+    <result column="score" jdbcType="INTEGER" property="score" />
   </resultMap>
 </mapper>

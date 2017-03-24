@@ -71,9 +71,10 @@ public class DepartmentDao {
 	/**
 	 * 获取全部
 	 */
-	public List<Department> findAll() {
+	public List<Department> findAll(DeleteType type) {
 		Example e = new Example(Department.class);
 		e.setOrderByClause("parentid asc,orders asc");
+		e.createCriteria().andEqualTo("deleted", type.getValue());
 		return mapper.selectByExample(e);
 	}
 

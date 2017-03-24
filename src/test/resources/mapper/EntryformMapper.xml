@@ -5,9 +5,9 @@
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="userId" jdbcType="INTEGER" property="userid" />
-    <result column="activityId" jdbcType="INTEGER" property="activityid" />
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="userId" jdbcType="CHAR" property="userid" />
+    <result column="activityId" jdbcType="CHAR" property="activityid" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />

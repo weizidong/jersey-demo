@@ -27,6 +27,26 @@ public class UserService {
 	private HistoryDao historyDao;
 
 	/**
+	 * 获取我的信息
+	 */
+	public User findMine(User user) {
+		Integer num = historyDao.getCount(user.getId(), HistoryType.系统消息, DeleteType.未删除);
+		user.setMsgNum(num);
+		num = historyDao.getCount(user.getId(), HistoryType.福利, DeleteType.未删除);
+		user.setWelfNum(num);
+		num = historyDao.getCount(user.getId(), HistoryType.活动, DeleteType.未删除);
+		user.setActNum(num);
+		return user;
+	}
+
+	/**
+	 * 修改
+	 */
+	public void update(User user) {
+		userDao.update(user);
+	}
+
+	/**
 	 * 创建
 	 */
 	public void create(User user) {
@@ -39,14 +59,6 @@ public class UserService {
 	 */
 	public void delete(Integer id, DeleteType type) {
 		// TODO 删除
-
-	}
-
-	/**
-	 * 修改
-	 */
-	public void update(User user) {
-		// TODO 修改
 
 	}
 
@@ -73,16 +85,4 @@ public class UserService {
 		// TODO 审核
 	}
 
-	/**
-	 * 获取我的信息
-	 */
-	public User mine(User user) {
-		Integer num = historyDao.getCount(user.getId(), HistoryType.系统消息, DeleteType.未删除);
-		user.setMsg_time(num);
-		num = historyDao.getCount(user.getId(), HistoryType.福利, DeleteType.未删除);
-		user.setWelf_time(num);
-		num = historyDao.getCount(user.getId(), HistoryType.活动, DeleteType.未删除);
-		user.setAct_time(num);
-		return null;
-	}
 }

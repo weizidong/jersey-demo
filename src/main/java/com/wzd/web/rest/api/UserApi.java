@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -35,6 +36,27 @@ public class UserApi {
 	private UserService service;
 
 	/**
+	 * 获取我的资料
+	 */
+	@GET
+	@Path("/mine")
+	public User findMine(@Context HttpServletRequest request) {
+		User user = (User) SessionUtil.getUser(request);
+		return service.findMine(user);
+	}
+
+	/**
+	 * 修改我的资料
+	 */
+	@PUT
+	@Path("/mine")
+	public void update(User user) {
+		service.update(user);
+	}
+
+	// 以上是实现的业务接口
+
+	/**
 	 * 创建
 	 */
 	@Path("/create")
@@ -56,15 +78,6 @@ public class UserApi {
 	}
 
 	/**
-	 * 修改
-	 */
-	@Path("/update")
-	@POST
-	public void update(User user) {
-		service.update(user);
-	}
-
-	/**
 	 * 查询指定id用户
 	 * 
 	 * @param type
@@ -74,19 +87,6 @@ public class UserApi {
 	@POST
 	public User getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
 		return service.findById(id, DeleteType.parse(type));
-	}
-
-	/**
-	 * 获取我的资料
-	 * 
-	 * @param type
-	 *            删除类型，0：不刪；1：回收站；2：永久
-	 */
-	@Path("/mine")
-	@GET
-	public User find(@Context HttpServletRequest request) {
-		User user = (User) SessionUtil.getUser(request);
-		return service.mine(user);
 	}
 
 	/**

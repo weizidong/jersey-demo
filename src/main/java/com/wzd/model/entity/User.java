@@ -65,11 +65,11 @@ public class User extends BaseResp {
 	private Integer score; // 积分
 	// 关联属性
 	@Transient
-	private Integer msg_time;// 未读消息个数
+	private Integer msgNum;// 未读消息个数
 	@Transient
-	private Integer welf_time;// 福利个数
+	private Integer welfNum;// 福利个数
 	@Transient
-	private Integer act_time;// 活动个数
+	private Integer actNum;// 活动个数
 
 	public String getId() {
 		return id;
@@ -303,28 +303,28 @@ public class User extends BaseResp {
 		this.score = score;
 	}
 
-	public Integer getMsg_time() {
-		return msg_time;
+	public Integer getMsgNum() {
+		return msgNum;
 	}
 
-	public void setMsg_time(Integer msg_time) {
-		this.msg_time = msg_time;
+	public void setMsgNum(Integer msgNum) {
+		this.msgNum = msgNum;
 	}
 
-	public Integer getWelf_time() {
-		return welf_time;
+	public Integer getWelfNum() {
+		return welfNum;
 	}
 
-	public void setWelf_time(Integer welf_time) {
-		this.welf_time = welf_time;
+	public void setWelfNum(Integer welfNum) {
+		this.welfNum = welfNum;
 	}
 
-	public Integer getAct_time() {
-		return act_time;
+	public Integer getActNum() {
+		return actNum;
 	}
 
-	public void setAct_time(Integer act_time) {
-		this.act_time = act_time;
+	public void setActNum(Integer actNum) {
+		this.actNum = actNum;
 	}
 
 	@Override
@@ -333,8 +333,7 @@ public class User extends BaseResp {
 				+ ", language=" + language + ", subscribeTime=" + subscribeTime + ", unionid=" + unionid + ", groupid=" + groupid + ", tagid_list=" + tagid_list + ", headimgurl="
 				+ headimgurl + ", nickname=" + nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone
 				+ ", address=" + address + ", name=" + name + ", depId=" + depId + ", idCard=" + idCard + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor
-				+ ", login=" + login + ", updated=" + updated + ", auth=" + auth + ", score=" + score + ", msg_time=" + msg_time + ", welf_time=" + welf_time + ", act_time="
-				+ act_time + "}";
+				+ ", login=" + login + ", updated=" + updated + ", auth=" + auth + ", score=" + score + ", msgNum=" + msgNum + ", welfNum=" + welfNum + ", actNum=" + actNum + "}";
 	}
 
 }

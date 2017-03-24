@@ -64,7 +64,7 @@ public class DepartmentService {
 	 * 获取部门列表(全部)
 	 */
 	public List<Department> findAll() {
-		return dao.findAll();
+		return dao.findAll(DeleteType.未删除);
 	}
 
 	/**

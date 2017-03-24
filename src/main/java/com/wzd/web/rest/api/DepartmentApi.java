@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -29,6 +30,17 @@ import com.wzd.service.DepartmentService;
 public class DepartmentApi {
 	@Autowired
 	private DepartmentService service;
+
+	/**
+	 * 获取部门列表(全部)
+	 */
+	@GET
+	@Path("/findAll")
+	public List<Department> findAll() {
+		return service.findAll();
+	}
+
+	// 以上是实现的业务接口
 
 	/**
 	 * 创建部门
@@ -70,15 +82,6 @@ public class DepartmentApi {
 	@POST
 	public Department getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
 		return service.findById(id, DeleteType.parse(type));
-	}
-
-	/**
-	 * 获取部门列表(全部)
-	 */
-	@Path("/findAll")
-	@POST
-	public List<Department> findAll() {
-		return service.findAll();
 	}
 
 	/**
