@@ -602,13 +602,13 @@ public class DateUtil {
 	 * @param date
 	 *            某个时间
 	 * @param firstDayOfWeek
-	 *            一周从哪天开始
+	 *            一周从哪天开始,0:星期天，1：星期1。。。
 	 * @return
 	 */
 	public static Date getFirstDayOfWeek(Date date, int firstDayOfWeek) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		cal.setFirstDayOfWeek(Calendar.MONDAY);
+		cal.setFirstDayOfWeek(firstDayOfWeek + 1);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
@@ -621,12 +621,13 @@ public class DateUtil {
 	 * 
 	 * @param date
 	 * @param firstDayOfWeek
+	 *            0:星期天，1：星期1。。。
 	 * @return
 	 */
 	public static Date getEndDayOfWeek(Date date, int firstDayOfWeek) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		cal.setFirstDayOfWeek(Calendar.MONDAY);
+		cal.setFirstDayOfWeek(firstDayOfWeek + 1);
 		cal.set(Calendar.HOUR_OF_DAY, 23);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 59);

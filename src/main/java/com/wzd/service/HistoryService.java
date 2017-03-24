@@ -27,4 +27,11 @@ public class HistoryService {
 		return historyDao.list(userid, DeleteType.未删除);
 	}
 
+	/**
+	 * 获取当前自然周历史记录
+	 */
+	public List<History> getSign(String userid) {
+		return historyDao.getSign(userid);
+	}
+
 }

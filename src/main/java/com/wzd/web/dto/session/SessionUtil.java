@@ -139,7 +139,7 @@ public class SessionUtil {
 	 */
 	public static Object getUser(HttpServletRequest request) {
 		Session session = getSession(request);
-		if (session == null) {
+		if (session == null || session.getUser() == null) {
 			throw new WebException(ResponseCode.未登录);
 		}
 		return session.getUser();

@@ -57,4 +57,9 @@ public class DaoTest extends BasicTest {
 		welfareDao.create(w);
 	}
 
+	@Test
+	public void test5() {
+		System.out.println(historyDao.getSign("asdasd"));
+	}
+
 }

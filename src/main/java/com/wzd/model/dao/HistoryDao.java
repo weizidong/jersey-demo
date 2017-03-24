@@ -10,6 +10,7 @@ import com.wzd.model.entity.History;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.model.mapper.HistoryMapper;
+import com.wzd.utils.DateUtil;
 import com.wzd.utils.UUIDUtil;
 
 import tk.mybatis.mapper.entity.Example;
@@ -66,5 +67,15 @@ public class HistoryDao {
 		h.setUserId(userId);
 		h.setWelfareId(welfareId);
 		return mapper.selectCount(h);
+	}
+
+	/**
+	 * 获取当前自然周签到历史
+	 */
+	public List<History> getSign(String userid) {
+		Example e = new Example(History.class);
+		e.setOrderByClause("recording DESC");
+		e.createCriteria().andEqualTo("userId", userid).andGreaterThan("recording", DateUtil.getFirstDayOfWeek(new Date(), 1));
+		return mapper.selectByExample(e);
 	}
 }
