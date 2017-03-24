@@ -67,7 +67,7 @@ public class FileService {
 	/**
 	 * 删除文件
 	 */
-	public void delete(Integer id, DeleteType type) {
+	public void delete(String id, DeleteType type) {
 		Files f = dao.getById(id);
 		if (f == null) {
 			throw new WebException(ResponseCode.资源不存在, "文件不存在");
@@ -91,7 +91,7 @@ public class FileService {
 	/**
 	 * 批量删除文件
 	 */
-	public void delete(IdListParam<Integer> param) {
+	public void delete(IdListParam<String> param) {
 		DeleteType type = DeleteType.parse(param.getType());
 		param.getIds().forEach(id -> {
 			delete(id, type);

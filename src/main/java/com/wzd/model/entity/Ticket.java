@@ -16,19 +16,19 @@ import javax.persistence.Id;
 @SuppressWarnings("serial")
 public class Ticket implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select uuid()")
+	private String id;
 	// 自有属性
 	private String ticket; // 票券码
 	private Integer foreign_key; // 外键
 	private Date used;// 使用时间
 	private Date created; // 生成时间
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -41,7 +41,7 @@ public class FileDao {
 	/**
 	 * 物理删除
 	 */
-	public void delete(Integer id) {
+	public void delete(String id) {
 		Files f = new Files();
 		f.setId(id);
 		mapper.delete(f);
@@ -50,7 +50,7 @@ public class FileDao {
 	/**
 	 * 根据ID查找文件
 	 */
-	public Files getById(Integer id) {
+	public Files getById(String id) {
 		Files f = new Files();
 		f.setId(id);
 		return mapper.selectOne(f);

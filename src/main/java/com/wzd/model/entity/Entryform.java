@@ -16,8 +16,8 @@ public class Entryform implements Serializable {
 	 * ID
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select uuid()")
+	private String id;
 
 	/**
 	 * 用户ID
@@ -66,7 +66,7 @@ public class Entryform implements Serializable {
 	 *
 	 * @return id - ID
 	 */
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -76,7 +76,7 @@ public class Entryform implements Serializable {
 	 * @param id
 	 *            ID
 	 */
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

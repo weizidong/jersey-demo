@@ -1,10 +1,7 @@
 package com.wzd.service.wechat.event;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.wzd.model.dao.AdminDao;
-import com.wzd.model.dao.UserDao;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
 import com.wzd.utils.Configs;
@@ -19,10 +16,6 @@ import com.wzd.web.param.wechat.WechatMsg;
  */
 @Component
 public class Event {
-	@Autowired
-	private UserDao userDao;
-	@Autowired
-	private AdminDao adminDao;
 
 	/**
 	 * 处理事件

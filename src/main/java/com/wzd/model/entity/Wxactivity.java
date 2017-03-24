@@ -13,8 +13,8 @@ import javax.persistence.*;
 @SuppressWarnings("serial")
 public class Wxactivity implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select uuid()")
+	private String id;
 
 	/**
 	 * 创建时间
@@ -138,14 +138,14 @@ public class Wxactivity implements Serializable {
 	/**
 	 * @return id
 	 */
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
 	/**
 	 * @param id
 	 */
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

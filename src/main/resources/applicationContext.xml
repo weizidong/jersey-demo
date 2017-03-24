@@ -57,6 +57,7 @@
 							supportMethodsArguments=true
 							params=count=countSql
 							autoRuntimeDialect=true
+							ORDER=BEFORE
 						</value>
 					</property>
 				</bean>

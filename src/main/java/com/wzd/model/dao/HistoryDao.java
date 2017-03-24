@@ -22,7 +22,7 @@ public class HistoryDao {
 	/**
 	 * 查询相应消息种类的数量
 	 */
-	public Integer getCount(Integer userid, HistoryType type, DeleteType del) {
+	public Integer getCount(String userid, HistoryType type, DeleteType del) {
 		History history = new History();
 		history.setUser_id(userid);
 		history.setType(type.getValue());

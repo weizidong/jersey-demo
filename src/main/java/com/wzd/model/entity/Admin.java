@@ -22,8 +22,8 @@ import com.wzd.service.wechat.base.BaseResp;
 @SuppressWarnings("serial")
 public class Admin extends BaseResp {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id; // ID
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select uuid()")
+	private String id; // ID
 	private String userid; // 成员UserID。对应管理端的帐号，企业内必须唯一。不区分大小写，长度为1~64个字节
 	private String name; // 成员名称。长度为1~64个字节
 	@Transient
@@ -51,11 +51,11 @@ public class Admin extends BaseResp {
 	private Date login; // 登录时间
 	private Integer audit; // 审核状态,0：未审核；1：审核通过；2：审核未通过；
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

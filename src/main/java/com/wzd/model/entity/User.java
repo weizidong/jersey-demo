@@ -20,8 +20,8 @@ import com.wzd.service.wechat.base.BaseResp;
 @SuppressWarnings("serial")
 public class User extends BaseResp {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select uuid()")
+	private String id;
 	// 微信属性
 	private Integer subscribe; // 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
 	@JsonIgnore
@@ -67,11 +67,11 @@ public class User extends BaseResp {
 	@Transient
 	private Integer act_time;// 活动个数
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

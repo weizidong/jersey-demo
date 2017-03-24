@@ -16,8 +16,8 @@ import javax.persistence.Id;
 @SuppressWarnings("serial")
 public class Welfare implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select uuid()")
+	private String id;
 	// 自有属性
 	private String name; // 名称
 	private Integer score;// 积分
@@ -31,11 +31,11 @@ public class Welfare implements Serializable {
 	// 系统属性
 	private Integer deleted; // 删除标志
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

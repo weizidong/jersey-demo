@@ -49,7 +49,7 @@ public class FileApi {
 	 */
 	@POST
 	@Path("/delete/{id}/{type}")
-	public void delete(@PathParam("id") Integer id, @PathParam("type") Integer type) {
+	public void delete(@PathParam("id") String id, @PathParam("type") Integer type) {
 		service.delete(id, DeleteType.parse(type));
 	}
 
@@ -58,7 +58,7 @@ public class FileApi {
 	 */
 	@POST
 	@Path("/deleteAll")
-	public void deleteAll(IdListParam<Integer> param) {
+	public void deleteAll(IdListParam<String> param) {
 		service.delete(param);
 	}
 

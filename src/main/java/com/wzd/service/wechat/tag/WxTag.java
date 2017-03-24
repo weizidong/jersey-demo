@@ -1,7 +1,5 @@
 package com.wzd.service.wechat.tag;
 
-import org.springframework.data.annotation.Id;
-
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
@@ -12,7 +10,6 @@ import com.wzd.service.wechat.base.BaseResp;
  */
 @SuppressWarnings("serial")
 public class WxTag extends BaseResp {
-	@Id
 	private String tagid;
 	private String tagname;
 

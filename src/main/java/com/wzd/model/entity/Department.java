@@ -26,7 +26,7 @@ public class Department extends BaseResp {
 	private Integer parentid; // 父亲部门id。根部门id为1
 	@Column(name = "orders")
 	private Integer order; // 在父部门中的次序值。order值小的排序靠前。
-	private Integer admin; // 创建者
+	private String admin; // 创建者
 	private Integer deleted; // 删除标志
 	@Transient
 	private List<Department> child; // 子部门
@@ -63,11 +63,11 @@ public class Department extends BaseResp {
 		this.order = order;
 	}
 
-	public Integer getAdmin() {
+	public String getAdmin() {
 		return admin;
 	}
 
-	public void setAdmin(Integer admin) {
+	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
 
