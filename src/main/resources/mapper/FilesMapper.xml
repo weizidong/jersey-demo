@@ -5,12 +5,12 @@
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="CHAR" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="fk" jdbcType="VARCHAR" property="fk" />
+    <result column="fk" jdbcType="CHAR" property="fk" />
     <result column="suffix" jdbcType="VARCHAR" property="suffix" />
-    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="userId" jdbcType="CHAR" property="userid" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="INTEGER" property="deleted" />

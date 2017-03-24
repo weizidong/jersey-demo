@@ -12,6 +12,10 @@ public class SocketMsg {
 	private String command;
 	private Object data;
 
+	public SocketMsg() {
+		super();
+	}
+
 	public SocketMsg(Object data) {
 		this(SocketType.通知.getValue(), data);
 	}

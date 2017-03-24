@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wzd.model.mapper.HistoryMapper" >
-  <resultMap id="BaseResultMap" type="com.wzd.model.entity.History" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzd.model.mapper.HistoryMapper">
+  <resultMap id="BaseResultMap" type="com.wzd.model.entity.History">
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="score" property="score" jdbcType="INTEGER" />
-    <result column="ticket" property="ticket" jdbcType="CHAR" />
-    <result column="recording" property="recording" jdbcType="TIMESTAMP" />
-    <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="deleled" property="deleled" jdbcType="INTEGER" />
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="user_id" jdbcType="CHAR" property="userId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="ticket" jdbcType="CHAR" property="ticket" />
+    <result column="recording" jdbcType="TIMESTAMP" property="recording" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="deleled" jdbcType="INTEGER" property="deleled" />
   </resultMap>
 </mapper>

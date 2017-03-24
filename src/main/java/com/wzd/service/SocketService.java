@@ -52,7 +52,9 @@ public class SocketService {
 		try {
 			Session session = sessionMap.get(userid);
 			if (session != null) {
-				session.getBasicRemote().sendText(JSON.toJSONString(msg));
+				String jsonMsg = JSON.toJSONString(msg);
+				log.debug("发送websocket:" + jsonMsg);
+				session.getBasicRemote().sendText(jsonMsg);
 			}
 		} catch (IOException e) {
 			log.error(e);
@@ -65,7 +67,9 @@ public class SocketService {
 	public void send(Session session, SocketMsg msg) {
 		try {
 			if (session != null) {
-				session.getBasicRemote().sendText(JSON.toJSONString(msg));
+				String jsonMsg = JSON.toJSONString(msg);
+				log.debug("发送websocket:" + jsonMsg);
+				session.getBasicRemote().sendText(jsonMsg);
 			}
 		} catch (IOException e) {
 			log.error(e);

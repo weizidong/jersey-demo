@@ -5,7 +5,7 @@
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="CHAR" property="id" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="deleted" jdbcType="INTEGER" property="deleted" />
@@ -24,9 +24,9 @@
     <result column="repetition" jdbcType="VARCHAR" property="repetition" />
     <result column="finish" jdbcType="VARCHAR" property="finish" />
     <result column="over" jdbcType="VARCHAR" property="over" />
-    <result column="pub_user" jdbcType="INTEGER" property="pubUser" />
+    <result column="pub_user" jdbcType="CHAR" property="pubUser" />
     <result column="dep_id" jdbcType="INTEGER" property="depId" />
-    <result column="auditor" jdbcType="INTEGER" property="auditor" />
+    <result column="auditor" jdbcType="CHAR" property="auditor" />
     <result column="aud_time" jdbcType="TIMESTAMP" property="audTime" />
     <result column="audit" jdbcType="INTEGER" property="audit" />
   </resultMap>
