@@ -7,16 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wzd.model.dao.DepartmentDao;
 import com.wzd.model.dao.HistoryDao;
+import com.wzd.model.dao.WelfareDao;
 import com.wzd.model.entity.Department;
 import com.wzd.model.entity.History;
+import com.wzd.model.entity.Welfare;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 
-public class DepDaoTest extends BasicTest {
+public class DaoTest extends BasicTest {
 	@Autowired
 	private DepartmentDao departmentDao;
 	@Autowired
 	private HistoryDao historyDao;
+	@Autowired
+	private WelfareDao welfareDao;
 
 	@Test
 	public void test1() {
@@ -42,6 +46,15 @@ public class DepDaoTest extends BasicTest {
 		h.setType(HistoryType.积分签到.getValue());
 		historyDao.create(h);
 		System.out.println(historyDao.list("d025138d9b574ccd9b2736bfe16748f6", DeleteType.未删除));
+	}
+
+	@Test
+	public void test4() {
+		Welfare w = new Welfare();
+		w.setName("积分签到");
+		w.setScore(50);
+		w.setType(HistoryType.积分签到.getValue());
+		welfareDao.create(w);
 	}
 
 }

@@ -54,6 +54,14 @@ public class UserApi {
 		service.update(user);
 	}
 
+	/**
+	 * 签到
+	 */
+	@PUT
+	@Path("/sign/{userid}")
+	public User sign(@PathParam("userid") String userid) {
+		return service.sign(userid);
+	}
 	// 以上是实现的业务接口
 
 	/**

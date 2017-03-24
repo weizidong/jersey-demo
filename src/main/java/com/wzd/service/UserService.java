@@ -11,6 +11,9 @@ import com.wzd.model.entity.User;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
+import com.wzd.utils.Configs;
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -83,6 +86,19 @@ public class UserService {
 	 */
 	public void auditing(AuditType parse, Admin user) {
 		// TODO 审核
+	}
+
+	/**
+	 * 签到
+	 */
+	public User sign(String userid) {
+		User user = userDao.getById(userid);
+		if (user == null) {
+			throw new WebException(ResponseCode.用户不存在, userid);
+		}
+		user.setScore(user.getScore() + Integer.parseInt(Configs.get("score")));
+		userDao.update(user);
+		return user;
 	}
 
 }

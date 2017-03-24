@@ -86,7 +86,7 @@ public class PageParam implements Serializable {
 	/**
 	 * 设置参数到Example
 	 */
-	public static void setCondition(Example e, PageParam param, Class<Files> clazz) {
+	public static void setCondition(Example e, PageParam param, Class<?> clazz) {
 		// 所有的字段名
 		List<String> fields = Arrays.stream(clazz.getFields()).map(field -> field.getName()).collect(Collectors.toList());
 		// 筛选条件

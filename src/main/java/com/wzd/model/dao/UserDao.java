@@ -68,4 +68,13 @@ public class UserDao {
 			update(user);
 		}
 	}
+
+	/**
+	 * 根据ID获取
+	 */
+	public User getById(String userid) {
+		User u = new User();
+		u.setId(userid);
+		return mapper.selectOne(u);
+	}
 }

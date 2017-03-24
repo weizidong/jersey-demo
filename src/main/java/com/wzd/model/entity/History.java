@@ -28,6 +28,8 @@ public class History implements Serializable {
 	private String ticket;// 票券
 	private Date recording;// 记录时间
 	private Integer type;// 类型
+	@Column(name = "welfare_id")
+	private String welfareId;// 兑换的福利
 
 	// 系统属性
 	private Integer deleled;// 删除标志
@@ -104,10 +106,18 @@ public class History implements Serializable {
 		this.deleled = deleled;
 	}
 
+	public String getWelfareId() {
+		return welfareId;
+	}
+
+	public void setWelfareId(String welfareId) {
+		this.welfareId = welfareId;
+	}
+
 	@Override
 	public String toString() {
 		return "[id=" + id + ", userId=" + userId + ", title=" + title + ", content=" + content + ", score=" + score + ", ticket=" + ticket + ", recording=" + recording + ", type="
-				+ type + ", deleled=" + deleled + "]";
+				+ type + ", welfareId=" + welfareId + ", deleled=" + deleled + "]";
 	}
 
 }

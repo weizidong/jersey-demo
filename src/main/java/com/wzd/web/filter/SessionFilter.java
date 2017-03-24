@@ -50,32 +50,27 @@ public class SessionFilter implements Filter {
 		String hostname = Configs.hostname;
 		// 请求
 		String requestUrl = httpRequest.getRequestURI().substring(1);
-		// 参数
-		String queryString = httpRequest.getQueryString();
-		if (!StringUtil.isEmpty(queryString)) {
-			requestUrl += "?" + queryString;
-		}
 		// 请求来源
 		String appType = request.getParameter("appType");
 		// 回调授权code
 		String code = request.getParameter("code");
-		log.debug("请求：" + requestUrl);
-		log.debug("appType：" + appType);
-		log.debug("code：" + code);
 		// 微信回调不检测
 		if (requestUrl.startsWith("rest/wechat/")) {
 			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
+		log.debug("请求：" + requestUrl);
+		log.debug("appType：" + appType);
+		log.debug("code：" + code);
 		// debug模式
 		if (SessionUtil.isDebug(httpRequest)) {
 			SessionUtil.openDebug(httpRequest, httpResponse);
 		}
 		// 授权成功，回调,
-		if (!StringUtil.isEmpty(code) && !StringUtil.isEmpty(appType)) {
+		if (!StringUtil.isEmpty(code)) {
 			// 授权用时
-			Long authorizeTs = System.currentTimeMillis() - Long.valueOf(request.getParameter("state"));
-			log.debug("微信授权成功!\t用时：" + authorizeTs);
+			appType = request.getParameter("state");
+			log.debug("微信授权成功!\tappType：" + appType);
 			Session session = null;
 			// 企业号换取Token
 			if (appType.equals(APPType.企业号.getValue())) {
@@ -90,25 +85,24 @@ public class SessionFilter implements Filter {
 			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
-		// 获取SessionId
-		String SessinId = SessionUtil.getSessionIdByCookie(httpRequest);
+		// 获取Session
+		Session session = SessionUtil.getSession(httpRequest);
 		// 企业号未授权
-		if (APPType.企业号.getValue().equals(appType) && SessinId == null) {
-			authorize(QyAPI.AUTHORIZE, Configs.sCorpID, hostname + requestUrl, httpResponse);
+		if (APPType.企业号.getValue().equals(appType) && session == null) {
+			authorize(QyAPI.AUTHORIZE, Configs.sCorpID, hostname + requestUrl, appType, httpResponse);
 			return;
 		}
 		// 服务号未授权
-		if (APPType.服务号.getValue().equals(appType) && SessinId == null) {
-			authorize(FwAPI.AUTHORIZE, Configs.bAppid, hostname + requestUrl, httpResponse);
+		if (APPType.服务号.getValue().equals(appType) && session == null) {
+			authorize(FwAPI.AUTHORIZE, Configs.bAppid, hostname + requestUrl, appType, httpResponse);
 			return;
 		}
 		// 管理平台未登录
-		if (APPType.管理平台.getValue().equals(appType) && SessinId == null) {
+		if (APPType.管理平台.getValue().equals(appType) && session == null) {
 			throw new WebException(ResponseCode.未登录, "未登录");
 		}
-		Session session = SessionUtil.getSession(httpRequest);
 		// 网站主页创建Session
-		if (appType == null || SessinId == null || session == null) {
+		if (appType == null && session == null) {
 			session = SessionUtil.generateSession(appType, null, null, null);
 			SessionUtil.saveSession(session, httpRequest, httpResponse);
 		}
@@ -122,16 +116,18 @@ public class SessionFilter implements Filter {
 			return;
 		}
 		// 非网站主页需要检测数据签名
-		if (!APPType.网站主页.getValue().equals(appType) && session != null) {
-			SessionUtil.checkSignature(session, httpRequest, httpResponse);
-		}
+		// if (!APPType.网站主页.getValue().equals(appType) && session != null) {
+		// SessionUtil.checkSignature(session, httpRequest, httpResponse);
+		// }
 		// 管理平台需要检测Session超时
 		if (APPType.管理平台.getValue().equals(appType) && session != null) {
 			SessionUtil.checkTs(session, httpRequest, httpResponse);
 		}
 		// 更新Session
-		SessionUtil.updateSession(session, httpRequest);
-		chain.doFilter(httpRequest, httpResponse);
+		if (session != null) {
+			SessionUtil.updateSession(session, httpRequest);
+			chain.doFilter(httpRequest, httpResponse);
+		}
 	}
 
 	@Override
@@ -145,8 +141,8 @@ public class SessionFilter implements Filter {
 	/**
 	 * 授权
 	 */
-	private void authorize(String path, String appid, String redirectUri, HttpServletResponse httpResponse) throws IOException {
-		String getCodeUrl = MessageFormat.format(path, appid, URLEncoder.encode(redirectUri, "utf-8"), Long.toString(System.currentTimeMillis()));
+	private void authorize(String path, String appid, String redirectUri, String appType, HttpServletResponse httpResponse) throws IOException {
+		String getCodeUrl = MessageFormat.format(path, appid, URLEncoder.encode(redirectUri, "utf-8"), appType == null ? Long.toString(System.currentTimeMillis()) : appType);
 		log.debug("授权:" + getCodeUrl);
 		httpResponse.sendRedirect(getCodeUrl);
 	}

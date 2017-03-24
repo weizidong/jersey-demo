@@ -57,4 +57,14 @@ public class HistoryDao {
 		h.setRecording(new Date());
 		mapper.insert(h);
 	}
+
+	/**
+	 * 查询该用户已兑换该福利的次数
+	 */
+	public Integer isDraw(String welfareId, String userId) {
+		History h = new History();
+		h.setUserId(userId);
+		h.setWelfareId(welfareId);
+		return mapper.selectCount(h);
+	}
 }
