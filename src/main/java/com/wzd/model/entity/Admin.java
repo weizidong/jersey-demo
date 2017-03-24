@@ -81,7 +81,7 @@ public class Admin extends BaseResp {
 
 	public void setDepartment(List<Integer> department) {
 		this.department = department;
-		this.departments = department.toString().replaceAll("\\,\\[\\]", "|").replaceAll(" ", "");
+		this.departments = department.toString().replaceAll("[\\,\\[\\]]", "|").replaceAll(" ", "");
 	}
 
 	public String getPosition() {
