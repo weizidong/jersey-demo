@@ -13,7 +13,7 @@ import javax.persistence.*;
 @SuppressWarnings("serial")
 public class Wxactivity implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select uuid()")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 
 	/**

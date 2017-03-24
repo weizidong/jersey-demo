@@ -16,7 +16,7 @@ public class Activity implements Serializable {
 	 * ID
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select uuid()")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 
 	/**

@@ -12,9 +12,9 @@
     <result column="country" jdbcType="VARCHAR" property="country" />
     <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="language" jdbcType="VARCHAR" property="language" />
-    <result column="subscribe_time" jdbcType="TIMESTAMP" property="subscribeTime" />
+    <result column="subscribe_time" jdbcType="BIGINT" property="subscribeTime" />
     <result column="unionid" jdbcType="VARCHAR" property="unionid" />
-    <result column="groupid" jdbcType="VARCHAR" property="groupid" />
+    <result column="groupid" jdbcType="INTEGER" property="groupid" />
     <result column="headimgurl" jdbcType="VARCHAR" property="headimgurl" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
@@ -32,6 +32,6 @@
     <result column="login" jdbcType="TIMESTAMP" property="login" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
     <result column="auth" jdbcType="VARCHAR" property="auth" />
-    <result column="score" jdbcType="BIGINT" property="score" />
+    <result column="score" jdbcType="INTEGER" property="score" />
   </resultMap>
 </mapper>

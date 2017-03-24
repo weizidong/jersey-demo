@@ -3,6 +3,7 @@ package com.wzd.model.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
- * 用户
+ * 用户实体
  * 
  * @author WeiZiDong
  *
@@ -20,7 +21,7 @@ import com.wzd.service.wechat.base.BaseResp;
 @SuppressWarnings("serial")
 public class User extends BaseResp {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select uuid()")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	// 微信属性
 	private Integer subscribe; // 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
@@ -30,7 +31,8 @@ public class User extends BaseResp {
 	private String country; // 用户所在国家
 	private String province; // 用户所在省份
 	private String language; // 用户的语言，简体中文为zh_CN
-	private Long subscribe_time; // 用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间
+	@Column(name = "subscribe_time")
+	private Long subscribeTime;// 用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间
 	@JsonIgnore
 	private String unionid; // 只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
 	private Integer groupid; // 用户所在的分组ID（兼容旧的用户分组接口）
@@ -49,16 +51,18 @@ public class User extends BaseResp {
 	private String address; // 住址
 	// 认证属性
 	private String name; // 姓名
-	private String dep_id; // 部门
-	private String id_card; // 身份证编号
+	@Column(name = "dep_id")
+	private Integer depId; // 部门
+	@Column(name = "id_card")
+	private String idCard; // 身份证编号
 	private String position; // 岗位
 	private Integer audit; // 状态，0：未审核，1：审核通过，2：审核未通过
-	private Integer auditor; // 审核人
+	private String auditor; // 审核人
 	// 系统属性
 	private Date login; // 登录时间
 	private Date updated; // 修改时间
 	private String auth; // 权限
-	private Long score; // 积分
+	private Integer score; // 积分
 	// 关联属性
 	@Transient
 	private Integer msg_time;// 未读消息个数
@@ -123,12 +127,12 @@ public class User extends BaseResp {
 		this.language = language;
 	}
 
-	public Long getSubscribe_time() {
-		return subscribe_time;
+	public Long getSubscribeTime() {
+		return subscribeTime;
 	}
 
-	public void setSubscribe_time(Long subscribe_time) {
-		this.subscribe_time = subscribe_time;
+	public void setSubscribeTime(Long subscribeTime) {
+		this.subscribeTime = subscribeTime;
 	}
 
 	public String getUnionid() {
@@ -227,20 +231,20 @@ public class User extends BaseResp {
 		this.name = name;
 	}
 
-	public String getDep_id() {
-		return dep_id;
+	public Integer getDepId() {
+		return depId;
 	}
 
-	public void setDep_id(String dep_id) {
-		this.dep_id = dep_id;
+	public void setDepId(Integer depId) {
+		this.depId = depId;
 	}
 
-	public String getId_card() {
-		return id_card;
+	public String getIdCard() {
+		return idCard;
 	}
 
-	public void setId_card(String id_card) {
-		this.id_card = id_card;
+	public void setIdCard(String idCard) {
+		this.idCard = idCard;
 	}
 
 	public String getPosition() {
@@ -259,11 +263,11 @@ public class User extends BaseResp {
 		this.audit = audit;
 	}
 
-	public Integer getAuditor() {
+	public String getAuditor() {
 		return auditor;
 	}
 
-	public void setAuditor(Integer auditor) {
+	public void setAuditor(String auditor) {
 		this.auditor = auditor;
 	}
 
@@ -291,11 +295,11 @@ public class User extends BaseResp {
 		this.auth = auth;
 	}
 
-	public Long getScore() {
+	public Integer getScore() {
 		return score;
 	}
 
-	public void setScore(Long score) {
+	public void setScore(Integer score) {
 		this.score = score;
 	}
 
@@ -325,11 +329,12 @@ public class User extends BaseResp {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", subscribe=" + subscribe + ", openid=" + openid + ", city=" + city + ", country=" + country + ", province=" + province + ", language=" + language
-				+ ", subscribe_time=" + subscribe_time + ", unionid=" + unionid + ", groupid=" + groupid + ", tagid_list=" + tagid_list + ", headimgurl=" + headimgurl
-				+ ", nickname=" + nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone + ", address="
-				+ address + ", name=" + name + ", dep_id=" + dep_id + ", id_card=" + id_card + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor + ", login="
-				+ login + ", updated=" + updated + ", auth=" + auth + ", score=" + score + ", msg_time=" + msg_time + ", welf_time=" + welf_time + ", act_time=" + act_time + "]";
+		return super.toString() + ", id=" + id + ", subscribe=" + subscribe + ", openid=" + openid + ", city=" + city + ", country=" + country + ", province=" + province
+				+ ", language=" + language + ", subscribeTime=" + subscribeTime + ", unionid=" + unionid + ", groupid=" + groupid + ", tagid_list=" + tagid_list + ", headimgurl="
+				+ headimgurl + ", nickname=" + nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone
+				+ ", address=" + address + ", name=" + name + ", depId=" + depId + ", idCard=" + idCard + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor
+				+ ", login=" + login + ", updated=" + updated + ", auth=" + auth + ", score=" + score + ", msg_time=" + msg_time + ", welf_time=" + welf_time + ", act_time="
+				+ act_time + "}";
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.mapper.UserMapper;
+import com.wzd.utils.UUIDUtil;
 
 /**
  * 用户数据库操作
@@ -48,8 +49,10 @@ public class UserDao {
 	 * 创建用户
 	 */
 	public void create(User user) {
+		user.setId(UUIDUtil.get());
 		user.setAudit(AuditType.未审核.getValue());
 		user.setUpdated(new Date());
+		user.setScore(0);
 		mapper.insert(user);
 	}
 

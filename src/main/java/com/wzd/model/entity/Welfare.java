@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @SuppressWarnings("serial")
 public class Welfare implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY,generator = "select uuid()")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	// 自有属性
 	private String name; // 名称

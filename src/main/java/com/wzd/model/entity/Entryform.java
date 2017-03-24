@@ -16,7 +16,7 @@ public class Entryform implements Serializable {
 	 * ID
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select uuid()")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 
 	/**

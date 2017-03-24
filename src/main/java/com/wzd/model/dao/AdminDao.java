@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.mapper.AdminMapper;
+import com.wzd.utils.UUIDUtil;
 
 /**
  * 管理员数据库操作
@@ -24,6 +25,7 @@ public class AdminDao {
 	 * 创建
 	 */
 	public Admin create(Admin admin) {
+		admin.setId(UUIDUtil.get());
 		admin.setAudit(0);
 		admin.setCreated(new Date());
 		admin.setDeleted(DeleteType.未删除.getValue());
