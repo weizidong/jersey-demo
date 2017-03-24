@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzd.model.mapper.TicketMapper" >
+  <resultMap id="BaseResultMap" type="com.wzd.model.entity.Ticket" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ticket" property="ticket" jdbcType="CHAR" />
+    <result column="foreign_key" property="foreignKey" jdbcType="INTEGER" />
+    <result column="used" property="used" jdbcType="TIMESTAMP" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>
