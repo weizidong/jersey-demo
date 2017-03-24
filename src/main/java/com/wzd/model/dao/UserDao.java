@@ -48,7 +48,7 @@ public class UserDao {
 	 * 创建用户
 	 */
 	public void create(User user) {
-		user.setStatus(AuditType.未审核.getValue());
+		user.setAudit(AuditType.未审核.getValue());
 		user.setUpdated(new Date());
 		mapper.insert(user);
 	}

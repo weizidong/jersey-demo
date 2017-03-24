@@ -33,8 +33,8 @@ public class Admin extends BaseResp {
 	private String gender;// 性别。1表示男性，2表示女性
 	private String email;// 邮箱。长度为0~64个字节。企业内必须唯一
 	private String weixinid;// 微信号。企业内必须唯一。（注意：是微信号，不是微信的名字）
-	@JsonIgnore
 	@Transient
+	@JsonIgnore
 	private String avatar_mediaid;// 成员头像的mediaid，通过多媒体接口上传图片获得的mediaid
 	private String avatar;// 头像url。注：如果要获取小图将url最后的"/0"改成"/64"即可
 	private Integer status;// 关注状态: 1=已关注，2=已禁用，4=未关注
