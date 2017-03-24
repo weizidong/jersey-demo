@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.mysql.jdbc.Blob;
-
 /**
  * 福利实体
  * 
@@ -30,7 +28,7 @@ public class Welfare implements Serializable {
 	private Integer total;// 总个数
 	private Integer current;// 当前领取个数
 	private Integer type;// 福利类型
-	private Blob rule;// 规则
+	private byte[] rule;// 规则
 	// 系统属性
 	private Integer deleted; // 删除标志
 	// 关联属性
@@ -132,11 +130,11 @@ public class Welfare implements Serializable {
 		this.draw = draw;
 	}
 
-	public Blob getRule() {
+	public byte[] getRule() {
 		return rule;
 	}
 
-	public void setRule(Blob rule) {
+	public void setRule(byte[] rule) {
 		this.rule = rule;
 	}
 
