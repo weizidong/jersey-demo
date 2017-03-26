@@ -34,6 +34,22 @@ public class History implements Serializable {
 	// 系统属性
 	private Integer deleled;// 删除标志
 
+	public History() {
+		super();
+	}
+
+	public History(String userId, String title, String content, Integer score, String ticket, Integer type,
+			String welfareId) {
+		super();
+		this.userId = userId;
+		this.title = title;
+		this.content = content;
+		this.score = score;
+		this.ticket = ticket;
+		this.type = type;
+		this.welfareId = welfareId;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -116,8 +132,9 @@ public class History implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", userId=" + userId + ", title=" + title + ", content=" + content + ", score=" + score + ", ticket=" + ticket + ", recording=" + recording + ", type="
-				+ type + ", welfareId=" + welfareId + ", deleled=" + deleled + "]";
+		return "[id=" + id + ", userId=" + userId + ", title=" + title + ", content=" + content + ", score=" + score
+				+ ", ticket=" + ticket + ", recording=" + recording + ", type=" + type + ", welfareId=" + welfareId
+				+ ", deleled=" + deleled + "]";
 	}
 
 }

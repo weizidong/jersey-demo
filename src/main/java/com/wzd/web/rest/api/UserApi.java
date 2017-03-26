@@ -58,9 +58,10 @@ public class UserApi {
 	 * 签到
 	 */
 	@PUT
-	@Path("/sign/{userid}")
-	public User sign(@PathParam("userid") String userid) {
-		return service.sign(userid);
+	@Path("/sign")
+	public User sign(@Context HttpServletRequest request) {
+		User user = (User) SessionUtil.getUser(request);
+		return service.sign(user.getId());
 	}
 	// 以上是实现的业务接口
 

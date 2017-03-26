@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.Admin;
+import com.wzd.model.entity.History;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
@@ -103,6 +104,9 @@ public class UserService {
 		}
 		user.setScore(user.getScore() + Integer.parseInt(Configs.get("score")));
 		userDao.update(user);
+		History h = new History(userid, "积分签到", "积分签到", Integer.parseInt(Configs.get("score")), null,
+				HistoryType.积分签到.getValue(), null);
+		historyDao.create(h);
 		return user;
 	}
 
