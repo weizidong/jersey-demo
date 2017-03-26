@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.PageInfo;
+import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.User;
 import com.wzd.model.entity.Welfare;
 import com.wzd.service.WelfareService;
@@ -38,7 +39,7 @@ public class WelfareApi {
 	@POST
 	@Path("create")
 	public Welfare create(Welfare w, @Context HttpServletRequest request) {
-		return service.create(w);
+		return service.create(w, (Admin) SessionUtil.getUser(request));
 	}
 
 	/**

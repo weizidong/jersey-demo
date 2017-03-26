@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.TicketDao;
 import com.wzd.model.dao.WelfareDao;
+import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.User;
 import com.wzd.model.entity.Welfare;
 import com.wzd.model.enums.APPType;
@@ -35,7 +36,7 @@ public class WelfareService {
 	/**
 	 * 创建福利
 	 */
-	public Welfare create(Welfare w) {
+	public Welfare create(Welfare w, Admin admin) {
 		w = welfareDao.create(w);
 		if (w.getType() == HistoryType.券票福利.getValue()) {
 			ticketDao.create(w.getTotal(), w.getId());
@@ -51,7 +52,6 @@ public class WelfareService {
 		if (session.getAppType() == null || !session.getAppType().equals(APPType.服务号) || page.getList() == null || page.getList().size() == 0) {
 			return page;
 		}
-
 		User user = (User) session.getUser();
 		page.getList().forEach(wel -> {
 			wel.setDraw(wel.getTime() - historyDao.isDraw(wel.getId(), user.getId()));
