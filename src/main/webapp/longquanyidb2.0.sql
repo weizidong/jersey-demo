@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-03-26 16:56:52
+Date: 2017-03-26 17:09:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -68,7 +68,7 @@ CREATE TABLE `admin` (
   `login` datetime DEFAULT NULL,
   `audit` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='管理员实体类\r\n@author weizidong';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='管理员实体类\r\n@author weizidong';
 
 -- ----------------------------
 -- Table structure for department
@@ -82,7 +82,7 @@ CREATE TABLE `department` (
   `admin` char(32) DEFAULT NULL COMMENT '创建者',
   `deleted` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for entryform
@@ -99,7 +99,7 @@ CREATE TABLE `entryform` (
   `deleted` int(1) DEFAULT NULL COMMENT '删除标志，0：未删除；1：回收站；2：永久删除',
   `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态，0：未到场；1：已到场；',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for files
@@ -118,7 +118,7 @@ CREATE TABLE `files` (
   `status` int(1) DEFAULT NULL COMMENT '状态',
   `type` int(1) DEFAULT NULL COMMENT '类型，0：头像；1：附件；2：重要文件',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='文件实体类\r\n@author weizidong';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文件实体类\r\n@author weizidong';
 
 -- ----------------------------
 -- Table structure for history
@@ -136,7 +136,7 @@ CREATE TABLE `history` (
   `type` int(2) DEFAULT NULL,
   `deleled` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for ticket
@@ -149,7 +149,7 @@ CREATE TABLE `ticket` (
   `used` datetime DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1401 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user
@@ -171,7 +171,7 @@ CREATE TABLE `user` (
   `sex` int(1) DEFAULT NULL COMMENT '用户的性别，值为1时是男性，值为2时是女性，值为0时是未知',
   `remark` varchar(255) DEFAULT NULL COMMENT '公众号运营者对粉丝的备注',
   `birthday` datetime DEFAULT NULL COMMENT '出生日期',
-  `marriage` int(1) NOT NULL DEFAULT '0' COMMENT '婚姻',
+  `marriage` int(1) DEFAULT '0' COMMENT '婚姻',
   `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
   `address` varchar(255) DEFAULT NULL COMMENT '住址',
   `name` varchar(20) DEFAULT NULL COMMENT '姓名',
@@ -185,7 +185,7 @@ CREATE TABLE `user` (
   `auth` varchar(255) DEFAULT NULL COMMENT '权限',
   `score` int(20) DEFAULT NULL COMMENT '积分',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='用户实体类\r\n@author weizidong';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户实体类\r\n@author weizidong';
 
 -- ----------------------------
 -- Table structure for welfare
@@ -206,7 +206,7 @@ CREATE TABLE `welfare` (
   `deleted` int(1) DEFAULT NULL,
   `rule` blob,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for wxactivity
@@ -238,4 +238,4 @@ CREATE TABLE `wxactivity` (
   `aud_time` datetime DEFAULT NULL COMMENT '审核时间',
   `audit` int(1) NOT NULL DEFAULT '0' COMMENT '审核状态,0：未审核；1：审核通过；2：审核未通过；',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
