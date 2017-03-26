@@ -78,4 +78,13 @@ public class HistoryDao {
 		e.createCriteria().andEqualTo("userId", userid).andGreaterThan("recording", DateUtil.getFirstDayOfWeek(new Date(), 1));
 		return mapper.selectByExample(e);
 	}
+
+	/**
+	 * 是否已经签到
+	 */
+	public Boolean isSign(String userid) {
+		Example e = new Example(History.class);
+		e.createCriteria().andEqualTo("userId", userid).andGreaterThan("recording", DateUtil.getDayStartTime(System.currentTimeMillis()));
+		return mapper.selectCountByExample(e) >= 1;
+	}
 }

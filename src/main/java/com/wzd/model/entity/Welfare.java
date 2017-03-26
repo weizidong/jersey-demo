@@ -3,9 +3,9 @@ package com.wzd.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * 福利实体
@@ -16,22 +16,25 @@ import javax.persistence.Id;
 @SuppressWarnings("serial")
 public class Welfare implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	// 自有属性
 	private String name; // 名称
 	private Integer score;// 积分
 	private Integer time;// 单人次数
 	private String provider;// 提供者
-	private Date start_time;// 开始时间
-	private Date end_time;// 结束时间
+	private String website; // 提供者网站
+	@Column(name = "start_time")
+	private Date startTime;// 开始时间
+	@Column(name = "end_time")
+	private Date endTime;// 结束时间
 	private Integer total;// 总个数
 	private Integer current;// 当前领取个数
 	private Integer type;// 福利类型
-	private byte[] rule;// 规则
+	private Object rule;// 规则
 	// 系统属性
 	private Integer deleted; // 删除标志
 	// 关联属性
+	@Transient
 	private Integer draw;// 该用户可领取剩余次数
 
 	public String getId() {
@@ -74,20 +77,28 @@ public class Welfare implements Serializable {
 		this.provider = provider;
 	}
 
-	public Date getStart_time() {
-		return start_time;
+	public String getWebsite() {
+		return website;
 	}
 
-	public void setStart_time(Date start_time) {
-		this.start_time = start_time;
+	public void setWebsite(String website) {
+		this.website = website;
 	}
 
-	public Date getEnd_time() {
-		return end_time;
+	public Date getStartTime() {
+		return startTime;
 	}
 
-	public void setEnd_time(Date end_time) {
-		this.end_time = end_time;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public Integer getTotal() {
@@ -114,6 +125,14 @@ public class Welfare implements Serializable {
 		this.type = type;
 	}
 
+	public Object getRule() {
+		return rule;
+	}
+
+	public void setRule(Object rule) {
+		this.rule = rule;
+	}
+
 	public Integer getDeleted() {
 		return deleted;
 	}
@@ -130,18 +149,10 @@ public class Welfare implements Serializable {
 		this.draw = draw;
 	}
 
-	public byte[] getRule() {
-		return rule;
-	}
-
-	public void setRule(byte[] rule) {
-		this.rule = rule;
-	}
-
 	@Override
 	public String toString() {
-		return "[id=" + id + ", name=" + name + ", score=" + score + ", time=" + time + ", provider=" + provider + ", start_time=" + start_time + ", end_time=" + end_time
-				+ ", total=" + total + ", current=" + current + ", type=" + type + ", deleted=" + deleted + ", draw=" + draw + "]";
+		return "[id=" + id + ", name=" + name + ", score=" + score + ", time=" + time + ", provider=" + provider + ", website=" + website + ", startTime=" + startTime
+				+ ", endTime=" + endTime + ", total=" + total + ", current=" + current + ", type=" + type + ", rule=" + rule + ", deleted=" + deleted + ", draw=" + draw + "]";
 	}
 
 }

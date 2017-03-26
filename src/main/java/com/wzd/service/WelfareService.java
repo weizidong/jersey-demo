@@ -5,10 +5,15 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.HistoryDao;
+import com.wzd.model.dao.TicketDao;
 import com.wzd.model.dao.WelfareDao;
 import com.wzd.model.entity.User;
 import com.wzd.model.entity.Welfare;
 import com.wzd.model.enums.APPType;
+import com.wzd.model.enums.DeleteType;
+import com.wzd.model.enums.HistoryType;
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
 import com.wzd.web.param.PageParam;
 
@@ -24,13 +29,18 @@ public class WelfareService {
 	private WelfareDao welfareDao;
 	@Autowired
 	private HistoryDao historyDao;
+	@Autowired
+	private TicketDao ticketDao;
 
 	/**
 	 * 创建福利
 	 */
 	public Welfare create(Welfare w) {
-		// TODO 创建福利
-		return null;
+		w = welfareDao.create(w);
+		if (w.getType() == HistoryType.券票福利.getValue()) {
+			ticketDao.create(w.getTotal(), w.getId());
+		}
+		return w;
 	}
 
 	/**
@@ -47,6 +57,28 @@ public class WelfareService {
 			wel.setDraw(wel.getTime() - historyDao.isDraw(wel.getId(), user.getId()));
 		});
 		return page;
+	}
+
+	/**
+	 * 兑换福利
+	 */
+	public void convert(String welfareId, User user) {
+		Welfare welfare = welfareDao.getById(welfareId, DeleteType.未删除);
+		if (welfare == null) {
+			throw new WebException(ResponseCode.资源不存在, "福利不存在");
+		}
+		Integer num = historyDao.isDraw(welfareId, user.getId());
+		if (num >= welfare.getTime()) {
+			throw new WebException(ResponseCode.不允许重复, "已领取过该福利");
+		}
+		// TODO 发放福利，记录历史
+	}
+
+	/**
+	 * 查询福利详情
+	 */
+	public Welfare findById(String welfareId, Integer delType) {
+		return welfareDao.getById(welfareId, DeleteType.parse(delType));
 	}
 
 }

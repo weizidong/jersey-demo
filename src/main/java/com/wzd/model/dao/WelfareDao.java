@@ -30,10 +30,12 @@ public class WelfareDao {
 	/**
 	 * 创建
 	 */
-	public void create(Welfare wel) {
+	public Welfare create(Welfare wel) {
 		wel.setId(UUIDUtil.get());
 		wel.setDeleted(DeleteType.未删除.getValue());
+		wel.setCurrent(0);
 		mapper.insert(wel);
+		return wel;
 	}
 
 	/**
@@ -56,5 +58,15 @@ public class WelfareDao {
 		// 开始分页
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<Welfare>(mapper.selectByExample(e));
+	}
+
+	/**
+	 * 根据ID查询福利
+	 */
+	public Welfare getById(String welfareId, DeleteType type) {
+		Welfare w = new Welfare();
+		w.setId(welfareId);
+		w.setDeleted(type.getValue());
+		return mapper.selectOne(w);
 	}
 }

@@ -100,8 +100,8 @@ public class UserApi {
 	/**
 	 * 条件查询列表
 	 */
-	@Path("/find")
 	@POST
+	@Path("/find")
 	public PageInfo<User> getById(PageParam param) {
 		return service.find(param);
 	}

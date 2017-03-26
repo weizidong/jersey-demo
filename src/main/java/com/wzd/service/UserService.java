@@ -35,8 +35,9 @@ public class UserService {
 	public User findMine(User user) {
 		Integer num = historyDao.getCount(user.getId(), HistoryType.系统消息, DeleteType.未删除);
 		user.setMsgNum(num);
-		num = historyDao.getCount(user.getId(), HistoryType.福利, DeleteType.未删除);
-		user.setWelfNum(num);
+		num = historyDao.getCount(user.getId(), HistoryType.券票福利, DeleteType.未删除);
+		Integer num1 = historyDao.getCount(user.getId(), HistoryType.红包福利, DeleteType.未删除);
+		user.setWelfNum(num + num1);
 		num = historyDao.getCount(user.getId(), HistoryType.活动, DeleteType.未删除);
 		user.setActNum(num);
 		return user;
@@ -95,6 +96,10 @@ public class UserService {
 		User user = userDao.getById(userid);
 		if (user == null) {
 			throw new WebException(ResponseCode.用户不存在, userid);
+		}
+		Boolean isSign = historyDao.isSign(userid);
+		if (isSign) {
+			throw new WebException(ResponseCode.已经签到);
 		}
 		user.setScore(user.getScore() + Integer.parseInt(Configs.get("score")));
 		userDao.update(user);

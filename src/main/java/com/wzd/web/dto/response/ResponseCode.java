@@ -42,7 +42,7 @@ public enum ResponseCode implements ResponseCodeType {
 
 	生成Excel表格数据失败(606, "生成Excel表格数据失败"),
 
-	加密失败(607, "加密失败"), 解密失败(608, "解密失败"), 类型错误(609, "类型错误");
+	加密失败(607, "加密失败"), 解密失败(608, "解密失败"), 类型错误(609, "类型错误"), 已经签到(610, "已经签到");
 
 	private int code;
 

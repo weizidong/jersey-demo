@@ -10,6 +10,7 @@ import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.WelfareDao;
 import com.wzd.model.entity.Department;
 import com.wzd.model.entity.History;
+import com.wzd.model.entity.Ticket;
 import com.wzd.model.entity.Welfare;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
@@ -32,8 +33,7 @@ public class DaoTest extends BasicTest {
 
 	@Test
 	public void text2() {
-		String s = "123123156465465.jpg";
-		System.out.println(s.substring(0, s.length() - 4));
+		System.out.println(Ticket.generate(0, "134564165168464156486512651684165"));
 	}
 
 	@Test

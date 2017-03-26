@@ -397,18 +397,14 @@ public class DateUtil {
 
 	/**
 	 * 获取当前日期是星期几<br>
-	 * 
-	 * @param dt
-	 * @return 当前日期是星期几
 	 */
-	public static String getWeekOfDate(Date dt) {
-		String[] weekDays = { "日", "一", "二", "三", "四", "五", "六" };
+	public static Integer getWeekOfDate(Date dt) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dt);
 		int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
-		if (w < 0)
-			w = 0;
-		return weekDays[w];
+		if (w <= 0)
+			w = 7;
+		return w;
 	}
 
 	/**

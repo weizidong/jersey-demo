@@ -3,6 +3,7 @@ package com.wzd.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,18 +18,19 @@ import javax.persistence.Id;
 public class Ticket implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String id;
+	private Integer id;
 	// 自有属性
 	private String ticket; // 票券码
-	private Integer foreign_key; // 外键
+	@Column(name = "foreign_key")
+	private String foreignKey; // 外键
 	private Date used;// 使用时间
 	private Date created; // 生成时间
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -40,12 +42,12 @@ public class Ticket implements Serializable {
 		this.ticket = ticket;
 	}
 
-	public Integer getForeign_key() {
-		return foreign_key;
+	public String getForeignKey() {
+		return foreignKey;
 	}
 
-	public void setForeign_key(Integer foreign_key) {
-		this.foreign_key = foreign_key;
+	public void setForeignKey(String foreignKey) {
+		this.foreignKey = foreignKey;
 	}
 
 	public Date getUsed() {
@@ -66,7 +68,14 @@ public class Ticket implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", ticket=" + ticket + ", foreign_key=" + foreign_key + ", used=" + used + ", created=" + created + "]";
+		return "[id=" + id + ", ticket=" + ticket + ", foreignKey=" + foreignKey + ", used=" + used + ", created=" + created + "]";
+	}
+
+	/**
+	 * 生成券码
+	 */
+	public static String generate(int i, String fk) {
+		return fk.substring(fk.length() - 2) + Integer.toHexString(10000 + i);
 	}
 
 }
