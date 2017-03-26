@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
@@ -22,7 +20,6 @@ import com.wzd.service.wechat.base.BaseResp;
 @SuppressWarnings("serial")
 public class Admin extends BaseResp {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id; // ID
 	private String userid; // 成员UserID。对应管理端的帐号，企业内必须唯一。不区分大小写，长度为1~64个字节
 	private String name; // 成员名称。长度为1~64个字节

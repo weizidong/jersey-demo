@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
@@ -21,7 +19,6 @@ import com.wzd.service.wechat.base.BaseResp;
 @SuppressWarnings("serial")
 public class User extends BaseResp {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	// 微信属性
 	private Integer subscribe; // 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
