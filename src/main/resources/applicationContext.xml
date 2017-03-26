@@ -57,7 +57,6 @@
 							supportMethodsArguments=true
 							params=count=countSql
 							autoRuntimeDialect=true
-							ORDER=BEFORE
 						</value>
 					</property>
 				</bean>
@@ -68,9 +67,7 @@
 	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.wzd.model.mapper" />
 		<!-- 3.2.2版本新特性，markerInterface可以起到mappers配置的作用，详细情况需要看Marker接口类 -->
-		<property name="markerInterface" value="tk.mybatis.mapper.common.Mapper" />
-		<!-- 通用Mapper通过属性注入进行配置，默认不配置时会注册Mapper<T>接口 <property name="properties"> 
-			<value> mappers=tk.mybatis.mapper.common.Mapper </value> </property> -->
+		<property name="markerInterface" value="com.wzd.model.mapper.MyMapper" />
 	</bean>
 
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
@@ -78,16 +75,10 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 
-	<!-- <aop:aspectj-autoproxy/> <aop:config> <aop:pointcut id="appService" 
-		expression="execution(* com.isea533.mybatis.service..*Service*.*(..))"/> 
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="appService"/> </aop:config> 
-		<tx:advice id="txAdvice" transaction-manager="transactionManager"> <tx:attributes> 
-		<tx:method name="select*" read-only="true"/> <tx:method name="find*" read-only="true"/> 
-		<tx:method name="get*" read-only="true"/> <tx:method name="*"/> </tx:attributes> 
-		</tx:advice> -->
-
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+
+	<bean id="SessionFilter" class="com.wzd.web.filter.SessionFilter" />
 </beans>

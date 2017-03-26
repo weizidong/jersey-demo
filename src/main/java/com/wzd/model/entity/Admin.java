@@ -10,6 +10,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wzd.service.wechat.base.BaseResp;
+import com.wzd.utils.StringUtil;
 
 /**
  * 管理员
@@ -159,7 +160,7 @@ public class Admin extends BaseResp {
 
 	public void setDepartments(String departments) {
 		this.departments = departments;
-		this.department = Arrays.stream(departments.split("|")).map(d -> Integer.parseInt(d)).collect(Collectors.toList());
+		this.department = Arrays.stream(departments.split("\\|")).filter(d -> !StringUtil.isEmpty(d)).map(d -> Integer.parseInt(d)).collect(Collectors.toList());
 	}
 
 	public Date getCreated() {

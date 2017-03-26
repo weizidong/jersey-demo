@@ -83,6 +83,7 @@ public class WechatApi {
 	 */
 	@GET
 	@Path("/syncQy")
+	@Produces(MediaType.APPLICATION_JSON)
 	public String sync() {
 		return qyService.sync();
 	}
@@ -164,6 +165,7 @@ public class WechatApi {
 	 */
 	@GET
 	@Path("/syncFw")
+	@Produces(MediaType.APPLICATION_JSON)
 	public String syncFw() {
 		return fwService.syncUser("");
 	}

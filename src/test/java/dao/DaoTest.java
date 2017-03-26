@@ -5,6 +5,7 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.wzd.model.dao.AdminDao;
 import com.wzd.model.dao.DepartmentDao;
 import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.WelfareDao;
@@ -22,6 +23,8 @@ public class DaoTest extends BasicTest {
 	private HistoryDao historyDao;
 	@Autowired
 	private WelfareDao welfareDao;
+	@Autowired
+	private AdminDao adminDao;
 
 	@Test
 	public void test1() {
@@ -60,6 +63,11 @@ public class DaoTest extends BasicTest {
 	@Test
 	public void test5() {
 		System.out.println(historyDao.getSign("asdasd"));
+	}
+
+	@Test
+	public void test6() {
+		System.out.println(adminDao.getByUserId("weizidong"));
 	}
 
 }

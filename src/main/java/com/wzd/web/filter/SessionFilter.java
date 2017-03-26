@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.wzd.model.enums.APPType;
 import com.wzd.service.wechat.FwWxService;
@@ -35,12 +36,15 @@ import com.wzd.web.dto.session.SessionUtil;
  * @author WeiZiDong
  *
  */
+@Component("SessionFilter")
 public class SessionFilter implements Filter {
 	private static final Logger log = LogManager.getLogger(SessionFilter.class);
 	@Autowired
 	private QyWxService qyService;
 	@Autowired
 	private FwWxService fwService;
+	@Autowired
+	private SessionUtil sessionUtil;
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -64,7 +68,8 @@ public class SessionFilter implements Filter {
 		log.debug("code：" + code);
 		// debug模式
 		if (SessionUtil.isDebug(httpRequest)) {
-			SessionUtil.openDebug(httpRequest, httpResponse);
+			log.debug("开启debug模式！");
+			sessionUtil.openDebug(httpRequest, httpResponse);
 		}
 		// 授权成功，回调,
 		if (!StringUtil.isEmpty(code)) {

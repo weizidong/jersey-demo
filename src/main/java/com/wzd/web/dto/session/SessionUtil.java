@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.wzd.model.dao.AdminDao;
 import com.wzd.model.dao.UserDao;
@@ -23,12 +25,17 @@ import com.wzd.web.dto.response.ResponseCode;
  * @author WeiZiDong
  *
  */
+@Component()
 public class SessionUtil {
 	private static final Logger log = LogManager.getLogger(SessionUtil.class);
 	private static final String SESSION_ID = "session_id";
 	private static final String ACCESS_TOKEN = "access_token";
 	private static final Integer COOKIE_MAX_AGE = 3600 * 24 * 7;
 	private static final EhcacheUtil ehcache = EhcacheUtil.getInstance();
+	@Autowired
+	private AdminDao adminDao;
+	@Autowired
+	private UserDao userDao;
 
 	/**
 	 * 从cookie中获取SessionId
@@ -48,31 +55,29 @@ public class SessionUtil {
 	/**
 	 * 开启debug模式
 	 */
-	public static void openDebug(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+	public void openDebug(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
 		String appType = httpRequest.getParameter("appType");
-		String SessinId = SessionUtil.getSessionIdByCookie(httpRequest);
+		String sessionId = getSessionIdByCookie(httpRequest);
 		Session session = getSession(httpRequest);
-		if (SessinId != null && session != null) {
+		if (sessionId != null && session != null) {
 			return;
 		}
-		String sessionId = null;
 		String accessToken = null;
 		Object user = null;
 		if (APPType.企业号.getValue().equals(appType)) {
 			sessionId = "weizidong";
-			AdminDao dao = new AdminDao();
-			user = dao.getByUserId(sessionId);
+			user = adminDao.getByUserId(sessionId);
 		}
 		if (APPType.服务号.getValue().equals(appType)) {
-			sessionId = "oPDWLv0ogagbw1PocuklciM2Ea0M";
-			UserDao dao = new UserDao();
-			user = dao.getByOpenId(SessinId);
+			sessionId = "oFTpnwnsF7Vv6WkM_fySqDtD-rEo";
+			user = userDao.getByOpenId(sessionId);
 		}
 		if (APPType.管理平台.getValue().equals(appType)) {
-			AdminDao dao = new AdminDao();
-			user = dao.getByUserId("weizidong");
+			sessionId = "weizidong";
+			user = adminDao.getByUserId(sessionId);
 		}
-		saveSession(generateSession(appType, sessionId, accessToken, user), httpRequest, httpResponse);
+		session = generateSession(appType, sessionId, accessToken, user);
+		saveSession(session, httpRequest, httpResponse);
 	}
 
 	/**
@@ -80,14 +85,6 @@ public class SessionUtil {
 	 */
 	public static Session getSession(HttpServletRequest request) {
 		Session session = null;
-		// debug模式固定Session
-		String debug = request.getParameter("debug");
-		if (isDebug(request)) {
-			session = new Session();
-			session.setSessionId(MD5Utils.getMD5ofStr(debug));
-			session.setAccessToken(MD5Utils.getMD5ofStr(debug, 2));
-			return session;
-		}
 		// 先判断request中否存在，存在既返回
 		Object sessionRequestAttr = request.getAttribute(SESSION_ID);
 		if (sessionRequestAttr != null) {

@@ -11,7 +11,6 @@ import com.wzd.model.entity.Ticket;
 import com.wzd.model.mapper.TicketMapper;
 
 import tk.mybatis.mapper.entity.Example;
-import tk.mybatis.mapper.entity.Example.Criteria;
 
 /**
  * 券票数据库操作

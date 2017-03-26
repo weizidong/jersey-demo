@@ -74,7 +74,7 @@ public class HistoryDao {
 	 */
 	public List<History> getSign(String userid) {
 		Example e = new Example(History.class);
-		e.setOrderByClause("recording DESC");
+		e.setOrderByClause("recording asc");
 		e.createCriteria().andEqualTo("userId", userid).andGreaterThan("recording", DateUtil.getFirstDayOfWeek(new Date(), 1));
 		return mapper.selectByExample(e);
 	}
