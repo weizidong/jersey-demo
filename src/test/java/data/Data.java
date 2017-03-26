@@ -45,7 +45,7 @@ public class Data extends BasicTest {
 		w.setTotal(total); // 总的个数
 		w.setType(type.getValue()); // 类型
 		w.setRule(("1、福利期间每人只能兑换" + time + "次福利。").getBytes()); // 规则
-		welfareService.create(w);
+		welfareService.create(w, null);
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class Data extends BasicTest {
 		crete(10, "电影票兑换", 1000, 1, 500, HistoryType.券票福利);
 		crete(20, "优惠券兑换", 2000, 1, 200, HistoryType.券票福利);
 	}
-	
+
 	/**
 	 * 创建签到历史
 	 */
