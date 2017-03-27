@@ -69,4 +69,8 @@ public class EhcacheUtil {
 	public void removeSession(String key) {
 		remove(LOGIN_SESSION, key);
 	}
+	public void clear() {
+		manager.getCache(LOGIN_SESSION).removeAll();
+		manager.getCache(TOKEN).removeAll();
+	}
 }

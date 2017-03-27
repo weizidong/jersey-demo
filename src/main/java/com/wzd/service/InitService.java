@@ -19,6 +19,7 @@ import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
 import com.wzd.utils.Configs;
 import com.wzd.utils.DateUtil;
+import com.wzd.utils.EhcacheUtil;
 import com.wzd.utils.MD5Utils;
 import com.wzd.utils.UUIDUtil;
 
@@ -125,7 +126,7 @@ public class InitService {
 	 * 清理测试数据
 	 */
 	public void clear() {
-		// TODO Auto-generated method stub
+		EhcacheUtil.getInstance().clear();
 
 	}
 
