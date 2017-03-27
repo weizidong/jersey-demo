@@ -10,7 +10,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum AuditType {
-	未审核(0), 审核通过(1), 审核未通过(2);
+	未审核(0), 审核中(1), 审核成功(2), 审核失败(3);
 	private Integer value;
 
 	private AuditType(Integer value) {

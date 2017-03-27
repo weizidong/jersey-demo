@@ -67,6 +67,8 @@ public class User extends BaseResp {
 	private Integer welfNum;// 福利个数
 	@Transient
 	private Integer actNum;// 活动个数
+	@Transient
+	private Boolean isSign;// 是否已签到
 
 	public String getId() {
 		return id;
@@ -324,13 +326,21 @@ public class User extends BaseResp {
 		this.actNum = actNum;
 	}
 
+	public Boolean getIsSign() {
+		return isSign;
+	}
+
+	public void setIsSign(Boolean isSign) {
+		this.isSign = isSign;
+	}
+
 	@Override
 	public String toString() {
-		return super.toString() + ", id=" + id + ", subscribe=" + subscribe + ", openid=" + openid + ", city=" + city + ", country=" + country + ", province=" + province
-				+ ", language=" + language + ", subscribeTime=" + subscribeTime + ", unionid=" + unionid + ", groupid=" + groupid + ", tagid_list=" + tagid_list + ", headimgurl="
-				+ headimgurl + ", nickname=" + nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone
-				+ ", address=" + address + ", name=" + name + ", depId=" + depId + ", idCard=" + idCard + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor
-				+ ", login=" + login + ", updated=" + updated + ", auth=" + auth + ", score=" + score + ", msgNum=" + msgNum + ", welfNum=" + welfNum + ", actNum=" + actNum + "}";
+		return "[id=" + id + ", subscribe=" + subscribe + ", openid=" + openid + ", city=" + city + ", country=" + country + ", province=" + province + ", language=" + language
+				+ ", subscribeTime=" + subscribeTime + ", unionid=" + unionid + ", groupid=" + groupid + ", tagid_list=" + tagid_list + ", headimgurl=" + headimgurl + ", nickname="
+				+ nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone + ", address=" + address + ", name="
+				+ name + ", depId=" + depId + ", idCard=" + idCard + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor + ", login=" + login + ", updated="
+				+ updated + ", auth=" + auth + ", score=" + score + ", msgNum=" + msgNum + ", welfNum=" + welfNum + ", actNum=" + actNum + ", isSign=" + isSign + "]";
 	}
 
 }

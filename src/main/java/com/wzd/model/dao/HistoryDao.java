@@ -1,5 +1,6 @@
 package com.wzd.model.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,14 +30,19 @@ public class HistoryDao {
 	/**
 	 * 查询相应消息种类的数量
 	 */
+	public Integer getCount(String userId, List<Integer> types, DeleteType del) {
+		Example e = new Example(History.class);
+		e.createCriteria().andEqualTo("userId", userId).andEqualTo("deleled", del.getValue()).andIn("type", types);
+		return mapper.selectCountByExample(e);
+	}
+
+	/**
+	 * 查询相应消息种类的数量
+	 */
 	public Integer getCount(String userId, HistoryType type, DeleteType del) {
-		History history = new History();
-		history.setUserId(userId);
-		history.setType(type.getValue());
-		if (del != null) {
-			history.setDeleled(del.getValue());
-		}
-		return mapper.selectCount(history);
+		List<Integer> types = new ArrayList<>();
+		types.add(type.getValue());
+		return getCount(userId, types, del);
 	}
 
 	/**

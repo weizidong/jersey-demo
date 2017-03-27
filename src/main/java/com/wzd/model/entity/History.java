@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.wzd.model.enums.HistoryType;
+
 /**
  * 用户历史记录
  * 
@@ -38,15 +40,14 @@ public class History implements Serializable {
 		super();
 	}
 
-	public History(String userId, String title, String content, Integer score, String ticket, Integer type,
-			String welfareId) {
+	public History(String userId, String title, String content, Integer score, String ticket, HistoryType type, String welfareId) {
 		super();
 		this.userId = userId;
 		this.title = title;
 		this.content = content;
 		this.score = score;
 		this.ticket = ticket;
-		this.type = type;
+		this.type = type.getValue();
 		this.welfareId = welfareId;
 	}
 
@@ -132,9 +133,8 @@ public class History implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", userId=" + userId + ", title=" + title + ", content=" + content + ", score=" + score
-				+ ", ticket=" + ticket + ", recording=" + recording + ", type=" + type + ", welfareId=" + welfareId
-				+ ", deleled=" + deleled + "]";
+		return "[id=" + id + ", userId=" + userId + ", title=" + title + ", content=" + content + ", score=" + score + ", ticket=" + ticket + ", recording=" + recording + ", type="
+				+ type + ", welfareId=" + welfareId + ", deleled=" + deleled + "]";
 	}
 
 }

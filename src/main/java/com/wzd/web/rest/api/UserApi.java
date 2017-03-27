@@ -63,7 +63,6 @@ public class UserApi {
 		User user = (User) SessionUtil.getUser(request);
 		return service.sign(user.getId());
 	}
-	// 以上是实现的业务接口
 
 	/**
 	 * 创建
@@ -111,11 +110,11 @@ public class UserApi {
 	 * 审核
 	 * 
 	 * @param type
-	 *            审核类型,1：审核通过；2：审核未通过
+	 *            审核类型,2：审核通过；3：审核未通过
 	 */
-	@Path("/audit/{type}")
-	@POST
-	public void auditing(@PathParam("type") Integer type, @Context HttpServletRequest request) {
-		service.auditing(AuditType.parse(type), (Admin) SessionUtil.getUser(request));
+	@PUT
+	@Path("/audit/{userId}/{type}")
+	public void auditing(@PathParam("userId") String userId, @PathParam("type") Integer type, @Context HttpServletRequest request) {
+		service.auditing(userId, AuditType.parse(type), (Admin) SessionUtil.getUser(request));
 	}
 }
