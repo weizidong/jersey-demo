@@ -47,11 +47,11 @@ public class AdminApi {
 	/**
 	 * 创建
 	 */
-	@Path("/create")
-	@POST
-	public void create(Admin admin) {
-		service.create(admin);
-	}
+	// @Path("/create")
+	// @POST
+	// public void create(Admin admin) {
+	// service.create(admin);
+	// }
 
 	/**
 	 * 删除

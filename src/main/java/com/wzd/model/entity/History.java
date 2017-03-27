@@ -37,17 +37,19 @@ public class History implements Serializable {
 	private Integer deleled;// 删除标志
 
 	public History() {
-		super();
 	}
 
 	public History(String userId, String title, String content, Integer score, String ticket, HistoryType type, String welfareId) {
-		super();
+		this(userId, title, content, score, ticket, type.getValue(), welfareId);
+	}
+
+	public History(String userId, String title, String content, Integer score, String ticket, Integer type, String welfareId) {
 		this.userId = userId;
 		this.title = title;
 		this.content = content;
 		this.score = score;
 		this.ticket = ticket;
-		this.type = type.getValue();
+		this.type = type;
 		this.welfareId = welfareId;
 	}
 

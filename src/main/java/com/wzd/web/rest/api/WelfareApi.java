@@ -18,6 +18,7 @@ import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.User;
 import com.wzd.model.entity.Welfare;
+import com.wzd.model.enums.DeleteType;
 import com.wzd.service.WelfareService;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.PageParam;
@@ -76,16 +77,16 @@ public class WelfareApi {
 	 */
 	@PUT
 	@Path("/update")
-	public void update(Welfare wel, @Context HttpServletRequest request) {
-		service.update(wel, (Admin) SessionUtil.getUser(request));
+	public void update(Welfare wel) {
+		service.update(wel);
 	}
 
 	/**
 	 * 删除福利
 	 */
 	@DELETE
-	@Path("/{welfareId}")
-	public void delete(@PathParam("welfareId") String welfareId, @Context HttpServletRequest request) {
-		service.delete(welfareId, (Admin) SessionUtil.getUser(request));
+	@Path("/{welfareId}/{delType}")
+	public void delete(@PathParam("welfareId") String welfareId, @PathParam("delType") Integer delType) {
+		service.delete(welfareId, DeleteType.parse(delType));
 	}
 }

@@ -97,4 +97,11 @@ public class WelfareDao {
 		}
 
 	}
+
+	/**
+	 * 修改活动信息
+	 */
+	public void update(Welfare welfare) {
+		mapper.updateByPrimaryKeySelective(welfare);
+	}
 }

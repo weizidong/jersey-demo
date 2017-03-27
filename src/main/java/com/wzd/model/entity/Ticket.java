@@ -24,6 +24,7 @@ public class Ticket implements Serializable {
 	@Column(name = "foreign_key")
 	private String foreignKey; // 外键
 	private Date used;// 使用时间
+	private Date draw;// 领取时间
 	private Date created; // 生成时间
 
 	public Integer getId() {
@@ -58,6 +59,14 @@ public class Ticket implements Serializable {
 		this.used = used;
 	}
 
+	public Date getDraw() {
+		return draw;
+	}
+
+	public void setDraw(Date draw) {
+		this.draw = draw;
+	}
+
 	public Date getCreated() {
 		return created;
 	}
@@ -68,7 +77,7 @@ public class Ticket implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", ticket=" + ticket + ", foreignKey=" + foreignKey + ", used=" + used + ", created=" + created + "]";
+		return "[id=" + id + ", ticket=" + ticket + ", foreignKey=" + foreignKey + ", used=" + used + ", draw=" + draw + ", created=" + created + "]";
 	}
 
 	/**

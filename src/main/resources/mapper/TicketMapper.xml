@@ -9,6 +9,7 @@
     <result column="ticket" jdbcType="CHAR" property="ticket" />
     <result column="foreign_key" jdbcType="CHAR" property="foreignKey" />
     <result column="used" jdbcType="TIMESTAMP" property="used" />
+    <result column="draw" jdbcType="TIMESTAMP" property="draw" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
   </resultMap>
 </mapper>

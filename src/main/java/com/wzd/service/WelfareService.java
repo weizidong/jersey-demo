@@ -8,6 +8,8 @@ import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.TicketDao;
 import com.wzd.model.dao.WelfareDao;
 import com.wzd.model.entity.Admin;
+import com.wzd.model.entity.History;
+import com.wzd.model.entity.Ticket;
 import com.wzd.model.entity.User;
 import com.wzd.model.entity.Welfare;
 import com.wzd.model.enums.APPType;
@@ -37,6 +39,7 @@ public class WelfareService {
 	 * 创建福利
 	 */
 	public Welfare create(Welfare w, Admin admin) {
+		w.setAdminId(admin.getId());
 		w = welfareDao.create(w);
 		if (w.getType() == HistoryType.券票福利.getValue()) {
 			ticketDao.create(w.getTotal(), w.getId());
@@ -62,7 +65,7 @@ public class WelfareService {
 	/**
 	 * 兑换福利
 	 */
-	public void convert(String welfareId, User user) {
+	public synchronized void convert(String welfareId, User user) {
 		Welfare welfare = welfareDao.getById(welfareId, DeleteType.未删除);
 		if (welfare == null) {
 			throw new WebException(ResponseCode.资源不存在, "福利不存在");
@@ -71,7 +74,24 @@ public class WelfareService {
 		if (num >= welfare.getTime()) {
 			throw new WebException(ResponseCode.不允许重复, "已领取过该福利");
 		}
-		// TODO 发放福利，记录历史
+		if (welfare.getCurrent() >= welfare.getTotal()) {
+			throw new WebException(ResponseCode.已领完, "该福利已领完");
+		}
+		String ticket = null;
+		if (welfare.getType() == HistoryType.券票福利.getValue()) {
+			Ticket t = ticketDao.getNew(welfare.getId());
+			ticketDao.draw(t);
+			ticket = t.getTicket();
+		}
+		if (welfare.getType() == HistoryType.红包福利.getValue()) {
+			// TODO 发放福利，记录历史
+			// RedPackService.sendRedPack(FwAPI.SEND_REDPACK, new
+			// RedPack(send_name, user.getOpenid(), total_amount, wishing,
+			// welfare.getName(), remark, risk_info));
+		}
+		welfare.setCurrent(welfare.getCurrent() + 1);
+		welfareDao.update(welfare);
+		historyDao.create(new History(user.getId(), welfare.getName(), null, -welfare.getScore(), ticket, welfare.getType(), welfareId));
 	}
 
 	/**
@@ -84,15 +104,14 @@ public class WelfareService {
 	/**
 	 * 修改福利
 	 */
-	public void update(Welfare wel, Admin user) {
-		// TODO Auto-generated method stub
-
+	public void update(Welfare wel) {
+		welfareDao.update(wel);
 	}
 
 	/**
 	 * 删除福利
 	 */
-	public void delete(String welfareId, Admin user) {
+	public void delete(String welfareId, DeleteType type) {
 		// TODO Auto-generated method stub
 
 	}
