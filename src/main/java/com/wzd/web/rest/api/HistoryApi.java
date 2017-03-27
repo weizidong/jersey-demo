@@ -31,7 +31,7 @@ public class HistoryApi {
 	private HistoryService service;
 
 	/**
-	 * 获取历史记录
+	 * 获取积分历史记录
 	 */
 	@GET
 	@Path("/score")
@@ -41,7 +41,7 @@ public class HistoryApi {
 	}
 
 	/**
-	 * 获取历史记录
+	 * 获取消息历史记录
 	 */
 	@GET
 	@Path("/msg")
