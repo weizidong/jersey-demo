@@ -48,11 +48,20 @@ public class HistoryDao {
 	/**
 	 * 查询指定人员的历史记录
 	 */
-	public List<History> list(String userId, DeleteType del) {
+	public List<History> list(String userId, List<Integer> types, DeleteType del) {
 		Example e = new Example(History.class);
 		e.setOrderByClause("recording desc");
-		e.createCriteria().andEqualTo("userId", userId).andEqualTo("deleled", del.getValue());
+		e.createCriteria().andEqualTo("userId", userId).andEqualTo("deleled", del.getValue()).andIn("type", types);
 		return mapper.selectByExample(e);
+	}
+
+	/**
+	 * 查询指定人员的历史记录
+	 */
+	public List<History> list(String userId, HistoryType type, DeleteType del) {
+		List<Integer> types = new ArrayList<>();
+		types.add(type.getValue());
+		return list(userId, types, del);
 	}
 
 	/**

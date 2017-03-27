@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -35,9 +34,20 @@ public class HistoryApi {
 	 * 获取历史记录
 	 */
 	@GET
-	@Path("/{userid}")
-	public List<History> findAll(@PathParam("userid") String userid) {
-		return service.findAll(userid);
+	@Path("/score")
+	public List<History> score(@Context HttpServletRequest request) {
+		User user = (User) SessionUtil.getUser(request);
+		return service.findScore(user.getId());
+	}
+
+	/**
+	 * 获取历史记录
+	 */
+	@GET
+	@Path("/msg")
+	public List<History> msg(@Context HttpServletRequest request) {
+		User user = (User) SessionUtil.getUser(request);
+		return service.findMsg(user.getId());
 	}
 
 	/**

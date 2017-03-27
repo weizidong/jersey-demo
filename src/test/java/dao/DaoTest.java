@@ -48,7 +48,7 @@ public class DaoTest extends BasicTest {
 		h.setUserId("d025138d9b574ccd9b2736bfe16748f6");
 		h.setType(HistoryType.积分签到.getValue());
 		historyDao.create(h);
-		System.out.println(historyDao.list("d025138d9b574ccd9b2736bfe16748f6", DeleteType.未删除));
+		System.out.println(historyDao.list("d025138d9b574ccd9b2736bfe16748f6", HistoryType.积分签到, DeleteType.未删除));
 	}
 
 	@Test
