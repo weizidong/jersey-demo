@@ -2,8 +2,10 @@ package com.wzd.web.rest.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -67,5 +69,23 @@ public class WelfareApi {
 	@Path("/convert/{welfareId}")
 	public void convert(@PathParam("welfareId") String welfareId, @Context HttpServletRequest request) {
 		service.convert(welfareId, (User) SessionUtil.getUser(request));
+	}
+
+	/**
+	 * 修改福利
+	 */
+	@PUT
+	@Path("/update")
+	public void update(Welfare wel, @Context HttpServletRequest request) {
+		service.update(wel, (Admin) SessionUtil.getUser(request));
+	}
+
+	/**
+	 * 删除福利
+	 */
+	@DELETE
+	@Path("/{welfareId}")
+	public void delete(@PathParam("welfareId") String welfareId, @Context HttpServletRequest request) {
+		service.delete(welfareId, (Admin) SessionUtil.getUser(request));
 	}
 }

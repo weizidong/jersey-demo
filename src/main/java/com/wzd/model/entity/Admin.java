@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wzd.model.enums.AuditType;
+import com.wzd.model.enums.SexType;
 import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.utils.StringUtil;
 
@@ -48,6 +50,25 @@ public class Admin extends BaseResp {
 	private String pwd; // 密码
 	private Date login; // 登录时间
 	private Integer audit; // 审核状态,0：未审核；1：审核通过；2：审核未通过；
+
+	public Admin() {
+		super();
+	}
+
+	public Admin(String id, String name, String position, String mobile, SexType sex, String email, String avatar, String extattr, String auth, String pwd, AuditType audit) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.position = position;
+		this.mobile = mobile;
+		this.gender = sex.getValue().toString();
+		this.email = email;
+		this.avatar = avatar;
+		this.extattr = extattr;
+		this.auth = auth;
+		this.pwd = pwd;
+		this.audit = audit.getValue();
+	}
 
 	public String getId() {
 		return id;

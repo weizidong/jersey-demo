@@ -81,4 +81,20 @@ public class WelfareService {
 		return welfareDao.getById(welfareId, DeleteType.parse(delType));
 	}
 
+	/**
+	 * 修改福利
+	 */
+	public void update(Welfare wel, Admin user) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * 删除福利
+	 */
+	public void delete(String welfareId, Admin user) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

@@ -44,6 +44,6 @@ public class PageMapperTest extends BasicTest {
 
 	@Test
 	public void test3() throws UnsupportedEncodingException {
-		System.out.println(System.currentTimeMillis() / 1000);
+		System.out.println("00000000000000000000000000000000".length());
 	}
 }

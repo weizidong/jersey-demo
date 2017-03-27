@@ -31,6 +31,21 @@ public class Department extends BaseResp {
 	@Transient
 	private List<Department> child; // 子部门
 
+	public Department() {
+		super();
+	}
+
+	public Department(Integer id, String name, Integer parentid, Integer order, String admin, Integer deleted, List<Department> child) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.parentid = parentid;
+		this.order = order;
+		this.admin = admin;
+		this.deleted = deleted;
+		this.child = child;
+	}
+
 	public Integer getId() {
 		return id;
 	}

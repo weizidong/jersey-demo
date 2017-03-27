@@ -46,6 +46,7 @@ public class User extends BaseResp {
 	private Integer marriage; // 婚姻
 	private String phone; // 联系电话
 	private String address; // 住址
+	private String email; // 邮箱
 	// 认证属性
 	private String name; // 姓名
 	@Column(name = "dep_id")
@@ -222,6 +223,14 @@ public class User extends BaseResp {
 		this.address = address;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -338,9 +347,10 @@ public class User extends BaseResp {
 	public String toString() {
 		return "[id=" + id + ", subscribe=" + subscribe + ", openid=" + openid + ", city=" + city + ", country=" + country + ", province=" + province + ", language=" + language
 				+ ", subscribeTime=" + subscribeTime + ", unionid=" + unionid + ", groupid=" + groupid + ", tagid_list=" + tagid_list + ", headimgurl=" + headimgurl + ", nickname="
-				+ nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone + ", address=" + address + ", name="
-				+ name + ", depId=" + depId + ", idCard=" + idCard + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor + ", login=" + login + ", updated="
-				+ updated + ", auth=" + auth + ", score=" + score + ", msgNum=" + msgNum + ", welfNum=" + welfNum + ", actNum=" + actNum + ", isSign=" + isSign + "]";
+				+ nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone + ", address=" + address + ", email="
+				+ email + ", name=" + name + ", depId=" + depId + ", idCard=" + idCard + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor + ", login=" + login
+				+ ", updated=" + updated + ", auth=" + auth + ", score=" + score + ", msgNum=" + msgNum + ", welfNum=" + welfNum + ", actNum=" + actNum + ", isSign=" + isSign
+				+ "]";
 	}
 
 }

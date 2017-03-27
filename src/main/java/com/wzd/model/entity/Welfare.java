@@ -31,6 +31,8 @@ public class Welfare implements Serializable {
 	private Integer current;// 当前领取个数
 	private Integer type;// 福利类型
 	private Object rule;// 规则
+	@Column(name = "admin_id")
+	private String adminId;// 发布者
 	// 系统属性
 	private Integer deleted; // 删除标志
 	// 关联属性
@@ -133,6 +135,14 @@ public class Welfare implements Serializable {
 		this.rule = rule;
 	}
 
+	public String getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
+	}
+
 	public Integer getDeleted() {
 		return deleted;
 	}
@@ -152,7 +162,8 @@ public class Welfare implements Serializable {
 	@Override
 	public String toString() {
 		return "[id=" + id + ", name=" + name + ", score=" + score + ", time=" + time + ", provider=" + provider + ", website=" + website + ", startTime=" + startTime
-				+ ", endTime=" + endTime + ", total=" + total + ", current=" + current + ", type=" + type + ", rule=" + rule + ", deleted=" + deleted + ", draw=" + draw + "]";
+				+ ", endTime=" + endTime + ", total=" + total + ", current=" + current + ", type=" + type + ", rule=" + rule + ", adminId=" + adminId + ", deleted=" + deleted
+				+ ", draw=" + draw + "]";
 	}
 
 }
