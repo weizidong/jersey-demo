@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-03-26 17:09:26
+Date: 2017-03-27 20:15:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -68,7 +68,7 @@ CREATE TABLE `admin` (
   `login` datetime DEFAULT NULL,
   `audit` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='管理员实体类\r\n@author weizidong';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='管理员实体类\r\n@author weizidong';
 
 -- ----------------------------
 -- Table structure for department
@@ -82,7 +82,7 @@ CREATE TABLE `department` (
   `admin` char(32) DEFAULT NULL COMMENT '创建者',
   `deleted` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for entryform
@@ -118,7 +118,7 @@ CREATE TABLE `files` (
   `status` int(1) DEFAULT NULL COMMENT '状态',
   `type` int(1) DEFAULT NULL COMMENT '类型，0：头像；1：附件；2：重要文件',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文件实体类\r\n@author weizidong';
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='文件实体类\r\n@author weizidong';
 
 -- ----------------------------
 -- Table structure for history
@@ -147,9 +147,10 @@ CREATE TABLE `ticket` (
   `ticket` char(6) DEFAULT NULL,
   `foreign_key` char(32) DEFAULT NULL,
   `used` datetime DEFAULT NULL,
+  `draw` datetime DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1401 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user
@@ -174,6 +175,7 @@ CREATE TABLE `user` (
   `marriage` int(1) DEFAULT '0' COMMENT '婚姻',
   `phone` varchar(20) DEFAULT NULL COMMENT '联系电话',
   `address` varchar(255) DEFAULT NULL COMMENT '住址',
+  `email` varchar(255) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL COMMENT '姓名',
   `dep_id` int(11) DEFAULT NULL COMMENT '部门',
   `id_card` varchar(20) DEFAULT NULL COMMENT '身份证编号',
@@ -185,7 +187,7 @@ CREATE TABLE `user` (
   `auth` varchar(255) DEFAULT NULL COMMENT '权限',
   `score` int(20) DEFAULT NULL COMMENT '积分',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='用户实体类\r\n@author weizidong';
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='用户实体类\r\n@author weizidong';
 
 -- ----------------------------
 -- Table structure for welfare
@@ -205,37 +207,6 @@ CREATE TABLE `welfare` (
   `type` int(2) DEFAULT NULL,
   `deleted` int(1) DEFAULT NULL,
   `rule` blob,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for wxactivity
--- ----------------------------
-DROP TABLE IF EXISTS `wxactivity`;
-CREATE TABLE `wxactivity` (
-  `id` char(32) NOT NULL,
-  `created` datetime NOT NULL COMMENT '创建时间',
-  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  `deleted` int(1) NOT NULL DEFAULT '0' COMMENT '删除标志，0：未删除；1：回收站；2：永久删除',
-  `status` int(1) DEFAULT NULL COMMENT '状态',
-  `type` int(2) DEFAULT NULL COMMENT '类型',
-  `title` varchar(30) DEFAULT NULL COMMENT '活动主题',
-  `pic_url` varchar(255) DEFAULT NULL COMMENT '推送配图',
-  `start` datetime DEFAULT NULL COMMENT '开始时间',
-  `end` datetime DEFAULT NULL COMMENT '结束时间',
-  `command` varchar(20) DEFAULT NULL COMMENT '活动口令',
-  `totle` int(6) NOT NULL DEFAULT '0' COMMENT '最大参加人数',
-  `current` int(6) NOT NULL DEFAULT '0' COMMENT '当前参加人数',
-  `avg` double NOT NULL DEFAULT '0' COMMENT '平均金额',
-  `wishing` varchar(255) DEFAULT NULL COMMENT '祝福语',
-  `reply` varchar(255) DEFAULT NULL COMMENT '活动回复语',
-  `repetition` varchar(255) DEFAULT NULL COMMENT '重复提示',
-  `finish` varchar(255) DEFAULT NULL COMMENT '领完提示',
-  `over` varchar(255) DEFAULT NULL COMMENT '活动结束语',
-  `pub_user` char(32) DEFAULT NULL COMMENT '发布人',
-  `dep_id` int(11) DEFAULT NULL COMMENT '发布机构',
-  `auditor` char(32) DEFAULT NULL COMMENT '审核人',
-  `aud_time` datetime DEFAULT NULL COMMENT '审核时间',
-  `audit` int(1) NOT NULL DEFAULT '0' COMMENT '审核状态,0：未审核；1：审核通过；2：审核未通过；',
+  `admin_id` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
