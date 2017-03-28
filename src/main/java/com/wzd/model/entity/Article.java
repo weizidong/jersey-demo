@@ -21,6 +21,7 @@ public class Article implements Serializable {
 	// 自有属性
 	private String title; // 标题
 	private Object content;// 内容
+	@Column(name = "pic_url")
 	private String imgUrl;// 配图
 	private Integer type; // 文章类型
 	@Column(name = "pub_user")
