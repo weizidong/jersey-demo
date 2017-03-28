@@ -17,7 +17,7 @@
     <result column="current" jdbcType="INTEGER" property="current" />
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="deleted" jdbcType="INTEGER" property="deleted" />
-    <result column="rule" jdbcType="LONGVARBINARY" property="rule" />
     <result column="admin_id" jdbcType="CHAR" property="adminId" />
+    <result column="rule" jdbcType="LONGVARBINARY" property="rule" />
   </resultMap>
 </mapper>
