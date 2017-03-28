@@ -8,10 +8,10 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 import org.glassfish.jersey.client.ClientConfig;
 
 import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.wzd.client.filter.log.LogRequestFilter;
 import com.wzd.client.filter.log.LogResponseFilter;
 

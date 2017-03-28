@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.wzd.model.enums.HistoryType;
@@ -19,7 +17,6 @@ import com.wzd.model.enums.HistoryType;
 @SuppressWarnings("serial")
 public class History implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 	// 自有属性
 	@Column(name = "user_id")

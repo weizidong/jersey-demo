@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * 微信返回结果基类

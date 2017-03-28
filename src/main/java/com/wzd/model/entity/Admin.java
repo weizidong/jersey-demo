@@ -8,7 +8,8 @@ import java.util.stream.Collectors;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.SexType;
 import com.wzd.service.wechat.base.BaseResp;

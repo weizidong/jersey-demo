@@ -1,8 +1,5 @@
 package com.wzd.web.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import tk.mybatis.mapper.util.StringUtil;
 
 /**
@@ -20,7 +17,6 @@ public class RestResponse {
 	private String msg;
 
 	// 响应数据
-	@JsonInclude(Include.NON_NULL)
 	private Object data;
 
 	public RestResponse() {

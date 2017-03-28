@@ -9,8 +9,8 @@ import javax.ws.rs.ext.ExceptionMapper;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.codehaus.jackson.JsonProcessingException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.response.RestResponse;
 

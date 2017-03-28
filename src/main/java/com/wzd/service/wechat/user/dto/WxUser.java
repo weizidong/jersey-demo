@@ -5,7 +5,8 @@ import java.util.List;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
