@@ -73,6 +73,10 @@ public class User extends BaseResp {
 	@Transient
 	private Boolean isSign;// 是否已签到
 
+	public User() {
+		super();
+	}
+
 	public String getId() {
 		return id;
 	}
