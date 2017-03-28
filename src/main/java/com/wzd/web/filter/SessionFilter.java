@@ -116,7 +116,7 @@ public class SessionFilter implements Filter {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
 			return;
 		}
-		if (requestUrl.equals("favicon.ico") || requestUrl.startsWith("userfiles/")) {
+		if (requestUrl.equals("favicon.ico") || requestUrl.startsWith("userfiles/") || requestUrl.startsWith("static/")) {
 			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
