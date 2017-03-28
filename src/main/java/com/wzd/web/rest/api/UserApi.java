@@ -102,7 +102,7 @@ public class UserApi {
 	 */
 	@POST
 	@Path("/find")
-	public PageInfo<User> getById(PageParam param) {
+	public PageInfo<User> find(PageParam param) {
 		return service.find(param);
 	}
 
