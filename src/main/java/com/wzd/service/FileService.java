@@ -53,11 +53,11 @@ public class FileService {
 		f.setType(type);
 		if (APPType.企业号.getValue().equals(request.getParameter("appType")) || APPType.管理平台.getValue().equals(request.getParameter("appType"))) {
 			Admin user = (Admin) SessionUtil.getUser(request);
-			f.setUserid(user.getUserid());
+			f.setUserId(user.getUserid());
 		}
 		if (APPType.服务号.getValue().equals(request.getParameter("appType"))) {
 			User user = (User) SessionUtil.getUser(request);
-			f.setUserid(user.getId().toString());
+			f.setUserId(user.getId().toString());
 		}
 		dao.create(f);
 		log.debug("上传文件成功:" + f);
@@ -84,8 +84,8 @@ public class FileService {
 	/**
 	 * 获取文件列表
 	 */
-	public PageInfo<Files> list(PageParam param) {
-		return dao.list(param);
+	public PageInfo<Files> list(PageParam param, DeleteType del) {
+		return dao.list(param, del);
 	}
 
 	/**

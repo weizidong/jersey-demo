@@ -64,10 +64,10 @@ public class WelfareDao {
 	/**
 	 * 条件查询列表
 	 */
-	public PageInfo<Welfare> find(PageParam param) {
+	public PageInfo<Welfare> find(PageParam param, DeleteType del) {
 		Example e = new Example(Welfare.class);
 		// 设置条件
-		PageParam.setCondition(e, param, Welfare.class);
+		PageParam.setCondition(e, param, del, Welfare.class);
 		// 开始分页
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<Welfare>(mapper.selectByExample(e));
@@ -99,7 +99,7 @@ public class WelfareDao {
 	}
 
 	/**
-	 * 修改活动信息
+	 * 修改福利信息
 	 */
 	public void update(Welfare welfare) {
 		mapper.updateByPrimaryKeySelective(welfare);

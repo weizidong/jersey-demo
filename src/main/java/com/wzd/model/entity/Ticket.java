@@ -27,6 +27,16 @@ public class Ticket implements Serializable {
 	private Date draw;// 领取时间
 	private Date created; // 生成时间
 
+	public Ticket() {
+		super();
+	}
+
+	public Ticket(String ticket, String foreignKey) {
+		this.ticket = ticket;
+		this.foreignKey = foreignKey;
+		this.created = new Date();
+	}
+
 	public Integer getId() {
 		return id;
 	}

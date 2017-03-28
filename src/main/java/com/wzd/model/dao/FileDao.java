@@ -32,7 +32,6 @@ public class FileDao {
 	public Files create(Files file) {
 		file.setCreated(new Date());
 		file.setDeleted(DeleteType.未删除.getValue());
-		file.setUpdated(new Date());
 		file.setStatus(StateType.启用.getValue());
 		mapper.insert(file);
 		return file;
@@ -57,22 +56,19 @@ public class FileDao {
 	}
 
 	/**
-	 * 更新不为空的字段
+	 * 获取文件列表
 	 */
-	public void update(Files f) {
-		f.setUpdated(new Date());
-		mapper.updateByPrimaryKeySelective(f);
+	public PageInfo<Files> list(PageParam param, DeleteType del) {
+		Example e = new Example(Files.class);
+		PageParam.setCondition(e, param, del, Files.class);
+		PageHelper.startPage(param.getPage(), param.getPageSize());
+		return new PageInfo<Files>(mapper.selectByExample(e));
 	}
 
 	/**
-	 * 获取文件列表
+	 * 修改
 	 */
-	public PageInfo<Files> list(PageParam param) {
-		Example e = new Example(Files.class);
-		// 设置条件
-		PageParam.setCondition(e, param, Files.class);
-		// 开始分页
-		PageHelper.startPage(param.getPage(), param.getPageSize());
-		return new PageInfo<Files>(mapper.selectByExample(e));
+	public void update(Files f) {
+		mapper.updateByPrimaryKeySelective(f);
 	}
 }

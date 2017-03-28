@@ -54,11 +54,13 @@ public class User extends BaseResp {
 	@Column(name = "id_card")
 	private String idCard; // 身份证编号
 	private String position; // 岗位
-	private Integer audit; // 状态，0：未审核，1：审核通过，2：审核未通过
+	private Integer audit; // 认证状态
 	private String auditor; // 审核人
 	// 系统属性
 	private Date login; // 登录时间
+	private Date created; // 注册时间
 	private Date updated; // 修改时间
+	private Integer status; // 用户状态
 	private String auth; // 权限
 	private Integer score; // 积分
 	// 关联属性
@@ -343,14 +345,30 @@ public class User extends BaseResp {
 		this.isSign = isSign;
 	}
 
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "[id=" + id + ", subscribe=" + subscribe + ", openid=" + openid + ", city=" + city + ", country=" + country + ", province=" + province + ", language=" + language
 				+ ", subscribeTime=" + subscribeTime + ", unionid=" + unionid + ", groupid=" + groupid + ", tagid_list=" + tagid_list + ", headimgurl=" + headimgurl + ", nickname="
 				+ nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone + ", address=" + address + ", email="
 				+ email + ", name=" + name + ", depId=" + depId + ", idCard=" + idCard + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor + ", login=" + login
-				+ ", updated=" + updated + ", auth=" + auth + ", score=" + score + ", msgNum=" + msgNum + ", welfNum=" + welfNum + ", actNum=" + actNum + ", isSign=" + isSign
-				+ "]";
+				+ ", created=" + created + ", updated=" + updated + ", status=" + status + ", auth=" + auth + ", score=" + score + ", msgNum=" + msgNum + ", welfNum=" + welfNum
+				+ ", actNum=" + actNum + ", isSign=" + isSign + "]";
 	}
 
 }

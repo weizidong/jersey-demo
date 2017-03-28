@@ -66,8 +66,8 @@ public class FileApi {
 	 * 条件查询文件列表
 	 */
 	@POST
-	@Path("/list")
-	public PageInfo<Files> list(PageParam param) {
-		return service.list(param);
+	@Path("/list/{delType}")
+	public PageInfo<Files> list(PageParam param, @PathParam("delType") Integer del) {
+		return service.list(param, DeleteType.parse(del));
 	}
 }

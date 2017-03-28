@@ -29,8 +29,10 @@
 		<result column="audit" jdbcType="INTEGER" property="audit" />
 		<result column="auditor" jdbcType="CHAR" property="auditor" />
 		<result column="login" jdbcType="TIMESTAMP" property="login" />
+		<result column="created" jdbcType="TIMESTAMP" property="created" />
 		<result column="updated" jdbcType="TIMESTAMP" property="updated" />
 		<result column="auth" jdbcType="VARCHAR" property="auth" />
 		<result column="score" jdbcType="INTEGER" property="score" />
+		<result column="status" jdbcType="INTEGER" property="status" />
 	</resultMap>
 </mapper>

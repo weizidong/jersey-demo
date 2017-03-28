@@ -40,11 +40,7 @@ public class TicketDao {
 	public void create(Integer old, Integer total, String foreignKey) {
 		List<Ticket> list = new ArrayList<>();
 		for (int i = old; i < total; i++) {
-			Ticket t = new Ticket();
-			t.setForeignKey(foreignKey);
-			t.setCreated(new Date());
-			t.setTicket(Ticket.generate(i, foreignKey));
-			list.add(t);
+			list.add(new Ticket(Ticket.generate(i, foreignKey), foreignKey));
 		}
 		mapper.insertList(list);
 	}
@@ -68,7 +64,6 @@ public class TicketDao {
 	public Ticket getNew(String foreignKey) {
 		Example e = new Example(Files.class);
 		e.createCriteria().andEqualTo("foreignKey", foreignKey).andIsNull("draw");
-		// 开始分页
 		PageHelper.startPage(1, 1);
 		List<Ticket> tickets = mapper.selectByExample(e);
 		if (tickets == null || tickets.size() <= 0) {
@@ -89,7 +84,7 @@ public class TicketDao {
 	 * 领取票券
 	 */
 	public void draw(Ticket t) {
-		t.setUsed(new Date());
+		t.setDraw(new Date());
 		mapper.updateByPrimaryKeySelective(t);
 	}
 }

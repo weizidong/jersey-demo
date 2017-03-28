@@ -50,8 +50,8 @@ public class WelfareService {
 	/**
 	 * 条件查询福利列表
 	 */
-	public PageInfo<Welfare> find(PageParam param, Session session) {
-		PageInfo<Welfare> page = welfareDao.find(param);
+	public PageInfo<Welfare> find(PageParam param, DeleteType del, Session session) {
+		PageInfo<Welfare> page = welfareDao.find(param, del);
 		if (session.getAppType() == null || !session.getAppType().equals(APPType.服务号) || page.getList() == null || page.getList().size() == 0) {
 			return page;
 		}

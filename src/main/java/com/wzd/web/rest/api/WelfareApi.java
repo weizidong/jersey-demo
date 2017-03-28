@@ -49,9 +49,9 @@ public class WelfareApi {
 	 * 条件查询列表
 	 */
 	@POST
-	@Path("/find")
-	public PageInfo<Welfare> find(PageParam param, @Context HttpServletRequest request) {
-		return service.find(param, SessionUtil.getSession(request));
+	@Path("/find/{delType}")
+	public PageInfo<Welfare> find(PageParam param, @PathParam("delType") Integer del, @Context HttpServletRequest request) {
+		return service.find(param, DeleteType.parse(del), SessionUtil.getSession(request));
 	}
 
 	/**

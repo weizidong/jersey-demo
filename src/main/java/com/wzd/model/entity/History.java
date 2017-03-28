@@ -32,7 +32,6 @@ public class History implements Serializable {
 	private Integer type;// 类型
 	@Column(name = "welfare_id")
 	private String welfareId;// 兑换的福利
-
 	// 系统属性
 	private Integer deleled;// 删除标志
 
