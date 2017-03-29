@@ -55,7 +55,7 @@ public class SystemService {
 		// 同步企业号
 		qyService.sync();
 		// 初始化系统设置
-		setting(new Setting(ID, "userfiles/logo.png", "龙泉驿职工之家", JSON.toJSONString(
+		setting(new Setting("userfiles/logo.png", "龙泉驿职工之家", JSON.toJSONString(
 				new News("欢迎关注\"龙泉驿职工之家\" |点我签到", "签到获得更多积分，可以兑换工会提供的各项福利以及参加各类活动！惊喜不断！你准备好了么？", Configs.hostname + "userfiles/signPic.png", Configs.hostname + "view/fwh/center")),
 				100, 50));
 	}
@@ -66,11 +66,11 @@ public class SystemService {
 	public void test() {
 		Admin a = new Admin(ID, USER_ID, "测试管理员", "测试", "13000000000", SexType.男, "ceshi@163.com", null, "userfiles/logo.png", StateType.启用, AuthType.所有权限,
 				MD5Utils.getMD5ofStr("123456", 2), AuditType.审核成功);
+		a.setDepartments("|1|");
 		adminService.create(a);
 		createWelfare(15, "一元红包", 500, 2, 3000, HistoryType.红包福利);
 		createWelfare(10, "电影票兑换", 1000, 1, 500, HistoryType.券票福利);
 		createWelfare(20, "优惠券兑换", 2000, 1, 200, HistoryType.券票福利);
-
 	}
 
 	/**

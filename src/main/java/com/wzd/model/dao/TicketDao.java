@@ -87,4 +87,24 @@ public class TicketDao {
 		t.setDraw(new Date());
 		mapper.updateByPrimaryKeySelective(t);
 	}
+
+	/**
+	 * 清理票券
+	 */
+	public void delete(String foreignKey) {
+		Ticket t = new Ticket();
+		t.setForeignKey(foreignKey);
+		mapper.delete(t);
+	}
+
+	/**
+	 * 清理票券
+	 */
+	public void delete(List<String> fks) {
+		if (fks != null && fks.size() > 0) {
+			Example e = new Example(Ticket.class);
+			e.createCriteria().andIn("foreignKey", fks);
+			mapper.deleteByExample(e);
+		}
+	}
 }

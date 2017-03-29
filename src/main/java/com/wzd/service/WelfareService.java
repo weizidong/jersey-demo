@@ -1,5 +1,8 @@
 package com.wzd.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -112,6 +115,9 @@ public class WelfareService {
 	 * 删除福利
 	 */
 	public void delete(String welfareId, DeleteType del) {
+		if (del == DeleteType.永久删除) {
+			ticketDao.delete(welfareId);
+		}
 		welfareDao.delete(welfareId, null, del);
 	}
 
@@ -119,6 +125,10 @@ public class WelfareService {
 	 * 删除福利
 	 */
 	public void deleteByAdmin(String adminId, DeleteType del) {
+		if (del == DeleteType.永久删除) {
+			List<Welfare> wels = welfareDao.getByAdmin(adminId, null);
+			ticketDao.delete(wels.stream().map(w -> w.getId()).collect(Collectors.toList()));
+		}
 		welfareDao.delete(null, adminId, del);
 	}
 

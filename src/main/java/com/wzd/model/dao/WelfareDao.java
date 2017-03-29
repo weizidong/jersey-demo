@@ -80,8 +80,22 @@ public class WelfareDao {
 	public Welfare getById(String welfareId, DeleteType type) {
 		Welfare w = new Welfare();
 		w.setId(welfareId);
-		w.setDeleted(type.getValue());
+		if (type != null) {
+			w.setDeleted(type.getValue());
+		}
 		return mapper.selectOne(w);
+	}
+
+	/**
+	 * 根据ID查询福利
+	 */
+	public List<Welfare> getByAdmin(String adminId, DeleteType type) {
+		Welfare w = new Welfare();
+		w.setAdminId(adminId);
+		if (type != null) {
+			w.setDeleted(type.getValue());
+		}
+		return mapper.select(w);
 	}
 
 	/**

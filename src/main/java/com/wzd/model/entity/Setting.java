@@ -66,8 +66,7 @@ public class Setting implements Serializable {
 		this.sign = sign;
 	}
 
-	public Setting(String id, String logo, String name, String sub, Integer score, Integer sign) {
-		this.id = id;
+	public Setting(String logo, String name, String sub, Integer score, Integer sign) {
 		this.logo = logo;
 		this.name = name;
 		this.sub = sub;
