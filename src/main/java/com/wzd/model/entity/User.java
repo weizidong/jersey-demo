@@ -64,6 +64,8 @@ public class User extends BaseResp {
 	private Integer status; // 用户状态
 	private String auth; // 权限
 	private Integer score; // 积分
+	@Column(name = "sign_num")
+	private Integer signNum; // 连续签到次数
 	// 关联属性
 	@Transient
 	private Integer msgNum;// 未读消息个数
@@ -366,14 +368,22 @@ public class User extends BaseResp {
 		this.status = status;
 	}
 
+	public Integer getSignNum() {
+		return signNum;
+	}
+
+	public void setSignNum(Integer signNum) {
+		this.signNum = signNum;
+	}
+
 	@Override
 	public String toString() {
 		return "[id=" + id + ", subscribe=" + subscribe + ", openid=" + openid + ", city=" + city + ", country=" + country + ", province=" + province + ", language=" + language
 				+ ", subscribeTime=" + subscribeTime + ", unionid=" + unionid + ", groupid=" + groupid + ", tagid_list=" + tagid_list + ", headimgurl=" + headimgurl + ", nickname="
 				+ nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone + ", address=" + address + ", email="
 				+ email + ", name=" + name + ", depId=" + depId + ", idCard=" + idCard + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor + ", login=" + login
-				+ ", created=" + created + ", updated=" + updated + ", status=" + status + ", auth=" + auth + ", score=" + score + ", msgNum=" + msgNum + ", welfNum=" + welfNum
-				+ ", actNum=" + actNum + ", isSign=" + isSign + "]";
+				+ ", created=" + created + ", updated=" + updated + ", status=" + status + ", auth=" + auth + ", score=" + score + ", signNum=" + signNum + ", msgNum=" + msgNum
+				+ ", welfNum=" + welfNum + ", actNum=" + actNum + ", isSign=" + isSign + "]";
 	}
 
 }

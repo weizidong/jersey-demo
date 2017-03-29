@@ -1,6 +1,8 @@
 package com.wzd.service;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +11,15 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.UserDao;
-import com.wzd.model.dao.WelfareDao;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.History;
+import com.wzd.model.entity.Setting;
 import com.wzd.model.entity.User;
-import com.wzd.model.entity.Welfare;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.utils.Configs;
+import com.wzd.utils.DateUtil;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.PageParam;
@@ -35,7 +37,7 @@ public class UserService {
 	@Autowired
 	private HistoryDao historyDao;
 	@Autowired
-	private WelfareDao welfareDao;
+	private SystemService systemService;
 
 	/**
 	 * 获取我的信息
@@ -121,14 +123,26 @@ public class UserService {
 		if (user == null) {
 			throw new WebException(ResponseCode.用户不存在, userid);
 		}
-		Boolean isSign = historyDao.isSign(userid);
-		if (isSign) {
+		List<History> hList = historyDao.getSign(userid);
+		History last = null;
+		if (hList != null && hList.size() > 0) {
+			last = hList.get(0);
+		}
+		if (last != null && !DateUtil.isBeforeToday(last.getRecording())) { // 已经签到
 			throw new WebException(ResponseCode.已经签到);
 		}
-		Welfare w = welfareDao.getSign();
-		user.setScore(user.getScore() + w.getScore());
+		Date d = new Date();
+		if (DateUtil.getCurrentDayStartTime() == DateUtil.getFirstDayOfWeek(d, 1)) { // 星期一
+			user.setSignNum(0);
+		}
+		if (last != null && DateUtil.getPreviousDay(d).getTime() >= last.getRecording().getTime()) { // 签到断掉
+			user.setSignNum(0);
+		}
+		Setting s = systemService.getSetting();
+		user.setSignNum(user.getSignNum() + 1);
+		user.setScore(user.getScore() + s.getSign() * user.getSignNum());
 		userDao.update(user);
-		History h = new History(userid, w.getName(), null, w.getScore(), null, HistoryType.积分签到, w.getId());
+		History h = new History(userid, "积分签到", null, s.getSign() * user.getSignNum(), null, HistoryType.积分签到, null);
 		historyDao.create(h);
 		return user;
 	}

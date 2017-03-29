@@ -90,7 +90,7 @@ public class HistoryDao {
 	public List<History> getSign(String userid) {
 		Example e = new Example(History.class);
 		e.setOrderByClause("recording asc");
-		e.createCriteria().andEqualTo("userId", userid).andGreaterThan("recording", DateUtil.getFirstDayOfWeek(new Date(), 1));
+		e.createCriteria().andEqualTo("userId", userid).andEqualTo("type", HistoryType.积分签到.getValue()).andGreaterThan("recording", DateUtil.getFirstDayOfWeek(new Date(), 1));
 		return mapper.selectByExample(e);
 	}
 
@@ -99,7 +99,8 @@ public class HistoryDao {
 	 */
 	public Boolean isSign(String userid) {
 		Example e = new Example(History.class);
-		e.createCriteria().andEqualTo("userId", userid).andGreaterThan("recording", DateUtil.getDayStartTime(System.currentTimeMillis()));
+		e.createCriteria().andEqualTo("userId", userid).andEqualTo("type", HistoryType.积分签到.getValue()).andGreaterThan("recording",
+				DateUtil.getDayStartTime(System.currentTimeMillis()));
 		return mapper.selectCountByExample(e) >= 1;
 	}
 }

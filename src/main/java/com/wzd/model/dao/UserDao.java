@@ -52,7 +52,6 @@ public class UserDao {
 		user.setId(UUIDUtil.get());
 		user.setAudit(AuditType.未审核.getValue());
 		user.setUpdated(new Date());
-		user.setScore(0);
 		mapper.insert(user);
 	}
 

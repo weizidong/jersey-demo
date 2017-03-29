@@ -13,8 +13,6 @@ import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.model.mapper.WelfareMapper;
 import com.wzd.utils.UUIDUtil;
-import com.wzd.web.dto.exception.WebException;
-import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.PageParam;
 
 import tk.mybatis.mapper.entity.Example;
@@ -49,17 +47,6 @@ public class WelfareDao {
 		w.setType(type.getValue());
 		w.setDeleted(del.getValue());
 		return mapper.select(w);
-	}
-
-	/**
-	 * 获取积分签到
-	 */
-	public Welfare getSign() {
-		List<Welfare> wels = getByType(HistoryType.积分签到, DeleteType.未删除);
-		if (wels == null || wels.size() <= 0) {
-			throw new WebException(ResponseCode.资源不存在, "积分签到数据不存在，请初始化...");
-		}
-		return wels.get(0);
 	}
 
 	/**

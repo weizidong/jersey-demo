@@ -104,16 +104,18 @@ public class Event {
 	private String subscribe(WechatMsg msg) {
 		// 关注服务号
 		if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.bId)) {
+			Setting s = systemService.getSetting();
 			ThreadPoolUtils.excuteCachedThreadPool(() -> {
 				User user = userDao.getByOpenId(msg.getFromUserName());
 				if (user == null) {
-					userDao.create(FwUserApi.get(msg.getFromUserName()));
+					user = FwUserApi.get(msg.getFromUserName());
+					user.setScore(s.getScore());
+					userDao.create(user);
 				} else {
 					user.setSubscribe(SubType.已关注.getValue());
 					userDao.update(user);
 				}
 			});
-			Setting s = systemService.getSetting();
 			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), Arrays.asList(JSON.parseObject(s.getSub(), News.class)));
 		}
 		return XmlResp.SUCCESS;
