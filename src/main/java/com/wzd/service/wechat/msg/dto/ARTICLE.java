@@ -22,6 +22,17 @@ public class ARTICLE implements Serializable {
 	private String digest;// 图文消息的描述，不超过512个字节，超过会自动截断
 	private String show_cover_pic;// 是否显示封面，1为显示，0为不显示
 
+	public ARTICLE() {
+		super();
+	}
+
+	public ARTICLE(String title, String description, String url, String picurl) {
+		this.title = title;
+		this.description = description;
+		this.url = url;
+		this.picurl = picurl;
+	}
+
 	public String getTitle() {
 		return title;
 	}

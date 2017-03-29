@@ -2,7 +2,7 @@ package com.wzd.service.wechat.base;
 
 import java.util.List;
 
-import com.wzd.service.wechat.news.News;
+import com.wzd.service.wechat.msg.dto.ARTICLE;
 
 /**
  * 回复消息Xml协议响应
@@ -54,10 +54,10 @@ public class XmlResp {
 	/**
 	 * 构造图文消息内容响应,多条图文消息信息，默认第一个item为大图,注意，如果图文数超过8，则将会无响应
 	 */
-	public static final String buildNews(String toUser, String fromUser, List<News> news) {
+	public static final String buildNews(String toUser, String fromUser, List<ARTICLE> news) {
 		StringBuilder sb = new StringBuilder();
-		for (News n : news) {
-			sb.append(String.format(NEWSITEM, n.getTitle(), n.getDescription(), n.getPicUrl(), n.getUrl()));
+		for (ARTICLE n : news) {
+			sb.append(String.format(NEWSITEM, n.getTitle(), n.getDescription(), n.getPicurl(), n.getUrl()));
 		}
 		return String.format(NEWS, toUser, fromUser, time(), MsgType.NEWS, news.size(), sb.toString());
 	}

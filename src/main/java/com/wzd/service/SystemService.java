@@ -19,7 +19,7 @@ import com.wzd.model.enums.SexType;
 import com.wzd.model.enums.StateType;
 import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
-import com.wzd.service.wechat.news.News;
+import com.wzd.service.wechat.msg.dto.ARTICLE;
 import com.wzd.utils.Configs;
 import com.wzd.utils.DateUtil;
 import com.wzd.utils.EhcacheUtil;
@@ -55,9 +55,8 @@ public class SystemService {
 		// 同步企业号
 		qyService.sync();
 		// 初始化系统设置
-		setting(new Setting("userfiles/logo.png", "龙泉驿职工之家", JSON.toJSONString(
-				new News("欢迎关注\"龙泉驿职工之家\" |点我签到", "签到获得更多积分，可以兑换工会提供的各项福利以及参加各类活动！惊喜不断！你准备好了么？", Configs.hostname + "userfiles/signPic.png", Configs.hostname + "view/fwh/center")),
-				100, 50));
+		setting(new Setting("userfiles/logo.png", "龙泉驿职工之家", JSON.toJSONString(new ARTICLE("欢迎关注\"龙泉驿职工之家\" |点我签到", "签到获得更多积分，可以兑换工会提供的各项福利以及参加各类活动！惊喜不断！你准备好了么？",
+				Configs.hostname + "view/fwh/center", Configs.hostname + "userfiles/signPic.png")), 100, 50));
 	}
 
 	/**
@@ -74,13 +73,18 @@ public class SystemService {
 	}
 
 	/**
-	 * 清理测试数据
+	 * 删除测试数据
 	 */
-	public void clear() {
-		// 清理缓存
-		EhcacheUtil.getInstance().clear();
+	public void delTest() {
 		adminService.delete(USER_ID, DeleteType.永久删除);
 		welfareService.deleteByAdmin(ID, DeleteType.永久删除);
+	}
+
+	/**
+	 * 清理缓存
+	 */
+	public void clear() {
+		EhcacheUtil.getInstance().clear();
 	}
 
 	/**

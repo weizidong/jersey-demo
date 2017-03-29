@@ -71,7 +71,7 @@ public class HistoryDao {
 		h.setId(UUIDUtil.get());
 		h.setDeleled(DeleteType.未删除.getValue());
 		h.setRecording(new Date());
-		mapper.insert(h);
+		mapper.insertSelective(h);
 	}
 
 	/**

@@ -21,6 +21,6 @@ public class ActivityDao {
 	 * 创建
 	 */
 	public void create(Activity activity) {
-		mapper.insert(activity);
+		mapper.insertSelective(activity);
 	}
 }

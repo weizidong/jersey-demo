@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.wzd.model.dao.WelfareDao;
 import com.wzd.model.enums.ActivityType;
 import com.wzd.service.wechat.base.XmlResp;
-import com.wzd.service.wechat.news.News;
+import com.wzd.service.wechat.msg.dto.ARTICLE;
 import com.wzd.utils.Configs;
 import com.wzd.web.param.wechat.WechatMsg;
 
@@ -34,13 +34,13 @@ public class WxMsgReceiver {
 		 * 以下是测试代码
 		 */
 		if (msg.getContent().equals("图文")) {
-			List<News> news = new ArrayList<>();
+			List<ARTICLE> news = new ArrayList<>();
 			for (int i = 0; i < 8; i++) {
-				News n = new News();
+				ARTICLE n = new ARTICLE();
 				if (i == 0) {
-					n.setPicUrl(Configs.hostname + "userfiles/2017/03/22/360+200.png");
+					n.setPicurl(Configs.hostname + "userfiles/2017/03/22/360+200.png");
 				} else {
-					n.setPicUrl(Configs.hostname + "userfiles/2017/03/22/200+200.png");
+					n.setPicurl(Configs.hostname + "userfiles/2017/03/22/200+200.png");
 				}
 				n.setDescription("文字描述" + i);
 				n.setTitle("题目" + i);

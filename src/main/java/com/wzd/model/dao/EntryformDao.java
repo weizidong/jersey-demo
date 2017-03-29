@@ -21,6 +21,6 @@ public class EntryformDao {
 	 * 报名
 	 */
 	public void entry(Entryform entryform) {
-		mapper.insert(entryform);
+		mapper.insertSelective(entryform);
 	}
 }

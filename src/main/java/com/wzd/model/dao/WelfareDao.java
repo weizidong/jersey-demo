@@ -1,5 +1,6 @@
 package com.wzd.model.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +36,8 @@ public class WelfareDao {
 		wel.setId(UUIDUtil.get());
 		wel.setDeleted(DeleteType.未删除.getValue());
 		wel.setCurrent(0);
-		mapper.insert(wel);
+		wel.setCreated(new Date());
+		mapper.insertSelective(wel);
 		return wel;
 	}
 

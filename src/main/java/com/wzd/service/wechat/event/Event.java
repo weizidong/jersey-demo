@@ -13,7 +13,7 @@ import com.wzd.model.enums.SubType;
 import com.wzd.service.SystemService;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
-import com.wzd.service.wechat.news.News;
+import com.wzd.service.wechat.msg.dto.ARTICLE;
 import com.wzd.service.wechat.user.FwUserApi;
 import com.wzd.utils.Configs;
 import com.wzd.utils.StringUtil;
@@ -116,7 +116,7 @@ public class Event {
 					userDao.update(user);
 				}
 			});
-			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), Arrays.asList(JSON.parseObject(s.getSub(), News.class)));
+			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), Arrays.asList(JSON.parseObject(s.getSub(), ARTICLE.class)));
 		}
 		return XmlResp.SUCCESS;
 	}

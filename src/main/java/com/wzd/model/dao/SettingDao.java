@@ -23,7 +23,7 @@ public class SettingDao {
 	 */
 	public void create(Setting s) {
 		EhcacheUtil.getInstance().putCache("Setting" + s.getId(), s);
-		mapper.insert(s);
+		mapper.insertSelective(s);
 	}
 
 	/**

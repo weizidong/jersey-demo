@@ -36,7 +36,7 @@ public class AdminDao {
 		admin.setCreated(new Date());
 		admin.setDeleted(DeleteType.未删除.getValue());
 		admin.setUpdated(new Date());
-		mapper.insert(admin);
+		mapper.insertSelective(admin);
 		return admin;
 	}
 

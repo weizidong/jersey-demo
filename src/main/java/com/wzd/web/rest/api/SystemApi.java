@@ -1,6 +1,7 @@
 package com.wzd.web.rest.api;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -44,7 +45,16 @@ public class SystemApi {
 	}
 
 	/**
-	 * 清理缓存和测试数据
+	 * 删除测试数据
+	 */
+	@DELETE
+	@Path("/test")
+	public void delTest() {
+		service.delTest();
+	}
+
+	/**
+	 * 清理缓存
 	 */
 	@POST
 	@Path("/clear")

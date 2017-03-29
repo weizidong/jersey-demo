@@ -52,7 +52,7 @@ public class UserDao {
 		user.setId(UUIDUtil.get());
 		user.setAudit(AuditType.未审核.getValue());
 		user.setUpdated(new Date());
-		mapper.insert(user);
+		mapper.insertSelective(user);
 	}
 
 	/**
