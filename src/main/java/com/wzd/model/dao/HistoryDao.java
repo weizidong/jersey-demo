@@ -13,8 +13,10 @@ import com.wzd.model.enums.HistoryType;
 import com.wzd.model.mapper.HistoryMapper;
 import com.wzd.utils.DateUtil;
 import com.wzd.utils.UUIDUtil;
+import com.wzd.web.param.PageParam;
 
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 /**
  * 用户历史数据库操作
@@ -48,20 +50,24 @@ public class HistoryDao {
 	/**
 	 * 查询指定人员的历史记录
 	 */
-	public List<History> list(String userId, List<Integer> types, DeleteType del) {
+	public List<History> list(PageParam param, String userId, List<Integer> types, DeleteType del) {
 		Example e = new Example(History.class);
 		e.setOrderByClause("recording desc");
-		e.createCriteria().andEqualTo("userId", userId).andEqualTo("deleled", del.getValue()).andIn("type", types);
+		Criteria c = PageParam.setCondition(e, "recording", param, History.class);
+		c.andEqualTo("userId", userId).andIn("type", types);
+		if (del != DeleteType.全部) {
+			c.andEqualTo("deleled", del.getValue());
+		}
 		return mapper.selectByExample(e);
 	}
 
 	/**
 	 * 查询指定人员的历史记录
 	 */
-	public List<History> list(String userId, HistoryType type, DeleteType del) {
+	public List<History> list(PageParam param, String userId, HistoryType type, DeleteType del) {
 		List<Integer> types = new ArrayList<>();
 		types.add(type.getValue());
-		return list(userId, types, del);
+		return list(param, userId, types, del);
 	}
 
 	/**

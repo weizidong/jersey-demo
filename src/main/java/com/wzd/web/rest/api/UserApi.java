@@ -46,10 +46,10 @@ public class UserApi {
 	}
 
 	/**
-	 * 修改我的资料
+	 * 修改资料
 	 */
 	@PUT
-	@Path("/mine")
+	@Path("/update")
 	public void update(User user) {
 		service.update(user);
 	}

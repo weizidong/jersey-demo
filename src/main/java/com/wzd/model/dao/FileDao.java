@@ -14,6 +14,7 @@ import com.wzd.model.mapper.FilesMapper;
 import com.wzd.web.param.PageParam;
 
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 /**
  * 文件数据库操作
@@ -60,7 +61,10 @@ public class FileDao {
 	 */
 	public PageInfo<Files> list(PageParam param, DeleteType del) {
 		Example e = new Example(Files.class);
-		PageParam.setCondition(e, param, del, Files.class);
+		Criteria c = PageParam.setCondition(e, "created", param, Files.class);
+		if (del != DeleteType.全部) {
+			c.andEqualTo("deleted", del.getValue());
+		}
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<Files>(mapper.selectByExample(e));
 	}

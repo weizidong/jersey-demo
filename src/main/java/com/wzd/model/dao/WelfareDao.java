@@ -17,6 +17,7 @@ import com.wzd.utils.UUIDUtil;
 import com.wzd.web.param.PageParam;
 
 import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 /**
  * 福利数据库操作
@@ -56,9 +57,10 @@ public class WelfareDao {
 	 */
 	public PageInfo<Welfare> find(PageParam param, DeleteType del) {
 		Example e = new Example(Welfare.class);
-		// 设置条件
-		PageParam.setCondition(e, param, del, Welfare.class);
-		// 开始分页
+		Criteria c = PageParam.setCondition(e, "created", param, Welfare.class);
+		if (del != DeleteType.全部) {
+			c.andEqualTo("deleted", del.getValue());
+		}
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<Welfare>(mapper.selectByExample(e));
 	}

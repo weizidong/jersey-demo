@@ -10,7 +10,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum ArticleType {
-	公告(0), 通知(1), 新闻(2), 政策法规(3), 内部文件(4), 工会资讯(5);
+	全部(-1), 公告(0), 通知(1), 新闻(2), 政策法规(3), 内部文件(4), 工会资讯(5), 福利预告(6);
 	private Integer value;
 
 	private ArticleType(Integer value) {

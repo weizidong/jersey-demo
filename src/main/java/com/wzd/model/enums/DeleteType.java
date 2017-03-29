@@ -10,7 +10,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum DeleteType {
-	未删除(0), 回收站(1), 永久删除(2);
+	全部(-1), 未删除(0), 回收站(1), 永久删除(2);
 	private Integer value;
 
 	private DeleteType(Integer value) {

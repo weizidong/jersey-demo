@@ -2,12 +2,13 @@ package com.wzd.web.param;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.wzd.model.enums.DeleteType;
+import com.alibaba.fastjson.JSON;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 
@@ -28,6 +29,8 @@ public class PageParam implements Serializable {
 	private String[] order; // 排序顺序
 	private String[] filed;// 筛选字段
 	private String[] keyWord;// 筛选关键词
+	private Date start; // 开始时间
+	private Date end; // 结束时间
 
 	public Integer getPage() {
 		return page;
@@ -77,16 +80,31 @@ public class PageParam implements Serializable {
 		this.keyWord = keyWord;
 	}
 
+	public Date getStart() {
+		return start;
+	}
+
+	public void setStart(Date start) {
+		this.start = start;
+	}
+
+	public Date getEnd() {
+		return end;
+	}
+
+	public void setEnd(Date end) {
+		this.end = end;
+	}
+
 	@Override
 	public String toString() {
-		return "[page=" + page + ", pageSize=" + pageSize + ", sort=" + Arrays.toString(sort) + ", order=" + Arrays.toString(order) + ", filed=" + Arrays.toString(filed)
-				+ ", keyWord=" + Arrays.toString(keyWord) + "]";
+		return JSON.toJSONString(this);
 	}
 
 	/**
 	 * 设置参数到Example
 	 */
-	public static void setCondition(Example e, PageParam param, DeleteType del, Class<?> clazz) {
+	public static Criteria setCondition(Example e, String timeFiled, PageParam param, Class<?> clazz) {
 		// 所有的字段名
 		List<String> fields = Arrays.stream(clazz.getFields()).map(field -> field.getName()).collect(Collectors.toList());
 		// 筛选条件
@@ -105,8 +123,8 @@ public class PageParam implements Serializable {
 				}
 			}
 		}
-		if (del != null) {
-			c.andEqualTo("deleted", del.getValue());
+		if (param.getStart() != null && param.getEnd() != null) {
+			c.andBetween(timeFiled, param.getStart(), param.getEnd());
 		}
 		// 排序条件
 		if (!ArrayUtils.isEmpty(param.getOrder()) && !ArrayUtils.isEmpty(param.getSort())) {
@@ -121,5 +139,6 @@ public class PageParam implements Serializable {
 			}
 			e.setOrderByClause(orderStr.toString());
 		}
+		return c;
 	}
 }
