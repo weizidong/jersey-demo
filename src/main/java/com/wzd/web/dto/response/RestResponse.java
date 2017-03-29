@@ -20,7 +20,7 @@ public class RestResponse {
 	private Object data;
 
 	public RestResponse() {
-	};
+	}
 
 	/**
 	 * 构造函数
