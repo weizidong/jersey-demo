@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 福利实体
  * 
@@ -41,6 +43,7 @@ public class Welfare implements Serializable {
 	private Date created;// 发布时间
 	// 系统属性
 	private Integer deleted; // 删除标志
+	private Integer status; // 状态标识
 	// 关联属性
 	@Transient
 	private Integer draw;// 该用户可领取剩余次数
@@ -111,6 +114,14 @@ public class Welfare implements Serializable {
 
 	public Integer getTotal() {
 		return total;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	public void setTotal(Integer total) {
@@ -207,9 +218,7 @@ public class Welfare implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", picUrl=" + picUrl + ", name=" + name + ", total=" + total + ", startTime=" + startTime + ", endTime=" + endTime + ", score=" + score + ", time="
-				+ time + ", provider=" + provider + ", website=" + website + ", current=" + current + ", type=" + type + ", rule=" + rule + ", wishing=" + wishing + ", news="
-				+ news + ", text=" + text + ", adminId=" + adminId + ", created=" + created + ", deleted=" + deleted + ", draw=" + draw + "]";
+		return JSON.toJSONString(this);
 	}
 
 }

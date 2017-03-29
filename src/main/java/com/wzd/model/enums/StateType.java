@@ -1,5 +1,6 @@
 
 package com.wzd.model.enums;
+
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 
@@ -10,7 +11,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum StateType {
-	停用(0), 启用(1);
+	未开始(0), 进行中(1), 暂停(2), 已结束(3);
 	private Integer value;
 
 	private StateType(Integer value) {

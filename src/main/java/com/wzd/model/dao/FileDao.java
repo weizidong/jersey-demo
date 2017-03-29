@@ -32,7 +32,7 @@ public class FileDao {
 	public Files create(Files file) {
 		file.setCreated(new Date());
 		file.setDeleted(DeleteType.未删除.getValue());
-		file.setStatus(StateType.启用.getValue());
+		file.setStatus(StateType.进行中.getValue());
 		mapper.insertSelective(file);
 		return file;
 	}

@@ -16,7 +16,6 @@ import com.wzd.model.enums.AuthType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.model.enums.SexType;
-import com.wzd.model.enums.StateType;
 import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
 import com.wzd.service.wechat.msg.dto.ARTICLE;
@@ -63,8 +62,8 @@ public class SystemService {
 	 * 创建测试数据
 	 */
 	public void test() {
-		Admin a = new Admin(ID, USER_ID, "测试管理员", "测试", "13000000000", SexType.男, "ceshi@163.com", null, "userfiles/logo.png", StateType.启用, AuthType.所有权限,
-				MD5Utils.getMD5ofStr("123456", 2), AuditType.审核成功);
+		Admin a = new Admin(ID, USER_ID, "测试管理员", "测试", "13000000000", SexType.男, "ceshi@163.com", null, "userfiles/logo.png", AuthType.所有权限, MD5Utils.getMD5ofStr("123456", 2),
+				AuditType.审核成功);
 		a.setDepartments("|1|");
 		adminService.create(a);
 		createWelfare(15, "一元红包", 500, 2, 3000, HistoryType.红包福利);
