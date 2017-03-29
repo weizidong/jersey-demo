@@ -89,7 +89,7 @@ public class Event {
 
 	// 取消关注事件
 	private String unsubscribe(WechatMsg msg) {
-		// TODO 取消关注事件
+		// 取消关注服务号
 		if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.bId)) {
 			ThreadPoolUtils.excuteCachedThreadPool(() -> {
 				User user = userDao.getByOpenId(msg.getFromUserName());
@@ -98,12 +98,10 @@ public class Event {
 			});
 		}
 		return XmlResp.SUCCESS;
-
 	}
 
 	// 关注事件
 	private String subscribe(WechatMsg msg) {
-		// TODO 关注事件
 		// 关注服务号
 		if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.bId)) {
 			ThreadPoolUtils.excuteCachedThreadPool(() -> {

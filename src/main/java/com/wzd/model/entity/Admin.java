@@ -11,7 +11,9 @@ import javax.persistence.Transient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.wzd.model.enums.AuditType;
+import com.wzd.model.enums.AuthType;
 import com.wzd.model.enums.SexType;
+import com.wzd.model.enums.StateType;
 import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.utils.StringUtil;
 
@@ -56,17 +58,20 @@ public class Admin extends BaseResp {
 		super();
 	}
 
-	public Admin(String id, String name, String position, String mobile, SexType sex, String email, String avatar, String extattr, String auth, String pwd, AuditType audit) {
+	public Admin(String id, String userid, String name, String position, String mobile, SexType gender, String email, String weixinid, String avatar, StateType status,
+			AuthType auth, String pwd, AuditType audit) {
 		super();
 		this.id = id;
+		this.userid = userid;
 		this.name = name;
 		this.position = position;
 		this.mobile = mobile;
-		this.gender = sex.getValue().toString();
+		this.gender = gender.getValue().toString();
 		this.email = email;
+		this.weixinid = weixinid;
 		this.avatar = avatar;
-		this.extattr = extattr;
-		this.auth = auth;
+		this.status = status.getValue();
+		this.auth = auth.getValue().toString();
 		this.pwd = pwd;
 		this.audit = audit.getValue();
 	}

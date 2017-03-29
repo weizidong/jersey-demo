@@ -77,8 +77,7 @@ public class AdminService {
 	 * 批量删除
 	 */
 	public void delete(IdListParam<String> param) {
-		// TODO 批量删除
-
+		dao.delete(param);
 	}
 
 	/**

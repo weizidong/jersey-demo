@@ -2,6 +2,7 @@ package com.wzd.model.dao;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -86,9 +87,14 @@ public class WelfareDao {
 	/**
 	 * 删除指定福利
 	 */
-	public void delete(String welfareId, DeleteType del) {
+	public void delete(String welfareId, String adminId, DeleteType del) {
 		Welfare w = new Welfare();
-		w.setId(welfareId);
+		if (StringUtils.isNotBlank(welfareId)) {
+			w.setId(welfareId);
+		}
+		if (StringUtils.isNotBlank(adminId)) {
+			w.setAdminId(adminId);
+		}
 		if (del == DeleteType.永久删除) {
 			mapper.delete(w);
 		} else {

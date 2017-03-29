@@ -6,17 +6,20 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.wzd.model.dao.SettingDao;
-import com.wzd.model.dao.WelfareDao;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Setting;
 import com.wzd.model.entity.Welfare;
 import com.wzd.model.enums.AuditType;
+import com.wzd.model.enums.AuthType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.model.enums.SexType;
+import com.wzd.model.enums.StateType;
 import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
+import com.wzd.service.wechat.news.News;
 import com.wzd.utils.Configs;
 import com.wzd.utils.DateUtil;
 import com.wzd.utils.EhcacheUtil;
@@ -31,12 +34,11 @@ import com.wzd.utils.MD5Utils;
 @Service
 public class SystemService {
 	public static final String ID = "00000000000000000000000000000000";
-	@Autowired
-	private WelfareDao welfareDao;
-	@Autowired
-	private AdminService adminService;
+	public static final String USER_ID = "ceshiguanliyuan";
 	@Autowired
 	private SettingDao settingDao;
+	@Autowired
+	private AdminService adminService;
 	@Autowired
 	private FwWxService fwService;
 	@Autowired
@@ -52,17 +54,19 @@ public class SystemService {
 		fwService.syncUser("");
 		// 同步企业号
 		qyService.sync();
-		// 创建福利
-		initWelfare();
-		// 创建系统设置
-
+		// 初始化系统设置
+		setting(new Setting(ID, "userfiles/logo.png", "龙泉驿职工之家", JSON.toJSONString(
+				new News("欢迎关注\"龙泉驿职工之家\" |点我签到", "签到获得更多积分，可以兑换工会提供的各项福利以及参加各类活动！惊喜不断！你准备好了么？", Configs.hostname + "userfiles/signPic.png", Configs.hostname + "view/fwh/center")),
+				100, 50));
 	}
 
 	/**
 	 * 创建测试数据
 	 */
 	public void test() {
-		adminService.create(new Admin(ID, "测试管理员", "测试", "13000000000", SexType.男, "ceshi@163.com", "", "", "", MD5Utils.getMD5ofStr("123456", 2), AuditType.审核成功));
+		Admin a = new Admin(ID, USER_ID, "测试管理员", "测试", "13000000000", SexType.男, "ceshi@163.com", null, "userfiles/logo.png", StateType.启用, AuthType.所有权限,
+				MD5Utils.getMD5ofStr("123456", 2), AuditType.审核成功);
+		adminService.create(a);
 		createWelfare(15, "一元红包", 500, 2, 3000, HistoryType.红包福利);
 		createWelfare(10, "电影票兑换", 1000, 1, 500, HistoryType.券票福利);
 		createWelfare(20, "优惠券兑换", 2000, 1, 200, HistoryType.券票福利);
@@ -75,14 +79,15 @@ public class SystemService {
 	public void clear() {
 		// 清理缓存
 		EhcacheUtil.getInstance().clear();
-
+		adminService.delete(USER_ID, DeleteType.永久删除);
+		welfareService.deleteByAdmin(ID, DeleteType.永久删除);
 	}
 
 	/**
 	 * 系统设置
 	 */
 	public void setting(Setting s) {
-		if (StringUtils.isNotBlank(s.getId())) {
+		if (StringUtils.isBlank(s.getId())) {
 			s.setId(ID);
 			settingDao.create(s);
 		} else {
@@ -95,18 +100,6 @@ public class SystemService {
 	 */
 	public Setting getSetting() {
 		return settingDao.getById(ID);
-	}
-
-	/**
-	 * 初始化福利
-	 */
-	private void initWelfare() {
-		welfareDao.delete(null, DeleteType.永久删除);
-		Welfare w = new Welfare();
-		w.setName("积分签到");
-		w.setType(HistoryType.积分签到.getValue());
-		w.setScore(Integer.parseInt(Configs.get("score")));
-		welfareDao.create(w);
 	}
 
 	/**

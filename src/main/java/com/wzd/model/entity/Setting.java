@@ -12,6 +12,7 @@ public class Setting implements Serializable {
 	private String name; // name
 	private String sub; // 关注信息
 	private Integer score; // 关注积分
+	private Integer sign; // 签到积分基数
 
 	public String getId() {
 		return id;
@@ -57,9 +58,26 @@ public class Setting implements Serializable {
 		super();
 	}
 
+	public Integer getSign() {
+		return sign;
+	}
+
+	public void setSign(Integer sign) {
+		this.sign = sign;
+	}
+
+	public Setting(String id, String logo, String name, String sub, Integer score, Integer sign) {
+		this.id = id;
+		this.logo = logo;
+		this.name = name;
+		this.sub = sub;
+		this.score = score;
+		this.sign = sign;
+	}
+
 	@Override
 	public String toString() {
-		return "[id=" + id + ", logo=" + logo + ", name=" + name + ", sub=" + sub + "]";
+		return "[id=" + id + ", logo=" + logo + ", name=" + name + ", sub=" + sub + ", score=" + score + ", sign=" + sign + "]";
 	}
 
 }

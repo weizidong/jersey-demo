@@ -111,9 +111,15 @@ public class WelfareService {
 	/**
 	 * 删除福利
 	 */
-	public void delete(String welfareId, DeleteType type) {
-		// TODO Auto-generated method stub
+	public void delete(String welfareId, DeleteType del) {
+		welfareDao.delete(welfareId, null, del);
+	}
 
+	/**
+	 * 删除福利
+	 */
+	public void deleteByAdmin(String adminId, DeleteType del) {
+		welfareDao.delete(null, adminId, del);
 	}
 
 }

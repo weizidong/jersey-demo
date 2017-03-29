@@ -2,6 +2,7 @@ package com.wzd.model.dao;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,9 @@ import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.mapper.AdminMapper;
 import com.wzd.utils.UUIDUtil;
+import com.wzd.web.param.IdListParam;
+
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * 管理员数据库操作
@@ -25,7 +29,9 @@ public class AdminDao {
 	 * 创建
 	 */
 	public Admin create(Admin admin) {
-		admin.setId(UUIDUtil.get());
+		if (StringUtils.isBlank(admin.getId())) {
+			admin.setId(UUIDUtil.get());
+		}
 		admin.setAudit(0);
 		admin.setCreated(new Date());
 		admin.setDeleted(DeleteType.未删除.getValue());
@@ -104,5 +110,17 @@ public class AdminDao {
 			admin.setEmail(email);
 		}
 		return mapper.selectOne(admin);
+	}
+
+	public void delete(IdListParam<String> param) {
+		Example e = new Example(Admin.class);
+		e.createCriteria().andIn("id", param.getIds());
+		if (param.getType() == DeleteType.永久删除.getValue()) {
+			mapper.deleteByExample(e);
+		} else {
+			Admin a = new Admin();
+			a.setDeleted(param.getType());
+			mapper.updateByExampleSelective(a, e);
+		}
 	}
 }
