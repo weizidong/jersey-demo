@@ -22,7 +22,7 @@ public class SettingDao {
 	 * 创建系统设置
 	 */
 	public void create(Setting s) {
-		EhcacheUtil.getInstance().putSession("Setting" + s.getId(), s);
+		EhcacheUtil.getInstance().putCache("Setting" + s.getId(), s);
 		mapper.insert(s);
 	}
 
@@ -30,7 +30,7 @@ public class SettingDao {
 	 * 更新系统设置
 	 */
 	public void update(Setting s) {
-		EhcacheUtil.getInstance().putSession("Setting" + s.getId(), s);
+		EhcacheUtil.getInstance().putCache("Setting" + s.getId(), s);
 		mapper.updateByPrimaryKeySelective(s);
 	}
 
@@ -43,7 +43,7 @@ public class SettingDao {
 			s = new Setting();
 			s.setId(id);
 			s = mapper.selectOne(s);
-			EhcacheUtil.getInstance().putSession("Setting" + id, s);
+			EhcacheUtil.getInstance().putCache("Setting" + id, s);
 		}
 		return s;
 	}

@@ -127,6 +127,8 @@ public class UserService {
 		History last = null;
 		if (hList != null && hList.size() > 0) {
 			last = hList.get(0);
+		} else {
+			user.setSignNum(0);
 		}
 		if (last != null && !DateUtil.isBeforeToday(last.getRecording())) { // 已经签到
 			throw new WebException(ResponseCode.已经签到);
