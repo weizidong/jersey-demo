@@ -5,15 +5,19 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
 import com.wzd.model.dao.UserDao;
+import com.wzd.model.entity.Setting;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.SubType;
+import com.wzd.service.SystemService;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
 import com.wzd.service.wechat.news.News;
 import com.wzd.service.wechat.user.FwUserApi;
 import com.wzd.utils.Configs;
 import com.wzd.utils.StringUtil;
+import com.wzd.utils.ThreadPoolUtils;
 import com.wzd.web.param.wechat.WechatMsg;
 
 /**
@@ -26,6 +30,8 @@ import com.wzd.web.param.wechat.WechatMsg;
 public class Event {
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private SystemService systemService;
 
 	/**
 	 * 处理事件
@@ -85,9 +91,11 @@ public class Event {
 	private String unsubscribe(WechatMsg msg) {
 		// TODO 取消关注事件
 		if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.bId)) {
-			User user = userDao.getByOpenId(msg.getFromUserName());
-			user.setSubscribe(SubType.未关注.getValue());
-			userDao.update(user);
+			ThreadPoolUtils.excuteCachedThreadPool(() -> {
+				User user = userDao.getByOpenId(msg.getFromUserName());
+				user.setSubscribe(SubType.未关注.getValue());
+				userDao.update(user);
+			});
 		}
 		return XmlResp.SUCCESS;
 
@@ -98,17 +106,18 @@ public class Event {
 		// TODO 关注事件
 		// 关注服务号
 		if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.bId)) {
-			User user = userDao.getByOpenId(msg.getFromUserName());
-			if (user == null) {
-				userDao.create(FwUserApi.get(msg.getFromUserName()));
-			} else {
-				user.setSubscribe(SubType.已关注.getValue());
-				userDao.update(user);
-			}
-			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), Arrays.asList(new News("欢迎关注\"龙泉驿职工之家\" |点我签到", "签到获得更多积分，可以兑换工会提供的各项福利以及参加各类活动！惊喜不断！你准备好了么？",
-					Configs.hostname + "userfiles/signPic.png", Configs.hostname + "view/fwh/center")));
+			ThreadPoolUtils.excuteCachedThreadPool(() -> {
+				User user = userDao.getByOpenId(msg.getFromUserName());
+				if (user == null) {
+					userDao.create(FwUserApi.get(msg.getFromUserName()));
+				} else {
+					user.setSubscribe(SubType.已关注.getValue());
+					userDao.update(user);
+				}
+			});
+			Setting s = systemService.getSetting();
+			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), Arrays.asList(JSON.parseObject(s.getSub(), News.class)));
 		}
-		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "关注事件");
-
+		return XmlResp.SUCCESS;
 	}
 }

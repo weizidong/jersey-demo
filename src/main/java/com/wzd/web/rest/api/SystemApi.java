@@ -1,7 +1,7 @@
 package com.wzd.web.rest.api;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -9,28 +9,29 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wzd.service.InitService;
+import com.wzd.model.entity.Setting;
+import com.wzd.service.SystemService;
 
 /**
- * 系统初始化接口
+ * 系统接口
  * 
  * @author WeiZiDong
  *
  */
-@Path("/init")
+@Path("/system")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class Init {
+public class SystemApi {
 	@Autowired
-	private InitService service;
+	private SystemService service;
 
 	/**
 	 * 初始化所有数据
 	 */
 	@POST
-	@Path("/all")
-	public void findAll() {
-		service.initAll();
+	@Path("/init")
+	public void init() {
+		service.init();
 	}
 
 	/**
@@ -43,12 +44,30 @@ public class Init {
 	}
 
 	/**
-	 * 清理测试数据
+	 * 清理缓存和测试数据
 	 */
-	@DELETE
-	@Path("/test")
+	@POST
+	@Path("/clear")
 	public void clear() {
 		service.clear();
+	}
+
+	/**
+	 * 系统设置
+	 */
+	@POST
+	@Path("/setting")
+	public void setting(Setting s) {
+		service.setting(s);
+	}
+
+	/**
+	 * 获取系统设置
+	 */
+	@GET
+	@Path("/setting")
+	public Setting getSetting() {
+		return service.getSetting();
 	}
 
 }

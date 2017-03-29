@@ -18,6 +18,7 @@ public class EhcacheUtil {
 	private static final String path = "/ehcache.xml";
 	public static final String LOGIN_SESSION = "loginSession";
 	public static final String TOKEN = "token";
+	public static final String CACHE = "cache";
 
 	private URL url;
 
@@ -49,14 +50,6 @@ public class EhcacheUtil {
 		return element == null ? null : element.getObjectValue();
 	}
 
-	public Session getSession(String key) {
-		return (Session) get(LOGIN_SESSION, key);
-	}
-
-	public void putSession(String key, Object value) {
-		put(LOGIN_SESSION, key, value);
-	}
-
 	public Cache get(String cacheName) {
 		return manager.getCache(cacheName);
 	}
@@ -66,11 +59,33 @@ public class EhcacheUtil {
 		cache.remove(key);
 	}
 
+	public Session getSession(String key) {
+		return (Session) get(LOGIN_SESSION, key);
+	}
+
+	public void putSession(String key, Object value) {
+		put(LOGIN_SESSION, key, value);
+	}
+
 	public void removeSession(String key) {
 		remove(LOGIN_SESSION, key);
 	}
+
+	public Object getCache(String key) {
+		return get(CACHE, key);
+	}
+
+	public void putCache(String key, Object value) {
+		put(CACHE, key, value);
+	}
+
+	public void removeCache(String key) {
+		remove(CACHE, key);
+	}
+
 	public void clear() {
 		manager.getCache(LOGIN_SESSION).removeAll();
 		manager.getCache(TOKEN).removeAll();
+		manager.getCache(CACHE).removeAll();
 	}
 }
