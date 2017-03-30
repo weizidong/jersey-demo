@@ -14,11 +14,13 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.History;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.HistoryService;
 import com.wzd.web.dto.history.HistoryDto;
+import com.wzd.web.dto.history.SignDto;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.PageParam;
 
@@ -47,7 +49,7 @@ public class HistoryApi {
 	/**
 	 * 获取消息历史记录
 	 */
-	@GET
+	@POST
 	@Path("/msg")
 	public List<History> msg(PageParam param, @Context HttpServletRequest request) {
 		User user = (User) SessionUtil.getUser(request);
@@ -57,11 +59,10 @@ public class HistoryApi {
 	/**
 	 * 获取签到历史
 	 */
-	@GET
+	@POST
 	@Path("/sign")
-	public List<History> sign(PageParam param, @Context HttpServletRequest request) {
-		User user = (User) SessionUtil.getUser(request);
-		return service.getSign(param, user.getId());
+	public PageInfo<SignDto> sign(PageParam param) {
+		return service.getSignList(param);
 	}
 
 	/**
@@ -71,6 +72,6 @@ public class HistoryApi {
 	@Path("/weekSign")
 	public List<History> getWeekSign(@Context HttpServletRequest request) {
 		User user = (User) SessionUtil.getUser(request);
-		return service.getSign(new PageParam(), user.getId());
+		return service.getSign(user.getId());
 	}
 }

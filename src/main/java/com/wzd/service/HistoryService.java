@@ -6,12 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.History;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.web.dto.history.HistoryDto;
+import com.wzd.web.dto.history.SignDto;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -48,8 +50,15 @@ public class HistoryService {
 	/**
 	 * 获取签到记录
 	 */
-	public List<History> getSign(PageParam param, String userid) {
+	public List<History> getSign(String userid) {
 		return historyDao.getSign(userid);
+	}
+
+	/**
+	 * 获取签到记录列表
+	 */
+	public PageInfo<SignDto> getSignList(PageParam param) {
+		return historyDao.getSignList(param);
 	}
 
 }

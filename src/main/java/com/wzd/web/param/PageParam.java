@@ -3,7 +3,9 @@ package com.wzd.web.param;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -106,7 +108,7 @@ public class PageParam implements Serializable {
 	 */
 	public static Criteria setCondition(Example e, String timeFiled, PageParam param, Class<?> clazz) {
 		// 所有的字段名
-		List<String> fields = Arrays.stream(clazz.getFields()).map(field -> field.getName()).collect(Collectors.toList());
+		List<String> fields = Arrays.stream(clazz.getDeclaredFields()).map(field -> field.getName()).collect(Collectors.toList());
 		// 筛选条件
 		Criteria c = e.createCriteria();
 		if (!ArrayUtils.isEmpty(param.getFiled()) && !ArrayUtils.isEmpty(param.getKeyWord())) {
@@ -140,5 +142,37 @@ public class PageParam implements Serializable {
 			e.setOrderByClause(orderStr.toString());
 		}
 		return c;
+	}
+
+	/**
+	 * 转换参数
+	 */
+	public static Map<String, Object> getCondition(PageParam param, Class<?> clazz) {
+		// 所有的字段名
+		List<String> fields = Arrays.stream(clazz.getDeclaredFields()).map(field -> field.getName()).collect(Collectors.toList());
+		Map<String, Object> p = new HashMap<>();
+		// 筛选条件
+		if (!ArrayUtils.isEmpty(param.getFiled()) && !ArrayUtils.isEmpty(param.getKeyWord())) {
+			for (int i = 0; i < param.getFiled().length; i++) {
+				String filed = param.getFiled()[i];
+				if (!fields.contains(filed)) {
+					throw new WebException(ResponseCode.资源不存在, "筛选字段名[" + filed + "]错误");
+				} else {
+					p.put(filed, param.getKeyWord()[i]);
+				}
+			}
+		}
+		// 排序条件
+		if (!ArrayUtils.isEmpty(param.getOrder()) && !ArrayUtils.isEmpty(param.getSort())) {
+			for (int i = 0; i < param.getSort().length; i++) {
+				String filed = param.getSort()[i];
+				if (!fields.contains(filed)) {
+					throw new WebException(ResponseCode.资源不存在, "排序字段名[" + filed + "]错误");
+				} else {
+					p.put(filed, param.getOrder()[i]);
+				}
+			}
+		}
+		return p;
 	}
 }

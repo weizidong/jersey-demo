@@ -7,12 +7,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.History;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.model.mapper.HistoryMapper;
 import com.wzd.utils.DateUtil;
 import com.wzd.utils.UUIDUtil;
+import com.wzd.web.dto.history.SignDto;
 import com.wzd.web.param.PageParam;
 
 import tk.mybatis.mapper.entity.Example;
@@ -108,5 +111,13 @@ public class HistoryDao {
 		e.createCriteria().andEqualTo("userId", userid).andEqualTo("type", HistoryType.积分签到.getValue()).andGreaterThan("recording",
 				DateUtil.getDayStartTime(System.currentTimeMillis()));
 		return mapper.selectCountByExample(e) >= 1;
+	}
+
+	/**
+	 * 获取签到列表
+	 */
+	public PageInfo<SignDto> getSignList(PageParam param) {
+		PageHelper.startPage(param.getPage(), param.getPageSize());
+		return new PageInfo<SignDto>(mapper.getSignList(PageParam.getCondition(param, SignDto.class)));
 	}
 }
