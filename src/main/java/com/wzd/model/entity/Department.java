@@ -9,6 +9,7 @@ import javax.persistence.Transient;
 
 import org.springframework.data.annotation.Id;
 
+import com.alibaba.fastjson.JSON;
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
@@ -28,7 +29,7 @@ public class Department extends BaseResp {
 	@Column(name = "orders")
 	private Integer order; // 在父部门中的次序值。order值小的排序靠前。
 	// 自有属性
-	
+
 	// 系统属性
 	private String admin; // 创建者
 	private Integer deleted; // 删除标志
@@ -111,8 +112,7 @@ public class Department extends BaseResp {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", id=" + id + ", name=" + name + ", parentid=" + parentid + ", order=" + order + ", admin=" + admin + ", deleted=" + deleted + ", child=" + child
-				+ "]";
+		return JSON.toJSONString(this);
 	}
 
 }

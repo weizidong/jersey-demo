@@ -24,7 +24,7 @@ public class ArticleService {
 
 	public Article create(Article a, Admin user) {
 		// TODO 发布文章
-		return null;
+		return articleDao.create(a);
 	}
 
 	/**

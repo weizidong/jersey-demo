@@ -2,9 +2,11 @@ package com.wzd.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+
+import com.alibaba.fastjson.JSON;
 
 /**
  * 活动表
@@ -17,32 +19,35 @@ public class Activity implements Serializable {
 	@Id
 	private String id; // ID
 	// 自有属性
-	private String title; // 活动主题
-	private Integer type; // 类型
 	@Column(name = "pic_url")
 	private String picUrl; // 推送配图
+	private String name; // 活动名称
 	private Date start; // 活动开始时间
 	private Date end; // 活动结束时间
-	private String place; // 活动举办地点
-	private Integer total; // 最大参加人数
-	private Integer current; // 当前参加人数
-	@Column(name = "pub_user")
-	private Integer pubUser; // 发布人
-	@Column(name = "dep_id")
-	private Integer depId; // 发布机构
+	@Column(name = "entry_start")
+	private Date entryStart; // 活动报名开始时间
+	@Column(name = "entry_end")
+	private Date entryEnd; // 活动报名结束时间
+	private Integer entry; // 活动报名权限
+	private Integer score; // 报名所需积分
+	private String sponsor; // 主办方
+	@Column(name = "co_sponsor")
+	private String coSponsor; // 协办方
+	private String organizer; // 承办方
+	private String place; // 活动地点
+	private String website; // 提供方链接
+	private String ticket; // 签到二维码
 	private Object detail; // 活动详情
+	private Object rule; // 活动规则
+	@Column(name = "admin_id")
+	private String adminId;// 发布者
+	private Date created;// 发布时间
+	private Integer total; // 活动总人数
+	private Integer current; // 当前报名人数
 	// 系统属性
-	private Date created; // 创建时间
-	private Integer deleted; // 删除标志，0：未删除，1：回收站，2：永久删除
-	private Date updated; // 修改时间
-	private Integer status; // 状态，0：未开始，1：进行中，2：已结束
-	private Integer auditor; // 审核人
-	private Integer audit; // 审核状态
-	@Column(name = "aud_time")
-	private Date audTime; // 审核时间
-	// 关联属性
-	@Transient
-	private List<Files> files;
+	private Integer type; // 类型
+	private Integer deleted; // 删除标志
+	private Integer status; // 状态
 
 	public String getId() {
 		return id;
@@ -52,28 +57,20 @@ public class Activity implements Serializable {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public Integer getType() {
-		return type;
-	}
-
-	public void setType(Integer type) {
-		this.type = type;
-	}
-
 	public String getPicUrl() {
 		return picUrl;
 	}
 
 	public void setPicUrl(String picUrl) {
 		this.picUrl = picUrl;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Date getStart() {
@@ -92,12 +89,20 @@ public class Activity implements Serializable {
 		this.end = end;
 	}
 
-	public String getPlace() {
-		return place;
+	public Date getEntryStart() {
+		return entryStart;
 	}
 
-	public void setPlace(String place) {
-		this.place = place;
+	public void setEntryStart(Date entryStart) {
+		this.entryStart = entryStart;
+	}
+
+	public Date getEntryEnd() {
+		return entryEnd;
+	}
+
+	public void setEntryEnd(Date entryEnd) {
+		this.entryEnd = entryEnd;
 	}
 
 	public Integer getTotal() {
@@ -116,20 +121,68 @@ public class Activity implements Serializable {
 		this.current = current;
 	}
 
-	public Integer getPubUser() {
-		return pubUser;
+	public Integer getEntry() {
+		return entry;
 	}
 
-	public void setPubUser(Integer pubUser) {
-		this.pubUser = pubUser;
+	public void setEntry(Integer entry) {
+		this.entry = entry;
 	}
 
-	public Integer getDepId() {
-		return depId;
+	public Integer getScore() {
+		return score;
 	}
 
-	public void setDepId(Integer depId) {
-		this.depId = depId;
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
+	public String getSponsor() {
+		return sponsor;
+	}
+
+	public void setSponsor(String sponsor) {
+		this.sponsor = sponsor;
+	}
+
+	public String getCoSponsor() {
+		return coSponsor;
+	}
+
+	public void setCoSponsor(String coSponsor) {
+		this.coSponsor = coSponsor;
+	}
+
+	public String getOrganizer() {
+		return organizer;
+	}
+
+	public void setOrganizer(String organizer) {
+		this.organizer = organizer;
+	}
+
+	public String getPlace() {
+		return place;
+	}
+
+	public void setPlace(String place) {
+		this.place = place;
+	}
+
+	public String getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
 	}
 
 	public Object getDetail() {
@@ -140,12 +193,36 @@ public class Activity implements Serializable {
 		this.detail = detail;
 	}
 
+	public Object getRule() {
+		return rule;
+	}
+
+	public void setRule(Object rule) {
+		this.rule = rule;
+	}
+
+	public String getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
+	}
+
 	public Date getCreated() {
 		return created;
 	}
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public Integer getDeleted() {
@@ -156,14 +233,6 @@ public class Activity implements Serializable {
 		this.deleted = deleted;
 	}
 
-	public Date getUpdated() {
-		return updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
-
 	public Integer getStatus() {
 		return status;
 	}
@@ -172,43 +241,9 @@ public class Activity implements Serializable {
 		this.status = status;
 	}
 
-	public Integer getAuditor() {
-		return auditor;
-	}
-
-	public void setAuditor(Integer auditor) {
-		this.auditor = auditor;
-	}
-
-	public Integer getAudit() {
-		return audit;
-	}
-
-	public void setAudit(Integer audit) {
-		this.audit = audit;
-	}
-
-	public Date getAudTime() {
-		return audTime;
-	}
-
-	public void setAudTime(Date audTime) {
-		this.audTime = audTime;
-	}
-
-	public List<Files> getFiles() {
-		return files;
-	}
-
-	public void setFiles(List<Files> files) {
-		this.files = files;
-	}
-
 	@Override
 	public String toString() {
-		return "[id=" + id + ", title=" + title + ", type=" + type + ", picUrl=" + picUrl + ", start=" + start + ", end=" + end + ", place=" + place + ", total=" + total
-				+ ", current=" + current + ", pubUser=" + pubUser + ", depId=" + depId + ", detail=" + detail + ", created=" + created + ", deleted=" + deleted + ", updated="
-				+ updated + ", status=" + status + ", auditor=" + auditor + ", audit=" + audit + ", audTime=" + audTime + ", files=" + files + "]";
+		return JSON.toJSONString(this);
 	}
 
 }

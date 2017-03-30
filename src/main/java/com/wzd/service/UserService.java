@@ -74,25 +74,23 @@ public class UserService {
 	/**
 	 * 删除
 	 */
-	public void delete(Integer id, DeleteType type) {
-		// TODO 删除
+	public void delete(String id, DeleteType type) {
+		// TODO 删除用户
 
 	}
 
 	/**
 	 * 查询指定id用户
 	 */
-	public User findById(Integer id, DeleteType type) {
-		// TODO 查询指定id用户
-		return null;
+	public User getById(String id) {
+		return userDao.getById(id);
 	}
 
 	/**
 	 * 条件查询列表
 	 */
 	public PageInfo<User> find(PageParam param) {
-		// TODO 条件查询列表
-		return null;
+		return new PageInfo<User>(userDao.find(param));
 	}
 
 	/**
@@ -118,12 +116,12 @@ public class UserService {
 	/**
 	 * 签到
 	 */
-	public User sign(String userid) {
-		User user = userDao.getById(userid);
+	public User sign(String id) {
+		User user = userDao.getById(id);
 		if (user == null) {
-			throw new WebException(ResponseCode.用户不存在, userid);
+			throw new WebException(ResponseCode.用户不存在, id);
 		}
-		List<History> hList = historyDao.getSign(userid);
+		List<History> hList = historyDao.getSign(id);
 		History last = null;
 		if (hList != null && hList.size() > 0) {
 			last = hList.get(0);
@@ -144,7 +142,7 @@ public class UserService {
 		user.setSignNum(user.getSignNum() + 1);
 		user.setScore(user.getScore() + s.getSign() * user.getSignNum());
 		userDao.update(user);
-		History h = new History(userid, "积分签到", null, s.getSign() * user.getSignNum(), null, HistoryType.积分签到, null);
+		History h = new History(id, "积分签到", null, s.getSign() * user.getSignNum(), null, HistoryType.积分签到, null);
 		historyDao.create(h);
 		return user;
 	}

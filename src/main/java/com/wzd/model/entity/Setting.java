@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Id;
 
+import com.alibaba.fastjson.JSON;
+
 @SuppressWarnings("serial")
 public class Setting implements Serializable {
 	@Id
@@ -76,7 +78,7 @@ public class Setting implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", logo=" + logo + ", name=" + name + ", sub=" + sub + ", score=" + score + ", sign=" + sign + "]";
+		return JSON.toJSONString(this);
 	}
 
 }

@@ -96,19 +96,19 @@ public class HistoryDao {
 	/**
 	 * 获取当前自然周签到历史
 	 */
-	public List<History> getSign(String userid) {
+	public List<History> getSign(String userId) {
 		Example e = new Example(History.class);
 		e.setOrderByClause("recording asc");
-		e.createCriteria().andEqualTo("userId", userid).andEqualTo("type", HistoryType.积分签到.getValue()).andGreaterThan("recording", DateUtil.getFirstDayOfWeek(new Date(), 1));
+		e.createCriteria().andEqualTo("userId", userId).andEqualTo("type", HistoryType.积分签到.getValue()).andGreaterThan("recording", DateUtil.getFirstDayOfWeek(new Date(), 1));
 		return mapper.selectByExample(e);
 	}
 
 	/**
 	 * 是否已经签到
 	 */
-	public Boolean isSign(String userid) {
+	public Boolean isSign(String userId) {
 		Example e = new Example(History.class);
-		e.createCriteria().andEqualTo("userId", userid).andEqualTo("type", HistoryType.积分签到.getValue()).andGreaterThan("recording",
+		e.createCriteria().andEqualTo("userId", userId).andEqualTo("type", HistoryType.积分签到.getValue()).andGreaterThan("recording",
 				DateUtil.getDayStartTime(System.currentTimeMillis()));
 		return mapper.selectCountByExample(e) >= 1;
 	}

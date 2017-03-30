@@ -96,4 +96,9 @@ public abstract class FwAPI {
 	 * 发放裂变红包,请求方式 :POST
 	 */
 	public static final String SEND_GROUP_REDPACK = "https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack";
+	// ======================== 生成带参数的二维码 ============================
+	/**
+	 * 创建二维码,请求方式:POST
+	 */
+	public static final String CREATE_QRCODE = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={0}";
 }

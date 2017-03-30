@@ -5,7 +5,7 @@ import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 
 /**
- * 运行状态类型
+ * 运行状态
  * 
  * @author WeiZiDong
  *

@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wzd.model.mapper.ActivityMapper">
-  <resultMap id="BaseResultMap" type="com.wzd.model.entity.Activity">
-    <!--
-      WARNING - @mbggenerated
-    -->
-    <id column="id" jdbcType="CHAR" property="id" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="deleted" jdbcType="INTEGER" property="deleted" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
-    <result column="start" jdbcType="TIMESTAMP" property="start" />
-    <result column="end" jdbcType="TIMESTAMP" property="end" />
-    <result column="place" jdbcType="VARCHAR" property="place" />
-    <result column="total" jdbcType="INTEGER" property="total" />
-    <result column="current" jdbcType="INTEGER" property="current" />
-    <result column="pub_user" jdbcType="CHAR" property="pubUser" />
-    <result column="dep_id" jdbcType="INTEGER" property="depId" />
-    <result column="auditor" jdbcType="CHAR" property="auditor" />
-    <result column="aud_time" jdbcType="TIMESTAMP" property="audTime" />
-    <result column="audit" jdbcType="INTEGER" property="audit" />
-    <result column="detail" jdbcType="LONGVARBINARY" property="detail" />
-  </resultMap>
+	<resultMap id="BaseResultMap" type="com.wzd.model.entity.Activity">
+		<id column="id" jdbcType="CHAR" property="id" />
+		<result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="start" jdbcType="TIMESTAMP" property="start" />
+		<result column="end" jdbcType="TIMESTAMP" property="end" />
+		<result column="entry_start" jdbcType="TIMESTAMP" property="entryStart" />
+		<result column="entry_end" jdbcType="TIMESTAMP" property="entryEnd" />
+		<result column="entry" jdbcType="INTEGER" property="entry" />
+		<result column="score" jdbcType="INTEGER" property="score" />
+		<result column="sponsor" jdbcType="VARCHAR" property="sponsor" />
+		<result column="co_sponsor" jdbcType="VARCHAR" property="coSponsor" />
+		<result column="organizer" jdbcType="VARCHAR" property="organizer" />
+		<result column="place" jdbcType="VARCHAR" property="place" />
+		<result column="website" jdbcType="VARCHAR" property="website" />
+		<result column="ticket" jdbcType="VARCHAR" property="ticket" />
+		<result column="detail" jdbcType="LONGVARBINARY" property="detail" />
+		<result column="rule" jdbcType="LONGVARBINARY" property="rule" />
+		<result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+		<result column="created" jdbcType="TIMESTAMP" property="created" />
+		<result column="total" jdbcType="INTEGER" property="total" />
+		<result column="current" jdbcType="INTEGER" property="current" />
+		<result column="type" jdbcType="INTEGER" property="type" />
+		<result column="deleted" jdbcType="INTEGER" property="deleted" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+	</resultMap>
 </mapper>

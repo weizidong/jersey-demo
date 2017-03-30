@@ -9,6 +9,7 @@ import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.alibaba.fastjson.JSON;
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
@@ -52,6 +53,8 @@ public class User extends BaseResp {
 	private String name; // 姓名
 	@Column(name = "dep_id")
 	private Integer depId; // 部门
+	@Column(name = "dep_name")
+	private Integer depName; // 部门名称
 	@Column(name = "id_card")
 	private String idCard; // 身份证编号
 	private String position; // 岗位
@@ -94,6 +97,14 @@ public class User extends BaseResp {
 
 	public void setSubscribe(Integer subscribe) {
 		this.subscribe = subscribe;
+	}
+
+	public Integer getDepName() {
+		return depName;
+	}
+
+	public void setDepName(Integer depName) {
+		this.depName = depName;
 	}
 
 	public String getOpenid() {
@@ -378,12 +389,7 @@ public class User extends BaseResp {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", subscribe=" + subscribe + ", openid=" + openid + ", city=" + city + ", country=" + country + ", province=" + province + ", language=" + language
-				+ ", subscribeTime=" + subscribeTime + ", unionid=" + unionid + ", groupid=" + groupid + ", tagid_list=" + tagid_list + ", headimgurl=" + headimgurl + ", nickname="
-				+ nickname + ", sex=" + sex + ", remark=" + remark + ", birthday=" + birthday + ", marriage=" + marriage + ", phone=" + phone + ", address=" + address + ", email="
-				+ email + ", name=" + name + ", depId=" + depId + ", idCard=" + idCard + ", position=" + position + ", audit=" + audit + ", auditor=" + auditor + ", login=" + login
-				+ ", created=" + created + ", updated=" + updated + ", status=" + status + ", auth=" + auth + ", score=" + score + ", signNum=" + signNum + ", msgNum=" + msgNum
-				+ ", welfNum=" + welfNum + ", actNum=" + actNum + ", isSign=" + isSign + "]";
+		return JSON.toJSONString(this);
 	}
 
 }

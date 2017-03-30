@@ -1,14 +1,19 @@
 package com.wzd.model.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.github.pagehelper.PageHelper;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.mapper.UserMapper;
 import com.wzd.utils.UUIDUtil;
+import com.wzd.web.param.PageParam;
+
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * 用户数据库操作
@@ -71,9 +76,20 @@ public class UserDao {
 	/**
 	 * 根据ID获取
 	 */
-	public User getById(String userid) {
+	public User getById(String id) {
 		User u = new User();
-		u.setId(userid);
+		u.setId(id);
 		return mapper.selectOne(u);
+	}
+
+	/**
+	 * 查询用户列表
+	 */
+	public List<User> find(PageParam param) {
+		Example e = new Example(User.class);
+		PageParam.setCondition(e, "created", param, User.class);
+		e.setOrderByClause("created DESC");
+		PageHelper.startPage(param.getPage(), param.getPageSize());
+		return mapper.selectByExample(e);
 	}
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 报名表
  * 
@@ -100,8 +102,7 @@ public class Entryform implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", userId=" + userId + ", activityId=" + activityId + ", time=" + time + ", type=" + type + ", created=" + created + ", updated=" + updated
-				+ ", deleted=" + deleted + ", status=" + status + "]";
+		return JSON.toJSONString(this);
 	}
 
 }

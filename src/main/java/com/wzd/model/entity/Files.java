@@ -8,6 +8,8 @@ import javax.persistence.Id;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 文件
  * 
@@ -113,8 +115,7 @@ public class Files implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", name=" + name + ", url=" + url + ", fk=" + fk + ", suffix=" + suffix + ", userId=" + userId + ", created=" + created + ", deleted=" + deleted
-				+ ", status=" + status + ", type=" + type + "]";
+		return JSON.toJSONString(this);
 	}
 
 }

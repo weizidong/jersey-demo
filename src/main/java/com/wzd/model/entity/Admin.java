@@ -10,6 +10,7 @@ import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.alibaba.fastjson.JSON;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.AuthType;
 import com.wzd.model.enums.SexType;
@@ -254,9 +255,6 @@ public class Admin extends BaseResp {
 
 	@Override
 	public String toString() {
-		return "{id=" + id + ", userid=" + userid + ", name=" + name + ", department=" + department + ", position=" + position + ", mobile=" + mobile + ", gender=" + gender
-				+ ", email=" + email + ", weixinid=" + weixinid + ", avatar_mediaid=" + avatar_mediaid + ", avatar=" + avatar + ", status=" + status + ", extattr=" + extattr
-				+ ", departments=" + departments + ", created=" + created + ", deleted=" + deleted + ", updated=" + updated + ", auth=" + auth + ", openid=" + openid + ", pwd="
-				+ pwd + ", login=" + login + ", audit=" + audit + "}";
+		return JSON.toJSONString(this);
 	}
 }

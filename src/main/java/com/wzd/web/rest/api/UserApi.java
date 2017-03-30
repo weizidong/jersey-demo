@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -48,7 +47,7 @@ public class UserApi {
 	/**
 	 * 修改资料
 	 */
-	@PUT
+	@POST
 	@Path("/update")
 	public void update(User user) {
 		service.update(user);
@@ -57,7 +56,7 @@ public class UserApi {
 	/**
 	 * 签到
 	 */
-	@PUT
+	@POST
 	@Path("/sign")
 	public User sign(@Context HttpServletRequest request) {
 		User user = (User) SessionUtil.getUser(request);
@@ -65,36 +64,21 @@ public class UserApi {
 	}
 
 	/**
-	 * 创建
-	 */
-	@Path("/create")
-	@POST
-	public void create(User user) {
-		service.create(user);
-	}
-
-	/**
 	 * 删除
-	 * 
-	 * @param type
-	 *            删除类型，0：不刪；1：回收站；2：永久
 	 */
-	@Path("/delete/{id}/{type}")
 	@POST
-	public void delete(@PathParam("id") Integer id, @PathParam("type") Integer type) {
+	@Path("/delete/{id}/{type}")
+	public void delete(@PathParam("id") String id, @PathParam("type") Integer type) {
 		service.delete(id, DeleteType.parse(type));
 	}
 
 	/**
 	 * 查询指定id用户
-	 * 
-	 * @param type
-	 *            删除类型，0：不刪；1：回收站；2：永久
 	 */
-	@Path("/get/{id}/{type}")
 	@POST
-	public User getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
-		return service.findById(id, DeleteType.parse(type));
+	@Path("/get/{id}")
+	public User getById(@PathParam("id") String id) {
+		return service.getById(id);
 	}
 
 	/**
@@ -108,11 +92,8 @@ public class UserApi {
 
 	/**
 	 * 审核
-	 * 
-	 * @param type
-	 *            审核类型,2：审核通过；3：审核未通过
 	 */
-	@PUT
+	@POST
 	@Path("/audit/{userId}/{type}")
 	public void auditing(@PathParam("userId") String userId, @PathParam("type") Integer type, @Context HttpServletRequest request) {
 		service.auditing(userId, AuditType.parse(type), (Admin) SessionUtil.getUser(request));

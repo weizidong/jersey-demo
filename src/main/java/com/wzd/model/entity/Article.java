@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 文章
  * 
@@ -164,9 +166,7 @@ public class Article implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", title=" + title + ", content=" + content + ", imgUrl=" + imgUrl + ", type=" + type + ", pubUser=" + pubUser + ", depId=" + depId + ", created="
-				+ created + ", updated=" + updated + ", deleted=" + deleted + ", auditor=" + auditor + ", audit=" + audit + ", audTime=" + audTime + ", files=" + files
-				+ ", admins=" + admins + "]";
+		return JSON.toJSONString(this);
 	}
 
 }

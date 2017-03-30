@@ -4,16 +4,16 @@ import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 
 /**
- * 用户的类型
+ * 签到类型
  * 
  * @author WeiZiDong
  *
  */
-public enum UserType {
-	全部用户(0), 认证用户(1);
+public enum SignType {
+	未签到(0), 已签到(1);
 	private Integer value;
 
-	private UserType(Integer value) {
+	private SignType(Integer value) {
 		this.value = value;
 	}
 
@@ -21,12 +21,12 @@ public enum UserType {
 		return value;
 	}
 
-	public static UserType parse(Integer type) {
-		for (UserType item : UserType.values()) {
+	public static SignType parse(Integer type) {
+		for (SignType item : SignType.values()) {
 			if (type != null && type == item.getValue()) {
 				return item;
 			}
 		}
-		throw new WebException(ResponseCode.不允许此方法, "值[" + type + "]不是" + UserType.class + "有效值。");
+		throw new WebException(ResponseCode.不允许此方法, "值[" + type + "]不是" + SignType.class + "有效值。");
 	}
 }

@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 票券
  * 
@@ -87,7 +89,7 @@ public class Ticket implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", ticket=" + ticket + ", foreignKey=" + foreignKey + ", used=" + used + ", draw=" + draw + ", created=" + created + "]";
+		return JSON.toJSONString(this);
 	}
 
 	/**

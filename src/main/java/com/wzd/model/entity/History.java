@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Id;
 
+import com.alibaba.fastjson.JSON;
 import com.wzd.model.enums.HistoryType;
 
 /**
@@ -131,8 +132,7 @@ public class History implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[id=" + id + ", userId=" + userId + ", title=" + title + ", content=" + content + ", score=" + score + ", ticket=" + ticket + ", recording=" + recording + ", type="
-				+ type + ", welfareId=" + welfareId + ", deleled=" + deleled + "]";
+		return JSON.toJSONString(this);
 	}
 
 }

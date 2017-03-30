@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.ActivityDao;
 import com.wzd.model.entity.Activity;
+import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.web.param.PageParam;
 
@@ -23,37 +24,35 @@ public class ActivityService {
 	/**
 	 * 创建活动
 	 */
-	public void create(Activity activity) {
-		dao.create(activity);
-	}
-
-	/**
-	 * 删除活动
-	 */
-	public void delete(Integer id, DeleteType type) {
-		// TODO 删除活动
+	public Activity create(Activity activity, Admin admin) {
+		return dao.create(activity, admin);
 	}
 
 	/**
 	 * 修改活动
 	 */
 	public void update(Activity activity) {
-		// TODO 修改活动
+		dao.update(activity);
+	}
+
+	/**
+	 * 删除活动
+	 */
+	public void delete(String id, DeleteType del) {
+		dao.delete(id, del);
 	}
 
 	/**
 	 * 根据id查询
 	 */
-	public Activity findById(Integer id, DeleteType type) {
-		// TODO 根据id查询
-		return null;
+	public Activity findById(String id) {
+		return dao.findById(id);
 	}
 
 	/**
 	 * 条件查询所有
 	 */
 	public PageInfo<Activity> find(PageParam param) {
-		// TODO 条件查询所有
-		return null;
+		return new PageInfo<Activity>(dao.find(param));
 	}
 }

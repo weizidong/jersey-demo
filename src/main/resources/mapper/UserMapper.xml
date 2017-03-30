@@ -24,6 +24,7 @@
 		<result column="email" jdbcType="VARCHAR" property="email" />
 		<result column="name" jdbcType="VARCHAR" property="name" />
 		<result column="dep_id" jdbcType="INTEGER" property="depId" />
+		<result column="dep_name" jdbcType="VARCHAR" property="depName" />
 		<result column="id_card" jdbcType="VARCHAR" property="idCard" />
 		<result column="position" jdbcType="VARCHAR" property="position" />
 		<result column="audit" jdbcType="INTEGER" property="audit" />
