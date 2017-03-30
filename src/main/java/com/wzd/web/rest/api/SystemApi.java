@@ -27,7 +27,7 @@ public class SystemApi {
 	private SystemService service;
 
 	/**
-	 * 初始化所有数据
+	 * 初始化系统
 	 */
 	@POST
 	@Path("/init")

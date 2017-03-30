@@ -25,9 +25,9 @@ public class Department extends BaseResp {
 	private Integer id; // 部门id，整型。指定时必须大于1，不指定时则自动生成
 	// 微信属性
 	private String name; // 部门名称。长度限制为32个字（汉字或英文字母），字符不能包括\:*?"<>｜
-	private Integer parentid; // 父亲部门id。根部门id为1
+	private Integer parentid = 1; // 父亲部门id。根部门id为1
 	@Column(name = "orders")
-	private Integer order; // 在父部门中的次序值。order值小的排序靠前。
+	private Integer order = 0; // 在父部门中的次序值。order值小的排序靠前。
 	// 自有属性
 
 	// 系统属性

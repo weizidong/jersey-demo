@@ -58,18 +58,18 @@ public class WelfareApi {
 	 * 查询福利详情
 	 */
 	@GET
-	@Path("/find/{welfareId}/{delType}")
-	public Welfare findById(@PathParam("welfareId") String welfareId, @PathParam("delType") Integer delType) {
-		return service.findById(welfareId, delType);
+	@Path("/find/{id}/{del}")
+	public Welfare findById(@PathParam("id") String id, @PathParam("del") Integer del) {
+		return service.findById(id, del);
 	}
 
 	/**
 	 * 兑换福利
 	 */
 	@POST
-	@Path("/convert/{welfareId}")
-	public void convert(@PathParam("welfareId") String welfareId, @Context HttpServletRequest request) {
-		service.convert(welfareId, (User) SessionUtil.getUser(request));
+	@Path("/convert/{id}")
+	public void convert(@PathParam("id") String id, @Context HttpServletRequest request) {
+		service.convert(id, (User) SessionUtil.getUser(request));
 	}
 
 	/**
@@ -85,8 +85,8 @@ public class WelfareApi {
 	 * 删除福利
 	 */
 	@DELETE
-	@Path("/{welfareId}/{delType}")
-	public void delete(@PathParam("welfareId") String welfareId, @PathParam("delType") Integer delType) {
-		service.delete(welfareId, DeleteType.parse(delType));
+	@Path("/delete/{id}/{del}")
+	public void delete(@PathParam("id") String id, @PathParam("del") Integer del) {
+		service.delete(id, DeleteType.parse(del));
 	}
 }
