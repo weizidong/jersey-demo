@@ -49,6 +49,31 @@ public class Activity implements Serializable {
 	private Integer deleted; // 删除标志
 	private Integer status; // 状态
 
+	public Activity() {
+		super();
+	}
+
+	public Activity(String picUrl, String name, Date start, Date end, Date entryStart, Date entryEnd, Integer entry, Integer score, String sponsor, String coSponsor,
+			String organizer, String place, String website, Object detail, Object rule, Integer total, Integer type) {
+		this.picUrl = picUrl;
+		this.name = name;
+		this.start = start;
+		this.end = end;
+		this.entryStart = entryStart;
+		this.entryEnd = entryEnd;
+		this.entry = entry;
+		this.score = score;
+		this.sponsor = sponsor;
+		this.coSponsor = coSponsor;
+		this.organizer = organizer;
+		this.place = place;
+		this.website = website;
+		this.detail = detail;
+		this.rule = rule;
+		this.total = total;
+		this.type = type;
+	}
+
 	public String getId() {
 		return id;
 	}

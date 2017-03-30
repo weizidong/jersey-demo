@@ -2,6 +2,7 @@ package com.wzd.web.rest.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -66,7 +67,7 @@ public class UserApi {
 	/**
 	 * 删除
 	 */
-	@POST
+	@DELETE
 	@Path("/delete/{id}/{type}")
 	public void delete(@PathParam("id") String id, @PathParam("type") Integer type) {
 		service.delete(id, DeleteType.parse(type));
@@ -75,7 +76,7 @@ public class UserApi {
 	/**
 	 * 查询指定id用户
 	 */
-	@POST
+	@GET
 	@Path("/get/{id}")
 	public User getById(@PathParam("id") String id) {
 		return service.getById(id);

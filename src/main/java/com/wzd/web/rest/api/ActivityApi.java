@@ -2,6 +2,8 @@ package com.wzd.web.rest.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -33,7 +35,7 @@ public class ActivityApi {
 	private ActivityService service;
 
 	/**
-	 * 发起活动
+	 * 创建活动
 	 */
 	@POST
 	@Path("/create")
@@ -53,8 +55,8 @@ public class ActivityApi {
 	/**
 	 * 删除活动
 	 */
+	@DELETE
 	@Path("/delete/{id}/{del}")
-	@POST
 	public void delete(@PathParam("id") String id, @PathParam("del") Integer del) {
 		service.delete(id, DeleteType.parse(del));
 	}
@@ -62,7 +64,7 @@ public class ActivityApi {
 	/**
 	 * 获取活动详情
 	 */
-	@POST
+	@GET
 	@Path("/get/{id}")
 	public Activity getById(@PathParam("id") String id) {
 		return service.findById(id);

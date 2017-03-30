@@ -55,4 +55,11 @@ public class ActivityService {
 	public PageInfo<Activity> find(PageParam param) {
 		return new PageInfo<Activity>(dao.find(param));
 	}
+
+	/**
+	 * 根据adminId删除
+	 */
+	public void deleteByAdmin(String adminId, DeleteType del) {
+		dao.deleteByAdmin(adminId, del);
+	}
 }

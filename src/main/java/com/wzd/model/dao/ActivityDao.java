@@ -62,7 +62,6 @@ public class ActivityDao {
 			a.setDeleted(del.getValue());
 			mapper.updateByPrimaryKeySelective(a);
 		}
-
 	}
 
 	/**
@@ -83,5 +82,19 @@ public class ActivityDao {
 		e.setOrderByClause("created DESC");
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return mapper.selectByExample(e);
+	}
+
+	/**
+	 * 根据adminId删除
+	 */
+	public void deleteByAdmin(String adminId, DeleteType del) {
+		Activity a = new Activity();
+		a.setAdminId(adminId);
+		if (del == DeleteType.永久删除) {
+			mapper.delete(a);
+		} else {
+			a.setDeleted(del.getValue());
+			mapper.updateByPrimaryKeySelective(a);
+		}
 	}
 }

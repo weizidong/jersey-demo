@@ -2,6 +2,7 @@ package com.wzd.web.rest.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -47,10 +48,10 @@ public class FileApi {
 	/**
 	 * 删除文件
 	 */
-	@POST
-	@Path("/delete/{id}/{type}")
-	public void delete(@PathParam("id") String id, @PathParam("type") Integer type) {
-		service.delete(id, DeleteType.parse(type));
+	@DELETE
+	@Path("/delete/{id}/{del}")
+	public void delete(@PathParam("id") String id, @PathParam("del") Integer del) {
+		service.delete(id, DeleteType.parse(del));
 	}
 
 	/**
@@ -66,8 +67,8 @@ public class FileApi {
 	 * 条件查询文件列表
 	 */
 	@POST
-	@Path("/list/{delType}")
-	public PageInfo<Files> list(PageParam param, @PathParam("delType") Integer del) {
+	@Path("/list/{del}")
+	public PageInfo<Files> list(PageParam param, @PathParam("del") Integer del) {
 		return service.list(param, DeleteType.parse(del));
 	}
 }

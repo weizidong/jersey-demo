@@ -91,7 +91,7 @@ public class AdminService {
 	/**
 	 * 查询详情
 	 */
-	public Admin findById(Integer id, DeleteType parse) {
+	public Admin findById(Integer id) {
 		// TODO 查询详情
 		return null;
 	}

@@ -56,8 +56,8 @@ public class DepartmentService {
 	/**
 	 * 根据id查询
 	 */
-	public Department findById(Integer id, DeleteType type) {
-		return dao.getById(id, type);
+	public Department findById(Integer id) {
+		return dao.getById(id, null);
 	}
 
 	/**

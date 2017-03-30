@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -40,25 +41,20 @@ public class DepartmentApi {
 		return service.findAll();
 	}
 
-	// 以上是实现的业务接口
-
 	/**
 	 * 创建部门
 	 */
-	@Path("/create")
 	@POST
+	@Path("/create")
 	public void create(Department dep, @Context HttpServletRequest request) {
 		service.create(dep, request);
 	}
 
 	/**
 	 * 删除部门
-	 * 
-	 * @param type
-	 *            删除类型，0：不刪；1：回收站；2：永久
 	 */
+	@DELETE
 	@Path("/delete/{id}/{type}")
-	@POST
 	public void delete(@PathParam("id") Integer id, @PathParam("type") Integer type) {
 		service.delete(id, DeleteType.parse(type));
 	}
@@ -66,29 +62,26 @@ public class DepartmentApi {
 	/**
 	 * 修改部门
 	 */
-	@Path("/update")
 	@POST
+	@Path("/update")
 	public void update(Department dep) {
 		service.update(dep);
 	}
 
 	/**
 	 * 获取部门详情
-	 * 
-	 * @param type
-	 *            删除类型，0：不刪；1：回收站；2：永久
 	 */
-	@Path("/get/{id}/{type}")
-	@POST
-	public Department getById(@PathParam("id") Integer id, @PathParam("type") Integer type) {
-		return service.findById(id, DeleteType.parse(type));
+	@GET
+	@Path("/get/{id}")
+	public Department getById(@PathParam("id") Integer id) {
+		return service.findById(id);
 	}
 
 	/**
 	 * 获取部门列表(树形)
 	 */
-	@Path("/findTree/{parentId}")
-	@POST
+	@GET
+	@Path("/tree/{parentId}")
 	public Department findTree(@PathParam("parentId") Integer parentId) {
 		Department dep = new Department();
 		dep.setId(parentId == null ? 1 : parentId);

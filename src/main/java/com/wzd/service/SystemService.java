@@ -8,14 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.wzd.model.dao.SettingDao;
+import com.wzd.model.entity.Activity;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Setting;
 import com.wzd.model.entity.Welfare;
+import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.AuthType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.model.enums.SexType;
+import com.wzd.model.enums.UserType;
 import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
 import com.wzd.service.wechat.msg.dto.ARTICLE;
@@ -44,6 +47,8 @@ public class SystemService {
 	private QyWxService qyService;
 	@Autowired
 	private WelfareService welfareService;
+	@Autowired
+	private ActivityService activityService;
 
 	/**
 	 * 初始化系统
@@ -69,6 +74,7 @@ public class SystemService {
 		createWelfare(15, "一元红包", 500, 2, 3000, HistoryType.红包福利);
 		createWelfare(10, "电影票兑换", 1000, 1, 500, HistoryType.券票福利);
 		createWelfare(20, "优惠券兑换", 2000, 1, 200, HistoryType.券票福利);
+		createActivity(a);
 	}
 
 	/**
@@ -77,6 +83,7 @@ public class SystemService {
 	public void delTest() {
 		adminService.delete(USER_ID, DeleteType.永久删除);
 		welfareService.deleteByAdmin(ID, DeleteType.永久删除);
+		activityService.deleteByAdmin(ID, DeleteType.永久删除);
 	}
 
 	/**
@@ -124,6 +131,17 @@ public class SystemService {
 		Admin a = new Admin();
 		a.setId(ID);
 		welfareService.create(w, a);
+	}
+
+	/**
+	 * 创建活动
+	 */
+	private void createActivity(Admin admin) {
+		Date d = new Date();
+		Activity a = new Activity("user", "龙泉驿区职工年中盛典", DateUtil.getBeforeDate(d, 10), DateUtil.getAfterDate(d, 10), DateUtil.getBeforeDate(d, 8), DateUtil.getAfterDate(d, 5),
+				UserType.全部用户.getValue(), 500, "龙泉驿区总工会", "成都爱创业科技有限公司", "成都爱创业科技有限公司", "成都市龙泉驿区红光路128号兴隆广场127号1002会议室", "http://www.ichuangye.cn", "1、福利期间每人只能兑换次福利。".getBytes(),
+				"1、福利期间每人只能兑换次福利。".getBytes(), 2000, ActivityType.普通活动.getValue());
+		activityService.create(a, admin);
 	}
 
 }

@@ -79,16 +79,6 @@ public class WechatApi {
 	}
 
 	/**
-	 * 同步企业号
-	 */
-	@GET
-	@Path("/syncQy")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String sync() {
-		return qyService.sync();
-	}
-
-	/**
 	 * 验证回调URL
 	 */
 	@GET
@@ -158,16 +148,6 @@ public class WechatApi {
 	@Path("/fwMenu")
 	public void deleteFwMenu() {
 		fwService.deleteFwMenu();
-	}
-
-	/**
-	 * 同步服务号
-	 */
-	@GET
-	@Path("/syncFw")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String syncFw() {
-		return fwService.syncUser("");
 	}
 
 }
