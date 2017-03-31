@@ -17,15 +17,15 @@ import com.wzd.model.entity.Files;
  *
  */
 public class FileUtil {
-	private static final String RESOURCE_URL = "/userfiles";
+	private static final String RESOURCE_URL = "userfiles/";
 	private static String BASE_PATH = "";
 
 	static {
 		String basePath = System.getProperty("jetty.home");
 		if (basePath == null) {
-			BASE_PATH = System.getProperty("user.dir") + "/src/main/webapp";
+			BASE_PATH = System.getProperty("user.dir") + "/src/main/webapp/";
 		} else {
-			BASE_PATH = basePath + "/webapps";
+			BASE_PATH = basePath + "/webapps/";
 		}
 	}
 
@@ -41,9 +41,9 @@ public class FileUtil {
 			// 后缀
 			String ext = fullName.substring(fullName.lastIndexOf("."), fullName.length());
 			// 相对路径
-			String folder = RESOURCE_URL + File.separator + DateUtil.dateToString(new Date(), DateUtil.PDATE2);
+			String folder = RESOURCE_URL + DateUtil.dateToString(new Date(), DateUtil.PDATE2) + "/";
 			// 绝对路径
-			String path = BASE_PATH + folder + File.separator + fileName + ext;
+			String path = BASE_PATH + folder + fileName + ext;
 			// 生成目录
 			File store = new File(BASE_PATH + folder);
 			if (!store.exists()) {
@@ -54,7 +54,7 @@ public class FileUtil {
 			// 返回值
 			Files f = new Files();
 			f.setName(fullName.substring(0, fullName.length() - 4));
-			f.setUrl(folder + File.separator + fileName + ext);
+			f.setUrl(Configs.hostname + folder + fileName + ext);
 			f.setSuffix(ext.substring(1));
 			return f;
 		} catch (IOException e) {
@@ -66,7 +66,7 @@ public class FileUtil {
 	 * 删除文件
 	 */
 	public static void delete(String url) {
-		File file = new File(BASE_PATH + url);
+		File file = new File(BASE_PATH + url.substring(Configs.hostname.length()));
 		if (file.isFile() && file.exists()) {
 			file.delete();
 		}

@@ -1,10 +1,10 @@
 package dao;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.wzd.model.dao.HistoryDao;
-import com.wzd.web.param.PageParam;
 
 public class DaoTest extends BasicTest {
 	@Autowired
@@ -12,6 +12,6 @@ public class DaoTest extends BasicTest {
 
 	@Test
 	public void test1() {
-		System.out.println(historyDao.getSignList(new PageParam()));
+		System.out.println(StringUtils.contains("|asdasd|name|zxczxc|", "|name|"));
 	}
 }

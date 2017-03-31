@@ -45,8 +45,11 @@ public class FileService {
 	public Files upload(FormDataMultiPart form, HttpServletRequest request) {
 		log.debug("开始上传文件。。。");
 		FormDataBodyPart filePart = form.getField("file");
-		Integer type = form.getField("type").getValueAs(Integer.class);
-		FileType.parse(type);
+		Integer type = null;
+		if (form.getField("type") != null) {
+			type = form.getField("type").getValueAs(Integer.class);
+			FileType.parse(type);
+		}
 		InputStream file = filePart.getValueAs(InputStream.class);
 		FormDataContentDisposition disposition = filePart.getFormDataContentDisposition();
 		Files f = FileUtil.writeFile(file, disposition);

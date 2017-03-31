@@ -12,6 +12,7 @@ import com.wzd.model.entity.Files;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.StateType;
 import com.wzd.model.mapper.FilesMapper;
+import com.wzd.utils.UUIDUtil;
 import com.wzd.web.param.PageParam;
 
 import tk.mybatis.mapper.entity.Example;
@@ -32,6 +33,7 @@ public class FileDao {
 	 * 创建
 	 */
 	public Files create(Files file) {
+		file.setId(UUIDUtil.get());
 		file.setCreated(new Date());
 		file.setDeleted(DeleteType.未删除.getValue());
 		file.setStatus(StateType.进行中.getValue());
@@ -66,6 +68,7 @@ public class FileDao {
 		if (del != DeleteType.全部) {
 			c.andEqualTo("deleted", del.getValue());
 		}
+		e.setOrderByClause(e.getOrderByClause() + ",created DESC");
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<Files>(mapper.selectByExample(e));
 	}

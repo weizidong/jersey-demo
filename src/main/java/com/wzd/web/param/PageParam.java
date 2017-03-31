@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.wzd.web.dto.exception.WebException;
@@ -116,9 +117,9 @@ public class PageParam implements Serializable {
 				String filed = param.getFiled()[i];
 				if (!fields.contains(filed)) {
 					throw new WebException(ResponseCode.资源不存在, "筛选字段名[" + filed + "]错误");
-				} else if (("|" + filed + "|").indexOf("|name|nickname|title|place|command|") != -1) {
-					c.andLike(filed, (String) param.getKeyWord()[i]);
-				} else if (("|" + filed + "|").indexOf("|birthday|score|") != -1) {
+				} else if (StringUtils.contains("|name|nickname|title|place|command|", "|" + filed + "|")) {
+					c.andLike(filed, "%" + (String) param.getKeyWord()[i] + "%");
+				} else if (StringUtils.contains("|birthday|score|", "|" + filed + "|")) {
 					c.andGreaterThanOrEqualTo(filed, param.getKeyWord()[i]);
 				} else {
 					c.andEqualTo(filed, param.getKeyWord()[i]);
