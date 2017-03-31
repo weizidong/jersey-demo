@@ -73,7 +73,7 @@ public class DepartmentDao {
 	 */
 	public List<Department> findAll(DeleteType type) {
 		Example e = new Example(Department.class);
-		e.setOrderByClause("parentid asc,orders asc");
+		e.setOrderByClause("parentid ASC,orders ASC");
 		e.createCriteria().andEqualTo("deleted", type.getValue());
 		return mapper.selectByExample(e);
 	}
@@ -84,7 +84,7 @@ public class DepartmentDao {
 	public List<Department> findByParentid(Integer parentid) {
 		Example e = new Example(Department.class);
 		e.createCriteria().andEqualTo("parentid", parentid);
-		e.setOrderByClause("orders asc");
+		e.setOrderByClause("orders ASC");
 		return mapper.selectByExample(e);
 	}
 

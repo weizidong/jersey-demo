@@ -55,8 +55,8 @@ public class HistoryDao {
 	 */
 	public List<History> list(PageParam param, String userId, List<Integer> types, DeleteType del) {
 		Example e = new Example(History.class);
-		e.setOrderByClause("recording desc");
 		Criteria c = PageParam.setCondition(e, "recording", param, History.class);
+		e.setOrderByClause(e.getOrderByClause() + ",recording DESC");
 		c.andEqualTo("userId", userId).andIn("type", types);
 		if (del != DeleteType.全部) {
 			c.andEqualTo("deleled", del.getValue());
