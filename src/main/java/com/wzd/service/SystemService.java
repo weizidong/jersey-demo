@@ -2,7 +2,6 @@ package com.wzd.service;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +15,9 @@ import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.AuthType;
 import com.wzd.model.enums.DeleteType;
+import com.wzd.model.enums.EntryType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.model.enums.SexType;
-import com.wzd.model.enums.EntryType;
 import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
 import com.wzd.service.wechat.msg.dto.ARTICLE;
@@ -97,8 +96,8 @@ public class SystemService {
 	 * 系统设置
 	 */
 	public void setting(Setting s) {
-		if (StringUtils.isBlank(s.getId())) {
-			s.setId(ID);
+		s.setId(ID);
+		if (settingDao.getById(ID) == null) {
 			settingDao.create(s);
 		} else {
 			settingDao.update(s);

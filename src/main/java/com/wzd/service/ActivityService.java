@@ -43,7 +43,9 @@ public class ActivityService {
 	 */
 	public Activity create(Activity activity, Admin admin) {
 		activity = activityDao.create(activity, admin);
-		fileDao.update(new Files(activity.getId(), FileType.活动配图), activity.getFiles().stream().map(f -> f.getId()).collect(Collectors.toList()));
+		if (activity.getFiles() != null && activity.getFiles().size() > 0) {
+			fileDao.update(new Files(activity.getId(), FileType.活动配图), activity.getFiles().stream().map(f -> f.getId()).collect(Collectors.toList()));
+		}
 		return activity;
 	}
 
