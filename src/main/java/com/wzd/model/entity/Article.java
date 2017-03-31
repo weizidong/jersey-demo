@@ -1,7 +1,6 @@
 package com.wzd.model.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,8 +26,8 @@ public class Article implements Serializable {
 	@Column(name = "pic_url")
 	private String imgUrl;// 配图
 	private Integer type; // 文章类型
-	@Column(name = "pub_user")
-	private Integer pubUser; // 发布人
+	@Column(name = "admin_id")
+	private String adminId; // 发布人
 	@Column(name = "dep_id")
 	private Integer depId; // 发布机构
 	// 系统属性
@@ -41,9 +40,9 @@ public class Article implements Serializable {
 	private Date audTime; // 审核时间
 	// 关联属性
 	@Transient
-	private List<Files> files = new ArrayList<>();// 附件
+	private List<Files> files;// 附件
 	@Transient
-	private List<Admin> admins = new ArrayList<>();// 通知成员
+	private List<Admin> admins;// 通知成员
 
 	public String getId() {
 		return id;
@@ -85,12 +84,13 @@ public class Article implements Serializable {
 		this.type = type;
 	}
 
-	public Integer getPubUser() {
-		return pubUser;
+
+	public String getAdminId() {
+		return adminId;
 	}
 
-	public void setPubUser(Integer pubUser) {
-		this.pubUser = pubUser;
+	public void setAdminId(String adminId) {
+		this.adminId = adminId;
 	}
 
 	public Integer getDepId() {

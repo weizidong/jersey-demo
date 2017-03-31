@@ -2,6 +2,8 @@ package com.wzd.web.param;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * id列表参数
  * 
@@ -30,7 +32,7 @@ public class IdListParam<T> {
 
 	@Override
 	public String toString() {
-		return "IdListParam [ids=" + ids + ", type=" + type + "]";
+		return JSON.toJSONString(this);
 	}
 
 }

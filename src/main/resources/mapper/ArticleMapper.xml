@@ -9,7 +9,7 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
-    <result column="pub_user" property="pubUser" jdbcType="CHAR" />
+    <result column="admin_id" property="adminId" jdbcType="CHAR" />
     <result column="dep_id" property="depId" jdbcType="INTEGER" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />

@@ -59,9 +59,9 @@ public class AdminApi {
 	 * 删除
 	 */
 	@DELETE
-	@Path("/delete/{userid}/{type}")
-	public void delete(@PathParam("userid") String userid, @PathParam("type") Integer type) {
-		service.delete(userid, DeleteType.parse(type));
+	@Path("/delete/{id}/{del}")
+	public void delete(@PathParam("id") String id, @PathParam("del") Integer del) {
+		service.delete(id, DeleteType.parse(del));
 	}
 
 	/**

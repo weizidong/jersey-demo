@@ -10,7 +10,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum MarriageType {
-	未婚(0), 已婚(1), 离异(2);
+	未知(0), 已婚(1), 未婚(2);
 	private Integer value;
 
 	private MarriageType(Integer value) {

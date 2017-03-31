@@ -18,7 +18,7 @@ import com.wzd.model.enums.AuthType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.model.enums.SexType;
-import com.wzd.model.enums.UserType;
+import com.wzd.model.enums.EntryType;
 import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
 import com.wzd.service.wechat.msg.dto.ARTICLE;
@@ -139,8 +139,8 @@ public class SystemService {
 	private void createActivity(Admin admin) {
 		Date d = new Date();
 		Activity a = new Activity("user", "龙泉驿区职工年中盛典", DateUtil.getBeforeDate(d, 10), DateUtil.getAfterDate(d, 10), DateUtil.getBeforeDate(d, 8), DateUtil.getAfterDate(d, 5),
-				UserType.全部用户.getValue(), 500, "龙泉驿区总工会", "成都爱创业科技有限公司", "成都爱创业科技有限公司", "成都市龙泉驿区红光路128号兴隆广场127号1002会议室", "http://www.ichuangye.cn", "1、福利期间每人只能兑换次福利。".getBytes(),
-				"1、福利期间每人只能兑换次福利。".getBytes(), 2000, ActivityType.普通活动.getValue());
+				EntryType.所有用户可报名.getValue(), 500, "龙泉驿区总工会", "成都爱创业科技有限公司", "成都爱创业科技有限公司", "成都市龙泉驿区红光路128号兴隆广场127号1002会议室", "http://www.ichuangye.cn",
+				"1、福利期间每人只能兑换次福利。".getBytes(), "1、福利期间每人只能兑换次福利。".getBytes(), 2000, ActivityType.普通活动.getValue());
 		activityService.create(a, admin);
 	}
 

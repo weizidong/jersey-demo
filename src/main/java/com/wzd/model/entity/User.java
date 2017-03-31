@@ -54,7 +54,7 @@ public class User extends BaseResp {
 	@Column(name = "dep_id")
 	private Integer depId; // 部门
 	@Column(name = "dep_name")
-	private Integer depName; // 部门名称
+	private String depName; // 部门名称
 	@Column(name = "id_card")
 	private String idCard; // 身份证编号
 	private String position; // 岗位
@@ -99,11 +99,11 @@ public class User extends BaseResp {
 		this.subscribe = subscribe;
 	}
 
-	public Integer getDepName() {
+	public String getDepName() {
 		return depName;
 	}
 
-	public void setDepName(Integer depName) {
+	public void setDepName(String depName) {
 		this.depName = depName;
 	}
 

@@ -2,6 +2,8 @@ package com.wzd.web.param.wechat;
 
 import java.io.Serializable;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 来自Wechat端的消息(所有字段)
  * 
@@ -380,13 +382,7 @@ public class WechatMsg implements Serializable {
 
 	@Override
 	public String toString() {
-		return "[ToUserName=" + ToUserName + ", FromUserName=" + FromUserName + ", CreateTime=" + CreateTime + ", MsgId=" + MsgId + ", MsgType=" + MsgType + ", AgentID=" + AgentID
-				+ ", Content=" + Content + ", PicUrl=" + PicUrl + ", MediaId=" + MediaId + ", Format=" + Format + ", Recognition=" + Recognition + ", ThumbMediaId=" + ThumbMediaId
-				+ ", Location_X=" + Location_X + ", Location_Y=" + Location_Y + ", Scale=" + Scale + ", Label=" + Label + ", Title=" + Title + ", Description=" + Description
-				+ ", Url=" + Url + ", Event=" + Event + ", EventKey=" + EventKey + ", MenuId=" + MenuId + ", Ticket=" + Ticket + ", ScanCodeInfo=" + ScanCodeInfo + ", ScanType="
-				+ ScanType + ", ScanResult=" + ScanResult + ", SendPicsInfo=" + SendPicsInfo + ", Count=" + Count + ", PicList=" + PicList + ", PicMd5Sum=" + PicMd5Sum
-				+ ", Latitude=" + Latitude + ", Longitude=" + Longitude + ", Precision=" + Precision + ", Poiname=" + Poiname + ", SendLocationInfo=" + SendLocationInfo
-				+ ", JobId=" + JobId + ", JobType=" + JobType + ", ErrCode=" + ErrCode + ", ErrMsg=" + ErrMsg + "]";
+		return JSON.toJSONString(this);
 	}
 
 }
