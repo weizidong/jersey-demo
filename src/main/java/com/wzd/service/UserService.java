@@ -75,8 +75,13 @@ public class UserService {
 	 * 删除
 	 */
 	public void delete(String id, DeleteType type) {
-		// TODO 删除用户
-
+		if (type != DeleteType.未删除 || type != DeleteType.回收站) {
+			throw new WebException(ResponseCode.错误请求, "del类型错误");
+		}
+		User u = new User();
+		u.setId(id);
+		u.setDeleted(type.getValue());
+		userDao.update(u);
 	}
 
 	/**

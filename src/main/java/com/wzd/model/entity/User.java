@@ -69,6 +69,7 @@ public class User extends BaseResp {
 	private Integer score; // 积分
 	@Column(name = "sign_num")
 	private Integer signNum; // 连续签到次数
+	private Integer deleted; // 删除标志
 	// 关联属性
 	@Transient
 	private Integer msgNum;// 未读消息个数
@@ -117,6 +118,14 @@ public class User extends BaseResp {
 
 	public String getCity() {
 		return city;
+	}
+
+	public Integer getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
 	}
 
 	public void setCity(String city) {

@@ -179,6 +179,7 @@ public class SessionUtil {
 		session.setAccessToken(StringUtil.isEmpty(accessToken) ? SignatureUtil.generateToke() : accessToken);
 		session.setAppType(appType);
 		session.setUser(user);
+		session.setTs(System.currentTimeMillis());
 		return session;
 	}
 

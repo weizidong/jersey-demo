@@ -34,6 +34,7 @@
 		<result column="updated" jdbcType="TIMESTAMP" property="updated" />
 		<result column="auth" jdbcType="VARCHAR" property="auth" />
 		<result column="score" jdbcType="INTEGER" property="score" />
+		<result column="deleted" jdbcType="INTEGER" property="deleted" />
 		<result column="status" jdbcType="INTEGER" property="status" />
 		<result column="sign_num" jdbcType="INTEGER" property="signNum" />
 	</resultMap>
