@@ -43,6 +43,9 @@ public class UserService {
 	 * 获取我的信息
 	 */
 	public User findMine(User user) {
+		if (user.getDeleted() == DeleteType.回收站.getValue()) {
+			throw new WebException(ResponseCode.用户被冻结);
+		}
 		Integer num = historyDao.getCount(user.getId(), HistoryType.系统消息, DeleteType.未删除);
 		user.setMsgNum(num);
 		num = historyDao.getCount(user.getId(), Arrays.asList(HistoryType.券票福利.getValue(), HistoryType.红包福利.getValue()), DeleteType.未删除);
