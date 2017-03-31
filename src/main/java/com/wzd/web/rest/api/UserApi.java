@@ -68,9 +68,9 @@ public class UserApi {
 	 * 删除
 	 */
 	@DELETE
-	@Path("/delete/{id}/{type}")
-	public void delete(@PathParam("id") String id, @PathParam("type") Integer type) {
-		service.delete(id, DeleteType.parse(type));
+	@Path("/delete/{id}/{del}")
+	public void delete(@PathParam("id") String id, @PathParam("del") Integer del) {
+		service.delete(id, DeleteType.parse(del));
 	}
 
 	/**
