@@ -95,4 +95,18 @@ public class FileDao {
 	public List<Files> getByFk(Files files) {
 		return mapper.select(files);
 	}
+
+	/**
+	 * 根据外键删除
+	 */
+	public void deleteByFk(String fk, DeleteType del) {
+		Files f = new Files();
+		f.setFk(fk);
+		if (del == DeleteType.永久删除) {
+			mapper.delete(f);
+		} else {
+			f.setDeleted(del.getValue());
+			update(f);
+		}
+	}
 }

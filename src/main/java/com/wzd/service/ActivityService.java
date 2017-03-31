@@ -17,6 +17,7 @@ import com.wzd.model.entity.Files;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.FileType;
+import com.wzd.utils.FileUtil;
 import com.wzd.web.dto.entryForm.EntryFormDto;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
@@ -58,6 +59,10 @@ public class ActivityService {
 	 */
 	public void delete(String id, DeleteType del) {
 		activityDao.delete(id, del);
+		if (del == DeleteType.永久删除) {
+			fileDao.getByFk(new Files(id, FileType.活动配图)).forEach(f -> FileUtil.delete(f.getUrl()));
+		}
+		fileDao.deleteByFk(id, del);
 	}
 
 	/**
@@ -111,5 +116,13 @@ public class ActivityService {
 	 */
 	public PageInfo<EntryFormDto> entryList(PageParam param, String id) {
 		return entryformDao.entryList(param, id);
+	}
+
+	/**
+	 * 健身签到
+	 */
+	public void signSports(User user) {
+		// TODO 健身签到
+
 	}
 }

@@ -1,5 +1,6 @@
 package com.wzd.model.dao;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import com.wzd.model.mapper.EntryformMapper;
 import com.wzd.utils.UUIDUtil;
 import com.wzd.web.dto.entryForm.EntryFormDto;
 import com.wzd.web.param.PageParam;
+
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * 报名表数据库操作
@@ -33,6 +36,7 @@ public class EntryformDao {
 		ef.setId(UUIDUtil.get());
 		ef.setDeleted(DeleteType.未删除.getValue());
 		ef.setStatus(SignType.未签到.getValue());
+		ef.setCreated(new Date());
 		mapper.insertSelective(ef);
 	}
 
@@ -46,9 +50,11 @@ public class EntryformDao {
 	/**
 	 * 签到
 	 */
-	public void sign(Entryform entryform) {
-		entryform.setStatus(SignType.已签到);
-		mapper.updateByPrimaryKeySelective(entryform);
+	public void sign(Entryform ef) {
+		Example e = new Example(Entryform.class);
+		e.createCriteria().andEqualTo(ef);
+		ef.setStatus(SignType.已签到);
+		mapper.updateByExampleSelective(ef, e);
 	}
 
 	/**
