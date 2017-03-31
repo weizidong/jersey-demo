@@ -1,13 +1,19 @@
 package com.wzd.model.dao;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Entryform;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.SignType;
 import com.wzd.model.mapper.EntryformMapper;
 import com.wzd.utils.UUIDUtil;
+import com.wzd.web.dto.entryForm.EntryFormDto;
+import com.wzd.web.param.PageParam;
 
 /**
  * 报名表数据库操作
@@ -28,5 +34,30 @@ public class EntryformDao {
 		ef.setDeleted(DeleteType.未删除.getValue());
 		ef.setStatus(SignType.未签到.getValue());
 		mapper.insertSelective(ef);
+	}
+
+	/**
+	 * 是否报名
+	 */
+	public Boolean isEntry(Entryform ef) {
+		return mapper.selectCount(ef) > 0;
+	}
+
+	/**
+	 * 签到
+	 */
+	public void sign(Entryform entryform) {
+		entryform.setStatus(SignType.已签到);
+		mapper.updateByPrimaryKeySelective(entryform);
+	}
+
+	/**
+	 * 获取签到列表
+	 */
+	public PageInfo<EntryFormDto> entryList(PageParam param, String id) {
+		PageHelper.startPage(param.getPage(), param.getPageSize());
+		Map<String, Object> p = PageParam.getCondition(param, EntryFormDto.class);
+		p.put("activityId", id);
+		return new PageInfo<EntryFormDto>(mapper.getSignList(p));
 	}
 }

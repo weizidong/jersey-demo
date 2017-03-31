@@ -66,11 +66,6 @@ public class SessionFilter implements Filter {
 		log.debug("请求：" + requestUrl);
 		log.debug("appType：" + appType);
 		log.debug("code：" + code);
-		// debug模式
-		if (SessionUtil.isDebug(httpRequest)) {
-			log.debug("开启debug模式！");
-			sessionUtil.openDebug(httpRequest, httpResponse);
-		}
 		// 授权成功，回调,
 		if (!StringUtil.isEmpty(code)) {
 			// 授权用时
@@ -90,8 +85,14 @@ public class SessionFilter implements Filter {
 			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
-		// 获取Session
-		Session session = SessionUtil.getSession(httpRequest);
+		Session session = null;
+		// debug模式
+		if (SessionUtil.isDebug(httpRequest)) {
+			log.debug("开启debug模式！");
+			session = sessionUtil.openDebug(httpRequest);
+		} else {
+			session = SessionUtil.getSession(httpRequest);
+		}
 		// 企业号未授权
 		if (APPType.企业号.getValue().equals(appType) && session == null) {
 			authorize(QyAPI.AUTHORIZE, Configs.sCorpID, hostname + requestUrl, appType, httpResponse);
@@ -107,7 +108,7 @@ public class SessionFilter implements Filter {
 			throw new WebException(ResponseCode.未登录, "未登录");
 		}
 		// 网站主页创建Session
-		if (appType == null && session == null) {
+		if (APPType.网站主页.getValue().equals(appType) && session == null) {
 			session = SessionUtil.generateSession(appType, null, null, null);
 			SessionUtil.saveSession(session, httpRequest, httpResponse);
 		}

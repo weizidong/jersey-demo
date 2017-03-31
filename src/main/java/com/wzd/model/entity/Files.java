@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.FileType;
 
 /**
  * 文件
@@ -32,6 +33,15 @@ public class Files implements Serializable {
 	private Integer deleted; // 删除标志
 	private Integer status; // 状态
 	private Integer type; // 类型
+
+	public Files() {
+		super();
+	}
+
+	public Files(String fk, FileType type) {
+		this.fk = fk;
+		this.type = type.getValue();
+	}
 
 	public String getId() {
 		return id;
@@ -111,6 +121,10 @@ public class Files implements Serializable {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public void setType(FileType type) {
+		this.type = type.getValue();
 	}
 
 	@Override

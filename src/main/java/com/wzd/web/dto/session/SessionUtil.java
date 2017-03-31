@@ -55,29 +55,22 @@ public class SessionUtil {
 	/**
 	 * 开启debug模式
 	 */
-	public void openDebug(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+	public Session openDebug(HttpServletRequest httpRequest) {
 		String appType = httpRequest.getParameter("appType");
 		String sessionId = getSessionIdByCookie(httpRequest);
-		Session session = getSession(httpRequest);
-		if (sessionId != null && session != null) {
-			return;
-		}
 		String accessToken = null;
 		Object user = null;
 		if (APPType.企业号.getValue().equals(appType)) {
 			sessionId = "weizidong";
 			user = adminDao.getByUserId(sessionId);
-		}
-		if (APPType.服务号.getValue().equals(appType)) {
+		} else if (APPType.服务号.getValue().equals(appType)) {
 			sessionId = "oFTpnwnsF7Vv6WkM_fySqDtD-rEo";
 			user = userDao.getByOpenId(sessionId);
-		}
-		if (APPType.管理平台.getValue().equals(appType)) {
+		} else if (APPType.管理平台.getValue().equals(appType)) {
 			sessionId = "weizidong";
 			user = adminDao.getByUserId(sessionId);
 		}
-		session = generateSession(appType, sessionId, accessToken, user);
-		saveSession(session, httpRequest, httpResponse);
+		return generateSession(appType, sessionId, accessToken, user);
 	}
 
 	/**

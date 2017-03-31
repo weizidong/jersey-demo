@@ -16,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Activity;
 import com.wzd.model.entity.Admin;
+import com.wzd.model.entity.User;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.ActivityService;
+import com.wzd.web.dto.entryForm.EntryFormDto;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.PageParam;
 
@@ -77,6 +79,33 @@ public class ActivityApi {
 	@Path("/find")
 	public PageInfo<Activity> find(PageParam param) {
 		return service.find(param);
+	}
+
+	/**
+	 * 报名
+	 */
+	@POST
+	@Path("/entry/{id}")
+	public void entry(@PathParam("id") String id, @Context HttpServletRequest request) {
+		service.entry(id, (User) SessionUtil.getUser(request));
+	}
+
+	/**
+	 * 签到
+	 */
+	@POST
+	@Path("/sign/{id}")
+	public void sign(@PathParam("id") String id, @Context HttpServletRequest request) {
+		service.sign(id, (User) SessionUtil.getUser(request));
+	}
+
+	/**
+	 * 获取报名列表
+	 */
+	@POST
+	@Path("/entryList/{id}")
+	public PageInfo<EntryFormDto> entryList(PageParam param, @PathParam("id") String id) {
+		return service.entryList(param, id);
 	}
 
 }

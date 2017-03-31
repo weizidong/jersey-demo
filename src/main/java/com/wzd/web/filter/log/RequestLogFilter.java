@@ -114,11 +114,10 @@ public class RequestLogFilter implements ContainerRequestFilter, ContainerRespon
 		 */
 		BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 		StringBuilder sb = new StringBuilder();
-
 		String line = null;
 		try {
 			while ((line = reader.readLine()) != null) {
-				sb.append(line.replaceAll(" ", "") + "\n");
+				sb.append(line.replaceAll(" ", ""));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

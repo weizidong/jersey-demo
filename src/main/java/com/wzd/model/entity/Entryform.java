@@ -2,9 +2,12 @@ package com.wzd.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.SignType;
 
 /**
  * 报名表
@@ -18,15 +21,24 @@ public class Entryform implements Serializable {
 	private String id; // ID
 	// 自有属性
 	@Column(name = "user_id")
-	private Integer userId; // 用户ID
+	private String userId; // 用户ID
 	@Column(name = "activity_id")
-	private Integer activityId; // 活动ID
+	private String activityId; // 活动ID
 	private Date time; // 报名时间
 	private Integer type; // 类型
 	private Date created; // 创建时间
 	private Date updated; // 修改时间
 	private Integer deleted; // 删除标志
 	private Integer status; // 状态，0：未到场；1：已到场；
+
+	public Entryform() {
+		super();
+	}
+
+	public Entryform(String userId, String activityId) {
+		this.userId = userId;
+		this.activityId = activityId;
+	}
 
 	public String getId() {
 		return id;
@@ -36,19 +48,19 @@ public class Entryform implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
-	public Integer getActivityId() {
+	public String getActivityId() {
 		return activityId;
 	}
 
-	public void setActivityId(Integer activityId) {
+	public void setActivityId(String activityId) {
 		this.activityId = activityId;
 	}
 
@@ -98,6 +110,10 @@ public class Entryform implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public void setStatus(SignType status) {
+		this.status = status.getValue();
 	}
 
 	@Override

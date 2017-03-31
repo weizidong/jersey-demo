@@ -10,7 +10,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum FileType {
-	头像(1), 配图(2), 附件(3);
+	管理员头像(1), 用户头像(2), 活动配图(3), 福利配图(4);
 	private Integer value;
 
 	private FileType(Integer value) {

@@ -33,10 +33,10 @@ public class ActivityDao {
 	 * 创建
 	 */
 	public Activity create(Activity activity, Admin admin) {
+		activity.setId(UUIDUtil.get());
 		activity.setAdminId(admin.getId());
 		activity.setCreated(new Date());
 		activity.setDeleted(DeleteType.未删除.getValue());
-		activity.setId(UUIDUtil.get());
 		activity.setStatus(StateType.未开始.getValue());
 		activity.setTicket(QrcodeService.getFixedQrcodeUrl(activity.getId()));
 		mapper.insertSelective(activity);
@@ -47,7 +47,7 @@ public class ActivityDao {
 	 * 修改活动
 	 */
 	public void update(Activity activity) {
-		mapper.updateByPrimaryKey(activity);
+		mapper.updateByPrimaryKeySelective(activity);
 	}
 
 	/**

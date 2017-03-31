@@ -2,9 +2,11 @@ package com.wzd.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSON;
 
@@ -20,7 +22,7 @@ public class Activity implements Serializable {
 	private String id; // ID
 	// 自有属性
 	@Column(name = "pic_url")
-	private String picUrl; // 推送配图
+	private String picUrl; // 封面
 	private String name; // 活动名称
 	private Date start; // 活动开始时间
 	private Date end; // 活动结束时间
@@ -49,6 +51,9 @@ public class Activity implements Serializable {
 	private Integer deleted; // 删除标志
 	private Integer status; // 状态
 
+	@Transient
+	private List<Files> files; // 活动配图
+
 	public Activity() {
 		super();
 	}
@@ -72,6 +77,14 @@ public class Activity implements Serializable {
 		this.rule = rule;
 		this.total = total;
 		this.type = type;
+	}
+
+	public List<Files> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<Files> files) {
+		this.files = files;
 	}
 
 	public String getId() {

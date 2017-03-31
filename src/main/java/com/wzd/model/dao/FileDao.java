@@ -1,6 +1,7 @@
 package com.wzd.model.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -74,5 +75,21 @@ public class FileDao {
 	 */
 	public void update(Files f) {
 		mapper.updateByPrimaryKeySelective(f);
+	}
+
+	/**
+	 * 批量更新
+	 */
+	public void update(Files f, List<String> ids) {
+		Example e = new Example(Files.class);
+		e.createCriteria().andIn("id", ids);
+		mapper.updateByExampleSelective(f, e);
+	}
+
+	/**
+	 * 根据外键查询
+	 */
+	public List<Files> getByFk(Files files) {
+		return mapper.select(files);
 	}
 }

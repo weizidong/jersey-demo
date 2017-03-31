@@ -3,13 +3,16 @@ package com.wzd.web.dto.history;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+
 import com.alibaba.fastjson.JSON;
 
 @SuppressWarnings("serial")
 public class SignDto implements Serializable {
 	private String name;
 	private String nickname;
-	private String dep_name;
+	@Column(name = "dep_name")
+	private String depName;
 	private Integer audit;
 	private Integer score;
 	private Date recording;
@@ -30,12 +33,12 @@ public class SignDto implements Serializable {
 		this.nickname = nickname;
 	}
 
-	public String getDep_name() {
-		return dep_name;
+	public String getDepName() {
+		return depName;
 	}
 
-	public void setDep_name(String dep_name) {
-		this.dep_name = dep_name;
+	public void setDepName(String depName) {
+		this.depName = depName;
 	}
 
 	public Integer getAudit() {
