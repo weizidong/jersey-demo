@@ -58,9 +58,9 @@ public class WelfareApi {
 	 * 查询福利详情
 	 */
 	@GET
-	@Path("/find/{id}/{del}")
-	public Welfare findById(@PathParam("id") String id, @PathParam("del") Integer del) {
-		return service.findById(id, del);
+	@Path("/find/{id}")
+	public Welfare findById(@PathParam("id") String id) {
+		return service.findById(id);
 	}
 
 	/**

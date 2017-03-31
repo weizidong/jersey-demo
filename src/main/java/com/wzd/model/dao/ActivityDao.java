@@ -97,4 +97,13 @@ public class ActivityDao {
 			mapper.updateByPrimaryKeySelective(a);
 		}
 	}
+
+	/**
+	 * 根据ID获取
+	 */
+	public Activity getById(String id) {
+		Activity a = new Activity();
+		a.setId(id);
+		return mapper.selectOne(a);
+	}
 }

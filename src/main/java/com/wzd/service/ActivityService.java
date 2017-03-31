@@ -17,7 +17,9 @@ import com.wzd.model.entity.Files;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.FileType;
+import com.wzd.model.enums.StateType;
 import com.wzd.utils.FileUtil;
+import com.wzd.utils.ThreadPoolUtils;
 import com.wzd.web.dto.entryForm.EntryFormDto;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
@@ -41,12 +43,27 @@ public class ActivityService {
 	/**
 	 * 创建活动
 	 */
-	public Activity create(Activity activity, Admin admin) {
-		activity = activityDao.create(activity, admin);
-		if (activity.getFiles() != null && activity.getFiles().size() > 0) {
-			fileDao.update(new Files(activity.getId(), FileType.活动配图), activity.getFiles().stream().map(f -> f.getId()).collect(Collectors.toList()));
+	public Activity create(Activity a, Admin admin) {
+		a = activityDao.create(a, admin);
+		if (a.getFiles() != null && a.getFiles().size() > 0) {
+			fileDao.update(new Files(a.getId(), FileType.活动配图), a.getFiles().stream().map(f -> f.getId()).collect(Collectors.toList()));
 		}
-		return activity;
+		String id = a.getId();
+		ThreadPoolUtils.schedule(() -> {
+			Activity act = activityDao.getById(id);
+			if (act.getStatus() != StateType.暂停.getValue()) {
+				act.setStatus(StateType.进行中.getValue());
+				activityDao.update(act);
+			}
+		}, a.getEntryStart());
+		ThreadPoolUtils.schedule(() -> {
+			Activity act = activityDao.getById(id);
+			if (act.getStatus() != StateType.暂停.getValue()) {
+				act.setStatus(StateType.已结束.getValue());
+				activityDao.update(act);
+			}
+		}, a.getEntryEnd());
+		return a;
 	}
 
 	/**
@@ -95,11 +112,26 @@ public class ActivityService {
 	 * 报名
 	 */
 	public void entry(String id, User user) {
+		Activity a = activityDao.getById(id);
+		if (a.getStatus() == StateType.暂停.getValue()) {
+			throw new WebException(ResponseCode.已暂停);
+		}
+		if (a.getStatus() == StateType.已结束.getValue()) {
+			throw new WebException(ResponseCode.已结束);
+		}
+		if (a.getStatus() == StateType.未开始.getValue()) {
+			throw new WebException(ResponseCode.未开始);
+		}
+		if (a.getCurrent() >= a.getTotal()) {
+			throw new WebException(ResponseCode.已报满);
+		}
 		Entryform ef = new Entryform(user.getId(), id);
 		if (entryformDao.isEntry(ef)) {
 			throw new WebException(ResponseCode.已报名);
 		}
 		entryformDao.entry(ef);
+		a.setCurrent(a.getCurrent() + 1);
+		activityDao.update(a);
 	}
 
 	/**

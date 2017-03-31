@@ -1,5 +1,6 @@
 package com.wzd.utils;
 
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -21,8 +22,6 @@ public class ThreadPoolUtils {
 
 	/**
 	 * 执行异步方法
-	 * 
-	 * @param runnable
 	 */
 	public static void excuteCachedThreadPool(Runnable runnable) {
 		if (cachedPool.isShutdown()) {
@@ -33,9 +32,6 @@ public class ThreadPoolUtils {
 
 	/**
 	 * 每隔period秒执行定时以及周期性任务的线程
-	 * 
-	 * @param runnable
-	 * @param period
 	 */
 	public static void excuteScheduledThreadPool(Runnable runnable, long period) {
 		if (scheduledPool.isShutdown()) {
@@ -43,4 +39,15 @@ public class ThreadPoolUtils {
 		}
 		scheduledPool.scheduleAtFixedRate(runnable, 0, period, TimeUnit.SECONDS);
 	}
+
+	/**
+	 * 定时任务
+	 */
+	public static void schedule(Runnable runnable, Date date) {
+		if (scheduledPool.isShutdown()) {
+			scheduledPool = Executors.newScheduledThreadPool(1);
+		}
+		scheduledPool.schedule(runnable, date.getTime() - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+	}
+
 }

@@ -100,8 +100,8 @@ public class WelfareService {
 	/**
 	 * 查询福利详情
 	 */
-	public Welfare findById(String welfareId, Integer delType) {
-		return welfareDao.getById(welfareId, DeleteType.parse(delType));
+	public Welfare findById(String welfareId) {
+		return welfareDao.getById(welfareId, null);
 	}
 
 	/**

@@ -56,7 +56,15 @@ public enum ResponseCode implements ResponseCodeType {
 
 	未报名(613, "未报名"),
 
-	用户被冻结(614, "用户被冻结");
+	用户被冻结(614, "用户被冻结"),
+
+	已报满(615, "已报满"),
+
+	已暂停(616, "已暂停"),
+
+	已结束(617, "已结束"),
+
+	未开始(618, "未开始");
 
 	private int code;
 
