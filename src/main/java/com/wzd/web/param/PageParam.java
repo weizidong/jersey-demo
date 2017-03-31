@@ -30,7 +30,7 @@ public class PageParam implements Serializable {
 	private String[] sort;// 排序字段
 	private String[] order; // 排序顺序
 	private String[] filed;// 筛选字段
-	private String[] keyWord;// 筛选关键词
+	private Object[] keyWord;// 筛选关键词
 	private Date start; // 开始时间
 	private Date end; // 结束时间
 
@@ -74,11 +74,11 @@ public class PageParam implements Serializable {
 		this.filed = filed;
 	}
 
-	public String[] getKeyWord() {
+	public Object[] getKeyWord() {
 		return keyWord;
 	}
 
-	public void setKeyWord(String[] keyWord) {
+	public void setKeyWord(Object[] keyWord) {
 		this.keyWord = keyWord;
 	}
 
@@ -117,7 +117,7 @@ public class PageParam implements Serializable {
 				if (!fields.contains(filed)) {
 					throw new WebException(ResponseCode.资源不存在, "筛选字段名[" + filed + "]错误");
 				} else if (("|" + filed + "|").indexOf("|name|nickname|title|place|command|") != -1) {
-					c.andLike(filed, param.getKeyWord()[i]);
+					c.andLike(filed, (String) param.getKeyWord()[i]);
 				} else if (("|" + filed + "|").indexOf("|birthday|score|") != -1) {
 					c.andGreaterThanOrEqualTo(filed, param.getKeyWord()[i]);
 				} else {

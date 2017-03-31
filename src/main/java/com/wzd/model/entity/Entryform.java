@@ -24,8 +24,9 @@ public class Entryform implements Serializable {
 	private String userId; // 用户ID
 	@Column(name = "activity_id")
 	private String activityId; // 活动ID
-	private Date time; // 报名时间
-	private Integer type; // 类型
+	private Date start; // 开始时间
+	private Date end; // 结束时间
+	private Integer type; // 活动类型
 	private Date created; // 创建时间
 	private Date updated; // 修改时间
 	private Integer deleted; // 删除标志
@@ -64,12 +65,20 @@ public class Entryform implements Serializable {
 		this.activityId = activityId;
 	}
 
-	public Date getTime() {
-		return time;
+	public Date getStart() {
+		return start;
 	}
 
-	public void setTime(Date time) {
-		this.time = time;
+	public void setStart(Date start) {
+		this.start = start;
+	}
+
+	public Date getEnd() {
+		return end;
+	}
+
+	public void setEnd(Date end) {
+		this.end = end;
 	}
 
 	public Integer getType() {

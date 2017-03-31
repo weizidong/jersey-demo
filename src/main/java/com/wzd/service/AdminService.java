@@ -84,7 +84,7 @@ public class AdminService {
 	 * 修改
 	 */
 	public void update(Admin admin) {
-		// TODO 修改
+		// TODO 修改管理员
 
 	}
 
@@ -92,7 +92,7 @@ public class AdminService {
 	 * 查询详情
 	 */
 	public Admin findById(Integer id) {
-		// TODO 查询详情
+		// TODO 查询管理员详情
 		return null;
 	}
 
@@ -100,7 +100,7 @@ public class AdminService {
 	 * 条件分页查询
 	 */
 	public PageInfo<Admin> find(PageParam param) {
-		// TODO 条件分页查询
+		// TODO 条件分页查询管理员
 		return null;
 	}
 
@@ -108,7 +108,7 @@ public class AdminService {
 	 * 审核
 	 */
 	public void auditing(AuditType parse, Admin user) {
-		// TODO 审核
+		// TODO 审核管理员
 	}
 
 	/**

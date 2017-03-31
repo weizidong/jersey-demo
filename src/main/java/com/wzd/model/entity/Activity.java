@@ -85,6 +85,9 @@ public class Activity implements Serializable {
 
 	public void setFiles(List<Files> files) {
 		this.files = files;
+		if (files != null && files.size() > 0) {
+			this.picUrl = files.get(0).getUrl();
+		}
 	}
 
 	public String getId() {

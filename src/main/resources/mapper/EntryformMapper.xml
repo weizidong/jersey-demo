@@ -6,7 +6,8 @@
 		<id column="id" jdbcType="CHAR" property="id" />
 		<result column="user_id" jdbcType="CHAR" property="userId" />
 		<result column="activity_id" jdbcType="CHAR" property="activityId" />
-		<result column="time" jdbcType="TIMESTAMP" property="time" />
+		<result column="start" jdbcType="TIMESTAMP" property="start" />
+		<result column="end" jdbcType="TIMESTAMP" property="end" />
 		<result column="type" jdbcType="INTEGER" property="type" />
 		<result column="created" jdbcType="TIMESTAMP" property="created" />
 		<result column="updated" jdbcType="TIMESTAMP" property="updated" />
