@@ -2,6 +2,7 @@ package com.wzd.model.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 
 import com.alibaba.fastjson.JSON;
@@ -15,6 +16,16 @@ public class Setting implements Serializable {
 	private String sub; // 关注信息
 	private Integer score; // 关注积分
 	private Integer sign; // 签到积分基数
+	@Column(name = "sports_ticket")
+	private String sportsTicket; // 健身签到二维码
+
+	public String getSportsTicket() {
+		return sportsTicket;
+	}
+
+	public void setSportsTicket(String sportsTicket) {
+		this.sportsTicket = sportsTicket;
+	}
 
 	public String getId() {
 		return id;

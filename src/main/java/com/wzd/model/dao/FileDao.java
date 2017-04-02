@@ -105,7 +105,7 @@ public class FileDao {
 		if (del == DeleteType.永久删除) {
 			mapper.delete(f);
 		} else {
-			f.setDeleted(del.getValue());
+			f.setDeleted(del);
 			update(f);
 		}
 	}

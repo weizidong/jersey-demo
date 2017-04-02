@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.github.pagehelper.PageHelper;
 import com.wzd.model.entity.Activity;
-import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.StateType;
 import com.wzd.model.mapper.ActivityMapper;
@@ -32,22 +31,21 @@ public class ActivityDao {
 	/**
 	 * 创建
 	 */
-	public Activity create(Activity activity, Admin admin) {
-		activity.setId(UUIDUtil.get());
-		activity.setAdminId(admin.getId());
-		activity.setCreated(new Date());
-		activity.setDeleted(DeleteType.未删除.getValue());
-		activity.setStatus(StateType.未开始.getValue());
-		activity.setTicket(QrcodeService.getFixedQrcodeUrl(activity.getId()));
-		mapper.insertSelective(activity);
-		return activity;
+	public void create(Activity a) {
+		a.setId(UUIDUtil.get());
+		a.setCreated(new Date());
+		a.setDeleted(DeleteType.未删除);
+		a.setStatus(StateType.未开始);
+		a.setCurrent(0);
+		a.setTicket(QrcodeService.getFixedQrcodeUrl(a.getId()));
+		mapper.insertSelective(a);
 	}
 
 	/**
 	 * 修改活动
 	 */
-	public void update(Activity activity) {
-		mapper.updateByPrimaryKeySelective(activity);
+	public void update(Activity a) {
+		mapper.updateByPrimaryKeySelective(a);
 	}
 
 	/**
@@ -59,8 +57,8 @@ public class ActivityDao {
 		if (del == DeleteType.永久删除) {
 			mapper.delete(a);
 		} else {
-			a.setDeleted(del.getValue());
-			mapper.updateByPrimaryKeySelective(a);
+			a.setDeleted(del);
+			update(a);
 		}
 	}
 
@@ -93,8 +91,8 @@ public class ActivityDao {
 		if (del == DeleteType.永久删除) {
 			mapper.delete(a);
 		} else {
-			a.setDeleted(del.getValue());
-			mapper.updateByPrimaryKeySelective(a);
+			a.setDeleted(del);
+			update(a);
 		}
 	}
 

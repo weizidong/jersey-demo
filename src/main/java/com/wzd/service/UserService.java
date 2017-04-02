@@ -57,7 +57,7 @@ public class UserService {
 	}
 
 	/**
-	 * 修改
+	 * 修改用户
 	 */
 	public void update(User user) {
 		if (user.getDepId() != null || StringUtils.isNotBlank(user.getIdCard()) || StringUtils.isNotBlank(user.getName()) || StringUtils.isNotBlank(user.getPosition())) {
@@ -67,15 +67,14 @@ public class UserService {
 	}
 
 	/**
-	 * 创建
+	 * 创建用户
 	 */
 	public void create(User user) {
 		userDao.create(user);
-
 	}
 
 	/**
-	 * 删除
+	 * 删除用户
 	 */
 	public void delete(String id, DeleteType type) {
 		if (type != DeleteType.未删除 || type != DeleteType.回收站) {
@@ -95,7 +94,7 @@ public class UserService {
 	}
 
 	/**
-	 * 条件查询列表
+	 * 获取用户列表
 	 */
 	public PageInfo<User> find(PageParam param) {
 		return new PageInfo<User>(userDao.find(param));
@@ -122,7 +121,7 @@ public class UserService {
 	}
 
 	/**
-	 * 签到
+	 * 积分签到
 	 */
 	public User sign(String id) {
 		User user = userDao.getById(id);

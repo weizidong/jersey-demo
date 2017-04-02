@@ -100,15 +100,6 @@ public class ActivityApi {
 	}
 
 	/**
-	 * 健身签到
-	 */
-	@POST
-	@Path("/signSports")
-	public void signSports(@Context HttpServletRequest request) {
-		service.signSports((User) SessionUtil.getUser(request));
-	}
-
-	/**
 	 * 获取报名列表
 	 */
 	@POST

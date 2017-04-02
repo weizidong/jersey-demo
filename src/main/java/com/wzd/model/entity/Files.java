@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.FileType;
 
 /**
@@ -105,6 +106,10 @@ public class Files implements Serializable {
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+
+	public void setDeleted(DeleteType del) {
+		this.deleted = del.getValue();
 	}
 
 	public Integer getStatus() {

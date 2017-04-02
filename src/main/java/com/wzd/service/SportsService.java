@@ -26,4 +26,36 @@ public class SportsService {
 		return sportsDao.create(s);
 	}
 
+	/**
+	 * 开启或关闭健身活动
+	 */
+	public Sports pause(Sports s, Admin admin) {
+		// TODO 开启或关闭健身活动
+		return null;
+	}
+
+	/**
+	 * 删除健身活动
+	 */
+	public Sports delete(Sports s, Admin admin) {
+		// TODO 删除健身活动
+		return null;
+	}
+
+	/**
+	 * 获取健身活动列表
+	 */
+	public Sports list(Sports s, Admin admin) {
+		// TODO 获取健身活动列表
+		return null;
+	}
+
+	/**
+	 * 获取健身活动报名列表
+	 */
+	public Sports entryList(Sports s, Admin admin) {
+		// TODO 获取健身活动报名列表
+		return null;
+	}
+
 }

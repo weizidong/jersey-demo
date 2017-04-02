@@ -91,7 +91,7 @@ public class Event {
 	private String unsubscribe(WechatMsg msg) {
 		// 取消关注服务号
 		if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.bId)) {
-			ThreadPoolUtils.excuteCachedThreadPool(() -> {
+			ThreadPoolUtils.execute(() -> {
 				User user = userDao.getByOpenId(msg.getFromUserName());
 				user.setSubscribe(SubType.未关注.getValue());
 				userDao.update(user);
@@ -105,7 +105,7 @@ public class Event {
 		// 关注服务号
 		if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.bId)) {
 			Setting s = systemService.getSetting();
-			ThreadPoolUtils.excuteCachedThreadPool(() -> {
+			ThreadPoolUtils.execute(() -> {
 				User user = userDao.getByOpenId(msg.getFromUserName());
 				if (user == null) {
 					user = FwUserApi.get(msg.getFromUserName());

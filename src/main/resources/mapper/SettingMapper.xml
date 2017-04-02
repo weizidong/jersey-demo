@@ -9,5 +9,6 @@
 		<result column="sub" jdbcType="VARCHAR" property="sub" />
 		<result column="score" jdbcType="INTEGER" property="score" />
 		<result column="sign" jdbcType="INTEGER" property="sign" />
+		<result column="sports_ticket" jdbcType="VARCHAR" property="sportsTicket" />
 	</resultMap>
 </mapper>

@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.ActivityType;
+import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.SignType;
 
 /**
@@ -27,8 +29,7 @@ public class Entryform implements Serializable {
 	private Date start; // 开始时间
 	private Date end; // 结束时间
 	private Integer type; // 活动类型
-	private Date created; // 创建时间
-	private Date updated; // 修改时间
+	private Date created; // 报名时间
 	private Integer deleted; // 删除标志
 	private Integer status; // 状态，0：未到场；1：已到场；
 
@@ -36,9 +37,18 @@ public class Entryform implements Serializable {
 		super();
 	}
 
-	public Entryform(String userId, String activityId) {
+	public Entryform(String userId, String activityId, ActivityType type) {
 		this.userId = userId;
 		this.activityId = activityId;
+		this.type = type.getValue();
+	}
+
+	public Entryform(String userId, String activityId, ActivityType type, Date start, Date end) {
+		this.userId = userId;
+		this.activityId = activityId;
+		this.type = type.getValue();
+		this.start = start;
+		this.end = end;
 	}
 
 	public String getId() {
@@ -97,20 +107,16 @@ public class Entryform implements Serializable {
 		this.created = created;
 	}
 
-	public Date getUpdated() {
-		return updated;
-	}
-
-	public void setUpdated(Date updated) {
-		this.updated = updated;
-	}
-
 	public Integer getDeleted() {
 		return deleted;
 	}
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+
+	public void setDeleted(DeleteType del) {
+		this.deleted = del.getValue();
 	}
 
 	public Integer getStatus() {

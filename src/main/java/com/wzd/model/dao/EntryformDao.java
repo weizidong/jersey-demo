@@ -34,8 +34,8 @@ public class EntryformDao {
 	 */
 	public void entry(Entryform ef) {
 		ef.setId(UUIDUtil.get());
-		ef.setDeleted(DeleteType.未删除.getValue());
-		ef.setStatus(SignType.未签到.getValue());
+		ef.setDeleted(DeleteType.未删除);
+		ef.setStatus(SignType.未签到);
 		ef.setCreated(new Date());
 		mapper.insertSelective(ef);
 	}
@@ -58,12 +58,26 @@ public class EntryformDao {
 	}
 
 	/**
-	 * 获取签到列表
+	 * 删除报名名单
+	 */
+	public void delete(Entryform ef, DeleteType del) {
+		if (del == DeleteType.永久删除) {
+			mapper.delete(ef);
+		} else {
+			Example e = new Example(Entryform.class);
+			e.createCriteria().andEqualTo(ef);
+			ef.setDeleted(del);
+			mapper.updateByExampleSelective(ef, e);
+		}
+	}
+
+	/**
+	 * 获取报名列表
 	 */
 	public PageInfo<EntryFormDto> entryList(PageParam param, String id) {
-		PageHelper.startPage(param.getPage(), param.getPageSize());
 		Map<String, Object> p = PageParam.getCondition(param, EntryFormDto.class);
 		p.put("activityId", id);
+		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<EntryFormDto>(mapper.getSignList(p));
 	}
 }
