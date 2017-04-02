@@ -159,4 +159,17 @@ public class ActivityService {
 		// TODO 健身签到
 
 	}
+
+	/**
+	 * 开启关闭活动
+	 */
+	public void pause(String id) {
+		Activity a = activityDao.getById(id);
+		if (a == null) {
+			throw new WebException(ResponseCode.资源不存在, "活动" + id + "不存在");
+		}
+		if (a.getStatus() != StateType.暂停.getValue()) {
+			a.setStatus(StateType.暂停.getValue());
+		}
+	}
 }

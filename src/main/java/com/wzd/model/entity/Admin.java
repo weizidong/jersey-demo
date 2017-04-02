@@ -105,7 +105,7 @@ public class Admin extends BaseResp {
 
 	public void setDepartment(List<Integer> department) {
 		this.department = department;
-		this.departments = department.toString().replaceAll("[\\,\\[\\]]", "|").replaceAll(" ", "");
+		this.departments = "|" + department.stream().map(String::valueOf).collect(Collectors.joining("|")) + "|";
 	}
 
 	public String getPosition() {
@@ -186,7 +186,7 @@ public class Admin extends BaseResp {
 
 	public void setDepartments(String departments) {
 		this.departments = departments;
-		this.department = Arrays.stream(departments.split("\\|")).filter(d -> !StringUtil.isEmpty(d)).map(d -> Integer.parseInt(d)).collect(Collectors.toList());
+		this.department = Arrays.stream(departments.split("\\|")).filter(d -> !StringUtil.isEmpty(d)).map(Integer::parseInt).collect(Collectors.toList());
 	}
 
 	public Date getCreated() {

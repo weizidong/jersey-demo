@@ -37,6 +37,8 @@ public class DateUtil {
 
 	/** 格式: yyyy-MM-dd HH:mm **/
 	public static final String P_DATETIME = "yyyy-MM-dd HH:mm";
+	/** 格式: HH:mm **/
+	public static final String P_TIME = "HH:mm";
 
 	public static javax.xml.datatype.XMLGregorianCalendar getXMLGregorianCalendarByDate(Date date) throws Exception {
 

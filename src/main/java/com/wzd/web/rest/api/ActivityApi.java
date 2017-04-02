@@ -117,4 +117,12 @@ public class ActivityApi {
 		return service.entryList(param, id);
 	}
 
+	/**
+	 * 开启关闭活动
+	 */
+	@POST
+	@Path("/pause/{id}")
+	public void pause(@PathParam("id") String id) {
+		service.pause(id);
+	}
 }
