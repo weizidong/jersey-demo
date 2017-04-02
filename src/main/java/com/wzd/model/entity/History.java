@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 
 /**
@@ -113,6 +114,9 @@ public class History implements Serializable {
 	public void setType(Integer type) {
 		this.type = type;
 	}
+	public void setType(HistoryType type) {
+		this.type = type.getValue();
+	}
 
 	public Integer getDeleled() {
 		return deleled;
@@ -120,6 +124,10 @@ public class History implements Serializable {
 
 	public void setDeleled(Integer deleled) {
 		this.deleled = deleled;
+	}
+
+	public void setDeleled(DeleteType del) {
+		this.deleled = del.getValue();
 	}
 
 	public String getWelfareId() {

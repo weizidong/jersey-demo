@@ -55,7 +55,7 @@ public class UserDao {
 	 */
 	public void create(User user) {
 		user.setId(UUIDUtil.get());
-		user.setAudit(AuditType.未审核.getValue());
+		user.setAudit(AuditType.未审核);
 		user.setUpdated(new Date());
 		mapper.insertSelective(user);
 	}

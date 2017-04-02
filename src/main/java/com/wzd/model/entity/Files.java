@@ -11,6 +11,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import com.alibaba.fastjson.JSON;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.FileType;
+import com.wzd.model.enums.StateType;
 
 /**
  * 文件
@@ -118,6 +119,10 @@ public class Files implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public void setStatus(StateType state) {
+		this.status = state.getValue();
 	}
 
 	public Integer getType() {

@@ -136,7 +136,7 @@ public class QyWxService {
 		if (user.getUserId() != null) {
 			session.setAccessToken(SignatureUtil.generateToke());
 			session.setSessionId(user.getUserId());
-			session.setAppType(APPType.企业号.getValue());
+			session.setAppType(APPType.企业号);
 			Admin admin = adminDao.getByUserId(user.getUserId());
 			session.setUser(admin);
 		}

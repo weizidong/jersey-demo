@@ -13,6 +13,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import com.alibaba.fastjson.JSON;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.AuthType;
+import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.SexType;
 import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.utils.StringUtil;
@@ -203,6 +204,9 @@ public class Admin extends BaseResp {
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+	public void setDeleted(DeleteType del) {
+		this.deleted = del.getValue();
 	}
 
 	public Date getUpdated() {

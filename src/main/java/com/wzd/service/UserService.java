@@ -61,7 +61,7 @@ public class UserService {
 	 */
 	public void update(User user) {
 		if (user.getDepId() != null || StringUtils.isNotBlank(user.getIdCard()) || StringUtils.isNotBlank(user.getName()) || StringUtils.isNotBlank(user.getPosition())) {
-			user.setAudit(AuditType.审核中.getValue());
+			user.setAudit(AuditType.审核中);
 		}
 		userDao.update(user);
 	}
@@ -76,13 +76,13 @@ public class UserService {
 	/**
 	 * 删除用户
 	 */
-	public void delete(String id, DeleteType type) {
-		if (type != DeleteType.未删除 || type != DeleteType.回收站) {
+	public void delete(String id, DeleteType del) {
+		if (del != DeleteType.未删除 || del != DeleteType.回收站) {
 			throw new WebException(ResponseCode.错误请求, "del类型错误");
 		}
 		User u = new User();
 		u.setId(id);
-		u.setDeleted(type.getValue());
+		u.setDeleted(del);
 		userDao.update(u);
 	}
 
@@ -108,7 +108,7 @@ public class UserService {
 		if (user == null) {
 			throw new WebException(ResponseCode.用户不存在, userId);
 		}
-		user.setAudit(audit.getValue());
+		user.setAudit(audit);
 		user.setAuditor(admin.getId());
 		userDao.update(user);
 		History h;

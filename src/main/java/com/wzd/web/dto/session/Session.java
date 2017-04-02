@@ -2,6 +2,9 @@ package com.wzd.web.dto.session;
 
 import java.io.Serializable;
 
+import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.APPType;
+
 /**
  * 用户登录状态
  * 
@@ -61,9 +64,13 @@ public class Session implements Serializable {
 		this.appType = appType;
 	}
 
+	public void setAppType(APPType appType) {
+		this.appType = appType.getValue();
+	}
+
 	@Override
 	public String toString() {
-		return "{sessionId:" + sessionId + ", accessToken:" + accessToken + ", ts:" + ts + ", user:" + user + ", appType:" + appType + "}";
+		return JSON.toJSONString(this);
 	}
 
 }

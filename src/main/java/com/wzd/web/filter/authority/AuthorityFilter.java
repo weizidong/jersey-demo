@@ -44,6 +44,7 @@ public class AuthorityFilter implements ContainerRequestFilter {
 		if (auths == null || auths.length == 0) {
 			return;
 		}
+		// TODO 权限验证
 		log.debug("接口允许的权限==>" + Arrays.toString(auths));
 		// 获取用户本身具有的权限
 		Session session = SessionUtil.getSession(request);

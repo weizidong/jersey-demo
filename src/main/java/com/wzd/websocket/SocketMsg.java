@@ -1,5 +1,6 @@
 package com.wzd.websocket;
 
+import com.alibaba.fastjson.JSON;
 import com.wzd.model.enums.SocketType;
 
 /**
@@ -17,12 +18,11 @@ public class SocketMsg {
 	}
 
 	public SocketMsg(Object data) {
-		this(SocketType.通知.getValue(), data);
+		this(SocketType.通知, data);
 	}
 
-	public SocketMsg(String command, Object data) {
-		super();
-		this.command = command;
+	public SocketMsg(SocketType command, Object data) {
+		this.command = command.getValue();
 		this.data = data;
 	}
 
@@ -44,7 +44,7 @@ public class SocketMsg {
 
 	@Override
 	public String toString() {
-		return "[command=" + command + ", data=" + data + "]";
+		return JSON.toJSONString(this);
 	}
 
 }

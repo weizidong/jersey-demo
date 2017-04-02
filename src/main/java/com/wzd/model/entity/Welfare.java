@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.DeleteType;
+import com.wzd.model.enums.HistoryType;
 
 /**
  * 福利实体
@@ -144,6 +146,10 @@ public class Welfare implements Serializable {
 		this.type = type;
 	}
 
+	public void setType(HistoryType type) {
+		this.type = type.getValue();
+	}
+
 	public Object getRule() {
 		return rule;
 	}
@@ -166,6 +172,9 @@ public class Welfare implements Serializable {
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+	public void setDeleted(DeleteType del) {
+		this.deleted = del.getValue();
 	}
 
 	public Integer getDraw() {

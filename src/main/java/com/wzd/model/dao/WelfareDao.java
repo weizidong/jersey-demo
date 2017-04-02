@@ -35,7 +35,7 @@ public class WelfareDao {
 	 */
 	public Welfare create(Welfare wel) {
 		wel.setId(UUIDUtil.get());
-		wel.setDeleted(DeleteType.未删除.getValue());
+		wel.setDeleted(DeleteType.未删除);
 		wel.setCurrent(0);
 		wel.setCreated(new Date());
 		mapper.insertSelective(wel);
@@ -47,8 +47,8 @@ public class WelfareDao {
 	 */
 	public List<Welfare> getByType(HistoryType type, DeleteType del) {
 		Welfare w = new Welfare();
-		w.setType(type.getValue());
-		w.setDeleted(del.getValue());
+		w.setType(type);
+		w.setDeleted(del);
 		return mapper.select(w);
 	}
 
@@ -68,11 +68,11 @@ public class WelfareDao {
 	/**
 	 * 根据ID查询福利
 	 */
-	public Welfare getById(String welfareId, DeleteType type) {
+	public Welfare getById(String welfareId, DeleteType del) {
 		Welfare w = new Welfare();
 		w.setId(welfareId);
-		if (type != null) {
-			w.setDeleted(type.getValue());
+		if (del != null) {
+			w.setDeleted(del);
 		}
 		return mapper.selectOne(w);
 	}
@@ -80,11 +80,11 @@ public class WelfareDao {
 	/**
 	 * 根据ID查询福利
 	 */
-	public List<Welfare> getByAdmin(String adminId, DeleteType type) {
+	public List<Welfare> getByAdmin(String adminId, DeleteType del) {
 		Welfare w = new Welfare();
 		w.setAdminId(adminId);
-		if (type != null) {
-			w.setDeleted(type.getValue());
+		if (del != null) {
+			w.setDeleted(del);
 		}
 		return mapper.select(w);
 	}
@@ -103,7 +103,7 @@ public class WelfareDao {
 		if (del == DeleteType.永久删除) {
 			mapper.delete(w);
 		} else {
-			w.setDeleted(del.getValue());
+			w.setDeleted(del);
 			mapper.updateByPrimaryKeySelective(w);
 		}
 

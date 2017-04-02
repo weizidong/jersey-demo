@@ -78,7 +78,7 @@ public class HistoryDao {
 	 */
 	public void create(History h) {
 		h.setId(UUIDUtil.get());
-		h.setDeleled(DeleteType.未删除.getValue());
+		h.setDeleled(DeleteType.未删除);
 		h.setRecording(new Date());
 		mapper.insertSelective(h);
 	}

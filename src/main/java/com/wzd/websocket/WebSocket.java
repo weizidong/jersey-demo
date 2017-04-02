@@ -36,7 +36,7 @@ public class WebSocket {
 	public void onOpen(@PathParam("userid") String userid, Session session) {
 		log.debug("开启websocket：" + userid);
 		service.save(userid, session);
-		service.send(session, new SocketMsg(SocketType.开启.getValue(), null));
+		service.send(session, new SocketMsg(SocketType.开启, null));
 	}
 
 	/**
@@ -54,6 +54,6 @@ public class WebSocket {
 	@OnError
 	public void onError(@PathParam("userid") String userid, Throwable throwable, Session session) {
 		log.error("websocket异常：" + userid + "===>" + throwable.getMessage());
-		service.send(session, new SocketMsg(SocketType.异常.getValue(), throwable.getMessage()));
+		service.send(session, new SocketMsg(SocketType.异常, throwable.getMessage()));
 	}
 }

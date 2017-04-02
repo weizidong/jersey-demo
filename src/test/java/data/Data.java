@@ -43,7 +43,7 @@ public class Data extends BasicTest {
 		w.setScore(score); // 积分
 		w.setTime(time); // 次数
 		w.setTotal(total); // 总的个数
-		w.setType(type.getValue()); // 类型
+		w.setType(type); // 类型
 		w.setRule(("1、福利期间每人只能兑换" + time + "次福利。").getBytes()); // 规则
 		welfareService.create(w, null);
 	}
@@ -69,10 +69,10 @@ public class Data extends BasicTest {
 		System.out.println(t);
 		for (int i = 0; i < t; i++) {
 			h.setId(UUIDUtil.get());
-			h.setDeleled(DeleteType.未删除.getValue());
+			h.setDeleled(DeleteType.未删除);
 			h.setRecording(DateUtil.getBeforeDate(date, i));
 			h.setScore(Integer.parseInt(Configs.get("score")));
-			h.setType(HistoryType.积分签到.getValue());
+			h.setType(HistoryType.积分签到);
 			historyMapper.insert(h);
 		}
 	}

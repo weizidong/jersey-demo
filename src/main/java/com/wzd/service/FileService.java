@@ -70,13 +70,13 @@ public class FileService {
 	/**
 	 * 删除文件
 	 */
-	public void delete(String id, DeleteType type) {
+	public void delete(String id, DeleteType del) {
 		Files f = dao.getById(id);
 		if (f == null) {
 			throw new WebException(ResponseCode.资源不存在, "文件不存在");
 		}
-		if (DeleteType.永久删除 != type) {
-			f.setDeleted(type.getValue());
+		if (DeleteType.永久删除 != del) {
+			f.setDeleted(del);
 			dao.update(f);
 		} else {
 			dao.delete(id);

@@ -35,8 +35,8 @@ public class FileDao {
 	public Files create(Files file) {
 		file.setId(UUIDUtil.get());
 		file.setCreated(new Date());
-		file.setDeleted(DeleteType.未删除.getValue());
-		file.setStatus(StateType.进行中.getValue());
+		file.setDeleted(DeleteType.未删除);
+		file.setStatus(StateType.进行中);
 		mapper.insertSelective(file);
 		return file;
 	}

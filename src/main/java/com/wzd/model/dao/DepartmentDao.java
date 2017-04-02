@@ -26,18 +26,18 @@ public class DepartmentDao {
 	 * 创建
 	 */
 	public void create(Department dep) {
-		dep.setDeleted(DeleteType.未删除.getValue());
+		dep.setDeleted(DeleteType.未删除);
 		mapper.insertSelective(dep);
 	}
 
 	/**
 	 * 根据ID获取
 	 */
-	public Department getById(Integer id, DeleteType type) {
+	public Department getById(Integer id, DeleteType del) {
 		Department dep = new Department();
 		dep.setId(id);
-		if (type != null) {
-			dep.setDeleted(type.getValue());
+		if (del != null) {
+			dep.setDeleted(del);
 		}
 		return mapper.selectOne(dep);
 	}
@@ -71,10 +71,10 @@ public class DepartmentDao {
 	/**
 	 * 获取全部
 	 */
-	public List<Department> findAll(DeleteType type) {
+	public List<Department> findAll(DeleteType del) {
 		Example e = new Example(Department.class);
 		e.setOrderByClause("parentid ASC,orders ASC");
-		e.createCriteria().andEqualTo("deleted", type.getValue());
+		e.createCriteria().andEqualTo("deleted", del.getValue());
 		return mapper.selectByExample(e);
 	}
 
@@ -91,13 +91,13 @@ public class DepartmentDao {
 	/**
 	 * 删除
 	 */
-	public void delete(Integer id, DeleteType type) {
+	public void delete(Integer id, DeleteType del) {
 		Department dep = new Department();
 		dep.setId(id);
-		if (type == DeleteType.永久删除) {
+		if (del == DeleteType.永久删除) {
 			mapper.delete(dep);
 		} else {
-			dep.setDeleted(type.getValue());
+			dep.setDeleted(del);
 			update(dep);
 		}
 	}

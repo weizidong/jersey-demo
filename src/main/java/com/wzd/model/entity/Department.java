@@ -10,6 +10,7 @@ import javax.persistence.Transient;
 import org.springframework.data.annotation.Id;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.DeleteType;
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
@@ -100,6 +101,10 @@ public class Department extends BaseResp {
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+
+	public void setDeleted(DeleteType del) {
+		this.deleted = del.getValue();
 	}
 
 	public List<Department> getChild() {

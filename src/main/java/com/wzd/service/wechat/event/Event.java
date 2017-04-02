@@ -93,7 +93,7 @@ public class Event {
 		if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.bId)) {
 			ThreadPoolUtils.execute(() -> {
 				User user = userDao.getByOpenId(msg.getFromUserName());
-				user.setSubscribe(SubType.未关注.getValue());
+				user.setSubscribe(SubType.未关注);
 				userDao.update(user);
 			});
 		}
@@ -112,7 +112,7 @@ public class Event {
 					user.setScore(s.getScore());
 					userDao.create(user);
 				} else {
-					user.setSubscribe(SubType.已关注.getValue());
+					user.setSubscribe(SubType.已关注);
 					userDao.update(user);
 				}
 			});

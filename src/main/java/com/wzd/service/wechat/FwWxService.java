@@ -115,7 +115,7 @@ public class FwWxService {
 		Session session = new Session();
 		session.setSessionId(token.getOpenid());
 		session.setAccessToken(token.getAccess_token());
-		session.setAppType(APPType.服务号.getValue());
+		session.setAppType(APPType.服务号);
 		User user = dao.getByOpenId(token.getOpenid());
 		// 无用户，创建
 		if (user == null) {

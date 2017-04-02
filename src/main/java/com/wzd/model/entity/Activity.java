@@ -9,7 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
+import com.wzd.model.enums.EntryType;
 import com.wzd.model.enums.StateType;
 
 /**
@@ -60,15 +62,15 @@ public class Activity implements Serializable {
 		super();
 	}
 
-	public Activity(String picUrl, String name, Date start, Date end, Date entryStart, Date entryEnd, Integer entry, Integer score, String sponsor, String coSponsor,
-			String organizer, String place, String website, Object detail, Object rule, Integer total, Integer type) {
+	public Activity(String picUrl, String name, Date start, Date end, Date entryStart, Date entryEnd, EntryType entry, Integer score, String sponsor, String coSponsor,
+			String organizer, String place, String website, Object detail, Object rule, Integer total, ActivityType type) {
 		this.picUrl = picUrl;
 		this.name = name;
 		this.start = start;
 		this.end = end;
 		this.entryStart = entryStart;
 		this.entryEnd = entryEnd;
-		this.entry = entry;
+		this.entry = entry.getValue();
 		this.score = score;
 		this.sponsor = sponsor;
 		this.coSponsor = coSponsor;
@@ -78,7 +80,7 @@ public class Activity implements Serializable {
 		this.detail = detail;
 		this.rule = rule;
 		this.total = total;
-		this.type = type;
+		this.type = type.getValue();
 	}
 
 	public List<Files> getFiles() {

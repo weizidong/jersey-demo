@@ -34,7 +34,7 @@ public class AdminDao {
 		}
 		admin.setAudit(0);
 		admin.setCreated(new Date());
-		admin.setDeleted(DeleteType.未删除.getValue());
+		admin.setDeleted(DeleteType.未删除);
 		admin.setUpdated(new Date());
 		mapper.insertSelective(admin);
 		return admin;
@@ -80,7 +80,7 @@ public class AdminDao {
 	public Admin getByMobile(String mobile, DeleteType type) {
 		Admin admin = new Admin();
 		admin.setMobile(mobile);
-		admin.setDeleted(type.getValue());
+		admin.setDeleted(type);
 		return admin;
 	}
 
@@ -93,7 +93,7 @@ public class AdminDao {
 		if (type == DeleteType.永久删除) {
 			mapper.delete(admin);
 		} else {
-			admin.setDeleted(type.getValue());
+			admin.setDeleted(type);
 			update(admin);
 		}
 	}

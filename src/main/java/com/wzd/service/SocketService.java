@@ -32,7 +32,7 @@ public class SocketService {
 	public void push(SocketMsg msg, Session session) {
 		switch (SocketType.parse(msg.getCommand())) {
 		case 心跳:
-			send(session, new SocketMsg(SocketType.心跳.getValue(), null));
+			send(session, new SocketMsg(SocketType.心跳, null));
 			break;
 		case 数据:
 

@@ -10,6 +10,9 @@ import javax.persistence.Transient;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.AuditType;
+import com.wzd.model.enums.DeleteType;
+import com.wzd.model.enums.SubType;
 import com.wzd.service.wechat.base.BaseResp;
 
 /**
@@ -100,6 +103,10 @@ public class User extends BaseResp {
 		this.subscribe = subscribe;
 	}
 
+	public void setSubscribe(SubType sub) {
+		this.subscribe = sub.getValue();
+	}
+
 	public String getDepName() {
 		return depName;
 	}
@@ -126,6 +133,9 @@ public class User extends BaseResp {
 
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
+	}
+	public void setDeleted(DeleteType del) {
+		this.deleted = del.getValue();
 	}
 
 	public void setCity(String city) {
@@ -298,6 +308,10 @@ public class User extends BaseResp {
 
 	public void setAudit(Integer audit) {
 		this.audit = audit;
+	}
+
+	public void setAudit(AuditType audit) {
+		this.audit = audit.getValue();
 	}
 
 	public String getAuditor() {

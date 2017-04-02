@@ -36,7 +36,7 @@ public class RedPack {
 		super();
 	}
 
-	public RedPack(String send_name, String re_openid, Integer total_amount, String wishing, String act_name, String remark, String risk_info, String scene_id) {
+	public RedPack(String send_name, String re_openid, Integer total_amount, String wishing, String act_name, String remark, String risk_info, SceneType scene) {
 		super();
 		this.nonce_str = UUIDUtil.get();
 		this.mch_id = Configs.get("mch_id");
@@ -49,12 +49,12 @@ public class RedPack {
 		this.client_ip = IpUtil.getClient_Ip();
 		this.act_name = act_name;
 		this.remark = remark;
-		this.scene_id = scene_id;
+		this.scene_id = scene.getValue();
 		this.risk_info = risk_info;
 	}
 
 	public RedPack(String send_name, String re_openid, Integer total_amount, String wishing, String act_name, String remark, String risk_info) {
-		this(send_name, re_openid, total_amount, wishing, act_name, remark, risk_info, SceneType.企业内部福利.getValue());
+		this(send_name, re_openid, total_amount, wishing, act_name, remark, risk_info, SceneType.企业内部福利);
 	}
 
 	public String getNonce_str() {
