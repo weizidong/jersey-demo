@@ -11,6 +11,9 @@ import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Sports;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.DeleteType;
+import com.wzd.model.enums.StateType;
+import com.wzd.web.dto.exception.WebException;
+import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -35,31 +38,38 @@ public class SportsService {
 	/**
 	 * 修改健身活动
 	 */
-	public Sports update(Sports s) {
-		// TODO 修改健身活动
-		return null;
+	public void update(Sports s) {
+		sportsDao.update(s);
 	}
 
 	/**
 	 * 开启或关闭健身活动
 	 */
 	public void pause(String id) {
-		// TODO 开启或关闭健身活动
+		Sports s = sportsDao.getById(id);
+		if (s == null) {
+			throw new WebException(ResponseCode.资源不存在, "健身活动" + id + "不存在");
+		}
+		if (s.getStatus() != StateType.暂停.getValue()) {
+			s.setStatus(StateType.暂停);
+		} else {
+			s.setStatus(StateType.进行中);
+		}
+		update(s);
 	}
 
 	/**
 	 * 删除健身活动
 	 */
 	public void delete(String id, DeleteType del) {
-		// TODO 删除健身活动
+		sportsDao.delete(id, del);
 	}
 
 	/**
 	 * 获取健身活动列表
 	 */
 	public PageInfo<Sports> list(PageParam param) {
-		// TODO 获取健身活动列表
-		return null;
+		return sportsDao.list(param);
 	}
 
 	/**

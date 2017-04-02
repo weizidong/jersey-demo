@@ -50,8 +50,8 @@ public class SportsApi {
 	 */
 	@POST
 	@Path("/update")
-	public Sports update(Sports s) {
-		return service.update(s);
+	public void update(Sports s) {
+		service.update(s);
 	}
 
 	/**
