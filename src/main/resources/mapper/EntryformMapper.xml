@@ -32,7 +32,7 @@
 	<select id="getSignList" resultMap="EntryFormDtoResultMap">
 		select
 		u.nickname,u.name,u.id_card,u.birthday,u.sex,u.marriage,u.phone,u.dep_name,u.audit,e.status,e.created,e.activity_id
-		from entryform e left join user u on e.open_id = u.open_id
+		from entryform e left join user u on e.open_id = u.openid
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="name != null and name != ''">
 				u.name LIKE CONCAT(CONCAT('%', #{name}),'%')

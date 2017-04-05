@@ -76,6 +76,10 @@ public class SessionFilter implements Filter {
 			if (appType.equals(APPType.企业号.getValue())) {
 				session = qyService.getUserInfo(code);
 			}
+			// 管理平台换取Token
+			if (appType.equals(APPType.管理平台.getValue())) {
+				session = qyService.getUserInfo(requestUrl.substring(requestUrl.lastIndexOf("/") + 1), code);
+			}
 			// 服务号换取Token
 			if (appType.equals(APPType.服务号.getValue())) {
 				session = fwService.getUserInfo(code);
@@ -94,7 +98,7 @@ public class SessionFilter implements Filter {
 			session = SessionUtil.getSession(httpRequest);
 		}
 		// 企业号未授权
-		if (APPType.企业号.getValue().equals(appType) && session == null) {
+		if ((APPType.企业号.getValue().equals(appType) && session == null) || (APPType.管理平台.getValue().equals(appType) && requestUrl.startsWith("view/login2"))) {
 			authorize(QyAPI.AUTHORIZE, Configs.sCorpID, hostname + requestUrl, appType, httpResponse);
 			return;
 		}

@@ -1,7 +1,9 @@
 package com.wzd.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +18,11 @@ import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.APPType;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
+import com.wzd.model.enums.ViewPage;
 import com.wzd.service.wechat.user.QyUserApi;
+import com.wzd.utils.EhcacheUtil;
 import com.wzd.utils.MD5Utils;
+import com.wzd.utils.QRCodeUtil;
 import com.wzd.utils.StringUtil;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
@@ -117,6 +122,20 @@ public class AdminService {
 	public HSSFWorkbook export(List<Integer> ids, HttpServletResponse response) {
 		// TODO 批量导出管理员
 		return null;
+	}
+
+	/**
+	 * 获取登录参数
+	 */
+	public Map<String, Object> login2(HttpServletRequest request, HttpServletResponse response) {
+		Session s = SessionUtil.generateSession(APPType.管理平台.getValue(), null, null, null);
+		Map<String, Object> map = new HashMap<>();
+		map.put("sessionId", s.getSessionId());
+		map.put("accessToken", s.getAccessToken());
+		map.put("ts", s.getTs());
+		map.put("qrcode", QRCodeUtil.encode(ViewPage.genarate(ViewPage.login2, s.getSessionId())));
+		EhcacheUtil.getInstance().putSession(s.getSessionId(), s);
+		return map;
 	}
 
 }

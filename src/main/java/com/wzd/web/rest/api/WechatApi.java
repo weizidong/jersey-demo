@@ -19,7 +19,6 @@ import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
 import com.wzd.service.wechat.utils.AesException;
 import com.wzd.service.wechat.utils.WeChatXmlUtil;
-import com.wzd.utils.HttpUtils;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.filter.formatjson.FormatJson;
@@ -54,14 +53,10 @@ public class WechatApi {
 	@Consumes(MediaType.TEXT_XML)
 	public String qyPush(@QueryParam("msg_signature") String msg_signature, @QueryParam("timestamp") String timestamp, @QueryParam("nonce") String nonce, String data) {
 		log.debug("接收到企业号推送的消息。。。");
-		// URL解码
-		String sReqMsgSig = HttpUtils.ParseUrl(msg_signature);
-		String sReqTimeStamp = HttpUtils.ParseUrl(timestamp);
-		String sReqNonce = HttpUtils.ParseUrl(nonce);
 		// 对用户回复的消息解密
 		String sMsg;
 		try {
-			sMsg = QyWxService.wxcpt().DecryptMsg(sReqMsgSig, sReqTimeStamp, sReqNonce, data);
+			sMsg = QyWxService.wxcpt().DecryptMsg(msg_signature, timestamp, nonce, data);
 		} catch (AesException e) {
 			throw new WebException(ResponseCode.解密失败, "解密回复信息密文失败！");
 		}
@@ -72,7 +67,7 @@ public class WechatApi {
 		log.debug("结果：\n" + rMsg);
 		// 回包加密
 		try {
-			return QyWxService.wxcpt().EncryptMsg(rMsg, sReqTimeStamp, sReqNonce);
+			return QyWxService.wxcpt().EncryptMsg(rMsg, timestamp, nonce);
 		} catch (Exception e) {
 			throw new WebException(ResponseCode.加密失败, "回包加密失败失败！");
 		}

@@ -14,6 +14,8 @@ import com.wzd.model.dao.DepartmentDao;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Department;
 import com.wzd.model.enums.APPType;
+import com.wzd.model.enums.SocketType;
+import com.wzd.service.SocketService;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.QyAPI;
 import com.wzd.service.wechat.base.XmlResp;
@@ -26,12 +28,13 @@ import com.wzd.service.wechat.user.dto.QyUser;
 import com.wzd.service.wechat.utils.AesException;
 import com.wzd.service.wechat.utils.WXBizMsgCrypt;
 import com.wzd.utils.Configs;
-import com.wzd.utils.HttpUtils;
 import com.wzd.utils.SignatureUtil;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.dto.session.Session;
+import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.wechat.WechatMsg;
+import com.wzd.websocket.SocketMsg;
 
 /**
  * 企业号操作服务
@@ -104,14 +107,10 @@ public class QyWxService {
 	 * 验证回调URL
 	 */
 	public String VerifyURL(String msg_signature, String timestamp, String nonce, String echostr) {
-		String sVerifyMsgSig = HttpUtils.ParseUrl("msg_signature");
-		String sVerifyTimeStamp = HttpUtils.ParseUrl("timestamp");
-		String sVerifyNonce = HttpUtils.ParseUrl("nonce");
-		String sVerifyEchoStr = HttpUtils.ParseUrl("echostr");
 		log.debug("验证回调URL...");
 		String sEchoStr = null;
 		try {
-			sEchoStr = wxcpt().VerifyURL(sVerifyMsgSig, sVerifyTimeStamp, sVerifyNonce, sVerifyEchoStr);
+			sEchoStr = wxcpt().VerifyURL(msg_signature, timestamp, nonce, echostr);
 		} catch (AesException e) {
 			e.printStackTrace();
 		}
@@ -139,6 +138,28 @@ public class QyWxService {
 			session.setAppType(APPType.企业号);
 			Admin admin = adminDao.getByUserId(user.getUserId());
 			session.setUser(admin);
+		}
+		return session;
+	}
+
+	/**
+	 * 根据code获取成员信息
+	 */
+	public Session getUserInfo(String sessionId, String code) {
+		QyUser user = RestClientUtil.get(MessageFormat.format(QyAPI.GETUSERINFO, getToken(), code), QyUser.class);
+		if (user.getErrcode() != null) {
+			throw new WebException(user.getErrcode(), user.getErrmsg());
+		}
+		// 非企业成员
+		if (user.getOpenId() != null) {
+			throw new WebException(ResponseCode.未授权, "不是企业成员");
+		}
+		// 企业成员
+		Session session = SessionUtil.getSessionById(sessionId);
+		if (session != null) {
+			Admin admin = adminDao.getByUserId(user.getUserId());
+			session.setUser(admin);
+			SocketService.send(sessionId, new SocketMsg(SocketType.登录, admin));
 		}
 		return session;
 	}

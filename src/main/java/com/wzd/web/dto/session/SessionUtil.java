@@ -96,6 +96,20 @@ public class SessionUtil {
 	}
 
 	/**
+	 * 获取Session
+	 */
+	public static Session getSessionById(String sessionId) {
+		Session session = null;
+		if (StringUtil.isEmpty(sessionId)) {
+			return null;
+		}
+		log.debug("sessionId = " + sessionId);
+		session = ehcache.getSession(sessionId);
+		log.debug("从ehcache中获取到的session = " + session);
+		return session;
+	}
+
+	/**
 	 * 验证是否超时
 	 */
 	public static void checkTs(Session session, HttpServletRequest request, HttpServletResponse response) {

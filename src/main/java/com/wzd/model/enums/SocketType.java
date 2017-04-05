@@ -10,7 +10,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum SocketType {
-	心跳("noop"), 数据("data"), 通知("notice"), 开启("open"), 关闭("close"), 异常("error");
+	心跳("noop"), 数据("data"), 通知("notice"), 开启("open"), 关闭("close"), 异常("error"), 登录("login");
 	private String value;
 
 	private SocketType(String value) {

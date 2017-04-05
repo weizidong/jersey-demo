@@ -1,5 +1,7 @@
 package com.wzd.web.rest.api;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -44,6 +46,15 @@ public class AdminApi {
 	@Path("/login")
 	public void login(Admin admin, @Context HttpServletRequest request, @Context HttpServletResponse response) {
 		service.login(admin, request, response);
+	}
+
+	/**
+	 * 登录
+	 */
+	@GET
+	@Path("/login2")
+	public Map<String, Object> login2(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+		return service.login2(request, response);
 	}
 
 	/**

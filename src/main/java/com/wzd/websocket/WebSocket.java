@@ -18,7 +18,6 @@ import com.wzd.service.SocketService;
 @ServerEndpoint("/websocket/{userid}")
 public class WebSocket {
 	private static final Logger log = LogManager.getLogger(WebSocket.class);
-	private SocketService service = new SocketService();
 
 	/**
 	 * 收到客户端消息时触发
@@ -26,7 +25,7 @@ public class WebSocket {
 	@OnMessage
 	public void onMessage(String message, @PathParam("userid") Integer userid, Session session) {
 		log.debug("接到websocket：" + userid + "===>" + message);
-		service.push(JSON.parseObject(message, SocketMsg.class), session);
+		SocketService.push(JSON.parseObject(message, SocketMsg.class), session);
 	}
 
 	/**
@@ -35,8 +34,8 @@ public class WebSocket {
 	@OnOpen
 	public void onOpen(@PathParam("userid") String userid, Session session) {
 		log.debug("开启websocket：" + userid);
-		service.save(userid, session);
-		service.send(session, new SocketMsg(SocketType.开启, null));
+		SocketService.save(userid, session);
+		SocketService.send(session, new SocketMsg(SocketType.开启, null));
 	}
 
 	/**
@@ -45,7 +44,7 @@ public class WebSocket {
 	@OnClose
 	public void onClose(@PathParam("userid") String userid, Session session) {
 		log.debug("关闭websocket：" + userid);
-		service.clear(userid);
+		SocketService.clear(userid);
 	}
 
 	/**
@@ -54,6 +53,6 @@ public class WebSocket {
 	@OnError
 	public void onError(@PathParam("userid") String userid, Throwable throwable, Session session) {
 		log.error("websocket异常：" + userid + "===>" + throwable.getMessage());
-		service.send(session, new SocketMsg(SocketType.异常, throwable.getMessage()));
+		SocketService.send(session, new SocketMsg(SocketType.异常, throwable.getMessage()));
 	}
 }

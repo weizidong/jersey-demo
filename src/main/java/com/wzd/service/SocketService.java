@@ -7,7 +7,6 @@ import javax.websocket.Session;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jvnet.hk2.annotations.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.wzd.model.enums.SocketType;
@@ -21,7 +20,6 @@ import net.sf.ehcache.util.concurrent.ConcurrentHashMap;
  * @author WeiZiDong
  *
  */
-@Service
 public class SocketService {
 	private static final Logger log = LogManager.getLogger(SocketService.class);
 	private static final Map<String, Session> sessionMap = new ConcurrentHashMap<>();
@@ -29,7 +27,7 @@ public class SocketService {
 	/**
 	 * 处理客户端发过来的指令
 	 */
-	public void push(SocketMsg msg, Session session) {
+	public static void push(SocketMsg msg, Session session) {
 		switch (SocketType.parse(msg.getCommand())) {
 		case 心跳:
 			send(session, new SocketMsg(SocketType.心跳, null));
@@ -48,7 +46,7 @@ public class SocketService {
 	/**
 	 * 发送指令
 	 */
-	public void send(String userid, SocketMsg msg) {
+	public static void send(String userid, SocketMsg msg) {
 		try {
 			Session session = sessionMap.get(userid);
 			if (session != null) {
@@ -64,7 +62,7 @@ public class SocketService {
 	/**
 	 * 发送指令
 	 */
-	public void send(Session session, SocketMsg msg) {
+	public static void send(Session session, SocketMsg msg) {
 		try {
 			if (session != null) {
 				String jsonMsg = JSON.toJSONString(msg);
@@ -79,7 +77,7 @@ public class SocketService {
 	/**
 	 * 保存连接
 	 */
-	public void save(String userid, Session session) {
+	public static void save(String userid, Session session) {
 		if (sessionMap.containsKey(userid)) {
 			sessionMap.replace(userid, session);
 		} else {
@@ -90,7 +88,7 @@ public class SocketService {
 	/**
 	 * 清理连接
 	 */
-	public void clear(String userid) {
+	public static void clear(String userid) {
 		sessionMap.remove(userid);
 	}
 }
