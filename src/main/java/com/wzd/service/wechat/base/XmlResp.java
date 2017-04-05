@@ -11,7 +11,7 @@ public class XmlResp {
 	/**
 	 * 回复success
 	 */
-	public static final String SUCCESS = "success";
+	public static final String SUCCESS = "";
 	/**
 	 * 回复文本消息
 	 */

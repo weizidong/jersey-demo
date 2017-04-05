@@ -2,6 +2,7 @@ package com.wzd.service;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,13 @@ import com.wzd.model.enums.AuthType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.EntryType;
 import com.wzd.model.enums.HistoryType;
+import com.wzd.model.enums.SceneType;
 import com.wzd.model.enums.SexType;
 import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
+import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.msg.dto.ARTICLE;
+import com.wzd.service.wechat.qrcode.QrcodeService;
 import com.wzd.utils.Configs;
 import com.wzd.utils.DateUtil;
 import com.wzd.utils.EhcacheUtil;
@@ -97,7 +101,11 @@ public class SystemService {
 	 */
 	public void setting(Setting s) {
 		s.setId(ID);
-		if (settingDao.getById(ID) == null) {
+		Setting db = settingDao.getById(ID);
+		if (db != null && StringUtils.isBlank(db.getSportsTicket())) {
+			s.setSportsTicket(QrcodeService.getFixedQrcodeUrl(FwAPI.CREATE_QRCODE, FwWxService.getToken(), SceneType.服务号健身运动签到.getValue()));
+		}
+		if (db == null) {
 			settingDao.create(s);
 		} else {
 			settingDao.update(s);
@@ -138,8 +146,8 @@ public class SystemService {
 	private void createActivity(Admin admin) {
 		Date d = new Date();
 		Activity a = new Activity("user", "龙泉驿区职工年中盛典", DateUtil.getBeforeDate(d, 10), DateUtil.getAfterDate(d, 10), DateUtil.getBeforeDate(d, 8), DateUtil.getAfterDate(d, 5),
-				EntryType.所有用户可报名, 500, "龙泉驿区总工会", "成都爱创业科技有限公司", "成都爱创业科技有限公司", "成都市龙泉驿区红光路128号兴隆广场127号1002会议室", "http://www.ichuangye.cn",
-				"1、福利期间每人只能兑换次福利。".getBytes(), "1、福利期间每人只能兑换次福利。".getBytes(), 2000, ActivityType.普通活动);
+				EntryType.所有用户可报名, 500, "龙泉驿区总工会", "成都爱创业科技有限公司", "成都爱创业科技有限公司", "成都市龙泉驿区红光路128号兴隆广场127号1002会议室", "http://www.ichuangye.cn", "1、福利期间每人只能兑换次福利。".getBytes(),
+				"1、福利期间每人只能兑换次福利。".getBytes(), 2000, ActivityType.普通活动);
 		activityService.create(a, admin);
 	}
 

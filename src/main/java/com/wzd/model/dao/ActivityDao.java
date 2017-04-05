@@ -11,6 +11,8 @@ import com.wzd.model.entity.Activity;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.StateType;
 import com.wzd.model.mapper.ActivityMapper;
+import com.wzd.service.wechat.FwWxService;
+import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.service.wechat.qrcode.QrcodeService;
 import com.wzd.utils.UUIDUtil;
 import com.wzd.web.param.PageParam;
@@ -37,7 +39,7 @@ public class ActivityDao {
 		a.setDeleted(DeleteType.未删除);
 		a.setStatus(StateType.未开始);
 		a.setCurrent(0);
-		a.setTicket(QrcodeService.getFixedQrcodeUrl(a.getId()));
+		a.setTicket(QrcodeService.getFixedQrcodeUrl(FwAPI.CREATE_QRCODE, FwWxService.getToken(), a.getId()));
 		mapper.insertSelective(a);
 	}
 

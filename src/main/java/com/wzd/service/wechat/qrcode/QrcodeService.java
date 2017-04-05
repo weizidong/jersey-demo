@@ -7,8 +7,6 @@ import java.util.Map;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wzd.client.RestClientUtil;
-import com.wzd.service.wechat.FwWxService;
-import com.wzd.service.wechat.base.FwAPI;
 import com.wzd.web.dto.exception.WebException;
 
 /**
@@ -19,38 +17,39 @@ import com.wzd.web.dto.exception.WebException;
  */
 public class QrcodeService {
 	// 二维码最大有效时间
-	private static final Integer MAX_TIME = 2592000;
+	public static final Integer MAX_TIME = 2592000;
 
 	/**
 	 * 获取临时二维码
 	 */
-	public static String getTempQrcocde(String timestamp) {
-		String qrcode = getQrcodeUrl(timestamp, false);
-		return qrcode;
+	public static String getTempQrcocde(String path, String token, Long sceneid, Integer expireSeconds) {
+		return getQrcodeUrl(path, token, generateTempTicket(expireSeconds, sceneid));
+	}
+
+	/**
+	 * 获取临时二维码(最长时间30天)
+	 */
+	public static String getTempQrcocde(String path, String token, Long sceneid) {
+		return getQrcodeUrl(path, token, generateTempTicket(MAX_TIME, sceneid));
 	}
 
 	/**
 	 * 获取永久二维码
 	 */
-	public static String getFixedQrcodeUrl(String lifesenseId) {
-		return getQrcodeUrl(lifesenseId, true);
+	public static String getFixedQrcodeUrl(String path, String token, String param) {
+		return getQrcodeUrl(path, token, generateFixedTicket(param));
 	}
 
 	/**
 	 * 获取带参数二维码
 	 */
-	private static String getQrcodeUrl(String param, boolean isFixed) {
-		if (isFixed) {
-			param = generateFixedTicket(param);
-		} else {
-			param = generateTempTicket(Long.parseLong(param));
-		}
-		String result = RestClientUtil.postJson(MessageFormat.format(FwAPI.CREATE_QRCODE, FwWxService.getToken()), param, String.class);
+	private static String getQrcodeUrl(String path, String token, String param) {
+		String result = RestClientUtil.postJson(MessageFormat.format(path, token), param, String.class);
 		JSONObject nodes = JSONObject.parseObject(result);
 		if (nodes.containsKey("errcode")) {
 			throw new WebException(nodes.getInteger("errcode"), nodes.getString("errmsg"));
 		}
-		return nodes.getString("url");
+		return nodes.getString("ticket");
 	}
 
 	/**
@@ -80,13 +79,6 @@ public class QrcodeService {
 		actionInfo.put("scene", sceneId);
 		params.put("action_info", actionInfo);
 		return JSON.toJSONString(params);
-	}
-
-	/**
-	 * 生成临时二维码参数(时间30天)
-	 */
-	private static String generateTempTicket(Long sceneid) {
-		return generateTempTicket(MAX_TIME, sceneid);
 	}
 
 }

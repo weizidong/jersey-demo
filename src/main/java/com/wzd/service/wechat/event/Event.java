@@ -9,7 +9,10 @@ import com.alibaba.fastjson.JSON;
 import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.Setting;
 import com.wzd.model.entity.User;
+import com.wzd.model.enums.SceneType;
 import com.wzd.model.enums.SubType;
+import com.wzd.service.ActivityService;
+import com.wzd.service.SportsService;
 import com.wzd.service.SystemService;
 import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
@@ -32,6 +35,10 @@ public class Event {
 	private UserDao userDao;
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private SportsService sportsService;
+	@Autowired
+	private ActivityService activityService;
 
 	/**
 	 * 处理事件
@@ -46,6 +53,8 @@ public class Event {
 			return unsubscribe(msg);
 		case MsgType.Event.SCAN:
 			return scan(msg);
+		case MsgType.Event.SCANCODE_PUSH:
+			return scanPush(msg);
 		case MsgType.Event.LOCATION:
 			return location(msg);
 		case MsgType.Event.CLICK:
@@ -55,6 +64,14 @@ public class Event {
 		default:
 			return XmlResp.SUCCESS;
 		}
+	}
+
+	/**
+	 * 企业号扫码事件
+	 */
+	private String scanPush(WechatMsg msg) {
+		// TODO 企业号扫码事件
+		return XmlResp.SUCCESS;
 	}
 
 	/**
@@ -78,6 +95,12 @@ public class Event {
 	 */
 	private String scan(WechatMsg msg) {
 		// TODO 扫描带参数二维码事件
+		User user = userDao.getByOpenId(msg.getFromUserName());
+		if (SceneType.服务号健身运动签到.getValue().equals(msg.getEventKey())) {
+			sportsService.sign(user);
+		} else {
+			activityService.sign(msg.getEventKey(), user);
+		}
 		return XmlResp.SUCCESS;
 	}
 
