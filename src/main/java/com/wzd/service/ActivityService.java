@@ -194,7 +194,7 @@ public class ActivityService {
 		if (!entryformDao.isEntry(ef)) {
 			throw new WebException(ResponseCode.未报名);
 		}
-		entryformDao.sign(new Entryform(user.getId(), id, ActivityType.工会活动));
+		entryformDao.sign(ef);
 	}
 
 	/**

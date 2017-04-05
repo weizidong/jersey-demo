@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.dao.EntryformDao;
 import com.wzd.model.dao.UserDao;
+import com.wzd.model.entity.Entryform;
 import com.wzd.model.entity.Setting;
 import com.wzd.model.entity.User;
+import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.SceneType;
 import com.wzd.model.enums.SubType;
-import com.wzd.service.ActivityService;
 import com.wzd.service.SportsService;
 import com.wzd.service.SystemService;
 import com.wzd.service.wechat.base.MsgType;
@@ -38,7 +40,7 @@ public class Event {
 	@Autowired
 	private SportsService sportsService;
 	@Autowired
-	private ActivityService activityService;
+	private EntryformDao entryformDao;
 
 	/**
 	 * 处理事件
@@ -99,7 +101,12 @@ public class Event {
 		if (SceneType.服务号健身运动签到.getValue().equals(msg.getEventKey())) {
 			sportsService.sign(user);
 		} else {
-			activityService.sign(msg.getEventKey(), user);
+			Entryform ef = new Entryform(user.getId(), msg.getEventKey(), ActivityType.工会活动);
+			if (!entryformDao.isEntry(ef)) {
+				return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "您还未报名该活动！");
+			}
+			entryformDao.sign(ef);
+			return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "签到成功！");
 		}
 		return XmlResp.SUCCESS;
 	}
