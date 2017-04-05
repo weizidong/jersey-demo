@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-04-02 17:31:01
+Date: 2017-04-05 20:13:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -116,7 +116,7 @@ CREATE TABLE `department` (
 DROP TABLE IF EXISTS `entryform`;
 CREATE TABLE `entryform` (
   `id` char(32) NOT NULL COMMENT 'ID',
-  `user_id` char(32) NOT NULL COMMENT '用户ID',
+  `open_id` varchar(36) DEFAULT NULL,
   `activity_id` char(32) NOT NULL COMMENT '活动ID',
   `start` datetime DEFAULT NULL,
   `end` datetime DEFAULT NULL,
