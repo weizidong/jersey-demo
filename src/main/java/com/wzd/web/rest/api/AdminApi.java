@@ -49,7 +49,7 @@ public class AdminApi {
 	}
 
 	/**
-	 * 登录
+	 * 获取扫码登录二维码
 	 */
 	@GET
 	@Path("/login2")

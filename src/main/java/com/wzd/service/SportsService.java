@@ -116,4 +116,11 @@ public class SportsService {
 		return ResponseCode.成功;
 	}
 
+	/**
+	 * 获取健身活动详情
+	 */
+	public Sports getById(String id) {
+		return sportsDao.getById(id);
+	}
+
 }

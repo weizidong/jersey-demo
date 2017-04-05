@@ -77,11 +77,13 @@ public class AdminDao {
 	/**
 	 * 根据电话号码获取用户信息
 	 */
-	public Admin getByMobile(String mobile, DeleteType type) {
-		Admin admin = new Admin();
-		admin.setMobile(mobile);
-		admin.setDeleted(type);
-		return admin;
+	public Admin login(Admin a, DeleteType del) {
+		Example e = new Example(Admin.class);
+		e.or().andEqualTo("userid", a.getUserid());
+		e.or().andEqualTo("mobile", a.getUserid());
+		e.or().andEqualTo("email", a.getUserid());
+		e.createCriteria().andEqualTo("deleted", del.getValue());
+		return mapper.selectByExample(e).get(0);
 	}
 
 	/**

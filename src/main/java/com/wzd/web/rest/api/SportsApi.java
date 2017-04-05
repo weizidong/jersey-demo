@@ -3,6 +3,7 @@ package com.wzd.web.rest.api;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -69,6 +70,15 @@ public class SportsApi {
 	@Path("/list")
 	public PageInfo<Sports> list(PageParam param) {
 		return service.list(param);
+	}
+
+	/**
+	 * 获取健身活动详情
+	 */
+	@GET
+	@Path("/get/{id}")
+	public Sports getById(@PathParam("id") String id) {
+		return service.getById(id);
 	}
 
 	/**

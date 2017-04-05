@@ -46,7 +46,7 @@ public class AdminService {
 	 * 登录
 	 */
 	public void login(Admin admin, HttpServletRequest request, HttpServletResponse response) {
-		Admin dbAdmin = dao.getByMobile(admin.getMobile(), DeleteType.未删除);
+		Admin dbAdmin = dao.login(admin, DeleteType.未删除);
 		if (dbAdmin == null) {
 			throw new WebException(ResponseCode.用户不存在);
 		}
