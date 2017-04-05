@@ -88,4 +88,14 @@ public class EntryformDao {
 	public List<Entryform> list(Entryform ef) {
 		return mapper.select(ef);
 	}
+
+	/**
+	 * 获取报名列表
+	 */
+	public List<Entryform> list(Entryform ef, Date time) {
+		Example e = new Example(Entryform.class);
+		e.createCriteria().andGreaterThan("end", time).andLessThan("start", time).andEqualTo(ef);
+		e.setOrderByClause("created DESC");
+		return mapper.selectByExample(e);
+	}
 }

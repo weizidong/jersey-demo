@@ -6,14 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
-import com.wzd.model.dao.EntryformDao;
 import com.wzd.model.dao.UserDao;
-import com.wzd.model.entity.Entryform;
 import com.wzd.model.entity.Setting;
 import com.wzd.model.entity.User;
-import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.SceneType;
 import com.wzd.model.enums.SubType;
+import com.wzd.service.ActivityService;
 import com.wzd.service.SportsService;
 import com.wzd.service.SystemService;
 import com.wzd.service.wechat.base.MsgType;
@@ -23,6 +21,7 @@ import com.wzd.service.wechat.user.FwUserApi;
 import com.wzd.utils.Configs;
 import com.wzd.utils.StringUtil;
 import com.wzd.utils.ThreadPoolUtils;
+import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.wechat.WechatMsg;
 
 /**
@@ -40,7 +39,7 @@ public class Event {
 	@Autowired
 	private SportsService sportsService;
 	@Autowired
-	private EntryformDao entryformDao;
+	private ActivityService activityService;
 
 	/**
 	 * 处理事件
@@ -96,24 +95,27 @@ public class Event {
 	 * 扫描带参数二维码事件
 	 */
 	private String scan(WechatMsg msg) {
-		// TODO 扫描带参数二维码事件
+		User u = userDao.getByOpenId(msg.getFromUserName());
+		ResponseCode res = null;
 		if (SceneType.服务号健身运动签到.getValue().equals(msg.getEventKey())) {
-			sportsService.sign(userDao.getByOpenId(msg.getFromUserName()));
+			res = sportsService.sign(u);
 		} else {
-			Entryform ef = new Entryform(msg.getFromUserName(), msg.getEventKey(), ActivityType.工会活动);
-			if (!entryformDao.isEntry(ef)) {
-				return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "您还未报名该活动！");
-			}
-			entryformDao.sign(ef);
-			return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "签到成功！");
+			res = activityService.sign(msg.getEventKey(), u);
 		}
-		return XmlResp.SUCCESS;
+		switch (res) {
+		case 成功:
+			return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "签到成功！");
+		case 未报名:
+			return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "你还未报名该活动！");
+		default:
+			return XmlResp.SUCCESS;
+		}
 	}
 
 	// 自定义菜单事件
 	private String click(WechatMsg msg) {
 		// TODO 自定义菜单事件
-		return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "点击菜单:" + msg.getEventKey());
+		return XmlResp.SUCCESS;
 	}
 
 	// 取消关注事件

@@ -20,6 +20,8 @@ public class EntryFormDto implements Serializable {
 	private Integer audit;
 	private Integer status;
 	private String phone;
+	private Date start;
+	private Date end;
 	@Column(name = "dep_name")
 	private String depName;
 	@Column(name = "activity_id")
@@ -27,6 +29,22 @@ public class EntryFormDto implements Serializable {
 
 	public String getNickname() {
 		return nickname;
+	}
+
+	public Date getStart() {
+		return start;
+	}
+
+	public void setStart(Date start) {
+		this.start = start;
+	}
+
+	public Date getEnd() {
+		return end;
+	}
+
+	public void setEnd(Date end) {
+		this.end = end;
 	}
 
 	public void setNickname(String nickname) {

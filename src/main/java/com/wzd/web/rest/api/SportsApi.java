@@ -1,7 +1,5 @@
 package com.wzd.web.rest.api;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -20,6 +18,7 @@ import com.wzd.model.entity.Sports;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.SportsService;
+import com.wzd.web.dto.entryForm.EntryFormDto;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.PageParam;
 
@@ -103,8 +102,8 @@ public class SportsApi {
 	 * 获取健身活动报名列表
 	 */
 	@POST
-	@Path("/entryList")
-	public List<Sports> entryList(PageParam param) {
-		return service.entryList(param);
+	@Path("/entryList/{id}")
+	public PageInfo<EntryFormDto> entryList(PageParam param, @PathParam("id") String id) {
+		return service.entryList(param, id);
 	}
 }

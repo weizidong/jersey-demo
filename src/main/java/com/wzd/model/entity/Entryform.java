@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.SignType;
+import com.wzd.model.enums.StateType;
 
 /**
  * 报名表
@@ -40,28 +41,32 @@ public class Entryform implements Serializable {
 		super();
 	}
 
-	public Entryform(String id, String openId, String activityId, Date start, Date end, ActivityType type, Date created, DeleteType del, Integer status) {
+	public Entryform(String id, String openId, String activityId, Date start, Date end, Integer type, Date created, Integer del, Integer status) {
 		this.id = id;
 		this.openId = openId;
 		this.activityId = activityId;
 		this.start = start;
 		this.end = end;
-		this.type = type.getValue();
+		this.type = type;
 		this.created = created;
-		this.deleted = del.getValue();
+		this.deleted = del;
 		this.status = status;
 	}
 
+	public Entryform(String openId, ActivityType type, DeleteType del, StateType status) {
+		this(null, openId, null, null, null, type.getValue(), null, del.getValue(), status.getValue());
+	}
+
 	public Entryform(String activityId, ActivityType type, DeleteType del) {
-		this(null, null, activityId, null, null, type, null, del, null);
+		this(null, null, activityId, null, null, type.getValue(), null, del.getValue(), null);
 	}
 
 	public Entryform(String openId, String activityId, ActivityType type) {
-		this(null, openId, activityId, null, null, type, null, null, null);
+		this(null, openId, activityId, null, null, type.getValue(), null, null, null);
 	}
 
 	public Entryform(String openId, String activityId, ActivityType type, Date start, Date end) {
-		this(null, openId, activityId, start, end, type, null, null, null);
+		this(null, openId, activityId, start, end, type.getValue(), null, null, null);
 	}
 
 	public String getOpenId() {

@@ -194,12 +194,13 @@ public class ActivityService {
 	/**
 	 * 签到
 	 */
-	public void sign(String id, User user) {
+	public ResponseCode sign(String id, User user) {
 		Entryform ef = new Entryform(user.getOpenid(), id, ActivityType.工会活动);
 		if (!entryformDao.isEntry(ef)) {
-			throw new WebException(ResponseCode.未报名);
+			return ResponseCode.未报名;
 		}
 		entryformDao.sign(ef);
+		return ResponseCode.成功;
 	}
 
 	/**

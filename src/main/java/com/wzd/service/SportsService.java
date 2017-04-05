@@ -1,17 +1,23 @@
 package com.wzd.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
+import com.wzd.model.dao.EntryformDao;
 import com.wzd.model.dao.SportsDao;
 import com.wzd.model.entity.Admin;
+import com.wzd.model.entity.Entryform;
 import com.wzd.model.entity.Sports;
 import com.wzd.model.entity.User;
+import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.StateType;
+import com.wzd.utils.DateUtil;
+import com.wzd.web.dto.entryForm.EntryFormDto;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.PageParam;
@@ -26,6 +32,8 @@ import com.wzd.web.param.PageParam;
 public class SportsService {
 	@Autowired
 	private SportsDao sportsDao;
+	@Autowired
+	private EntryformDao entryformDao;
 
 	/**
 	 * 创建健身活动
@@ -75,23 +83,37 @@ public class SportsService {
 	/**
 	 * 获取健身活动报名列表
 	 */
-	public List<Sports> entryList(PageParam param) {
-		// TODO 获取健身活动报名列表
-		return null;
+	public PageInfo<EntryFormDto> entryList(PageParam param, String id) {
+		return entryformDao.entryList(param, id);
 	}
 
 	/**
 	 * 报名健身活动
 	 */
 	public void entry(Sports s, User user) {
-		// TODO 报名健身活动
+		if (s == null || s.getDates().size() != 1 || s.getStarts().size() == 0 || s.getEnds().size() == 0) {
+			throw new WebException(ResponseCode.错误请求, "参数错误");
+		}
+		String date = DateUtil.formatDate(s.getDates().get(0), DateUtil.P_DATE);
+		for (int i = 0; i < s.getStarts().size(); i++) {
+			String start = DateUtil.formatDate(s.getDates().get(0), DateUtil.P_TIME);
+			String end = DateUtil.formatDate(s.getEnds().get(0), DateUtil.P_TIME);
+			entryformDao.entry(new Entryform(user.getOpenid(), s.getId(), ActivityType.健身活动, DateUtil.parseToDate(date + start, DateUtil.P_DATETIME),
+					DateUtil.parseToDate(date + end, DateUtil.P_DATETIME)));
+		}
 	}
 
 	/**
 	 * 签到健身活动
 	 */
-	public void sign(User user) {
-		// TODO 签到健身活动
+	public ResponseCode sign(User user) {
+		List<Entryform> efs = entryformDao.list(new Entryform(user.getOpenid(), ActivityType.健身活动, DeleteType.未删除, StateType.进行中), new Date());
+		if (efs == null || efs.size() < 1) {
+			return ResponseCode.未报名;
+		}
+		Entryform ef = efs.get(0);
+		entryformDao.sign(ef);
+		return ResponseCode.成功;
 	}
 
 }

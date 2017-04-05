@@ -20,6 +20,8 @@
 		<result column="id_card" jdbcType="VARCHAR" property="idCard" />
 		<result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
 		<result column="sex" jdbcType="INTEGER" property="sex" />
+		<result column="start" jdbcType="TIMESTAMP" property="start" />
+		<result column="end" jdbcType="TIMESTAMP" property="end" />
 		<result column="marriage" jdbcType="INTEGER" property="marriage" />
 		<result column="phone" jdbcType="VARCHAR" property="phone" />
 		<result column="dep_name" jdbcType="VARCHAR" property="depName" />
@@ -31,7 +33,7 @@
 
 	<select id="getSignList" resultMap="EntryFormDtoResultMap">
 		select
-		u.nickname,u.name,u.id_card,u.birthday,u.sex,u.marriage,u.phone,u.dep_name,u.audit,e.status,e.created,e.activity_id
+		u.nickname,u.name,u.id_card,u.birthday,u.sex,u.marriage,u.phone,u.dep_name,u.audit,e.status,e.created,e.activity_id,e.start,e.end
 		from entryform e left join user u on e.open_id = u.openid
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="name != null and name != ''">
