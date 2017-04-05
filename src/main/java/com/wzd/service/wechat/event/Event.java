@@ -97,11 +97,10 @@ public class Event {
 	 */
 	private String scan(WechatMsg msg) {
 		// TODO 扫描带参数二维码事件
-		User user = userDao.getByOpenId(msg.getFromUserName());
 		if (SceneType.服务号健身运动签到.getValue().equals(msg.getEventKey())) {
-			sportsService.sign(user);
+			sportsService.sign(userDao.getByOpenId(msg.getFromUserName()));
 		} else {
-			Entryform ef = new Entryform(user.getId(), msg.getEventKey(), ActivityType.工会活动);
+			Entryform ef = new Entryform(msg.getFromUserName(), msg.getEventKey(), ActivityType.工会活动);
 			if (!entryformDao.isEntry(ef)) {
 				return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "您还未报名该活动！");
 			}

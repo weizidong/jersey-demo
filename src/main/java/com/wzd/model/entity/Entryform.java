@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Id;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.alibaba.fastjson.JSON;
 import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
@@ -22,8 +24,9 @@ public class Entryform implements Serializable {
 	@Id
 	private String id; // ID
 	// 自有属性
-	@Column(name = "user_id")
-	private String userId; // 用户ID
+	@Column(name = "open_id")
+	@JsonIgnore
+	private String openId; // openId
 	@Column(name = "activity_id")
 	private String activityId; // 活动ID
 	private Date start; // 开始时间
@@ -37,18 +40,36 @@ public class Entryform implements Serializable {
 		super();
 	}
 
-	public Entryform(String userId, String activityId, ActivityType type) {
-		this.userId = userId;
+	public Entryform(String id, String openId, String activityId, Date start, Date end, ActivityType type, Date created, DeleteType del, Integer status) {
+		this.id = id;
+		this.openId = openId;
 		this.activityId = activityId;
-		this.type = type.getValue();
-	}
-
-	public Entryform(String userId, String activityId, ActivityType type, Date start, Date end) {
-		this.userId = userId;
-		this.activityId = activityId;
-		this.type = type.getValue();
 		this.start = start;
 		this.end = end;
+		this.type = type.getValue();
+		this.created = created;
+		this.deleted = del.getValue();
+		this.status = status;
+	}
+
+	public Entryform(String activityId, ActivityType type, DeleteType del) {
+		this(null, null, activityId, null, null, type, null, del, null);
+	}
+
+	public Entryform(String openId, String activityId, ActivityType type) {
+		this(null, openId, activityId, null, null, type, null, null, null);
+	}
+
+	public Entryform(String openId, String activityId, ActivityType type, Date start, Date end) {
+		this(null, openId, activityId, start, end, type, null, null, null);
+	}
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
 	}
 
 	public String getId() {
@@ -57,14 +78,6 @@ public class Entryform implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 	public String getActivityId() {

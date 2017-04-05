@@ -1,5 +1,6 @@
 package com.wzd.service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,10 @@ import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.FileType;
 import com.wzd.model.enums.StateType;
+import com.wzd.model.enums.ViewPage;
+import com.wzd.service.wechat.msg.WxMsgSender;
+import com.wzd.service.wechat.msg.dto.ARTICLE;
+import com.wzd.service.wechat.msg.dto.NEWS;
 import com.wzd.utils.FileUtil;
 import com.wzd.utils.ThreadPoolUtils;
 import com.wzd.web.dto.entryForm.EntryFormDto;
@@ -177,7 +182,7 @@ public class ActivityService {
 		if (a.getCurrent() >= a.getTotal()) {
 			throw new WebException(ResponseCode.已报满);
 		}
-		Entryform ef = new Entryform(user.getId(), id, ActivityType.工会活动);
+		Entryform ef = new Entryform(user.getOpenid(), id, ActivityType.工会活动);
 		if (entryformDao.isEntry(ef)) {
 			throw new WebException(ResponseCode.已报名);
 		}
@@ -190,7 +195,7 @@ public class ActivityService {
 	 * 签到
 	 */
 	public void sign(String id, User user) {
-		Entryform ef = new Entryform(user.getId(), id, ActivityType.工会活动);
+		Entryform ef = new Entryform(user.getOpenid(), id, ActivityType.工会活动);
 		if (!entryformDao.isEntry(ef)) {
 			throw new WebException(ResponseCode.未报名);
 		}
@@ -218,5 +223,9 @@ public class ActivityService {
 			a.setStatus(StateType.未开始);
 		}
 		update(a);
+		List<Entryform> list = entryformDao.list(new Entryform(id, ActivityType.工会活动, DeleteType.未删除));
+		String title = "活动\"" + a.getName() + "\"已经" + (a.getStatus() == StateType.暂停.getValue() ? "开启！" : "暂停！");
+		WxMsgSender.batchSendToFw(list.stream().map(Entryform::getOpenId).collect(Collectors.toList()),
+				new NEWS(Arrays.asList(new ARTICLE(title, title, ViewPage.genarate(ViewPage.activity, id), a.getPicUrl()))));
 	}
 }

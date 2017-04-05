@@ -6,6 +6,8 @@ import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * 微信返回结果基类
  * 
@@ -83,8 +85,7 @@ public class BaseResp implements Serializable {
 
 	@Override
 	public String toString() {
-		return "{errcode=" + errcode + ", errmsg=" + errmsg + ", invaliduser=" + invaliduser + ", invalidparty=" + invalidparty + ", invalidtag=" + invalidtag + ", invalidlist="
-				+ invalidlist;
+		return JSON.toJSONString(this);
 	}
 
 }

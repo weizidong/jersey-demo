@@ -13,8 +13,11 @@ import java.util.List;
 public class NEWS implements Serializable {
 	private List<ARTICLE> articles;
 
-	public NEWS(List<ARTICLE> articles) {
+	public NEWS() {
 		super();
+	}
+
+	public NEWS(List<ARTICLE> articles) {
 		this.articles = articles;
 	}
 

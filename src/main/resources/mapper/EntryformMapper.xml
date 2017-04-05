@@ -4,7 +4,7 @@
 	<resultMap id="BaseResultMap" type="com.wzd.model.entity.Entryform">
 		<!-- WARNING - @mbggenerated -->
 		<id column="id" jdbcType="CHAR" property="id" />
-		<result column="user_id" jdbcType="CHAR" property="userId" />
+		<result column="open_id" jdbcType="VARCHAR" property="openId" />
 		<result column="activity_id" jdbcType="CHAR" property="activityId" />
 		<result column="start" jdbcType="TIMESTAMP" property="start" />
 		<result column="end" jdbcType="TIMESTAMP" property="end" />
@@ -32,7 +32,7 @@
 	<select id="getSignList" resultMap="EntryFormDtoResultMap">
 		select
 		u.nickname,u.name,u.id_card,u.birthday,u.sex,u.marriage,u.phone,u.dep_name,u.audit,e.status,e.created,e.activity_id
-		from entryform e left join user u on e.user_id = u.id
+		from entryform e left join user u on e.open_id = u.open_id
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="name != null and name != ''">
 				u.name LIKE CONCAT(CONCAT('%', #{name}),'%')

@@ -10,7 +10,7 @@ public class QyWeiXin {
 	@Test
 	public void senmsg() {
 		WxMsg msg = WxMsg.generateText("oFTpnwnsF7Vv6WkM_fySqDtD-rEo", "测试发生消息");
-		WxMsgSender.sendTextToFw(msg);
+		WxMsgSender.sendToFw(msg);
 	}
 
 	@Test

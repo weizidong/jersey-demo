@@ -1,6 +1,7 @@
 package com.wzd.model.dao;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +80,12 @@ public class EntryformDao {
 		p.put("activityId", id);
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<EntryFormDto>(mapper.getSignList(p));
+	}
+
+	/**
+	 * 获取报名列表
+	 */
+	public List<Entryform> list(Entryform ef) {
+		return mapper.select(ef);
 	}
 }
