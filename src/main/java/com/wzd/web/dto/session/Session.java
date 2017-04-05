@@ -23,6 +23,8 @@ public class Session implements Serializable {
 	private Object user;
 	// 请求来源
 	private String appType;
+	// 二维码
+	private String qrcode;
 
 	public String getSessionId() {
 		return sessionId;
@@ -66,6 +68,14 @@ public class Session implements Serializable {
 
 	public void setAppType(APPType appType) {
 		this.appType = appType.getValue();
+	}
+
+	public String getQrcode() {
+		return qrcode;
+	}
+
+	public void setQrcode(String qrcode) {
+		this.qrcode = qrcode;
 	}
 
 	@Override

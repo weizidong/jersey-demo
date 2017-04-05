@@ -46,9 +46,9 @@ public class SocketService {
 	/**
 	 * 发送指令
 	 */
-	public static void send(String userid, SocketMsg msg) {
+	public static void send(String sessionId, SocketMsg msg) {
 		try {
-			Session session = sessionMap.get(userid);
+			Session session = sessionMap.get(sessionId);
 			if (session != null) {
 				String jsonMsg = JSON.toJSONString(msg);
 				log.debug("发送websocket:" + jsonMsg);
@@ -77,18 +77,18 @@ public class SocketService {
 	/**
 	 * 保存连接
 	 */
-	public static void save(String userid, Session session) {
-		if (sessionMap.containsKey(userid)) {
-			sessionMap.replace(userid, session);
+	public static void save(String sessionId, Session session) {
+		if (sessionMap.containsKey(sessionId)) {
+			sessionMap.replace(sessionId, session);
 		} else {
-			sessionMap.put(userid, session);
+			sessionMap.put(sessionId, session);
 		}
 	}
 
 	/**
 	 * 清理连接
 	 */
-	public static void clear(String userid) {
-		sessionMap.remove(userid);
+	public static void clear(String sessionId) {
+		sessionMap.remove(sessionId);
 	}
 }

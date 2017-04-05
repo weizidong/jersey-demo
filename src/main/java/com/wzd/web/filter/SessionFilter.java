@@ -79,6 +79,9 @@ public class SessionFilter implements Filter {
 			// 管理平台换取Token
 			if (appType.equals(APPType.管理平台.getValue())) {
 				session = qyService.getUserInfo(requestUrl.substring(requestUrl.lastIndexOf("/") + 1), code);
+				if (session == null) {
+					throw new WebException(ResponseCode.登录超时);
+				}
 			}
 			// 服务号换取Token
 			if (appType.equals(APPType.服务号.getValue())) {

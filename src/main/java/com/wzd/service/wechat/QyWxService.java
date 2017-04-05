@@ -159,7 +159,9 @@ public class QyWxService {
 		if (session != null) {
 			Admin admin = adminDao.getByUserId(user.getUserId());
 			session.setUser(admin);
-			SocketService.send(sessionId, new SocketMsg(SocketType.登录, admin));
+			SocketService.send(sessionId, new SocketMsg(SocketType.登录, session));
+		} else {
+			SocketService.send(sessionId, new SocketMsg(SocketType.登录超时, null));
 		}
 		return session;
 	}

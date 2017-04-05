@@ -1,7 +1,5 @@
 package com.wzd.web.rest.api;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
@@ -22,6 +20,7 @@ import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.AdminService;
 import com.wzd.utils.PoiExcelUtils;
+import com.wzd.web.dto.session.Session;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.IdListParam;
 import com.wzd.web.param.PageParam;
@@ -40,6 +39,15 @@ public class AdminApi {
 	private AdminService service;
 
 	/**
+	 * 获取我的资料
+	 */
+	@GET
+	@Path("/mine")
+	public Admin findMine(@Context HttpServletRequest request) {
+		return (Admin) SessionUtil.getUser(request);
+	}
+
+	/**
 	 * 登录
 	 */
 	@POST
@@ -53,7 +61,7 @@ public class AdminApi {
 	 */
 	@GET
 	@Path("/login2")
-	public Map<String, Object> login2(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+	public Session login2(@Context HttpServletRequest request, @Context HttpServletResponse response) {
 		return service.login2(request, response);
 	}
 
