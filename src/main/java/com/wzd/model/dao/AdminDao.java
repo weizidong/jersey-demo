@@ -6,11 +6,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.mapper.AdminMapper;
 import com.wzd.utils.UUIDUtil;
 import com.wzd.web.param.IdListParam;
+import com.wzd.web.param.PageParam;
 
 import tk.mybatis.mapper.entity.Example;
 
@@ -114,6 +117,20 @@ public class AdminDao {
 		return mapper.selectOne(admin);
 	}
 
+	/**
+	 * 根据条件分页查询
+	 */
+	public PageInfo<Admin> find(PageParam param) {
+		Example e = new Example(Admin.class);
+		PageParam.setCondition(e, "created", param, Admin.class);
+		e.setOrderByClause("created DESC");
+		PageHelper.startPage(param.getPage(), param.getPageSize());
+		return new PageInfo<Admin>(mapper.selectByExample(e));
+	}
+
+	/**
+	 * 批量删除
+	 */
 	public void delete(IdListParam<String> param) {
 		Example e = new Example(Admin.class);
 		e.createCriteria().andIn("id", param.getIds());
@@ -124,5 +141,14 @@ public class AdminDao {
 			a.setDeleted(param.getType());
 			mapper.updateByExampleSelective(a, e);
 		}
+	}
+
+	/**
+	 * 根据Id获取
+	 */
+	public Admin getById(String id) {
+		Admin a = new Admin();
+		a.setId(id);
+		return mapper.selectOne(a);
 	}
 }

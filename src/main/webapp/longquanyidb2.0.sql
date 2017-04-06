@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-04-05 20:13:47
+Date: 2017-04-05 21:17:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,8 +35,8 @@ CREATE TABLE `activity` (
   `place` varchar(50) DEFAULT NULL COMMENT '活动举办地点',
   `website` varchar(255) DEFAULT NULL,
   `ticket` varchar(255) DEFAULT NULL,
-  `detail` blob COMMENT '活动详情',
-  `rule` blob,
+  `detail` text COMMENT '活动详情',
+  `rule` text,
   `admin_id` char(32) DEFAULT NULL,
   `created` datetime DEFAULT NULL COMMENT '创建时间',
   `type` int(2) DEFAULT NULL COMMENT '类型',
@@ -82,7 +82,7 @@ DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `id` char(32) NOT NULL,
   `title` varchar(20) DEFAULT NULL,
-  `content` blob,
+  `content` text,
   `img_url` varchar(255) DEFAULT NULL,
   `type` int(2) DEFAULT NULL,
   `pub_user` char(32) DEFAULT NULL,
@@ -271,7 +271,7 @@ CREATE TABLE `welfare` (
   `current` int(6) DEFAULT NULL,
   `type` int(2) DEFAULT NULL,
   `deleted` int(1) DEFAULT NULL,
-  `rule` blob,
+  `rule` text,
   `admin_id` char(32) DEFAULT NULL,
   `wishing` varchar(255) DEFAULT NULL,
   `news` varchar(500) DEFAULT NULL,

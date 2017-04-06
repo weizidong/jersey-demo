@@ -17,8 +17,8 @@
 		<result column="place" jdbcType="VARCHAR" property="place" />
 		<result column="website" jdbcType="VARCHAR" property="website" />
 		<result column="ticket" jdbcType="VARCHAR" property="ticket" />
-		<result column="detail" jdbcType="LONGVARBINARY" property="detail" />
-		<result column="rule" jdbcType="LONGVARBINARY" property="rule" />
+		<result column="detail" jdbcType="VARCHAR" property="detail" />
+		<result column="rule" jdbcType="VARCHAR" property="rule" />
 		<result column="admin_id" jdbcType="VARCHAR" property="adminId" />
 		<result column="created" jdbcType="TIMESTAMP" property="created" />
 		<result column="total" jdbcType="INTEGER" property="total" />

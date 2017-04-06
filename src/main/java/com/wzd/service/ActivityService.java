@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.ActivityDao;
+import com.wzd.model.dao.AdminDao;
 import com.wzd.model.dao.EntryformDao;
 import com.wzd.model.dao.FileDao;
 import com.wzd.model.entity.Activity;
@@ -45,6 +46,8 @@ public class ActivityService {
 	@Autowired
 	private ActivityDao activityDao;
 	@Autowired
+	private AdminDao adminDao;
+	@Autowired
 	private FileDao fileDao;
 	@Autowired
 	private EntryformDao entryformDao;
@@ -55,11 +58,11 @@ public class ActivityService {
 	 * 创建活动
 	 */
 	public Activity create(Activity a, Admin admin) {
+		a.setAdminId(admin.getId());
+		activityDao.create(a);
 		if (a.getFiles() != null && a.getFiles().size() > 0) {
 			fileDao.update(new Files(a.getId(), FileType.活动配图), a.getFiles().stream().map(Files::getId).collect(Collectors.toList()));
 		}
-		a.setAdminId(admin.getId());
-		activityDao.create(a);
 		setTimmer(a);
 		return a;
 	}
@@ -148,6 +151,7 @@ public class ActivityService {
 		Activity a = activityDao.findById(id);
 		List<Files> files = fileDao.getByFk(new Files(a.getId(), FileType.活动配图));
 		a.setFiles(files);
+		a.setAdmin(adminDao.getById(a.getAdminId()));
 		return a;
 	}
 

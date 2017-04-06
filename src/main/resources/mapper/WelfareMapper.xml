@@ -22,6 +22,6 @@
 		<result column="deleted" jdbcType="INTEGER" property="deleted" />
 		<result column="status" jdbcType="INTEGER" property="status" />
 		<result column="admin_id" jdbcType="CHAR" property="adminId" />
-		<result column="rule" jdbcType="LONGVARBINARY" property="rule" />
+		<result column="rule" jdbcType="VARCHAR" property="rule" />
 	</resultMap>
 </mapper>

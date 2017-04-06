@@ -17,6 +17,6 @@
     <result column="auditor" property="auditor" jdbcType="CHAR" />
     <result column="audit" property="audit" jdbcType="INTEGER" />
     <result column="aud_time" property="audTime" jdbcType="TIMESTAMP" />
-    <result column="content" property="content" jdbcType="LONGVARBINARY" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
   </resultMap>
 </mapper>

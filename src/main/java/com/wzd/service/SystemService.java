@@ -134,7 +134,7 @@ public class SystemService {
 		w.setTime(time); // 次数
 		w.setTotal(total); // 总的个数
 		w.setType(type); // 类型
-		w.setRule(("1、福利期间每人只能兑换" + time + "次福利。").getBytes()); // 规则
+		w.setRule("1、福利期间每人只能兑换" + time + "次福利。"); // 规则
 		Admin a = new Admin();
 		a.setId(ID);
 		welfareService.create(w, a);
@@ -146,8 +146,8 @@ public class SystemService {
 	private void createActivity(Admin admin) {
 		Date d = new Date();
 		Activity a = new Activity("user", "龙泉驿区职工年中盛典", DateUtil.getBeforeDate(d, 10), DateUtil.getAfterDate(d, 10), DateUtil.getBeforeDate(d, 8), DateUtil.getAfterDate(d, 5),
-				EntryType.所有用户可报名, 500, "龙泉驿区总工会", "成都爱创业科技有限公司", "成都爱创业科技有限公司", "成都市龙泉驿区红光路128号兴隆广场127号1002会议室", "http://www.ichuangye.cn", "1、福利期间每人只能兑换次福利。".getBytes(),
-				"1、福利期间每人只能兑换次福利。".getBytes(), 2000, ActivityType.普通活动);
+				EntryType.所有用户可报名, 500, "龙泉驿区总工会", "成都爱创业科技有限公司", "成都爱创业科技有限公司", "成都市龙泉驿区红光路128号兴隆广场127号1002会议室", "http://www.ichuangye.cn", "1、福利期间每人只能兑换次福利。",
+				"1、福利期间每人只能兑换次福利。", 2000, ActivityType.普通活动);
 		activityService.create(a, admin);
 	}
 

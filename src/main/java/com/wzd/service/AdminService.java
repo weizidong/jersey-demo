@@ -105,8 +105,7 @@ public class AdminService {
 	 * 条件分页查询
 	 */
 	public PageInfo<Admin> find(PageParam param) {
-		// TODO 条件分页查询管理员
-		return null;
+		return dao.find(param);
 	}
 
 	/**

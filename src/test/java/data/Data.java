@@ -44,7 +44,7 @@ public class Data extends BasicTest {
 		w.setTime(time); // 次数
 		w.setTotal(total); // 总的个数
 		w.setType(type); // 类型
-		w.setRule(("1、福利期间每人只能兑换" + time + "次福利。").getBytes()); // 规则
+		w.setRule("1、福利期间每人只能兑换" + time + "次福利。"); // 规则
 		welfareService.create(w, null);
 	}
 

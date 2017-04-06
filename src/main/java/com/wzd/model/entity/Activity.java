@@ -43,8 +43,8 @@ public class Activity implements Serializable {
 	private String place; // 活动地点
 	private String website; // 提供方链接
 	private String ticket; // 签到二维码
-	private Object detail; // 活动详情
-	private Object rule; // 活动规则
+	private String detail; // 活动详情
+	private String rule; // 活动规则
 	@Column(name = "admin_id")
 	private String adminId;// 发布者
 	private Date created;// 发布时间
@@ -56,6 +56,8 @@ public class Activity implements Serializable {
 	private Integer status; // 状态
 
 	@Transient
+	private Admin admin; // 发布者
+	@Transient
 	private List<Files> files; // 活动配图
 
 	public Activity() {
@@ -63,7 +65,7 @@ public class Activity implements Serializable {
 	}
 
 	public Activity(String picUrl, String name, Date start, Date end, Date entryStart, Date entryEnd, EntryType entry, Integer score, String sponsor, String coSponsor,
-			String organizer, String place, String website, Object detail, Object rule, Integer total, ActivityType type) {
+			String organizer, String place, String website, String detail, String rule, Integer total, ActivityType type) {
 		this.picUrl = picUrl;
 		this.name = name;
 		this.start = start;
@@ -92,6 +94,14 @@ public class Activity implements Serializable {
 		if (files != null && files.size() > 0) {
 			this.picUrl = files.get(0).getUrl();
 		}
+	}
+
+	public Admin getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
 	}
 
 	public String getId() {
@@ -230,19 +240,19 @@ public class Activity implements Serializable {
 		this.website = website;
 	}
 
-	public Object getDetail() {
+	public String getDetail() {
 		return detail;
 	}
 
-	public void setDetail(Object detail) {
+	public void setDetail(String detail) {
 		this.detail = detail;
 	}
 
-	public Object getRule() {
+	public String getRule() {
 		return rule;
 	}
 
-	public void setRule(Object rule) {
+	public void setRule(String rule) {
 		this.rule = rule;
 	}
 

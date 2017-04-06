@@ -36,7 +36,7 @@ public class Welfare implements Serializable {
 	private String website; // 提供者网站
 	private Integer current;// 当前领取个数
 	private Integer type;// 福利类型
-	private Object rule;// 规则
+	private String rule;// 规则
 	private String wishing; // 红包祝福语
 	private String news; // 图文回复
 	private String text; // 文本回复
@@ -150,11 +150,11 @@ public class Welfare implements Serializable {
 		this.type = type.getValue();
 	}
 
-	public Object getRule() {
+	public String getRule() {
 		return rule;
 	}
 
-	public void setRule(Object rule) {
+	public void setRule(String rule) {
 		this.rule = rule;
 	}
 

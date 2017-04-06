@@ -22,7 +22,7 @@ public class Article implements Serializable {
 	private String id; // ID
 	// 自有属性
 	private String title; // 标题
-	private Object content;// 内容
+	private String content;// 内容
 	@Column(name = "pic_url")
 	private String imgUrl;// 配图
 	private Integer type; // 文章类型
@@ -60,11 +60,11 @@ public class Article implements Serializable {
 		this.title = title;
 	}
 
-	public Object getContent() {
+	public String getContent() {
 		return content;
 	}
 
-	public void setContent(Object content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 
