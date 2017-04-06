@@ -59,7 +59,7 @@ public class SessionFilter implements Filter {
 		// 回调授权code
 		String code = request.getParameter("code");
 		// 微信回调不检测
-		if (requestUrl.startsWith("rest/wechat/")) {
+		if (requestUrl.startsWith("rest/wechat/") || requestUrl.startsWith("websocekt/")) {
 			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
