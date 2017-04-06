@@ -27,7 +27,6 @@ public class User extends BaseResp {
 	private String id;
 	// 微信属性
 	private Integer subscribe; // 用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。
-	@JsonIgnore
 	private String openid; // 用户的标识，对当前公众号唯一
 	private String city; // 用户所在城市
 	private String country; // 用户所在国家
@@ -82,6 +81,8 @@ public class User extends BaseResp {
 	private Integer actNum;// 活动个数
 	@Transient
 	private Boolean isSign;// 是否已签到
+	@Transient
+	private Boolean exp; // 有无工作经验
 
 	public User() {
 		super();
@@ -105,6 +106,14 @@ public class User extends BaseResp {
 
 	public void setSubscribe(SubType sub) {
 		this.subscribe = sub.getValue();
+	}
+
+	public Boolean getExp() {
+		return exp;
+	}
+
+	public void setExp(Boolean exp) {
+		this.exp = exp;
 	}
 
 	public String getDepName() {
@@ -134,6 +143,7 @@ public class User extends BaseResp {
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
 	}
+
 	public void setDeleted(DeleteType del) {
 		this.deleted = del.getValue();
 	}

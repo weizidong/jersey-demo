@@ -123,7 +123,7 @@ public class AdminDao {
 	public PageInfo<Admin> find(PageParam param) {
 		Example e = new Example(Admin.class);
 		PageParam.setCondition(e, "created", param, Admin.class);
-		e.setOrderByClause("created DESC");
+		e.setOrderByClause(e.getOrderByClause() + ",created DESC");
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<Admin>(mapper.selectByExample(e));
 	}

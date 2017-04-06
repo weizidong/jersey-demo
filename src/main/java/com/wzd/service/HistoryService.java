@@ -61,4 +61,17 @@ public class HistoryService {
 		return historyDao.getSignList(param);
 	}
 
+	/**
+	 * 获取我的福利
+	 */
+	public List<History> findWelfare(PageParam param, String userId, DeleteType del) {
+		return historyDao.list(param, userId, Arrays.asList(HistoryType.券票福利.getValue(), HistoryType.红包福利.getValue()), del);
+	}
+
+	/**
+	 * 删除历史记录
+	 */
+	public void delete(String id, DeleteType del) {
+		historyDao.delete(id, del);
+	}
 }

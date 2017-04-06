@@ -10,7 +10,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum ActivityType {
-	普通活动(0), 健身活动(1), 工会活动(2), 相亲活动(3), 红包活动(4), 优惠券活动(5), 电影票活动(6);
+	普通活动(0), 健身活动(1), 工会活动(2), 相亲活动(3), 红包活动(4), 优惠券活动(5), 电影票活动(6), 招聘活动(7);
 	private Integer value;
 
 	private ActivityType(Integer value) {

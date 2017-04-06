@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -47,6 +48,15 @@ public class HistoryApi {
 	}
 
 	/**
+	 * 获取我的福利
+	 */
+	@POST
+	@Path("/welfare/{userId}/{del}")
+	public List<History> welfare(PageParam param, @PathParam("userId") String userId, @PathParam("del") Integer del) {
+		return service.findWelfare(param, userId, DeleteType.parse(del));
+	}
+
+	/**
 	 * 获取消息历史记录
 	 */
 	@POST
@@ -73,5 +83,14 @@ public class HistoryApi {
 	public List<History> getWeekSign(@Context HttpServletRequest request) {
 		User user = (User) SessionUtil.getUser(request);
 		return service.getSign(user.getId());
+	}
+
+	/**
+	 * 删除历史记录
+	 */
+	@DELETE
+	@Path("/delete/{id}/{del}")
+	public void delete(@PathParam("id") String id, @PathParam("del") Integer del) {
+		service.delete(id, DeleteType.parse(del));
 	}
 }

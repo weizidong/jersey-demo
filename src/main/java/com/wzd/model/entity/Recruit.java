@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.enums.DeleteType;
+import com.wzd.model.enums.StateType;
 
 /**
  * 招聘信息
@@ -176,12 +178,20 @@ public class Recruit implements Serializable {
 		this.deleted = deleted;
 	}
 
+	public void setDeleted(DeleteType del) {
+		this.deleted = del.getValue();
+	}
+
 	public Integer getStatus() {
 		return status;
 	}
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public void setStatus(StateType status) {
+		this.status = status.getValue();
 	}
 
 	public List<String> getLinkmans() {

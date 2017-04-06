@@ -120,4 +120,18 @@ public class HistoryDao {
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<SignDto>(mapper.getSignList(PageParam.getCondition(param, SignDto.class)));
 	}
+
+	/**
+	 * 删除历史记录
+	 */
+	public void delete(String id, DeleteType del) {
+		History h = new History();
+		h.setId(id);
+		if (del == DeleteType.永久删除) {
+			mapper.delete(h);
+		} else {
+			h.setDeleled(del);
+			mapper.updateByPrimaryKeySelective(h);
+		}
+	}
 }

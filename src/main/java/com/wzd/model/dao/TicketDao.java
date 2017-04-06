@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.github.pagehelper.PageHelper;
-import com.wzd.model.entity.Files;
 import com.wzd.model.entity.Ticket;
 import com.wzd.model.mapper.TicketMapper;
 import com.wzd.web.dto.exception.WebException;
