@@ -62,7 +62,7 @@ public class TicketDao {
 	 * 获取最新一张未使用的票
 	 */
 	public Ticket getNew(String foreignKey) {
-		Example e = new Example(Files.class);
+		Example e = new Example(Ticket.class);
 		e.createCriteria().andEqualTo("foreignKey", foreignKey).andIsNull("draw");
 		PageHelper.startPage(1, 1);
 		List<Ticket> tickets = mapper.selectByExample(e);
