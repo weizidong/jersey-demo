@@ -40,13 +40,13 @@ import com.wzd.web.param.PageParam;
 @Service
 public class AdminService {
 	@Autowired
-	private AdminDao dao;
+	private AdminDao adminDao;
 
 	/**
 	 * 登录
 	 */
 	public void login(Admin admin, HttpServletRequest request, HttpServletResponse response) {
-		Admin dbAdmin = dao.login(admin, DeleteType.未删除);
+		Admin dbAdmin = adminDao.login(admin, DeleteType.未删除);
 		if (dbAdmin == null) {
 			throw new WebException(ResponseCode.用户不存在);
 		}
@@ -56,7 +56,7 @@ public class AdminService {
 		}
 		// 更新登录时间
 		dbAdmin.setLogin(new Date());
-		dao.update(dbAdmin);
+		adminDao.update(dbAdmin);
 		// 保存Session
 		Session session = SessionUtil.generateSession(APPType.管理平台.getValue(), null, null, dbAdmin);
 		SessionUtil.saveSession(session, request, response);
@@ -67,7 +67,7 @@ public class AdminService {
 	 */
 	public void create(Admin admin) {
 		QyUserApi.create(admin);
-		dao.create(admin);
+		adminDao.create(admin);
 	}
 
 	/**
@@ -75,44 +75,48 @@ public class AdminService {
 	 */
 	public void delete(String userid, DeleteType type) {
 		QyUserApi.delete(userid);
-		dao.delete(userid, type);
+		adminDao.delete(userid, type);
 	}
 
 	/**
 	 * 批量删除
 	 */
 	public void delete(IdListParam<String> param) {
-		dao.delete(param);
+		if (DeleteType.parse(param.getType()) == DeleteType.永久删除) {
+			QyUserApi.batchDelete(param.getIds());
+		}
+		adminDao.delete(param);
 	}
 
 	/**
 	 * 修改
 	 */
 	public void update(Admin admin) {
-		// TODO 修改管理员
-
+		QyUserApi.update(admin);
+		adminDao.update(admin);
 	}
 
 	/**
 	 * 查询详情
 	 */
-	public Admin findById(Integer id) {
-		// TODO 查询管理员详情
-		return null;
+	public Admin findById(String id) {
+		return adminDao.getById(id);
 	}
 
 	/**
 	 * 条件分页查询
 	 */
 	public PageInfo<Admin> find(PageParam param) {
-		return dao.find(param);
+		return adminDao.find(param);
 	}
 
 	/**
 	 * 审核
 	 */
-	public void auditing(AuditType parse, Admin user) {
-		// TODO 审核管理员
+	public void auditing(String id, AuditType type) {
+		Admin a = adminDao.getById(id);
+		a.setAudit(type);
+		adminDao.update(a);
 	}
 
 	/**
@@ -134,10 +138,11 @@ public class AdminService {
 		ThreadPoolUtils.schedule(() -> {
 			Session now = eh.getSession(s.getSessionId());
 			if (now.getUser() == null) {
-				eh.removeSession(s.getSessionId());
+				SessionUtil.removeSession(s.getSessionId(), request, response);
 			}
 			FileUtil.delete(s.getQrcode());
 		}, new Date(s.getTs() + 2 * 60 * 1000));
+		SessionUtil.saveSession(s, request, response);
 		return s;
 	}
 

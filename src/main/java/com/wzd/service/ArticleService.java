@@ -22,7 +22,7 @@ public class ArticleService {
 	@Autowired
 	private ArticleDao articleDao;
 
-	public Article create(Article a, Admin user) {
+	public Article create(Article a, Admin u) {
 		// TODO 发布文章
 		return articleDao.create(a);
 	}
@@ -30,7 +30,7 @@ public class ArticleService {
 	/**
 	 * 获取文章列表
 	 */
-	public PageInfo<Article> find(PageParam param, ArticleType parse, DeleteType parse2, Admin user) {
+	public PageInfo<Article> find(PageParam param, ArticleType type, DeleteType del, Admin u) {
 		// TODO 获取文章列表
 		return null;
 	}

@@ -45,7 +45,6 @@ public class Department extends BaseResp {
 	}
 
 	public Department(Integer id, String name, Integer parentid, Integer order, String admin, Integer deleted, List<Department> child) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.parentid = parentid;

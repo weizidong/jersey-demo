@@ -97,7 +97,7 @@ public class AdminApi {
 	 */
 	@GET
 	@Path("/get/{id}")
-	public Admin getById(@PathParam("id") Integer id) {
+	public Admin getById(@PathParam("id") String id) {
 		return service.findById(id);
 	}
 
@@ -114,9 +114,9 @@ public class AdminApi {
 	 * 审核
 	 */
 	@POST
-	@Path("/audit/{type}")
-	public void auditing(@PathParam("type") Integer type, @Context HttpServletRequest request) {
-		service.auditing(AuditType.parse(type), (Admin) SessionUtil.getUser(request));
+	@Path("/audit/{id}/{audit}")
+	public void auditing(@PathParam("id") String id, @PathParam("audit") Integer audit) {
+		service.auditing(id, AuditType.parse(audit));
 	}
 
 	/**

@@ -24,7 +24,7 @@ import com.wzd.web.dto.session.SessionUtil;
 @Service
 public class DepartmentService {
 	@Autowired
-	private DepartmentDao dao;
+	private DepartmentDao departmentDao;
 	@Autowired
 	private WxDepService wxService;
 
@@ -35,7 +35,7 @@ public class DepartmentService {
 		Admin admin = (Admin) SessionUtil.getUser(request);
 		dep = wxService.create(dep);
 		dep.setAdmin(admin.getId());
-		dao.create(dep);
+		departmentDao.create(dep);
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class DepartmentService {
 	 */
 	public void delete(Integer id, DeleteType type) {
 		wxService.delete(id);
-		dao.delete(id, type);
+		departmentDao.delete(id, type);
 	}
 
 	/**
@@ -57,14 +57,14 @@ public class DepartmentService {
 	 * 根据id查询
 	 */
 	public Department findById(Integer id) {
-		return dao.getById(id, null);
+		return departmentDao.getById(id, null);
 	}
 
 	/**
 	 * 获取部门列表(全部)
 	 */
 	public List<Department> findAll() {
-		return dao.findAll(DeleteType.未删除);
+		return departmentDao.findAll(DeleteType.未删除);
 	}
 
 	/**
@@ -75,12 +75,12 @@ public class DepartmentService {
 			return null;
 		}
 		if (StringUtil.isEmpty(dep.getName())) {
-			dep = dao.getById(dep.getId() == null ? 0 : dep.getId(), DeleteType.parse(dep.getDeleted()));
+			dep = departmentDao.getById(dep.getId() == null ? 0 : dep.getId(), DeleteType.parse(dep.getDeleted()));
 		}
 		if (dep == null) {
 			return null;
 		}
-		List<Department> deps = dao.findByParentid(dep.getId());
+		List<Department> deps = departmentDao.findByParentid(dep.getId());
 		if (deps != null && deps.size() > 0) {
 			deps.forEach(d -> {
 				d = findTree(d);

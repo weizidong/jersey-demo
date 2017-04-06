@@ -205,6 +205,7 @@ public class Admin extends BaseResp {
 	public void setDeleted(Integer deleted) {
 		this.deleted = deleted;
 	}
+
 	public void setDeleted(DeleteType del) {
 		this.deleted = del.getValue();
 	}
@@ -255,6 +256,10 @@ public class Admin extends BaseResp {
 
 	public void setAudit(Integer audit) {
 		this.audit = audit;
+	}
+
+	public void setAudit(AuditType audit) {
+		this.audit = audit.getValue();
 	}
 
 	@Override
