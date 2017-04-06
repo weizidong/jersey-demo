@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzd.model.mapper.RecruitMapper">
+	<resultMap id="BaseResultMap" type="com.wzd.model.entity.Recruit">
+		<id column="id" jdbcType="CHAR" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="num" jdbcType="INTEGER" property="num" />
+		<result column="current" jdbcType="INTEGER" property="current" />
+		<result column="pay" jdbcType="INTEGER" property="pay" />
+		<result column="company" jdbcType="VARCHAR" property="company" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="start" jdbcType="TIMESTAMP" property="start" />
+		<result column="end" jdbcType="TIMESTAMP" property="end" />
+		<result column="linkman" jdbcType="VARCHAR" property="linkman" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="claim" jdbcType="VARCHAR" property="claim" />
+		<result column="treatment" jdbcType="VARCHAR" property="treatment" />
+		<result column="admin_id" jdbcType="VARCHAR" property="adminId" />
+		<result column="created" jdbcType="TIMESTAMP" property="created" />
+		<result column="deleted" jdbcType="INTEGER" property="deleted" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+	</resultMap>
+</mapper>

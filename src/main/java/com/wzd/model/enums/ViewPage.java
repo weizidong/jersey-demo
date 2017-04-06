@@ -16,9 +16,13 @@ public abstract class ViewPage {
 	 */
 	public static final String activity = "view/activity/{0}";
 	/**
-	 * 二维码登录
+	 * 登陆成功
 	 */
-	public static String login2 = "view/login2/{0}?appType=zhxt";
+	public static String loginSuccess = "view/zhxt/loginSuccess?appType={0}";
+	/**
+	 * 登陆失败
+	 */
+	public static String loginError = "view/zhxt/loginError";
 
 	public static String genarate(String page, Object... arguments) {
 		return Configs.hostname + MessageFormat.format(page, arguments);

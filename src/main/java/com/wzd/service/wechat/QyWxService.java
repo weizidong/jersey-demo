@@ -148,11 +148,13 @@ public class QyWxService {
 	public Session getUserInfo(String sessionId, String code) {
 		QyUser user = RestClientUtil.get(MessageFormat.format(QyAPI.GETUSERINFO, getToken(), code), QyUser.class);
 		if (user.getErrcode() != null) {
-			throw new WebException(user.getErrcode(), user.getErrmsg());
+			log.error(user.getErrcode() + "," + user.getErrmsg());
+			return null;
 		}
 		// 非企业成员
 		if (user.getOpenId() != null) {
-			throw new WebException(ResponseCode.未授权, "不是企业成员");
+			log.error("不是企业成员");
+			return null;
 		}
 		// 企业成员
 		Session session = SessionUtil.getSessionById(sessionId);

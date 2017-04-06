@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.wzd.model.enums.APPType;
+import com.wzd.model.enums.ViewPage;
 import com.wzd.service.wechat.FwWxService;
 import com.wzd.service.wechat.QyWxService;
 import com.wzd.service.wechat.base.FwAPI;
@@ -80,7 +81,8 @@ public class SessionFilter implements Filter {
 			if (appType.equals(APPType.管理平台.getValue())) {
 				session = qyService.getUserInfo(requestUrl.substring(requestUrl.lastIndexOf("/") + 1), code);
 				if (session == null) {
-					throw new WebException(ResponseCode.登录超时);
+					request.getRequestDispatcher("/" + ViewPage.loginError).forward(request, response);
+					return;
 				}
 			}
 			// 服务号换取Token

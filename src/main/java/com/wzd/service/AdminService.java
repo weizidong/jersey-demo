@@ -132,7 +132,7 @@ public class AdminService {
 	 */
 	public Session login2(HttpServletRequest request, HttpServletResponse response) {
 		Session s = SessionUtil.generateSession(APPType.管理平台.getValue(), null, null, null);
-		s.setQrcode(QRCodeUtil.encode(ViewPage.genarate(ViewPage.login2, s.getSessionId())));
+		s.setQrcode(QRCodeUtil.encode(ViewPage.genarate(ViewPage.loginSuccess, APPType.管理平台.getValue())));
 		EhcacheUtil eh = EhcacheUtil.getInstance();
 		eh.putSession(s.getSessionId(), s);
 		ThreadPoolUtils.schedule(() -> {
