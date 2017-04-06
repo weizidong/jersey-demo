@@ -88,7 +88,7 @@ public class UserDao {
 	public List<User> find(PageParam param) {
 		Example e = new Example(User.class);
 		PageParam.setCondition(e, "created", param, User.class);
-		e.setOrderByClause(e.getOrderByClause() + ",created DESC");
+		PageParam.setOrderByClause(e, "created DESC");
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return mapper.selectByExample(e);
 	}

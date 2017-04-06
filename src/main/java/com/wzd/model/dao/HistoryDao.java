@@ -3,6 +3,7 @@ package com.wzd.model.dao;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import com.wzd.model.mapper.HistoryMapper;
 import com.wzd.utils.DateUtil;
 import com.wzd.utils.UUIDUtil;
 import com.wzd.web.dto.history.SignDto;
+import com.wzd.web.dto.history.WelfareDto;
 import com.wzd.web.param.PageParam;
 
 import tk.mybatis.mapper.entity.Example;
@@ -56,7 +58,7 @@ public class HistoryDao {
 	public List<History> list(PageParam param, String userId, List<Integer> types, DeleteType del) {
 		Example e = new Example(History.class);
 		Criteria c = PageParam.setCondition(e, "recording", param, History.class);
-		e.setOrderByClause(e.getOrderByClause() + ",recording DESC");
+		PageParam.setOrderByClause(e, "recording DESC");
 		c.andEqualTo("userId", userId).andIn("type", types);
 		if (del != DeleteType.全部) {
 			c.andEqualTo("deleled", del.getValue());
@@ -133,5 +135,16 @@ public class HistoryDao {
 			h.setDeleled(del);
 			mapper.updateByPrimaryKeySelective(h);
 		}
+	}
+
+	/**
+	 * 获取我的福利
+	 */
+	public List<WelfareDto> findWelfare(PageParam param, String userId, List<Integer> types, DeleteType del) {
+		Map<String, Object> map = PageParam.getCondition(param, WelfareDto.class);
+		map.put("userId", userId);
+		map.put("types", types);
+		map.put("del", del.getValue());
+		return mapper.findWelfare(map);
 	}
 }

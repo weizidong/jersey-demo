@@ -79,7 +79,7 @@ public class ActivityDao {
 	public List<Activity> find(PageParam param) {
 		Example e = new Example(Activity.class);
 		PageParam.setCondition(e, "created", param, Activity.class);
-		e.setOrderByClause(e.getOrderByClause() + ",created DESC");
+		PageParam.setOrderByClause(e, "created DESC");
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return mapper.selectByExample(e);
 	}

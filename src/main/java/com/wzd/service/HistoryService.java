@@ -14,6 +14,7 @@ import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.web.dto.history.HistoryDto;
 import com.wzd.web.dto.history.SignDto;
+import com.wzd.web.dto.history.WelfareDto;
 import com.wzd.web.param.PageParam;
 
 /**
@@ -43,8 +44,8 @@ public class HistoryService {
 	/**
 	 * 获取未读消息
 	 */
-	public List<History> findMsg(PageParam param, String userid) {
-		return historyDao.list(param, userid, HistoryType.系统消息, DeleteType.未删除);
+	public PageInfo<History> findMsg(PageParam param, String userid) {
+		return new PageInfo<History>(historyDao.list(param, userid, HistoryType.系统消息, DeleteType.未删除));
 	}
 
 	/**
@@ -64,8 +65,8 @@ public class HistoryService {
 	/**
 	 * 获取我的福利
 	 */
-	public List<History> findWelfare(PageParam param, String userId, DeleteType del) {
-		return historyDao.list(param, userId, Arrays.asList(HistoryType.券票福利.getValue(), HistoryType.红包福利.getValue()), del);
+	public PageInfo<WelfareDto> findWelfare(PageParam param, String userId, DeleteType del) {
+		return new PageInfo<WelfareDto>(historyDao.findWelfare(param, userId, Arrays.asList(HistoryType.券票福利.getValue(), HistoryType.红包福利.getValue()), del));
 	}
 
 	/**

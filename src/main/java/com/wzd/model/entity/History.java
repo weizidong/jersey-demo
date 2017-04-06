@@ -114,6 +114,7 @@ public class History implements Serializable {
 	public void setType(Integer type) {
 		this.type = type;
 	}
+
 	public void setType(HistoryType type) {
 		this.type = type.getValue();
 	}

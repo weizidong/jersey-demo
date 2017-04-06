@@ -108,6 +108,9 @@ public class PageParam implements Serializable {
 	 * 设置参数到Example
 	 */
 	public static Criteria setCondition(Example e, String timeFiled, PageParam param, Class<?> clazz) {
+		if (param == null) {
+			param = new PageParam();
+		}
 		// 所有的字段名
 		List<String> fields = Arrays.stream(clazz.getDeclaredFields()).map(field -> field.getName()).collect(Collectors.toList());
 		// 筛选条件
@@ -139,6 +142,9 @@ public class PageParam implements Serializable {
 				} else {
 					orderStr.append(filed + " " + param.getOrder()[i]);
 				}
+				if (i < param.getSort().length - 1) {
+					orderStr.append(",");
+				}
 			}
 			e.setOrderByClause(orderStr.toString());
 		}
@@ -146,9 +152,23 @@ public class PageParam implements Serializable {
 	}
 
 	/**
+	 * 设置默认的排序条件
+	 */
+	public static void setOrderByClause(Example e, String order) {
+		if (e.getOrderByClause() == null) {
+			e.setOrderByClause(order);
+		} else {
+			e.setOrderByClause(e.getSelectColumns() + "," + order);
+		}
+	}
+
+	/**
 	 * 转换参数
 	 */
 	public static Map<String, Object> getCondition(PageParam param, Class<?> clazz) {
+		if (param == null) {
+			param = new PageParam();
+		}
 		// 所有的字段名
 		List<String> fields = Arrays.stream(clazz.getDeclaredFields()).map(field -> field.getName()).collect(Collectors.toList());
 		Map<String, Object> p = new HashMap<>();

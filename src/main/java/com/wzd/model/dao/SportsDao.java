@@ -66,7 +66,7 @@ public class SportsDao {
 	public PageInfo<Sports> list(PageParam param) {
 		Example e = new Example(Sports.class);
 		PageParam.setCondition(e, "created", param, Sports.class);
-		e.setOrderByClause(e.getOrderByClause() + ",created DESC");
+		PageParam.setOrderByClause(e, "created DESC");
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<Sports>(mapper.selectByExample(e));
 	}

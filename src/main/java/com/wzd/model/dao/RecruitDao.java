@@ -53,7 +53,7 @@ public class RecruitDao {
 	public PageInfo<Recruit> find(PageParam param) {
 		Example e = new Example(Recruit.class);
 		PageParam.setCondition(e, "created", param, Recruit.class);
-		e.setOrderByClause(e.getOrderByClause() + ",created DESC");
+		PageParam.setOrderByClause(e, "created DESC");
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<Recruit>(mapper.selectByExample(e));
 	}

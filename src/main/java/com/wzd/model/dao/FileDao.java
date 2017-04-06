@@ -68,7 +68,7 @@ public class FileDao {
 		if (del != DeleteType.全部) {
 			c.andEqualTo("deleted", del.getValue());
 		}
-		e.setOrderByClause(e.getOrderByClause() + ",created DESC");
+		PageParam.setOrderByClause(e, "created DESC");
 		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return new PageInfo<Files>(mapper.selectByExample(e));
 	}

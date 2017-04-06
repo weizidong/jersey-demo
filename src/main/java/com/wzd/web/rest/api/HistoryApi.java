@@ -22,6 +22,7 @@ import com.wzd.model.enums.DeleteType;
 import com.wzd.service.HistoryService;
 import com.wzd.web.dto.history.HistoryDto;
 import com.wzd.web.dto.history.SignDto;
+import com.wzd.web.dto.history.WelfareDto;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.PageParam;
 
@@ -52,7 +53,7 @@ public class HistoryApi {
 	 */
 	@POST
 	@Path("/welfare/{userId}/{del}")
-	public List<History> welfare(PageParam param, @PathParam("userId") String userId, @PathParam("del") Integer del) {
+	public PageInfo<WelfareDto> welfare(PageParam param, @PathParam("userId") String userId, @PathParam("del") Integer del) {
 		return service.findWelfare(param, userId, DeleteType.parse(del));
 	}
 
@@ -61,7 +62,7 @@ public class HistoryApi {
 	 */
 	@POST
 	@Path("/msg")
-	public List<History> msg(PageParam param, @Context HttpServletRequest request) {
+	public PageInfo<History> msg(PageParam param, @Context HttpServletRequest request) {
 		User user = (User) SessionUtil.getUser(request);
 		return service.findMsg(param, user.getId());
 	}
