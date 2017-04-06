@@ -36,7 +36,19 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>SessionFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SessionFilter</filter-name>
+		<url-pattern>/*.html</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SessionFilter</filter-name>
+		<url-pattern>/rest/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>SessionFilter</filter-name>
+		<url-pattern>/view/*</url-pattern>
 	</filter-mapping>
 	<!-- 配置filter过滤器 -->
 	<filter>

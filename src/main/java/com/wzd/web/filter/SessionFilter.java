@@ -59,7 +59,7 @@ public class SessionFilter implements Filter {
 		// 回调授权code
 		String code = request.getParameter("code");
 		// 微信回调不检测
-		if (requestUrl.startsWith("rest/wechat/") || requestUrl.startsWith("websocekt/")) {
+		if (requestUrl.startsWith("rest/wechat/")) {
 			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
@@ -122,10 +122,6 @@ public class SessionFilter implements Filter {
 		// 加载静态文件
 		if (StringUtil.isEmpty(requestUrl) || requestUrl.endsWith(".html") || requestUrl.startsWith("view/")) {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
-			return;
-		}
-		if (requestUrl.equals("favicon.ico") || requestUrl.startsWith("userfiles/") || requestUrl.startsWith("static/")) {
-			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
 		// 非网站主页需要检测数据签名
