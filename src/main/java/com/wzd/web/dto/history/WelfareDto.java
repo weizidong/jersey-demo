@@ -16,7 +16,8 @@ import com.alibaba.fastjson.JSON;
 @SuppressWarnings("serial")
 public class WelfareDto implements Serializable {
 	private String id;
-	// 自有属性
+	@Column(name = "welfare_id")
+	private String welfareId;
 	@Column(name = "pic_url")
 	private String picUrl; // 配图
 	private String name; // 名称
@@ -27,6 +28,7 @@ public class WelfareDto implements Serializable {
 	private Integer score;// 积分
 	private String ticket;// 票券
 	private Date recording;// 记录时间
+	private Date used;// 使用时间
 
 	public String getId() {
 		return id;
@@ -34,6 +36,14 @@ public class WelfareDto implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getWelfareId() {
+		return welfareId;
+	}
+
+	public void setWelfareId(String welfareId) {
+		this.welfareId = welfareId;
 	}
 
 	public String getPicUrl() {
@@ -98,6 +108,14 @@ public class WelfareDto implements Serializable {
 
 	public void setRecording(Date recording) {
 		this.recording = recording;
+	}
+
+	public Date getUsed() {
+		return used;
+	}
+
+	public void setUsed(Date used) {
+		this.used = used;
 	}
 
 	@Override

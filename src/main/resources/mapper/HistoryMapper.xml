@@ -11,6 +11,7 @@
 		<result column="score" jdbcType="INTEGER" property="score" />
 		<result column="ticket" jdbcType="CHAR" property="ticket" />
 		<result column="recording" jdbcType="TIMESTAMP" property="recording" />
+		<result column="used" jdbcType="TIMESTAMP" property="used" />
 		<result column="type" jdbcType="INTEGER" property="type" />
 		<result column="deleled" jdbcType="INTEGER" property="deleled" />
 	</resultMap>
@@ -31,6 +32,7 @@
 		<result column="content" property="content" jdbcType="VARCHAR" />
 		<result column="score" property="score" jdbcType="INTEGER" />
 		<result column="ticket" property="ticket" jdbcType="VARCHAR" />
+		<result column="welfare_id" jdbcType="CHAR" property="welfareId" />
 		<result column="recording" property="recording" jdbcType="TIMESTAMP" />
 	</resultMap>
 
@@ -58,7 +60,7 @@
 	</select>
 	<select id="findWelfare" resultMap="WelfareDtoResultMap">
 		select
-		w.id,w.pic_url,w.name,w.end_time,h.title,h.content,h.ticket,h.score,h.recording
+		h.id,h.welfare_id,w.pic_url,w.name,w.end_time,h.title,h.content,h.ticket,h.score,h.recording,h.used
 		from history h left join welfare w on
 		h.welfare_id=w.id
 		<trim prefix="WHERE" prefixOverrides="AND|OR">

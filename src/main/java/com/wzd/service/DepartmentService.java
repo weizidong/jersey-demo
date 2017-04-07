@@ -50,7 +50,8 @@ public class DepartmentService {
 	 * 修改部门
 	 */
 	public void update(Department dep) {
-		// TODO 修改部门
+		wxService.update(dep);
+		departmentDao.update(dep);
 	}
 
 	/**

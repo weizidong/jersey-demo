@@ -88,4 +88,13 @@ public class WelfareApi {
 	public void delete(@PathParam("id") String id, @PathParam("del") Integer del) {
 		service.delete(id, DeleteType.parse(del));
 	}
+
+	/**
+	 * 使用兑换福利
+	 */
+	@POST
+	@Path("/use/{id}")
+	public void use(@PathParam("id") String id) {
+		service.use(id);
+	}
 }

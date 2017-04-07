@@ -72,14 +72,6 @@ public class TicketDao {
 	}
 
 	/**
-	 * 使用票券
-	 */
-	public void used(Ticket t) {
-		t.setUsed(new Date());
-		mapper.updateByPrimaryKeySelective(t);
-	}
-
-	/**
 	 * 领取票券
 	 */
 	public void draw(Ticket t) {

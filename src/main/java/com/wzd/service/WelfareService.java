@@ -1,5 +1,6 @@
 package com.wzd.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -130,6 +131,18 @@ public class WelfareService {
 			ticketDao.delete(wels.stream().map(w -> w.getId()).collect(Collectors.toList()));
 		}
 		welfareDao.delete(null, adminId, del);
+	}
+
+	/**
+	 * 使用兑换福利
+	 */
+	public void use(String id) {
+		History h = historyDao.getById(id);
+		if (h == null) {
+			throw new WebException(ResponseCode.资源不存在, "没有领取,无法兑换");
+		}
+		h.setUsed(new Date());
+		historyDao.update(h);
 	}
 
 }

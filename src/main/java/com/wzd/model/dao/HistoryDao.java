@@ -147,4 +147,20 @@ public class HistoryDao {
 		map.put("del", del.getValue());
 		return mapper.findWelfare(map);
 	}
+
+	/**
+	 * 根据id获取
+	 */
+	public History getById(String id) {
+		History h = new History();
+		h.setId(id);
+		return mapper.selectOne(h);
+	}
+
+	/**
+	 * 修改记录
+	 */
+	public void update(History h) {
+		mapper.updateByPrimaryKeySelective(h);
+	}
 }

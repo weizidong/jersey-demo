@@ -33,10 +33,10 @@ public class History implements Serializable {
 	private String welfareId;// 兑换的福利
 	// 系统属性
 	private Integer deleled;// 删除标志
+	private Date used;// 使用时间
 
 	public History() {
 	}
-
 	public History(String userId, String title, String content, Integer score, String ticket, HistoryType type, String welfareId) {
 		this(userId, title, content, score, ticket, type.getValue(), welfareId);
 	}
@@ -137,6 +137,14 @@ public class History implements Serializable {
 
 	public void setWelfareId(String welfareId) {
 		this.welfareId = welfareId;
+	}
+
+	public Date getUsed() {
+		return used;
+	}
+
+	public void setUsed(Date used) {
+		this.used = used;
 	}
 
 	@Override

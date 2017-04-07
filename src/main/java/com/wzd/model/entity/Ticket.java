@@ -25,7 +25,6 @@ public class Ticket implements Serializable {
 	private String ticket; // 票券码
 	@Column(name = "foreign_key")
 	private String foreignKey; // 外键
-	private Date used;// 使用时间
 	private Date draw;// 领取时间
 	private Date created; // 生成时间
 
@@ -61,14 +60,6 @@ public class Ticket implements Serializable {
 
 	public void setForeignKey(String foreignKey) {
 		this.foreignKey = foreignKey;
-	}
-
-	public Date getUsed() {
-		return used;
-	}
-
-	public void setUsed(Date used) {
-		this.used = used;
 	}
 
 	public Date getDraw() {
