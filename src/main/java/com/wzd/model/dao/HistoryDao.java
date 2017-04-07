@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.History;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
@@ -118,9 +117,13 @@ public class HistoryDao {
 	/**
 	 * 获取签到列表
 	 */
-	public PageInfo<SignDto> getSignList(PageParam param) {
+	public List<SignDto> getSignList(PageParam param, String userId, List<Integer> types, DeleteType del) {
+		Map<String, Object> map = PageParam.getCondition(param, WelfareDto.class);
+		map.put("userId", userId);
+		map.put("types", types);
+		map.put("del", del.getValue());
 		PageHelper.startPage(param.getPage(), param.getPageSize());
-		return new PageInfo<SignDto>(mapper.getSignList(PageParam.getCondition(param, SignDto.class)));
+		return mapper.getSignList(map);
 	}
 
 	/**
@@ -145,6 +148,7 @@ public class HistoryDao {
 		map.put("userId", userId);
 		map.put("types", types);
 		map.put("del", del.getValue());
+		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return mapper.findWelfare(map);
 	}
 

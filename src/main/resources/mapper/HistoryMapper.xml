@@ -19,6 +19,7 @@
 		<result column="nickname" property="nickname" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
 		<result column="audit" property="audit" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
 		<result column="dep_name" property="depName" jdbcType="VARCHAR" />
 		<result column="score" property="score" jdbcType="INTEGER" />
 		<result column="recording" property="recording" jdbcType="TIMESTAMP" />
@@ -54,6 +55,16 @@
 			</if>
 			<if test="start != null and end != null">
 				AND h.recording BETWEEN #{start} AND #{end}
+			</if>
+			<if test="types != null">
+				AND h.type IN
+				<foreach item="item" index="index" collection="types" open="("
+					separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="del != null and del != ''">
+				AND h.del = #{del}
 			</if>
 		</trim>
 		ORDER BY h.recording DESC

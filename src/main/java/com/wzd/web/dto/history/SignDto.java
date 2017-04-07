@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 public class SignDto implements Serializable {
 	private String name;
 	private String nickname;
+	private String title;
 	@Column(name = "dep_name")
 	private String depName;
 	private Integer audit;
@@ -27,6 +28,14 @@ public class SignDto implements Serializable {
 
 	public String getNickname() {
 		return nickname;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setNickname(String nickname) {

@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.HistoryDao;
-import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.History;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
-import com.wzd.web.dto.history.HistoryDto;
 import com.wzd.web.dto.history.SignDto;
 import com.wzd.web.dto.history.WelfareDto;
 import com.wzd.web.param.PageParam;
@@ -27,18 +25,13 @@ import com.wzd.web.param.PageParam;
 public class HistoryService {
 	@Autowired
 	private HistoryDao historyDao;
-	@Autowired
-	private UserDao userDao;
 
 	/**
 	 * 获取积分记录
 	 */
-	public HistoryDto findScore(PageParam param, String userid, DeleteType del) {
-		HistoryDto dto = new HistoryDto();
-		dto.setUser(userDao.getById(userid));
-		dto.setHistorys(historyDao.list(param, userid,
+	public PageInfo<SignDto> findScore(PageParam param, String userId, DeleteType del) {
+		return new PageInfo<SignDto>(historyDao.getSignList(param, userId,
 				Arrays.asList(HistoryType.积分签到.getValue(), HistoryType.券票福利.getValue(), HistoryType.红包福利.getValue(), HistoryType.活动.getValue()), del));
-		return dto;
 	}
 
 	/**
@@ -58,8 +51,8 @@ public class HistoryService {
 	/**
 	 * 获取签到记录列表
 	 */
-	public PageInfo<SignDto> getSignList(PageParam param) {
-		return historyDao.getSignList(param);
+	public PageInfo<SignDto> getSignList(PageParam param, String userId, DeleteType del) {
+		return new PageInfo<SignDto>(historyDao.getSignList(param, userId, Arrays.asList(HistoryType.积分签到.getValue()), del));
 	}
 
 	/**

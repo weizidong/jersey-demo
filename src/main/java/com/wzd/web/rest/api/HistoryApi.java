@@ -20,7 +20,6 @@ import com.wzd.model.entity.History;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.HistoryService;
-import com.wzd.web.dto.history.HistoryDto;
 import com.wzd.web.dto.history.SignDto;
 import com.wzd.web.dto.history.WelfareDto;
 import com.wzd.web.dto.session.SessionUtil;
@@ -44,7 +43,7 @@ public class HistoryApi {
 	 */
 	@POST
 	@Path("/score/{userId}/{del}")
-	public HistoryDto score(PageParam param, @PathParam("userId") String userId, @PathParam("del") Integer del) {
+	public PageInfo<SignDto> score(PageParam param, @PathParam("userId") String userId, @PathParam("del") Integer del) {
 		return service.findScore(param, userId, DeleteType.parse(del));
 	}
 
@@ -71,9 +70,9 @@ public class HistoryApi {
 	 * 获取签到历史
 	 */
 	@POST
-	@Path("/sign")
-	public PageInfo<SignDto> sign(PageParam param) {
-		return service.getSignList(param);
+	@Path("/sign/{userId}/{del}")
+	public PageInfo<SignDto> sign(PageParam param, @PathParam("userId") String userId, @PathParam("del") Integer del) {
+		return service.getSignList(param, userId, DeleteType.parse(del));
 	}
 
 	/**
