@@ -15,6 +15,7 @@ import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.AuthType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.SexType;
+import com.wzd.model.enums.SubType;
 import com.wzd.service.wechat.base.BaseResp;
 import com.wzd.utils.StringUtil;
 
@@ -171,6 +172,10 @@ public class Admin extends BaseResp {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public void setStatus(SubType sub) {
+		this.status = sub.getValue();
 	}
 
 	public String getExtattr() {

@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.wzd.model.dao.AdminDao;
 import com.wzd.model.dao.UserDao;
+import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Setting;
 import com.wzd.model.entity.User;
+import com.wzd.model.enums.AuditType;
+import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.SceneType;
 import com.wzd.model.enums.SubType;
 import com.wzd.service.ActivityService;
@@ -18,6 +22,7 @@ import com.wzd.service.wechat.base.MsgType;
 import com.wzd.service.wechat.base.XmlResp;
 import com.wzd.service.wechat.msg.dto.ARTICLE;
 import com.wzd.service.wechat.user.FwUserApi;
+import com.wzd.service.wechat.user.QyUserApi;
 import com.wzd.utils.Configs;
 import com.wzd.utils.StringUtil;
 import com.wzd.utils.ThreadPoolUtils;
@@ -34,6 +39,8 @@ import com.wzd.web.param.wechat.WechatMsg;
 public class Event {
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private AdminDao adminDao;
 	@Autowired
 	private SystemService systemService;
 	@Autowired
@@ -128,6 +135,14 @@ public class Event {
 				userDao.update(user);
 			});
 		}
+		// 关注企业号
+		else if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.sCorpID)) {
+			ThreadPoolUtils.execute(() -> {
+				Admin admin = adminDao.getByUserId(msg.getFromUserName());
+				admin.setStatus(SubType.未关注);
+				adminDao.update(admin);
+			});
+		}
 		return XmlResp.SUCCESS;
 	}
 
@@ -148,6 +163,22 @@ public class Event {
 				}
 			});
 			return XmlResp.buildNews(msg.getFromUserName(), msg.getToUserName(), Arrays.asList(JSON.parseObject(s.getSub(), ARTICLE.class)));
+		}
+		// 关注企业号
+		else if (StringUtil.equalsIgnoreCase(msg.getToUserName(), Configs.sCorpID)) {
+			ThreadPoolUtils.execute(() -> {
+				Admin admin = adminDao.getByUserId(msg.getFromUserName());
+				if (admin == null) {
+					admin = QyUserApi.get(msg.getFromUserName());
+					admin.setDeleted(DeleteType.未删除);
+					admin.setAudit(AuditType.未审核);
+					admin.setStatus(SubType.已关注);
+					adminDao.create(admin);
+				} else {
+					admin.setStatus(SubType.已关注);
+					adminDao.update(admin);
+				}
+			});
 		}
 		return XmlResp.SUCCESS;
 	}
