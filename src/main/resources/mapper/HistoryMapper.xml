@@ -39,7 +39,7 @@
 
 	<select id="getSignList" resultMap="SignDtoResultMap">
 		select u.nickname,u.name,u.audit,d.name as
-		dep_name,h.score,h.recording
+		dep_name,h.score,h.recording,h.title
 		from history h left join user u on
 		h.user_id=u.id left join department d
 		on u.dep_id=d.id

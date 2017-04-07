@@ -2,10 +2,13 @@ package com.wzd.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import javax.ws.rs.client.Client;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -50,8 +53,7 @@ public class PropertiesUtil {
 		Map<String, String> propsMap = new HashMap<String, String>();
 
 		try {
-
-			InputStream in = new Resource().getResourceAsStream(path);
+			InputStreamReader in = new InputStreamReader(Client.class.getClassLoader().getResourceAsStream(path), "UTF-8");
 			props.load(in);
 			Enumeration<?> en = props.propertyNames();
 			while (en.hasMoreElements()) {
