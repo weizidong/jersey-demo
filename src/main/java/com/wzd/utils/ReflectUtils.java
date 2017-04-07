@@ -91,7 +91,7 @@ public class ReflectUtils {
 	 *            字段名
 	 * @return 字段对应的值
 	 */
-	public static Object getValueOfGetIncludeObjectFeild(Object object, String fieldName) throws Exception {
+	public static Object getValueOfGetIncludeObjectFeild(Object object, String fieldName) {
 		if (object == null) {
 			return null;
 		}

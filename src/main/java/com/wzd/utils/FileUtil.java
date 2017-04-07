@@ -17,8 +17,9 @@ import com.wzd.model.entity.Files;
  *
  */
 public class FileUtil {
-	private static final String RESOURCE_URL = "userfiles/";
-	private static String BASE_PATH = "";
+	public static final String RESOURCE_URL = "userfiles/";
+	public static String BASE_PATH = "";
+	public static final String DOWNLOAD_URL = "download/";
 
 	static {
 		String basePath = System.getProperty("jetty.home");

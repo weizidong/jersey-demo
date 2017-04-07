@@ -53,7 +53,7 @@ public class PoiExcelUtils {
 	 * 1.创建 workbook
 	 */
 	private HSSFWorkbook getHSSFWorkbook() {
-		LOGGER.info("【创建 workbook】");
+		LOGGER.debug("【创建 workbook】");
 		return new HSSFWorkbook();
 	}
 
@@ -66,7 +66,7 @@ public class PoiExcelUtils {
 	 *            sheet 名称
 	 */
 	private HSSFSheet getHSSFSheet(HSSFWorkbook hssfWorkbook, String sheetName) {
-		LOGGER.info("【创建 sheet】sheetName ： " + sheetName);
+		LOGGER.debug("【创建 sheet】sheetName ： " + sheetName);
 		return hssfWorkbook.createSheet(sheetName);
 	}
 
@@ -80,16 +80,16 @@ public class PoiExcelUtils {
 	 * @param headers
 	 *            列标题，数组形式
 	 *            <p>
-	 *            如{"列标题1@beanFieldName1@columnWidth","列标题2@beanFieldName2@columnWidth","列标题3@beanFieldName3@columnWidth"}
+	 *            如{"列标题1@beanFieldName1@type@columnWidth","列标题2@beanFieldName2@type@columnWidth","列标题3@beanFieldName3@type@columnWidth"}
 	 *            </p>
 	 *            <p>
-	 *            其中参数@columnWidth可选，columnWidth为整型数值
+	 *            其中参数@type@columnWidth可选，columnWidth为整型数值
 	 *            </p>
 	 * @param title
 	 *            标题
 	 */
 	private void writeHeader(HSSFWorkbook hssfWorkbook, HSSFSheet hssfSheet, String[] headers, String title) {
-		LOGGER.info("【写入表头信息】");
+		LOGGER.debug("【写入表头信息】");
 		// 头信息处理
 		String[] newHeaders = headersHandler(headers);
 		// 初始化标题和表头单元格样式
@@ -110,15 +110,15 @@ public class PoiExcelUtils {
 		HSSFRow headRow = hssfSheet.createRow(1);
 		headRow.setHeight((short) 500);
 		HSSFCell headCell = null;
-		String[] headInfo = null;
+		String[] headdebug = null;
 		// 处理excel表头
 		for (int i = 0, len = newHeaders.length; i < len; i++) {
-			headInfo = newHeaders[i].split("@");
+			headdebug = newHeaders[i].split("@");
 			headCell = headRow.createCell(i);
-			headCell.setCellValue(headInfo[0]);
+			headCell.setCellValue(headdebug[0]);
 			headCell.setCellStyle(titleCellStyle);
 			// 设置列宽度
-			setColumnWidth(i, headInfo, hssfSheet);
+			setColumnWidth(i, headdebug, hssfSheet);
 		}
 	}
 
@@ -132,30 +132,30 @@ public class PoiExcelUtils {
 	 * @param headers
 	 *            列标题，数组形式
 	 *            <p>
-	 *            如{"列标题1@beanFieldName1@columnWidth","列标题2@beanFieldName2@columnWidth","列标题3@beanFieldName3@columnWidth"}
+	 *            如{"列标题1@beanFieldName1@type@columnWidth","列标题2@beanFieldName2@type@columnWidth","列标题3@beanFieldName3@type@columnWidth"}
 	 *            </p>
 	 *            <p>
-	 *            其中参数@columnWidth可选，columnWidth为整型数值
+	 *            其中参数@type@columnWidth可选，columnWidth为整型数值
 	 *            </p>
 	 * @param startIndex
 	 *            起始行索引
 	 */
 	private void writeHeader(HSSFWorkbook hssfWorkbook, HSSFSheet hssfSheet, String[] headers, int startIndex) {
-		LOGGER.info("【写入表头信息】");
+		LOGGER.debug("【写入表头信息】");
 		HSSFCellStyle headerCellStyle = createTitleCellStyle(hssfWorkbook);
 		// 表头
 		HSSFRow headRow = hssfSheet.createRow(startIndex);
 		headRow.setHeight((short) 500);
 		HSSFCell headCell = null;
-		String[] headInfo = null;
+		String[] headdebug = null;
 		// 处理excel表头
 		for (int i = 0, len = headers.length; i < len; i++) {
-			headInfo = headers[i].split("@");
+			headdebug = headers[i].split("@");
 			headCell = headRow.createCell(i);
-			headCell.setCellValue(headInfo[0]);
+			headCell.setCellValue(headdebug[0]);
 			headCell.setCellStyle(headerCellStyle);
 			// 设置列宽度
-			setColumnWidth(i, headInfo, hssfSheet);
+			setColumnWidth(i, headdebug, hssfSheet);
 		}
 	}
 
@@ -165,10 +165,10 @@ public class PoiExcelUtils {
 	 * @param headers
 	 *            列标题，数组形式
 	 *            <p>
-	 *            如{"列标题1@beanFieldName1@columnWidth","列标题2@beanFieldName2@columnWidth","列标题3@beanFieldName3@columnWidth"}
+	 *            如{"列标题1@beanFieldName1@type@columnWidth","列标题2@beanFieldName2@type@columnWidth","列标题3@beanFieldName3@type@columnWidth"}
 	 *            </p>
 	 *            <p>
-	 *            其中参数@columnWidth可选，columnWidth为整型数值
+	 *            其中参数@type@columnWidth可选，columnWidth为整型数值
 	 *            </p>
 	 * @return 校验后的头信息
 	 */
@@ -193,15 +193,15 @@ public class PoiExcelUtils {
 	 * @param headers
 	 *            列标题，数组形式
 	 *            <p>
-	 *            如{"列标题1@beanFieldName1@columnWidth","列标题2@beanFieldName2@columnWidth","列标题3@beanFieldName3@columnWidth"}
+	 *            如{"列标题1@beanFieldName1@type@columnWidth","列标题2@beanFieldName2@type@columnWidth","列标题3@beanFieldName3@type@columnWidth"}
 	 *            </p>
 	 *            <p>
-	 *            其中参数@columnWidth可选，columnWidth为整型数值
+	 *            其中参数@type@columnWidth可选，columnWidth为整型数值
 	 *            </p>
 	 * @param dataList
 	 *            要导出的数据集合
 	 */
-	private void writeContent(HSSFWorkbook hssfWorkbook, HSSFSheet hssfSheet, String[] headers, List<?> dataList) throws Exception {
+	private void writeContent(HSSFWorkbook hssfWorkbook, HSSFSheet hssfSheet, String[] headers, List<?> dataList) {
 		writeContent(hssfWorkbook, hssfSheet, headers, dataList, 2);
 	}
 
@@ -215,18 +215,18 @@ public class PoiExcelUtils {
 	 * @param headers
 	 *            列标题，数组形式
 	 *            <p>
-	 *            如{"列标题1@beanFieldName1@columnWidth","列标题2@beanFieldName2@columnWidth","列标题3@beanFieldName3@columnWidth"}
+	 *            如{"列标题1@beanFieldName1@type@columnWidth","列标题2@beanFieldName2@type@columnWidth","列标题3@beanFieldName3@type@columnWidth"}
 	 *            </p>
 	 *            <p>
-	 *            其中参数@columnWidth可选，columnWidth为整型数值
+	 *            其中参数@type@columnWidth可选，columnWidth为整型数值
 	 *            </p>
 	 * @param dataList
 	 *            要导出的数据集合
 	 * @param startIndex
 	 *            起始行的索引
 	 */
-	private void writeContent(HSSFWorkbook hssfWorkbook, HSSFSheet hssfSheet, String[] headers, List<?> dataList, int startIndex) throws Exception {
-		LOGGER.info("【写入Excel内容部分】");
+	private void writeContent(HSSFWorkbook hssfWorkbook, HSSFSheet hssfSheet, String[] headers, List<?> dataList, int startIndex) {
+		LOGGER.debug("【写入Excel内容部分】");
 		// 2015-8-13 增加，当没有数据的时候，把原来抛异常的方式修改成返回一个只有头信息，没有数据的空Excel
 		if (CollectionUtils.isEmpty(dataList)) {
 			LOGGER.warn("【没有内容数据】");
@@ -245,8 +245,9 @@ public class PoiExcelUtils {
 			row = hssfSheet.createRow(rownum);
 			for (int i = 0, len = headers.length; i < len; i++) {
 				cell = row.createCell(i);
-				cellValue = ReflectUtils.getValueOfGetIncludeObjectFeild(dataList.get(j), headers[i].split("@")[1]);
-				cellValueHandler(cell, cellValue);
+				String[] hs = headers[i].split("@");
+				cellValue = ReflectUtils.getValueOfGetIncludeObjectFeild(dataList.get(j), hs[1]);
+				cellValueHandler(cell, cellValue, hs.length < 3 ? null : hs[2]);
 				cell.setCellStyle(cellStyle);
 			}
 			rownum++;
@@ -258,22 +259,22 @@ public class PoiExcelUtils {
 	 * 
 	 * @param i
 	 *            列的索引号
-	 * @param headInfo
+	 * @param headdebug
 	 *            表头信息，其中包含了用户需要设置的列宽
 	 */
-	private void setColumnWidth(int i, String[] headInfo, HSSFSheet hssfSheet) {
-		if (headInfo.length < 3) {
+	private void setColumnWidth(int i, String[] headdebug, HSSFSheet hssfSheet) {
+		if (headdebug.length < 4) {
 			// 用户没有设置列宽，使用默认宽度
 			hssfSheet.setColumnWidth(i, DEFAUL_COLUMN_WIDTH);
 			return;
 		}
-		if (StringUtils.isBlank(headInfo[2])) {
+		if (StringUtils.isBlank(headdebug[3])) {
 			// 使用默认宽度
 			hssfSheet.setColumnWidth(i, DEFAUL_COLUMN_WIDTH);
 			return;
 		}
 		// 使用用户设置的列宽进行设置
-		hssfSheet.setColumnWidth(i, Integer.parseInt(headInfo[2]));
+		hssfSheet.setColumnWidth(i, Integer.parseInt(headdebug[3]));
 	}
 
 	/**
@@ -284,12 +285,9 @@ public class PoiExcelUtils {
 	 * @param cellValue
 	 *            单元格值
 	 */
-	private void cellValueHandler(HSSFCell cell, Object cellValue) {
+	private void cellValueHandler(HSSFCell cell, Object cellValue, String type) {
 		// 判断cellValue是否为空，否则在cellValue.toString()会出现空指针异常
-		if (cellValue == null) {
-			cell.setCellValue("");
-			return;
-		}
+		cellValue = changeType(cellValue == null ? "" : cellValue.toString(), type);
 		if (cellValue instanceof String) {
 			cell.setCellValue((String) cellValue);
 		} else if (cellValue instanceof Boolean) {
@@ -304,8 +302,24 @@ public class PoiExcelUtils {
 			cell.setCellValue((Double.parseDouble(cellValue.toString())));
 		} else if (cellValue instanceof HSSFRichTextString) {
 			cell.setCellValue((HSSFRichTextString) cellValue);
+		} else {
+			cell.setCellValue(cellValue.toString());
 		}
-		cell.setCellValue(cellValue.toString());
+	}
+
+	private Object changeType(Object val, String type) {
+		if ("sex".equals(type)) {
+			return "1".equals(val) ? "男" : "2".equals(val) ? "女" : "未知";
+		} else if ("sub".equals(type)) {
+			return "1".equals(val) ? "已关注" : "0".equals(val) ? "未关注" : "未知";
+		} else if ("audit".equals(type)) {
+			return "1".equals(val) ? "审核中" : "2".equals(val) ? "审核成功" : "3".equals(val) ? "审核失败" : "未审核";
+		} else if ("mar".equals(type)) {
+			return "1".equals(val) ? "已婚" : "2".equals(val) ? "未婚" : "未知";
+		} else if (StringUtils.isBlank(val.toString())) {
+			return "无";
+		}
+		return val;
 	}
 
 	/**
@@ -317,7 +331,7 @@ public class PoiExcelUtils {
 	 */
 	@SuppressWarnings("deprecation")
 	private HSSFCellStyle createTitleCellStyle(HSSFWorkbook hssfWorkbook) {
-		LOGGER.info("【创建标题和表头单元格样式】");
+		LOGGER.debug("【创建标题和表头单元格样式】");
 		// 单元格的样式
 		HSSFCellStyle cellStyle = hssfWorkbook.createCellStyle();
 		// 设置字体样式，改为变粗
@@ -341,7 +355,7 @@ public class PoiExcelUtils {
 	 */
 	@SuppressWarnings("deprecation")
 	private HSSFCellStyle createContentCellStyle(HSSFWorkbook hssfWorkbook) {
-		LOGGER.info("【创建内容单元格样式】");
+		LOGGER.debug("【创建内容单元格样式】");
 		// 单元格的样式
 		HSSFCellStyle cellStyle = hssfWorkbook.createCellStyle();
 		// 设置字体样式，改为不变粗
@@ -381,15 +395,27 @@ public class PoiExcelUtils {
 	 * 
 	 * @param hssfWorkbook
 	 *            {@link HSSFWorkbook}
-	 * @param filePath
-	 *            文件输出目录，包括文件名（.xls）
+	 * @param basePath
+	 *            文件输出目录
 	 */
-	private void write2FilePath(HSSFWorkbook hssfWorkbook, String filePath) {
-		LOGGER.info("【将生成的Excel输出到指定目录】filePath ：" + filePath);
+	private String write2FilePath(HSSFWorkbook hssfWorkbook, String basePath) {
+		// 文件名
+		String fileName = System.currentTimeMillis() + ".xls";
+		// 相对路径
+		String folder = FileUtil.DOWNLOAD_URL + DateUtil.dateToString(new Date(), DateUtil.PDATE2) + "/";
+		// 绝对路径
+		String path = basePath + folder + fileName;
+		// 生成目录
+		File store = new File(basePath + folder);
+		if (!store.exists()) {
+			store.mkdirs();
+		}
+		LOGGER.debug("【将生成的Excel输出到指定目录】basePath ：" + basePath);
 		FileOutputStream fileOut = null;
 		try {
-			fileOut = new FileOutputStream(filePath);
+			fileOut = new FileOutputStream(path);
 			hssfWorkbook.write(fileOut);
+			return Configs.hostname + folder + fileName;
 		} catch (Exception e) {
 			LOGGER.error("【将生成的Excel输出到指定目录失败】", e);
 			throw new RuntimeException("将生成的Excel输出到指定目录失败");
@@ -405,25 +431,23 @@ public class PoiExcelUtils {
 	 *            sheet名称
 	 * @param title
 	 *            标题
-	 * @param filePath
-	 *            要导出的Excel存放的文件路径
 	 * @param headers
 	 *            列标题，数组形式
 	 *            <p>
-	 *            如{"列标题1@beanFieldName1@columnWidth","列标题2@beanFieldName2@columnWidth","列标题3@beanFieldName3@columnWidth"}
+	 *            如{"列标题1@beanFieldName1@type@columnWidth","列标题2@beanFieldName2@type@columnWidth","列标题3@beanFieldName3@type@columnWidth"}
 	 *            </p>
 	 *            <p>
-	 *            其中参数@columnWidth可选，columnWidth为整型数值，默认4000
+	 *            其中参数@type@columnWidth可选，columnWidth为整型数值，默认4000
 	 *            </p>
 	 * @param dataList
 	 *            要导出数据的集合
 	 */
-	public static void createExcel2FilePath(String sheetName, String title, String filePath, String[] headers, List<?> dataList) throws Exception {
+	public static String createExcel2FilePath(String sheetName, String title, String basePath, String[] headers, List<?> dataList) {
 		if (ArrayUtils.isEmpty(headers)) {
 			LOGGER.warn("【表头为空】");
 			throw new RuntimeException("表头不能为空");
 		}
-		LOGGER.info("【生成Excel,并存放到指定文件夹目录下】sheetName : " + sheetName + " , title : " + title + " , filePath : " + filePath + " , headers : " + Arrays.toString(headers));
+		LOGGER.debug("【生成Excel,并存放到指定文件夹目录下】sheetName : " + sheetName + " , title : " + title + " , basePath : " + basePath + " , headers : " + Arrays.toString(headers));
 		PoiExcelUtils poiExcelUtil = new PoiExcelUtils();
 		// 1.创建 Workbook
 		HSSFWorkbook hssfWorkbook = poiExcelUtil.getHSSFWorkbook();
@@ -434,7 +458,7 @@ public class PoiExcelUtils {
 		// 4.写入内容
 		poiExcelUtil.writeContent(hssfWorkbook, hssfSheet, headers, dataList);
 		// 5.保存文件到filePath中
-		poiExcelUtil.write2FilePath(hssfWorkbook, filePath);
+		return poiExcelUtil.write2FilePath(hssfWorkbook, basePath);
 	}
 
 	/**
@@ -456,10 +480,10 @@ public class PoiExcelUtils {
 	 * @param headers
 	 *            列标题，数组形式
 	 *            <p>
-	 *            如{"列标题1@beanFieldName1@columnWidth","列标题2@beanFieldName2@columnWidth","列标题3@beanFieldName3@columnWidth"}
+	 *            如{"列标题1@beanFieldName1@type@columnWidth","列标题2@beanFieldName2@type@columnWidth","列标题3@beanFieldName3@type@columnWidth"}
 	 *            </p>
 	 *            <p>
-	 *            其中参数@columnWidth可选，columnWidth为整型数值，默认4000
+	 *            其中参数@type@columnWidth可选，columnWidth为整型数值，默认4000
 	 *            </p>
 	 * @param detailDataList
 	 *            要导出数据的集合
@@ -480,7 +504,7 @@ public class PoiExcelUtils {
 			LOGGER.warn("【参数mainData】");
 			throw new IllegalArgumentException("mainData");
 		}
-		LOGGER.info("【生成Excel,并存放到指定文件夹目录下】sheetName : " + sheetName + " , title : " + title + " , filePath : " + filePath + " , headers : " + Arrays.toString(headers));
+		LOGGER.debug("【生成Excel,并存放到指定文件夹目录下】sheetName : " + sheetName + " , title : " + title + " , filePath : " + filePath + " , headers : " + Arrays.toString(headers));
 		PoiExcelUtils poiExcelUtil = new PoiExcelUtils();
 		// 1.创建 Workbook
 		HSSFWorkbook hssfWorkbook = poiExcelUtil.getHSSFWorkbook();
@@ -571,7 +595,7 @@ public class PoiExcelUtils {
 	 */
 	private int writeMainData(HSSFWorkbook hssfWorkbook, HSSFSheet hssfSheet, int columnSize, String[] mainDataFields, Object mainData, int startIndex, boolean needExportDate)
 			throws Exception {
-		LOGGER.info("【写主表（mainData）数据】columnSize = {} , mainDataFields = {} , mainData = {}", columnSize, Arrays.toString(mainDataFields), mainData);
+		LOGGER.debug("【写主表（mainData）数据】columnSize = {} , mainDataFields = {} , mainData = {}", columnSize, Arrays.toString(mainDataFields), mainData);
 		// 1.计算主表数据需要写多少行，每行写多少个单元格，每行写多少个字段
 		int fieldsSize = mainDataFields.length;
 		// 导出日期是否需要独立一行显示
@@ -630,11 +654,11 @@ public class PoiExcelUtils {
 				cellIndex = j * 2;
 				// 字段描述的单元格
 				cell4FiledName = row.createCell(cellIndex);
-				cellValueHandler(cell4FiledName, fieldsArray[0]);
+				cellValueHandler(cell4FiledName, fieldsArray[0], null);
 				cell4FiledName.setCellStyle(cellStyle);
 				// 字段值的单元格
 				cell4Value = row.createCell(cellIndex + 1);
-				cellValueHandler(cell4Value, ReflectUtils.getValueOfGetIncludeObjectFeild(mainData, fieldsArray[1]));
+				cellValueHandler(cell4Value, ReflectUtils.getValueOfGetIncludeObjectFeild(mainData, fieldsArray[1]), fieldsArray.length < 3 ? null : fieldsArray[2]);
 				cell4Value.setCellStyle(cellStyle);
 				// 如果当前行还可以继续写数据，则将导出日期写在该行
 				if (fieldIndex == fieldsSize && needExportDate && filedSizeInOneRow != j + 1) {
@@ -701,11 +725,11 @@ public class PoiExcelUtils {
 		HSSFCellStyle cellStyle = createContentCellStyle(hssfWorkbook);
 		// 导出日期
 		HSSFCell cell4ExortDate = row.createCell(cellIndex);
-		cellValueHandler(cell4ExortDate, "导出日期");
+		cellValueHandler(cell4ExortDate, "导出日期", null);
 		cell4ExortDate.setCellStyle(cellStyle);
 		// 导出日期的值
 		HSSFCell cell4ExportDateValue = row.createCell(cellIndex + 1);
-		cellValueHandler(cell4ExportDateValue, DateUtil.dateToString(new Date(), DateUtil.P_DATETIME));
+		cellValueHandler(cell4ExportDateValue, DateUtil.dateToString(new Date(), DateUtil.P_DATETIME), null);
 		cell4ExportDateValue.setCellStyle(cellStyle);
 	}
 
@@ -719,20 +743,20 @@ public class PoiExcelUtils {
 	 * @param headers
 	 *            列标题，数组形式
 	 *            <p>
-	 *            如{"列标题1@beanFieldName1@columnWidth","列标题2@beanFieldName2@columnWidth","列标题3@beanFieldName3@columnWidth"}
+	 *            如{"列标题1@beanFieldName1@type@columnWidth","列标题2@beanFieldName2@type@columnWidth","列标题3@beanFieldName3@type@columnWidth"}
 	 *            </p>
 	 *            <p>
-	 *            其中参数@columnWidth可选，columnWidth为整型数值，默认4000
+	 *            其中参数@type@columnWidth可选，columnWidth为整型数值，默认4000
 	 *            </p>
 	 * @param dataList
 	 *            要导出数据的集合
 	 */
-	public static HSSFWorkbook createExcel2Export(String sheetName, String title, String[] headers, List<?> dataList) throws Exception {
+	public static HSSFWorkbook createExcel2Export(String sheetName, String title, String[] headers, List<?> dataList) {
 		if (ArrayUtils.isEmpty(headers)) {
 			LOGGER.warn("【表头为空】");
 			throw new RuntimeException("表头不能为空");
 		}
-		LOGGER.info("【生成Excel的WorkBook，用于导出Excel】sheetName : " + sheetName + " , title : " + title + "  , headers : " + Arrays.toString(headers));
+		LOGGER.debug("【生成Excel的WorkBook，用于导出Excel】sheetName : " + sheetName + " , title : " + title + "  , headers : " + Arrays.toString(headers));
 		PoiExcelUtils poiExcelUtil = new PoiExcelUtils();
 		// 1.创建 Workbook
 		HSSFWorkbook hssfWorkbook = poiExcelUtil.getHSSFWorkbook();
@@ -762,10 +786,10 @@ public class PoiExcelUtils {
 	 * @param headers
 	 *            列标题，数组形式
 	 *            <p>
-	 *            如{"列标题1@beanFieldName1@columnWidth","列标题2@beanFieldName2@columnWidth","列标题3@beanFieldName3@columnWidth"}
+	 *            如{"列标题1@beanFieldName1@type@columnWidth","列标题2@beanFieldName2@type@columnWidth","列标题3@beanFieldName3@type@columnWidth"}
 	 *            </p>
 	 *            <p>
-	 *            其中参数@columnWidth可选，columnWidth为整型数值，默认4000
+	 *            其中参数@type@columnWidth可选，columnWidth为整型数值，默认4000
 	 *            </p>
 	 * @param detailDataList
 	 *            要导出数据的集合
@@ -787,7 +811,7 @@ public class PoiExcelUtils {
 			LOGGER.warn("【参数mainData】");
 			throw new IllegalArgumentException("mainData");
 		}
-		LOGGER.info("【生成Excel,用于导出】sheetName : " + sheetName + " , title : " + title + " , headers : " + Arrays.toString(headers) + " , mainDataFields = "
+		LOGGER.debug("【生成Excel,用于导出】sheetName : " + sheetName + " , title : " + title + " , headers : " + Arrays.toString(headers) + " , mainDataFields = "
 				+ Arrays.toString(mainDataFields));
 		PoiExcelUtils poiExcelUtil = new PoiExcelUtils();
 		// 1.创建 Workbook
@@ -918,7 +942,7 @@ public class PoiExcelUtils {
 	 */
 	public static List<String[]> readExcel(String excelPath, int skipRows, int columnCount, int sheetNo, Set<Integer> columnNumberForSkipValueValidateSet,
 			List<String> noneCellValuePositionList) throws Exception {
-		LOGGER.info("【读取Excel】excelPath = {} ， skipRows = {} , columnCount = {} , columnNumberForSkipValueValidateSet = {}", excelPath, skipRows, columnCount,
+		LOGGER.debug("【读取Excel】excelPath = {} ， skipRows = {} , columnCount = {} , columnNumberForSkipValueValidateSet = {}", excelPath, skipRows, columnCount,
 				columnNumberForSkipValueValidateSet);
 		if (StringUtils.isBlank(excelPath)) {
 			LOGGER.warn("【参数excelPath为空】");
@@ -1013,8 +1037,7 @@ public class PoiExcelUtils {
 	 */
 	public static void writeWorkbook(HttpServletResponse response, HSSFWorkbook workbook) {
 		response.reset();
-		response.setCharacterEncoding("utf-8");
-		response.setContentType("multipart/form-data");
+		response.setContentType("application/octet-stream");
 		String fileName = System.currentTimeMillis() + ".xls";
 		response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
 		OutputStream out = null;

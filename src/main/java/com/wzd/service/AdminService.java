@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,7 @@ import com.wzd.service.wechat.user.QyUserApi;
 import com.wzd.utils.EhcacheUtil;
 import com.wzd.utils.FileUtil;
 import com.wzd.utils.MD5Utils;
+import com.wzd.utils.PoiExcelUtils;
 import com.wzd.utils.QRCodeUtil;
 import com.wzd.utils.StringUtil;
 import com.wzd.utils.ThreadPoolUtils;
@@ -122,9 +122,10 @@ public class AdminService {
 	/**
 	 * 批量导出管理员
 	 */
-	public HSSFWorkbook export(List<Integer> ids, HttpServletResponse response) {
-		// TODO 批量导出管理员
-		return null;
+	public String export(List<Integer> ids) {
+		String[] headers = new String[] { "用户名@userid", "姓名@name", "职位@position", "联系方式@mobile", "性别@gender@sex", "邮箱@email", "关注状态@status@sub", "审核状态@audit@audit" };
+		List<Admin> dataList = adminDao.findByIds(ids);
+		return PoiExcelUtils.createExcel2FilePath("管理员列表", "管理员列表", FileUtil.BASE_PATH, headers, dataList);
 	}
 
 	/**

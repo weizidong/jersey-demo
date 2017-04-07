@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="./jquery-3.2.0.min.js"></script>
+</head>
+<body>
+	<button id="export">下载</button>
+	<a id='a'>文件</a>
+	<script type="text/javascript">
+		$('#export').click(function() {
+			$.ajax({
+				type : 'POST',
+				url : '/rest/admin/export?debug=weizidong&appType=qyh',
+				contentType : 'application/json',
+				data : '{}',
+				success : function(data) {
+					$('#a').attr('src', data.data);
+				}
+			});
+		})
+	</script>
+</body>
+</html>

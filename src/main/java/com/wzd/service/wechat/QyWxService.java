@@ -171,16 +171,13 @@ public class QyWxService {
 	/**
 	 * 同步部门和部门成员
 	 */
-	public String sync() {
+	public void sync() {
 		List<Department> deps = depService.getDepList(null);
 		deps.forEach(dep -> {
 			depDao.save(dep);
 			List<Admin> admins = QyUserApi.list(dep.getId());
-			admins.forEach(admin -> {
-				adminDao.save(admin);
-			});
+			admins.forEach(admin -> adminDao.save(admin));
 		});
-		return XmlResp.SUCCESS;
 	}
 
 }

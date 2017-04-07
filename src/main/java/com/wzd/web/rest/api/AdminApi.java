@@ -19,7 +19,6 @@ import com.wzd.model.entity.Admin;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.AdminService;
-import com.wzd.utils.PoiExcelUtils;
 import com.wzd.web.dto.session.Session;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.IdListParam;
@@ -124,7 +123,7 @@ public class AdminApi {
 	 */
 	@POST
 	@Path("/export")
-	public void export(IdListParam<Integer> param, @Context HttpServletResponse response) {
-		PoiExcelUtils.writeWorkbook(response, service.export(param.getIds(), response));
+	public String export(IdListParam<Integer> param, @Context HttpServletResponse response) {
+		return service.export(param.getIds());
 	}
 }

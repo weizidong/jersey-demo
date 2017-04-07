@@ -160,16 +160,16 @@ public class FwWxService {
 	/**
 	 * 同步服务号获取用户列表
 	 */
-	public String syncUser(String next_openid) {
+	public void syncUser(String next_openid) {
 		if (next_openid != null && next_openid.equals("OVER")) {
-			return XmlResp.SUCCESS;
+			return;
 		}
 		FwUserList resp = FwUserApi.getList(next_openid);
 		List<String> openids = resp.getOpenids();
 		if (openids == null || openids.size() == 0) {
-			return XmlResp.SUCCESS;
+			return;
 		}
 		openids.forEach(openid -> dao.save(FwUserApi.get(openid)));
-		return syncUser(resp.getNext_openid() == null ? "OVER" : resp.getNext_openid());
+		syncUser(resp.getNext_openid() == null ? "OVER" : resp.getNext_openid());
 	}
 }

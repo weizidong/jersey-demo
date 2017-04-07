@@ -40,4 +40,14 @@ public class ThreadPoolUtils {
 		return scheduledPool.schedule(runnable, time > 0 ? time : 0, TimeUnit.MILLISECONDS);
 	}
 
+	/**
+	 * 延迟任务
+	 */
+	public static ScheduledFuture<?> schedule(Runnable runnable, Integer time) {
+		if (scheduledPool.isShutdown()) {
+			scheduledPool = Executors.newScheduledThreadPool(2);
+		}
+		return scheduledPool.schedule(runnable, time != null && time > 0 ? time : 0, TimeUnit.SECONDS);
+	}
+
 }

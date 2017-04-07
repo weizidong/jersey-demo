@@ -1,6 +1,7 @@
 package com.wzd.model.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,5 +151,16 @@ public class AdminDao {
 		Admin a = new Admin();
 		a.setId(id);
 		return mapper.selectOne(a);
+	}
+
+	/**
+	 * 根据ids查询列表
+	 */
+	public List<Admin> findByIds(List<Integer> ids) {
+		Example e = new Example(Admin.class);
+		if (ids != null && ids.size() > 0) {
+			e.createCriteria().andIn("id", ids);
+		}
+		return mapper.selectByExample(e);
 	}
 }
