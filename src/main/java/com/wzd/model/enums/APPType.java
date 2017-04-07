@@ -10,7 +10,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum APPType {
-	企业号("qyh"), 服务号("fwh"), 管理平台("zhxt"), 网站主页("wzzy");
+	企业号("qyh"), 服务号("fwh"), 管理平台("zhxt"), 网站主页("wzzy"), 二维码登录("ewm");
 	private String value;
 
 	private APPType(String value) {

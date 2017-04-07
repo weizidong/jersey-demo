@@ -18,7 +18,11 @@ public abstract class ViewPage {
 	/**
 	 * 登陆成功
 	 */
-	public static String loginSuccess = "view/zhxt/loginSuccess?appType={0}";
+	public static String loginSuccess = "view/zhxt/loginSuccess";
+	/**
+	 * 二维码登录地址
+	 */
+	public static String login2 = "view/login2/{0}?appType={1}";
 	/**
 	 * 登陆失败
 	 */

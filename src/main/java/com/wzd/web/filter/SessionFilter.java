@@ -78,12 +78,14 @@ public class SessionFilter implements Filter {
 				session = qyService.getUserInfo(code);
 			}
 			// 管理平台换取Token
-			if (appType.equals(APPType.管理平台.getValue())) {
+			if (appType.equals(APPType.二维码登录.getValue())) {
 				session = qyService.getUserInfo(requestUrl.substring(requestUrl.lastIndexOf("/") + 1), code);
 				if (session == null) {
-					request.getRequestDispatcher("/" + ViewPage.loginError).forward(request, response);
-					return;
+					httpResponse.sendRedirect("/" + ViewPage.loginError);
+				} else {
+					httpResponse.sendRedirect("/" + ViewPage.loginSuccess);
 				}
+				return;
 			}
 			// 服务号换取Token
 			if (appType.equals(APPType.服务号.getValue())) {
@@ -103,7 +105,7 @@ public class SessionFilter implements Filter {
 			session = SessionUtil.getSession(httpRequest);
 		}
 		// 企业号未授权
-		if ((APPType.企业号.getValue().equals(appType) && session == null) || (APPType.管理平台.getValue().equals(appType) && requestUrl.startsWith("view/login2"))) {
+		if ((APPType.企业号.getValue().equals(appType) && session == null) || APPType.二维码登录.getValue().equals(appType)) {
 			authorize(QyAPI.AUTHORIZE, Configs.sCorpID, hostname + requestUrl, appType, httpResponse);
 			return;
 		}
@@ -111,10 +113,6 @@ public class SessionFilter implements Filter {
 		if (APPType.服务号.getValue().equals(appType) && session == null) {
 			authorize(FwAPI.AUTHORIZE, Configs.bAppid, hostname + requestUrl, appType, httpResponse);
 			return;
-		}
-		// 管理平台未登录
-		if (APPType.管理平台.getValue().equals(appType) && session == null) {
-			throw new WebException(ResponseCode.未登录, "未登录");
 		}
 		// 网站主页创建Session
 		if (APPType.网站主页.getValue().equals(appType) && session == null) {
@@ -125,6 +123,10 @@ public class SessionFilter implements Filter {
 		if (StringUtil.isEmpty(requestUrl) || requestUrl.endsWith(".html") || requestUrl.startsWith("view/")) {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
 			return;
+		}
+		// 管理平台未登录
+		if (APPType.管理平台.getValue().equals(appType) && session == null && !requestUrl.startsWith("rest/admin/login")) {
+			throw new WebException(ResponseCode.未登录, "未登录");
 		}
 		// 非网站主页需要检测数据签名
 		// if (!APPType.网站主页.getValue().equals(appType) && session != null) {
@@ -137,8 +139,8 @@ public class SessionFilter implements Filter {
 		// 更新Session
 		if (session != null) {
 			SessionUtil.updateSession(session, httpRequest);
-			chain.doFilter(httpRequest, httpResponse);
 		}
+		chain.doFilter(httpRequest, httpResponse);
 	}
 
 	@Override
