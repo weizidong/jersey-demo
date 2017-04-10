@@ -35,7 +35,7 @@ public class SportsDao {
 		s.setCreated(new Date());
 		s.setDeleted(DeleteType.未删除);
 		s.setStatus(StateType.进行中);
-		mapper.insert(s);
+		mapper.insertSelective(s);
 		return s;
 	}
 

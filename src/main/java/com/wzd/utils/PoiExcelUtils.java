@@ -287,7 +287,7 @@ public class PoiExcelUtils {
 	 */
 	private void cellValueHandler(HSSFCell cell, Object cellValue, String type) {
 		// 判断cellValue是否为空，否则在cellValue.toString()会出现空指针异常
-		cellValue = changeType(cellValue == null ? "" : cellValue.toString(), type);
+		cellValue = changeType(cellValue == null ? "" : cellValue, type);
 		if (cellValue instanceof String) {
 			cell.setCellValue((String) cellValue);
 		} else if (cellValue instanceof Boolean) {
@@ -309,13 +309,17 @@ public class PoiExcelUtils {
 
 	private Object changeType(Object val, String type) {
 		if ("sex".equals(type)) {
-			return "1".equals(val) ? "男" : "2".equals(val) ? "女" : "未知";
+			return "1".equals(val.toString()) ? "男" : "2".equals(val.toString()) ? "女" : "未知";
 		} else if ("sub".equals(type)) {
-			return "1".equals(val) ? "已关注" : "0".equals(val) ? "未关注" : "未知";
+			return "1" == val ? "已关注" : "0" == val ? "未关注" : "未知";
 		} else if ("audit".equals(type)) {
-			return "1".equals(val) ? "审核中" : "2".equals(val) ? "审核成功" : "3".equals(val) ? "审核失败" : "未审核";
+			return "1" == val ? "审核中" : "2" == val ? "审核成功" : "3" == val ? "审核失败" : "未审核";
 		} else if ("mar".equals(type)) {
-			return "1".equals(val) ? "已婚" : "2".equals(val) ? "未婚" : "未知";
+			return "1" == val ? "已婚" : "2" == val ? "未婚" : "未知";
+		} else if ("user".equals(type)) {
+			return "2" == val ? "职工认证用户" : "普通用户";
+		} else if ("bir".equals(type)) {
+			return val == null ? "无" : DateUtil.formatDate((Date) val, DateUtil.P_DATE);
 		} else if (StringUtils.isBlank(val.toString())) {
 			return "无";
 		}

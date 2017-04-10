@@ -119,6 +119,9 @@ public class Event {
 		case 未报名:
 			SocketService.send(u.getId(), new SocketMsg(SocketType.通知, "你还未报名该活动！"));
 			return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "你还未报名该活动！");
+		case 已经签到:
+			SocketService.send(u.getId(), new SocketMsg(SocketType.通知, "你已经签到！"));
+			return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "你已经签到！");
 		default:
 			return XmlResp.SUCCESS;
 		}

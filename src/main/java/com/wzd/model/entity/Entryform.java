@@ -12,7 +12,6 @@ import com.alibaba.fastjson.JSON;
 import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.SignType;
-import com.wzd.model.enums.StateType;
 
 /**
  * 报名表
@@ -54,8 +53,8 @@ public class Entryform implements Serializable {
 		this.status = status;
 	}
 
-	public Entryform(String openId, ActivityType type, DeleteType del, StateType status) {
-		this(null, openId, null, null, null, type.getValue(), null, del.getValue(), status.getValue());
+	public Entryform(String openId, ActivityType type, DeleteType del, Integer status) {
+		this(null, openId, null, null, null, type.getValue(), null, del.getValue(), status);
 	}
 
 	public Entryform(String activityId, ActivityType type, DeleteType del) {

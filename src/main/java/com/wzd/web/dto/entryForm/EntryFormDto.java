@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSON;
 @SuppressWarnings("serial")
 public class EntryFormDto implements Serializable {
 	private String nickname;
+	private String position;
 	private String name;
 	@Column(name = "id_card")
 	private String idCard;
@@ -29,6 +30,14 @@ public class EntryFormDto implements Serializable {
 
 	public String getNickname() {
 		return nickname;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 	public Date getStart() {

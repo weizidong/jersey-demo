@@ -109,6 +109,15 @@ public class ActivityApi {
 	}
 
 	/**
+	 * 批量导出报名列表
+	 */
+	@POST
+	@Path("/exportEntry/{id}")
+	public String exportEntry(PageParam param, @PathParam("id") String id) {
+		return service.exportEntry(param, id);
+	}
+
+	/**
 	 * 开启关闭活动
 	 */
 	@POST

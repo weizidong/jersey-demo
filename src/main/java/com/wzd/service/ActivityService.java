@@ -33,6 +33,7 @@ import com.wzd.service.wechat.msg.WxMsgSender;
 import com.wzd.service.wechat.msg.dto.ARTICLE;
 import com.wzd.service.wechat.msg.dto.NEWS;
 import com.wzd.utils.FileUtil;
+import com.wzd.utils.PoiExcelUtils;
 import com.wzd.utils.ThreadPoolUtils;
 import com.wzd.web.dto.entryForm.EntryFormDto;
 import com.wzd.web.dto.exception.WebException;
@@ -225,7 +226,17 @@ public class ActivityService {
 	 * 获取报名列表
 	 */
 	public PageInfo<EntryFormDto> entryList(PageParam param, String id) {
-		return entryformDao.entryList(param, id);
+		return new PageInfo<EntryFormDto>(entryformDao.entryList(param, id));
+	}
+
+	/**
+	 * 批量导出报名列表
+	 */
+	public String exportEntry(PageParam param, String id) {
+		String[] headers = new String[] { "昵称@nickname", "姓名@name", "身份证@idCard", "生日@birthday@bir", "性别@sex@sex", "婚姻@marriage@mar", "联系电话@phone", "所属公司@depName", "职位名称@position",
+				"报名时间@created", "用户类型@audit@user" };
+		List<EntryFormDto> dataList = entryformDao.entryList(param, id);
+		return PoiExcelUtils.createExcel2FilePath("活动报名表", "活动报名表", FileUtil.BASE_PATH, headers, dataList);
 	}
 
 	/**
@@ -247,4 +258,5 @@ public class ActivityService {
 		WxMsgSender.batchSendToFw(list.stream().map(Entryform::getOpenId).collect(Collectors.toList()),
 				new NEWS(Arrays.asList(new ARTICLE(title, title, ViewPage.genarate(ViewPage.activity, id), a.getPicUrl()))));
 	}
+
 }

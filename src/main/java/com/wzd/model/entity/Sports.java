@@ -11,6 +11,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alibaba.fastjson.JSON;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.StateType;
@@ -29,9 +31,9 @@ public class Sports implements Serializable {
 	private Integer type; // 项目类型
 	private Integer total; // 人数上限
 	private Integer score; // 报名积分
-	private String date = ""; // 开启日期
-	private String start = ""; // 开始时间
-	private String end = ""; // 结束时间
+	private String date; // 开启日期
+	private String start; // 开始时间
+	private String end; // 结束时间
 	private Integer status; // 状态
 	private Integer deleted; // 删除状态
 	@Column(name = "admin_id")
@@ -92,7 +94,9 @@ public class Sports implements Serializable {
 
 	public void setDate(String date) {
 		this.date = date;
-		this.dates = Arrays.stream(date.split("\\|")).map(d -> DateUtil.parseToDate(d, DateUtil.P_DATE)).collect(Collectors.toList());
+		if (StringUtils.isNotBlank(date)) {
+			this.dates = Arrays.stream(date.split("\\|")).map(d -> DateUtil.parseToDate(d, DateUtil.P_DATE)).collect(Collectors.toList());
+		}
 	}
 
 	public String getStart() {
@@ -101,7 +105,9 @@ public class Sports implements Serializable {
 
 	public void setStart(String start) {
 		this.start = start;
-		this.starts = Arrays.stream(start.split("\\|")).map(t -> DateUtil.parseToDate(t, DateUtil.P_TIME)).collect(Collectors.toList());
+		if (StringUtils.isNotBlank(start)) {
+			this.starts = Arrays.stream(start.split("\\|")).map(t -> DateUtil.parseToDate(t, DateUtil.P_TIME)).collect(Collectors.toList());
+		}
 	}
 
 	public String getEnd() {
@@ -110,7 +116,9 @@ public class Sports implements Serializable {
 
 	public void setEnd(String end) {
 		this.end = end;
-		this.ends = Arrays.stream(end.split("\\|")).map(t -> DateUtil.parseToDate(t, DateUtil.P_TIME)).collect(Collectors.toList());
+		if (StringUtils.isNotBlank(end)) {
+			this.ends = Arrays.stream(end.split("\\|")).map(t -> DateUtil.parseToDate(t, DateUtil.P_TIME)).collect(Collectors.toList());
+		}
 	}
 
 	public List<Date> getStarts() {

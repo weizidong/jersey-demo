@@ -18,6 +18,7 @@ import com.wzd.model.entity.User;
 import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
+import com.wzd.model.enums.SignType;
 import com.wzd.model.enums.StateType;
 import com.wzd.utils.DateUtil;
 import com.wzd.web.dto.entryForm.EntryFormDto;
@@ -89,7 +90,7 @@ public class SportsService {
 	 * 获取健身活动报名列表
 	 */
 	public PageInfo<EntryFormDto> entryList(PageParam param, String id) {
-		return entryformDao.entryList(param, id);
+		return new PageInfo<EntryFormDto>(entryformDao.entryList(param, id));
 	}
 
 	/**
@@ -114,10 +115,10 @@ public class SportsService {
 		}
 		String date = DateUtil.formatDate(s.getDates().get(0), DateUtil.P_DATE);
 		for (int i = 0; i < s.getStarts().size(); i++) {
-			String start = DateUtil.formatDate(s.getDates().get(0), DateUtil.P_TIME);
+			String start = DateUtil.formatDate(s.getStarts().get(0), DateUtil.P_TIME);
 			String end = DateUtil.formatDate(s.getEnds().get(0), DateUtil.P_TIME);
-			Entryform ef = new Entryform(user.getOpenid(), s.getId(), ActivityType.健身活动, DateUtil.parseToDate(date + start, DateUtil.P_DATETIME),
-					DateUtil.parseToDate(date + end, DateUtil.P_DATETIME));
+			Entryform ef = new Entryform(user.getOpenid(), s.getId(), ActivityType.健身活动, DateUtil.parseToDate(date + " " + start, DateUtil.P_DATETIME),
+					DateUtil.parseToDate(date + " " + end, DateUtil.P_DATETIME));
 			if (entryformDao.isEntry(ef)) {
 				throw new WebException(ResponseCode.已报名);
 			}
@@ -130,11 +131,14 @@ public class SportsService {
 	 * 签到健身活动
 	 */
 	public ResponseCode sign(User user) {
-		List<Entryform> efs = entryformDao.list(new Entryform(user.getOpenid(), ActivityType.健身活动, DeleteType.未删除, StateType.进行中), new Date());
+		List<Entryform> efs = entryformDao.list(new Entryform(user.getOpenid(), ActivityType.健身活动, DeleteType.未删除, null), new Date());
 		if (efs == null || efs.size() < 1) {
 			return ResponseCode.未报名;
 		}
 		Entryform ef = efs.get(0);
+		if (ef.getStatus() == SignType.已签到.getValue()) {
+			return ResponseCode.已经签到;
+		}
 		entryformDao.sign(ef);
 		return ResponseCode.成功;
 	}
