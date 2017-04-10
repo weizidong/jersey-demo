@@ -318,6 +318,10 @@ public class PoiExcelUtils {
 			return "1" == val ? "已婚" : "2" == val ? "未婚" : "未知";
 		} else if ("user".equals(type)) {
 			return "2" == val ? "职工认证用户" : "普通用户";
+		} else if ("exp".equals(type)) {
+			return (Boolean) val ? "有" : "无";
+		} else if ("age".equals(type)) {
+			return val == null ? "无" : DateUtil.getAge((Date) val);
 		} else if ("bir".equals(type)) {
 			return val == null ? "无" : DateUtil.formatDate((Date) val, DateUtil.P_DATE);
 		} else if (StringUtils.isBlank(val.toString())) {

@@ -85,7 +85,9 @@ public class EntryformDao {
 	public List<EntryFormDto> entryList(PageParam param, String id) {
 		Map<String, Object> p = PageParam.getCondition(param, EntryFormDto.class);
 		p.put("activityId", id);
-		PageHelper.startPage(param.getPage(), param.getPageSize());
+		if (param.getPageSize() != null) {
+			PageHelper.startPage(param.getPage(), param.getPageSize());
+		}
 		return mapper.getSignList(p);
 	}
 

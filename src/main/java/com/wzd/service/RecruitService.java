@@ -1,5 +1,7 @@
 package com.wzd.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,9 @@ import com.wzd.model.entity.Entryform;
 import com.wzd.model.entity.Recruit;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.ActivityType;
+import com.wzd.utils.FileUtil;
+import com.wzd.utils.PoiExcelUtils;
+import com.wzd.web.dto.entryForm.EntryFormDto;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.PageParam;
@@ -65,5 +70,22 @@ public class RecruitService {
 	 */
 	public PageInfo<Recruit> find(PageParam param) {
 		return recruitDao.find(param);
+	}
+
+	/**
+	 * 导出应聘列表
+	 */
+	public String export(PageParam param, String id) {
+		String[] headers = new String[] { "姓名@name", "生日@birthday@bir", "年龄@birthday@age", "性别@sex@sex", "婚姻@marriage@mar", "联系电话@phone", "有无相关工作经验@exp@exp" };
+		param.setPageSize(null);
+		List<EntryFormDto> dataList = entryformDao.entryList(param, id);
+		return PoiExcelUtils.createExcel2FilePath("应聘名单", "应聘名单", FileUtil.BASE_PATH, headers, dataList);
+	}
+
+	/**
+	 * 获取应聘列表
+	 */
+	public PageInfo<EntryFormDto> entryList(PageParam param, String id) {
+		return new PageInfo<EntryFormDto>(entryformDao.entryList(param, id));
 	}
 }

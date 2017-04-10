@@ -849,10 +849,10 @@ public class DateUtil {
 	 * 计算年龄
 	 * 
 	 * @param birthDay
-	 * @param currentDate
 	 * @return
 	 */
-	public static int getAge(Date birthDay, Date currentDate) {
+	public static int getAge(Date birthDay) {
+		Date currentDate = new Date();
 		if (currentDate.after(birthDay)) {
 			Calendar birth = Calendar.getInstance();
 			birth.setTime(birthDay);

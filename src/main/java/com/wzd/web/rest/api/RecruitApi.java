@@ -17,6 +17,7 @@ import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Recruit;
 import com.wzd.model.entity.User;
 import com.wzd.service.RecruitService;
+import com.wzd.web.dto.entryForm.EntryFormDto;
 import com.wzd.web.dto.session.SessionUtil;
 import com.wzd.web.param.PageParam;
 
@@ -67,5 +68,23 @@ public class RecruitApi {
 	@Path("/find/{id}")
 	public Recruit getById(@PathParam("id") String id) {
 		return service.getById(id);
+	}
+
+	/**
+	 * 获取报名列表
+	 */
+	@POST
+	@Path("/entryList/{id}")
+	public PageInfo<EntryFormDto> entryList(PageParam param, @PathParam("id") String id) {
+		return service.entryList(param, id);
+	}
+
+	/**
+	 * 导出报名列表
+	 */
+	@POST
+	@Path("/export/{id}")
+	public String export(PageParam param, @PathParam("id") String id) {
+		return service.export(param, id);
 	}
 }

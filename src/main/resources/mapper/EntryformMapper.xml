@@ -30,11 +30,12 @@
 		<result column="status" jdbcType="INTEGER" property="status" />
 		<result column="created" jdbcType="TIMESTAMP" property="created" />
 		<result column="activity_id" jdbcType="CHAR" property="activityId" />
+		<result column="exp" jdbcType="TINYINT" property="exp" />
 	</resultMap>
 
 	<select id="getSignList" resultMap="EntryFormDtoResultMap">
 		select
-		u.nickname,u.name,u.id_card,u.birthday,u.sex,u.marriage,u.phone,u.dep_name,u.audit,e.status,e.created,e.activity_id,e.start,e.end
+		u.nickname,u.name,u.id_card,u.birthday,u.sex,u.marriage,u.phone,u.dep_name,u.audit,e.status,e.created,e.activity_id,e.start,e.end,e.exp
 		from entryform e left join user u on e.open_id = u.openid
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="name != null and name != ''">

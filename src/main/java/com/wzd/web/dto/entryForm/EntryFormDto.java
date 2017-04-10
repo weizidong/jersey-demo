@@ -27,6 +27,7 @@ public class EntryFormDto implements Serializable {
 	private String depName;
 	@Column(name = "activity_id")
 	private String activityId;
+	private Boolean exp;
 
 	public String getNickname() {
 		return nickname;
@@ -34,6 +35,14 @@ public class EntryFormDto implements Serializable {
 
 	public String getPosition() {
 		return position;
+	}
+
+	public Boolean getExp() {
+		return exp;
+	}
+
+	public void setExp(Boolean exp) {
+		this.exp = exp;
 	}
 
 	public void setPosition(String position) {
