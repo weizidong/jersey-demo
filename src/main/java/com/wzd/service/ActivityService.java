@@ -27,6 +27,7 @@ import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.FileType;
 import com.wzd.model.enums.HistoryType;
+import com.wzd.model.enums.SignType;
 import com.wzd.model.enums.StateType;
 import com.wzd.model.enums.ViewPage;
 import com.wzd.service.wechat.msg.WxMsgSender;
@@ -214,9 +215,12 @@ public class ActivityService {
 	 * 签到
 	 */
 	public ResponseCode sign(String id, User user) {
-		Entryform ef = new Entryform(user.getOpenid(), id, ActivityType.工会活动);
-		if (!entryformDao.isEntry(ef)) {
+		Entryform ef = entryformDao.get(new Entryform(user.getOpenid(), id, ActivityType.工会活动));
+		if (ef == null) {
 			return ResponseCode.未报名;
+		}
+		if (ef.getStatus() == SignType.已签到.getValue()) {
+			return ResponseCode.已经签到;
 		}
 		entryformDao.sign(ef);
 		return ResponseCode.成功;

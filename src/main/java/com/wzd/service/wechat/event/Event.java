@@ -106,6 +106,9 @@ public class Event {
 	 */
 	private String scan(WechatMsg msg) {
 		User u = userDao.getByOpenId(msg.getFromUserName());
+		if (u == null) {
+			return XmlResp.SUCCESS;
+		}
 		ResponseCode res = null;
 		if (SceneType.服务号健身运动签到.getValue().equals(msg.getEventKey())) {
 			res = sportsService.sign(u);

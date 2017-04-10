@@ -49,6 +49,13 @@ public class EntryformDao {
 	}
 
 	/**
+	 * 获取报名
+	 */
+	public Entryform get(Entryform ef) {
+		return mapper.selectOne(ef);
+	}
+
+	/**
 	 * 签到
 	 */
 	public void sign(Entryform ef) {
