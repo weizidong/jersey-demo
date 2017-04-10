@@ -15,6 +15,7 @@ import com.wzd.model.dao.ActivityDao;
 import com.wzd.model.dao.AdminDao;
 import com.wzd.model.dao.EntryformDao;
 import com.wzd.model.dao.FileDao;
+import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.Activity;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Entryform;
@@ -49,6 +50,8 @@ public class ActivityService {
 	private AdminDao adminDao;
 	@Autowired
 	private FileDao fileDao;
+	@Autowired
+	private UserDao userDao;
 	@Autowired
 	private EntryformDao entryformDao;
 	// 定时器记录
@@ -183,6 +186,9 @@ public class ActivityService {
 		if (a.getStatus() == StateType.未开始.getValue()) {
 			throw new WebException(ResponseCode.未开始);
 		}
+		if (a.getScore() > user.getScore()) {
+			throw new WebException(ResponseCode.积分不够);
+		}
 		if (a.getCurrent() >= a.getTotal()) {
 			throw new WebException(ResponseCode.已报满);
 		}
@@ -193,6 +199,8 @@ public class ActivityService {
 		entryformDao.entry(ef);
 		a.setCurrent(a.getCurrent() + 1);
 		activityDao.update(a);
+		user.setScore(user.getScore() - a.getScore());
+		userDao.update(user);
 	}
 
 	/**

@@ -10,8 +10,10 @@ import org.springframework.stereotype.Component;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.entity.Entryform;
+import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.SignType;
+import com.wzd.model.enums.StateType;
 import com.wzd.model.mapper.EntryformMapper;
 import com.wzd.utils.UUIDUtil;
 import com.wzd.web.dto.entryForm.EntryFormDto;
@@ -97,5 +99,13 @@ public class EntryformDao {
 		e.createCriteria().andGreaterThan("end", time).andLessThan("start", time).andEqualTo(ef);
 		e.setOrderByClause("created DESC");
 		return mapper.selectByExample(e);
+	}
+
+	/**
+	 * 获取参加活动的数量
+	 */
+	public Integer getCount(String openId, ActivityType type, DeleteType del) {
+		Entryform ef = new Entryform(openId, type, del, StateType.进行中);
+		return mapper.selectCount(ef);
 	}
 }

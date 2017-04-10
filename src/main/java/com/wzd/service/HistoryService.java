@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.entity.History;
+import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
+import com.wzd.web.dto.history.ActivityDto;
 import com.wzd.web.dto.history.SignDto;
 import com.wzd.web.dto.history.WelfareDto;
 import com.wzd.web.param.PageParam;
@@ -31,7 +33,8 @@ public class HistoryService {
 	 */
 	public PageInfo<SignDto> findScore(PageParam param, String userId, DeleteType del) {
 		return new PageInfo<SignDto>(historyDao.getSignList(param, userId,
-				Arrays.asList(HistoryType.积分签到.getValue(), HistoryType.券票福利.getValue(), HistoryType.红包福利.getValue(), HistoryType.活动.getValue()), del));
+				Arrays.asList(HistoryType.积分签到.getValue(), HistoryType.券票福利.getValue(), HistoryType.红包福利.getValue(), HistoryType.工会活动.getValue(), HistoryType.健身活动.getValue()),
+				del));
 	}
 
 	/**
@@ -39,6 +42,13 @@ public class HistoryService {
 	 */
 	public PageInfo<History> findMsg(PageParam param, String userid) {
 		return new PageInfo<History>(historyDao.list(param, userid, HistoryType.系统消息, DeleteType.未删除));
+	}
+
+	/**
+	 * 获取我的活动历史记录
+	 */
+	public PageInfo<ActivityDto> findActivity(PageParam param, String openId, DeleteType parse) {
+		return new PageInfo<ActivityDto>(historyDao.findActivity(param, openId, ActivityType.工会活动, DeleteType.未删除));
 	}
 
 	/**

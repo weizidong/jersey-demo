@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
+import com.wzd.model.dao.EntryformDao;
 import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.History;
 import com.wzd.model.entity.Setting;
 import com.wzd.model.entity.User;
+import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
@@ -37,6 +39,8 @@ public class UserService {
 	@Autowired
 	private HistoryDao historyDao;
 	@Autowired
+	private EntryformDao entryformDao;
+	@Autowired
 	private SystemService systemService;
 
 	/**
@@ -50,8 +54,10 @@ public class UserService {
 		user.setMsgNum(num);
 		num = historyDao.getCount(user.getId(), Arrays.asList(HistoryType.券票福利.getValue(), HistoryType.红包福利.getValue()), DeleteType.未删除);
 		user.setWelfNum(num);
-		num = historyDao.getCount(user.getId(), HistoryType.活动, DeleteType.未删除);
+		num = entryformDao.getCount(user.getId(), ActivityType.工会活动, DeleteType.未删除);
 		user.setActNum(num);
+		num = entryformDao.getCount(user.getId(), ActivityType.健身活动, DeleteType.未删除);
+		user.setSportNum(num);
 		user.setIsSign(historyDao.isSign(user.getId()));
 		return user;
 	}

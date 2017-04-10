@@ -80,6 +80,8 @@ public class User extends BaseResp {
 	@Transient
 	private Integer actNum;// 活动个数
 	@Transient
+	private Integer sportNum;// 活动个数
+	@Transient
 	private Boolean isSign;// 是否已签到
 	@Transient
 	private Boolean exp; // 有无工作经验
@@ -98,6 +100,14 @@ public class User extends BaseResp {
 
 	public Integer getSubscribe() {
 		return subscribe;
+	}
+
+	public Integer getSportNum() {
+		return sportNum;
+	}
+
+	public void setSportNum(Integer sportNum) {
+		this.sportNum = sportNum;
 	}
 
 	public void setSubscribe(Integer subscribe) {

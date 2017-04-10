@@ -20,6 +20,7 @@ import com.wzd.model.entity.History;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.service.HistoryService;
+import com.wzd.web.dto.history.ActivityDto;
 import com.wzd.web.dto.history.SignDto;
 import com.wzd.web.dto.history.WelfareDto;
 import com.wzd.web.dto.session.SessionUtil;
@@ -39,7 +40,7 @@ public class HistoryApi {
 	private HistoryService service;
 
 	/**
-	 * 获取积分历史记录
+	 * 获取我的历史记录
 	 */
 	@POST
 	@Path("/score/{userId}/{del}")
@@ -57,7 +58,17 @@ public class HistoryApi {
 	}
 
 	/**
-	 * 获取消息历史记录
+	 * 获取我的活动
+	 */
+	@POST
+	@Path("/activity/{del}")
+	public PageInfo<ActivityDto> activity(PageParam param, @PathParam("del") Integer del, @Context HttpServletRequest request) {
+		User user = (User) SessionUtil.getUser(request);
+		return service.findActivity(param, user.getOpenid(), DeleteType.parse(del));
+	}
+
+	/**
+	 * 获取我的消息历史记录
 	 */
 	@POST
 	@Path("/msg")

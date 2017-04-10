@@ -36,6 +36,17 @@
 		<result column="welfare_id" jdbcType="CHAR" property="welfareId" />
 		<result column="recording" property="recording" jdbcType="TIMESTAMP" />
 	</resultMap>
+	<resultMap id="ActivityDtoResultMap" type="com.wzd.web.dto.history.ActivityDto">
+		<result column="id" property="id" jdbcType="CHAR" />
+		<result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="start" property="start" jdbcType="TIMESTAMP" />
+		<result column="end" property="end" jdbcType="TIMESTAMP" />
+		<result column="total" property="total" jdbcType="INTEGER" />
+		<result column="entry" property="entry" jdbcType="INTEGER" />
+		<result column="current" property="current" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
 
 	<select id="getSignList" resultMap="SignDtoResultMap">
 		select u.nickname,u.name,u.audit,d.name as
@@ -93,5 +104,26 @@
 			</if>
 		</trim>
 		ORDER BY h.recording DESC
+	</select>
+	<select id="findActivity" resultMap="ActivityDtoResultMap">
+		select
+		a.id,a.pic_url,a.name,a.start,a.end,a.entry,a.total,a.current,e.status
+		from entryform e left join activity a on
+		e.activity_id = a.id
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="name != null and name != ''">
+				a.name LIKE CONCAT(CONCAT('%', #{name}),'%')
+			</if>
+			<if test="openId != null and openId != ''">
+				AND e.open_id = #{openId}
+			</if>
+			<if test="type != null and openId != ''">
+				AND e.type = #{type}
+			</if>
+			<if test="del != null and del != ''">
+				AND e.del = #{del}
+			</if>
+		</trim>
+		ORDER BY e.created DESC
 	</select>
 </mapper>

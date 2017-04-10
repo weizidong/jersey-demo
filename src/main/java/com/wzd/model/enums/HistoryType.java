@@ -10,7 +10,7 @@ import com.wzd.web.dto.response.ResponseCode;
  *
  */
 public enum HistoryType {
-	系统消息(0), 积分签到(1), 红包福利(2), 券票福利(3), 活动(4);
+	系统消息(0), 积分签到(1), 红包福利(2), 券票福利(3), 工会活动(4), 健身活动(5);
 	private Integer value;
 
 	private HistoryType(Integer value) {

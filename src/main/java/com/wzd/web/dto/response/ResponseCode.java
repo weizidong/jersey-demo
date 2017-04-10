@@ -64,7 +64,9 @@ public enum ResponseCode implements ResponseCodeType {
 
 	已结束(617, "已结束"),
 
-	未开始(618, "未开始");
+	未开始(618, "未开始"),
+
+	积分不够(619, "积分不够");
 
 	private int code;
 

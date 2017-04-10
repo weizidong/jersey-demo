@@ -10,11 +10,13 @@ import org.springframework.stereotype.Component;
 
 import com.github.pagehelper.PageHelper;
 import com.wzd.model.entity.History;
+import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.HistoryType;
 import com.wzd.model.mapper.HistoryMapper;
 import com.wzd.utils.DateUtil;
 import com.wzd.utils.UUIDUtil;
+import com.wzd.web.dto.history.ActivityDto;
 import com.wzd.web.dto.history.SignDto;
 import com.wzd.web.dto.history.WelfareDto;
 import com.wzd.web.param.PageParam;
@@ -138,6 +140,18 @@ public class HistoryDao {
 			h.setDeleled(del);
 			mapper.updateByPrimaryKeySelective(h);
 		}
+	}
+
+	/**
+	 * 获取我的活动
+	 */
+	public List<ActivityDto> findActivity(PageParam param, String openId, ActivityType type, DeleteType del) {
+		Map<String, Object> map = PageParam.getCondition(param, WelfareDto.class);
+		map.put("openId", openId);
+		map.put("type", type.getValue());
+		map.put("del", del.getValue());
+		PageHelper.startPage(param.getPage(), param.getPageSize());
+		return mapper.findActivity(map);
 	}
 
 	/**
