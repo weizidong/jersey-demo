@@ -36,6 +36,7 @@ public class Entryform implements Serializable {
 	private Date created; // 报名时间
 	private Integer deleted; // 删除标志
 	private Integer status; // 状态，0：未到场；1：已到场；
+	private Boolean exp; // 有无工作经验
 
 	public Entryform() {
 		super();
@@ -83,6 +84,14 @@ public class Entryform implements Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Boolean getExp() {
+		return exp;
+	}
+
+	public void setExp(Boolean exp) {
+		this.exp = exp;
 	}
 
 	public String getActivityId() {

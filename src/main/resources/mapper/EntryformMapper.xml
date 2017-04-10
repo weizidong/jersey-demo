@@ -13,6 +13,7 @@
 		<result column="updated" jdbcType="TIMESTAMP" property="updated" />
 		<result column="deleted" jdbcType="INTEGER" property="deleted" />
 		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="exp" jdbcType="TINYINT" property="exp" />
 	</resultMap>
 	<resultMap id="EntryFormDtoResultMap" type="com.wzd.web.dto.entryForm.EntryFormDto">
 		<result column="nickname" jdbcType="VARCHAR" property="nickname" />

@@ -1,7 +1,6 @@
 package com.wzd.web.rest.api;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -33,24 +32,6 @@ public class SystemApi {
 	@Path("/init")
 	public void init() {
 		service.init();
-	}
-
-	/**
-	 * 创建测试数据
-	 */
-	@POST
-	@Path("/test")
-	public void test() {
-		service.test();
-	}
-
-	/**
-	 * 删除测试数据
-	 */
-	@DELETE
-	@Path("/test")
-	public void delTest() {
-		service.delTest();
 	}
 
 	/**

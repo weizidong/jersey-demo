@@ -49,6 +49,7 @@ public class RecruitService {
 			throw new WebException(ResponseCode.已报名);
 		}
 		userDao.update(u);
+		ef.setExp(u.getExp());
 		entryformDao.entry(ef);
 	}
 
