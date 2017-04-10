@@ -14,8 +14,10 @@ import com.wzd.model.entity.User;
 import com.wzd.model.enums.AuditType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.SceneType;
+import com.wzd.model.enums.SocketType;
 import com.wzd.model.enums.SubType;
 import com.wzd.service.ActivityService;
+import com.wzd.service.SocketService;
 import com.wzd.service.SportsService;
 import com.wzd.service.SystemService;
 import com.wzd.service.wechat.base.MsgType;
@@ -28,6 +30,7 @@ import com.wzd.utils.StringUtil;
 import com.wzd.utils.ThreadPoolUtils;
 import com.wzd.web.dto.response.ResponseCode;
 import com.wzd.web.param.wechat.WechatMsg;
+import com.wzd.websocket.SocketMsg;
 
 /**
  * 微信事件消息处理
@@ -111,8 +114,10 @@ public class Event {
 		}
 		switch (res) {
 		case 成功:
+			SocketService.send(u.getId(), new SocketMsg(SocketType.通知, "签到成功!"));
 			return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "签到成功！");
 		case 未报名:
+			SocketService.send(u.getId(), new SocketMsg(SocketType.通知, "你还未报名该活动！"));
 			return XmlResp.buildText(msg.getFromUserName(), msg.getToUserName(), "你还未报名该活动！");
 		default:
 			return XmlResp.SUCCESS;
