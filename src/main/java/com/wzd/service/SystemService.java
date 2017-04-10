@@ -63,7 +63,7 @@ public class SystemService {
 		qyService.sync();
 		// 初始化系统设置
 		setting(new Setting("userfiles/logo.png", "龙泉驿职工之家", JSON.toJSONString(new ARTICLE("欢迎关注\"龙泉驿职工之家\" |点我签到", "签到获得更多积分，可以兑换工会提供的各项福利以及参加各类活动！惊喜不断！你准备好了么？",
-				Configs.hostname + "view/fwh/center", Configs.hostname + "userfiles/signPic.png")), 100, 50));
+				Configs.hostname + "view/fwh/signin", Configs.hostname + "userfiles/signPic.png")), 100, 50));
 	}
 
 	/**

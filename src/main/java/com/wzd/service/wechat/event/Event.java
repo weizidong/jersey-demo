@@ -158,6 +158,9 @@ public class Event {
 					user.setScore(s.getScore());
 					userDao.create(user);
 				} else {
+					if (user.getScore() < s.getScore()) {
+						user.setScore(s.getScore());
+					}
 					user.setSubscribe(SubType.已关注);
 					userDao.update(user);
 				}

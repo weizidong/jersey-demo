@@ -8,13 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.EntryformDao;
+import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.SportsDao;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Entryform;
+import com.wzd.model.entity.History;
 import com.wzd.model.entity.Sports;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
+import com.wzd.model.enums.HistoryType;
 import com.wzd.model.enums.StateType;
 import com.wzd.utils.DateUtil;
 import com.wzd.web.dto.entryForm.EntryFormDto;
@@ -32,6 +35,8 @@ import com.wzd.web.param.PageParam;
 public class SportsService {
 	@Autowired
 	private SportsDao sportsDao;
+	@Autowired
+	private HistoryDao historyDao;
 	@Autowired
 	private EntryformDao entryformDao;
 
@@ -94,12 +99,30 @@ public class SportsService {
 		if (s == null || s.getDates().size() != 1 || s.getStarts().size() == 0 || s.getEnds().size() == 0) {
 			throw new WebException(ResponseCode.错误请求, "参数错误");
 		}
+		Sports db = sportsDao.getById(s.getId());
+		if (db.getStatus() == StateType.暂停.getValue()) {
+			throw new WebException(ResponseCode.已暂停);
+		}
+		if (db.getStatus() == StateType.已结束.getValue()) {
+			throw new WebException(ResponseCode.已结束);
+		}
+		if (db.getStatus() == StateType.未开始.getValue()) {
+			throw new WebException(ResponseCode.未开始);
+		}
+		if (db.getScore() > user.getScore()) {
+			throw new WebException(ResponseCode.积分不够);
+		}
 		String date = DateUtil.formatDate(s.getDates().get(0), DateUtil.P_DATE);
 		for (int i = 0; i < s.getStarts().size(); i++) {
 			String start = DateUtil.formatDate(s.getDates().get(0), DateUtil.P_TIME);
 			String end = DateUtil.formatDate(s.getEnds().get(0), DateUtil.P_TIME);
-			entryformDao.entry(new Entryform(user.getOpenid(), s.getId(), ActivityType.健身活动, DateUtil.parseToDate(date + start, DateUtil.P_DATETIME),
-					DateUtil.parseToDate(date + end, DateUtil.P_DATETIME)));
+			Entryform ef = new Entryform(user.getOpenid(), s.getId(), ActivityType.健身活动, DateUtil.parseToDate(date + start, DateUtil.P_DATETIME),
+					DateUtil.parseToDate(date + end, DateUtil.P_DATETIME));
+			if (entryformDao.isEntry(ef)) {
+				throw new WebException(ResponseCode.已报名);
+			}
+			entryformDao.entry(ef);
+			historyDao.create(new History(user.getId(), db.getName(), null, -db.getScore(), null, HistoryType.健身活动, db.getId()));
 		}
 	}
 

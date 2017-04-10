@@ -120,7 +120,7 @@ public class FwWxService {
 		// 无用户，创建
 		if (user == null) {
 			// 拉取用户信息
-			user = FwUserApi.get(token.getAccess_token(), token.getOpenid());
+			user = FwUserApi.get(token.getOpenid());
 			user.setLogin(new Date());
 			dao.create(user);
 		} else {

@@ -51,8 +51,6 @@ public class SessionFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		// 域名
-		String hostname = Configs.hostname;
 		// 请求
 		String requestUrl = httpRequest.getRequestURI().substring(1);
 		// 请求来源
@@ -64,14 +62,17 @@ public class SessionFilter implements Filter {
 			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
+		if (httpRequest.getQueryString() != null) {
+			requestUrl += "?" + httpRequest.getQueryString();
+		}
 		log.debug("请求：" + requestUrl);
 		log.debug("appType：" + appType);
 		log.debug("code：" + code);
 		// 授权成功，回调,
 		if (!StringUtil.isEmpty(code)) {
 			// 授权用时
-			appType = request.getParameter("state");
-			log.debug("微信授权成功!\tappType：" + appType);
+			Long time = Long.parseLong(request.getParameter("state"));
+			log.debug("微信授权成功!\t用时：" + (System.currentTimeMillis() - time) + "ms");
 			Session session = null;
 			// 企业号换取Token
 			if (appType.equals(APPType.企业号.getValue())) {
@@ -93,7 +94,7 @@ public class SessionFilter implements Filter {
 			}
 			// 保存会话信息
 			SessionUtil.saveSession(session, httpRequest, httpResponse);
-			chain.doFilter(httpRequest, httpResponse);
+			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
 			return;
 		}
 		Session session = null;
@@ -106,12 +107,12 @@ public class SessionFilter implements Filter {
 		}
 		// 企业号未授权
 		if ((APPType.企业号.getValue().equals(appType) && session == null) || APPType.二维码登录.getValue().equals(appType)) {
-			authorize(QyAPI.AUTHORIZE, Configs.sCorpID, hostname + requestUrl, appType, httpResponse);
+			authorize(QyAPI.AUTHORIZE, Configs.sCorpID, requestUrl, httpResponse);
 			return;
 		}
 		// 服务号未授权
 		if (APPType.服务号.getValue().equals(appType) && session == null) {
-			authorize(FwAPI.AUTHORIZE, Configs.bAppid, hostname + requestUrl, appType, httpResponse);
+			authorize(FwAPI.AUTHORIZE, Configs.bAppid, requestUrl, httpResponse);
 			return;
 		}
 		// 网站主页创建Session
@@ -119,19 +120,20 @@ public class SessionFilter implements Filter {
 			session = SessionUtil.generateSession(appType, null, null, null);
 			SessionUtil.saveSession(session, httpRequest, httpResponse);
 		}
+		// 管理平台未登录
+		if (APPType.管理平台.getValue().equals(appType) && session == null && !requestUrl.startsWith("rest/admin/login")) {
+			throw new WebException(ResponseCode.未登录, "未登录");
+		}
 		// 加载静态文件
 		if (StringUtil.isEmpty(requestUrl) || requestUrl.endsWith(".html") || requestUrl.startsWith("view/")) {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
 			return;
 		}
-		// 管理平台未登录
-		if (APPType.管理平台.getValue().equals(appType) && session == null && !requestUrl.startsWith("rest/admin/login")) {
-			throw new WebException(ResponseCode.未登录, "未登录");
-		}
 		// 非网站主页需要检测数据签名
 		// if (!APPType.网站主页.getValue().equals(appType) && session != null) {
 		// SessionUtil.checkSignature(session, httpRequest, httpResponse);
 		// }
+
 		// 管理平台需要检测Session超时
 		if (APPType.管理平台.getValue().equals(appType) && session != null) {
 			SessionUtil.checkTs(session, httpRequest, httpResponse);
@@ -154,8 +156,8 @@ public class SessionFilter implements Filter {
 	/**
 	 * 授权
 	 */
-	private void authorize(String path, String appid, String redirectUri, String appType, HttpServletResponse httpResponse) throws IOException {
-		String getCodeUrl = MessageFormat.format(path, appid, URLEncoder.encode(redirectUri, "utf-8"), appType == null ? Long.toString(System.currentTimeMillis()) : appType);
+	private void authorize(String path, String appid, String redirectUri, HttpServletResponse httpResponse) throws IOException {
+		String getCodeUrl = MessageFormat.format(path, appid, URLEncoder.encode(Configs.hostname + redirectUri, "utf-8"), String.valueOf(System.currentTimeMillis()));
 		log.debug("授权:" + getCodeUrl);
 		httpResponse.sendRedirect(getCodeUrl);
 	}

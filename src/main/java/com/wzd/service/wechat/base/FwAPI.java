@@ -11,7 +11,7 @@ public abstract class FwAPI {
 	/**
 	 * 用户同意授权，获取code，请求方式: GET
 	 */
-	public static final String AUTHORIZE = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri={1}&response_type=code&scope=SCOPE&state={2}#wechat_redirect";
+	public static final String AUTHORIZE = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri={1}&response_type=code&scope=snsapi_userinfo&state={2}#wechat_redirect";
 	/**
 	 * 通过code换取网页授权access_token，请求方式: GET
 	 */

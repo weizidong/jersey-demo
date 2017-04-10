@@ -15,15 +15,18 @@ import com.wzd.model.dao.ActivityDao;
 import com.wzd.model.dao.AdminDao;
 import com.wzd.model.dao.EntryformDao;
 import com.wzd.model.dao.FileDao;
+import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.Activity;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Entryform;
 import com.wzd.model.entity.Files;
+import com.wzd.model.entity.History;
 import com.wzd.model.entity.User;
 import com.wzd.model.enums.ActivityType;
 import com.wzd.model.enums.DeleteType;
 import com.wzd.model.enums.FileType;
+import com.wzd.model.enums.HistoryType;
 import com.wzd.model.enums.StateType;
 import com.wzd.model.enums.ViewPage;
 import com.wzd.service.wechat.msg.WxMsgSender;
@@ -54,6 +57,8 @@ public class ActivityService {
 	private UserDao userDao;
 	@Autowired
 	private EntryformDao entryformDao;
+	@Autowired
+	private HistoryDao historyDao;
 	// 定时器记录
 	private static final Map<String, ScheduledFuture<?>> timmer = new HashMap<>();
 
@@ -197,6 +202,7 @@ public class ActivityService {
 			throw new WebException(ResponseCode.已报名);
 		}
 		entryformDao.entry(ef);
+		historyDao.create(new History(user.getId(), a.getName(), null, -a.getScore(), null, HistoryType.工会活动, a.getId()));
 		a.setCurrent(a.getCurrent() + 1);
 		activityDao.update(a);
 		user.setScore(user.getScore() - a.getScore());
