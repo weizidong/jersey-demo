@@ -204,10 +204,23 @@ public class ActivityService {
 			throw new WebException(ResponseCode.已报名);
 		}
 		entryformDao.entry(ef);
-		historyDao.create(new History(user.getId(), a.getName(), null, -a.getScore(), null, HistoryType.工会活动, a.getId()));
+		historyDao.create(new History(user.getId(), a.getName() + "报名", null, -a.getScore(), null, HistoryType.工会活动, a.getId()));
 		a.setCurrent(a.getCurrent() + 1);
 		activityDao.update(a);
 		user.setScore(user.getScore() - a.getScore());
+		userDao.update(user);
+	}
+
+	/**
+	 * 取消报名
+	 */
+	public void cacleEntry(String id, User user) {
+		Activity a = activityDao.getById(id);
+		entryformDao.delete(new Entryform(user.getOpenid(), id, ActivityType.工会活动), DeleteType.永久删除);
+		historyDao.create(new History(user.getId(), a.getName() + "取消报名", null, a.getScore(), null, HistoryType.工会活动, a.getId()));
+		a.setCurrent(a.getCurrent() - 1);
+		activityDao.update(a);
+		user.setScore(user.getScore() + a.getScore());
 		userDao.update(user);
 	}
 

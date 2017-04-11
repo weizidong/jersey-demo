@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import com.wzd.model.dao.EntryformDao;
 import com.wzd.model.dao.HistoryDao;
 import com.wzd.model.dao.SportsDao;
+import com.wzd.model.dao.UserDao;
 import com.wzd.model.entity.Admin;
 import com.wzd.model.entity.Entryform;
 import com.wzd.model.entity.History;
@@ -40,6 +41,8 @@ public class SportsService {
 	private HistoryDao historyDao;
 	@Autowired
 	private EntryformDao entryformDao;
+	@Autowired
+	private UserDao userDao;
 
 	/**
 	 * 创建健身活动
@@ -97,10 +100,13 @@ public class SportsService {
 	 * 报名健身活动
 	 */
 	public void entry(Sports s, User user) {
-		if (s == null || s.getDates().size() != 1 || s.getStarts().size() == 0 || s.getEnds().size() == 0) {
+		if (s == null || s.getDates().size() != 1 || s.getStarts().size() != 1 || s.getEnds().size() != 1) {
 			throw new WebException(ResponseCode.错误请求, "参数错误");
 		}
 		Sports db = sportsDao.getById(s.getId());
+		if (db == null) {
+			throw new WebException(ResponseCode.资源不存在, "活动不存在!");
+		}
 		if (db.getStatus() == StateType.暂停.getValue()) {
 			throw new WebException(ResponseCode.已暂停);
 		}
@@ -114,17 +120,38 @@ public class SportsService {
 			throw new WebException(ResponseCode.积分不够);
 		}
 		String date = DateUtil.formatDate(s.getDates().get(0), DateUtil.P_DATE);
-		for (int i = 0; i < s.getStarts().size(); i++) {
-			String start = DateUtil.formatDate(s.getStarts().get(0), DateUtil.P_TIME);
-			String end = DateUtil.formatDate(s.getEnds().get(0), DateUtil.P_TIME);
-			Entryform ef = new Entryform(user.getOpenid(), s.getId(), ActivityType.健身活动, DateUtil.parseToDate(date + " " + start, DateUtil.P_DATETIME),
-					DateUtil.parseToDate(date + " " + end, DateUtil.P_DATETIME));
-			if (entryformDao.isEntry(ef)) {
-				throw new WebException(ResponseCode.已报名);
-			}
-			entryformDao.entry(ef);
-			historyDao.create(new History(user.getId(), db.getName(), null, -db.getScore(), null, HistoryType.健身活动, db.getId()));
+		String start = DateUtil.formatDate(s.getStarts().get(0), DateUtil.P_TIME);
+		String end = DateUtil.formatDate(s.getEnds().get(0), DateUtil.P_TIME);
+		Entryform ef = new Entryform(user.getOpenid(), s.getId(), ActivityType.健身活动, DateUtil.parseToDate(date + " " + start, DateUtil.P_DATETIME),
+				DateUtil.parseToDate(date + " " + end, DateUtil.P_DATETIME));
+		if (entryformDao.isEntry(ef)) {
+			throw new WebException(ResponseCode.已报名);
 		}
+		entryformDao.entry(ef);
+		historyDao.create(new History(user.getId(), db.getName() + "报名", null, -db.getScore(), null, HistoryType.健身活动, db.getId()));
+		user.setScore(user.getScore() - db.getScore());
+		userDao.update(user);
+	}
+
+	/**
+	 * 取消报名
+	 */
+	public void cacelEntry(Sports s, User user) {
+		if (s == null || s.getDates().size() != 1 || s.getStarts().size() != 1 || s.getEnds().size() != 1) {
+			throw new WebException(ResponseCode.错误请求, "参数错误");
+		}
+		Sports db = sportsDao.getById(s.getId());
+		if (db == null) {
+			throw new WebException(ResponseCode.资源不存在, "活动不存在!");
+		}
+		String date = DateUtil.formatDate(s.getDates().get(0), DateUtil.P_DATE);
+		String start = DateUtil.formatDate(s.getStarts().get(0), DateUtil.P_TIME);
+		String end = DateUtil.formatDate(s.getEnds().get(0), DateUtil.P_TIME);
+		entryformDao.delete(new Entryform(user.getOpenid(), s.getId(), ActivityType.健身活动, DateUtil.parseToDate(date + " " + start, DateUtil.P_DATETIME),
+				DateUtil.parseToDate(date + " " + end, DateUtil.P_DATETIME)), DeleteType.永久删除);
+		historyDao.create(new History(user.getId(), db.getName() + "取消报名", null, db.getScore(), null, HistoryType.健身活动, db.getId()));
+		user.setScore(user.getScore() + db.getScore());
+		userDao.update(user);
 	}
 
 	/**

@@ -98,6 +98,14 @@ public class SportsApi {
 	public void entry(Sports s, @Context HttpServletRequest request) {
 		service.entry(s, (User) SessionUtil.getUser(request));
 	}
+	/**
+	 * 取消报名
+	 */
+	@POST
+	@Path("/cancelEntry")
+	public void cacelEntry(Sports s, @Context HttpServletRequest request) {
+		service.cacelEntry(s, (User) SessionUtil.getUser(request));
+	}
 
 	/**
 	 * 签到

@@ -91,6 +91,15 @@ public class ActivityApi {
 	}
 
 	/**
+	 * 取消报名
+	 */
+	@POST
+	@Path("/cancelEntry/{id}")
+	public void cacleEntry(@PathParam("id") String id, @Context HttpServletRequest request) {
+		service.cacleEntry(id, (User) SessionUtil.getUser(request));
+	}
+
+	/**
 	 * 签到
 	 */
 	@POST
@@ -109,7 +118,7 @@ public class ActivityApi {
 	}
 
 	/**
-	 * 批量导出报名列表
+	 * 导出报名列表
 	 */
 	@POST
 	@Path("/exportEntry/{id}")
