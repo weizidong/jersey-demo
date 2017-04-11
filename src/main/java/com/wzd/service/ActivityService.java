@@ -250,7 +250,7 @@ public class ActivityService {
 	 * 批量导出报名列表
 	 */
 	public String exportEntry(PageParam param, String id) {
-		String[] headers = new String[] { "昵称@nickname", "姓名@name", "身份证@idCard", "生日@birthday@bir", "性别@sex@sex", "婚姻@marriage@mar", "联系电话@phone", "所属公司@depName", "职位名称@position",
+		String[] headers = new String[] { "昵称@nickname", "姓名@name", "身份证@idCard", "生日@birthday@date", "性别@sex@sex", "婚姻@marriage@mar", "联系电话@phone", "所属公司@depName", "职位名称@position",
 				"报名时间@created", "用户类型@audit@user" };
 		param.setPageSize(null);
 		List<EntryFormDto> dataList = entryformDao.entryList(param, id);

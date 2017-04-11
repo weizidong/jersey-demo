@@ -98,6 +98,7 @@ public class SportsApi {
 	public void entry(Sports s, @Context HttpServletRequest request) {
 		service.entry(s, (User) SessionUtil.getUser(request));
 	}
+
 	/**
 	 * 取消报名
 	 */
@@ -123,5 +124,14 @@ public class SportsApi {
 	@Path("/entryList/{id}")
 	public PageInfo<EntryFormDto> entryList(PageParam param, @PathParam("id") String id) {
 		return service.entryList(param, id);
+	}
+
+	/**
+	 * 导出报名表
+	 */
+	@POST
+	@Path("/export/{id}")
+	public String export(PageParam param, @PathParam("id") String id) {
+		return service.export(param, id);
 	}
 }

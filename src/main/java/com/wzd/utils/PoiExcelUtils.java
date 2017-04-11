@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -243,11 +244,22 @@ public class PoiExcelUtils {
 		// 遍历集合，处理数据
 		for (int j = 0, size = dataList.size(); j < size; j++) {
 			row = hssfSheet.createRow(rownum);
+			Object data = dataList.get(j);
 			for (int i = 0, len = headers.length; i < len; i++) {
 				cell = row.createCell(i);
 				String[] hs = headers[i].split("@");
-				cellValue = ReflectUtils.getValueOfGetIncludeObjectFeild(dataList.get(j), hs[1]);
-				cellValueHandler(cell, cellValue, hs.length < 3 ? null : hs[2]);
+				String[] hs1 = hs[1].split("\\|");
+				if (hs1 != null && hs1.length > 1) {
+					cellValue = Arrays.asList(hs1).stream().map((h) -> {
+						Object val = ReflectUtils.getValueOfGetIncludeObjectFeild(data, h);
+						val = changeType(val == null ? "" : val, hs.length < 3 ? null : hs[2]);
+						return val.toString();
+					}).collect(Collectors.joining(hs.length < 5 ? "" : hs[4]));
+				} else {
+					cellValue = ReflectUtils.getValueOfGetIncludeObjectFeild(data, hs[1]);
+					cellValue = changeType(cellValue == null ? "" : cellValue, hs.length < 3 ? null : hs[2]);
+				}
+				cellValueHandler(cell, cellValue);
 				cell.setCellStyle(cellStyle);
 			}
 			rownum++;
@@ -285,9 +297,8 @@ public class PoiExcelUtils {
 	 * @param cellValue
 	 *            单元格值
 	 */
-	private void cellValueHandler(HSSFCell cell, Object cellValue, String type) {
+	private void cellValueHandler(HSSFCell cell, Object cellValue) {
 		// 判断cellValue是否为空，否则在cellValue.toString()会出现空指针异常
-		cellValue = changeType(cellValue == null ? "" : cellValue, type);
 		if (cellValue instanceof String) {
 			cell.setCellValue((String) cellValue);
 		} else if (cellValue instanceof Boolean) {
@@ -322,8 +333,12 @@ public class PoiExcelUtils {
 			return (Boolean) val ? "有" : "无";
 		} else if ("age".equals(type)) {
 			return val == null ? "无" : DateUtil.getAge((Date) val);
-		} else if ("bir".equals(type)) {
+		} else if ("date".equals(type)) {
 			return val == null ? "无" : DateUtil.formatDate((Date) val, DateUtil.P_DATE);
+		} else if ("time".equals(type)) {
+			return val == null ? "无" : DateUtil.formatDate((Date) val, DateUtil.P_TIME);
+		} else if ("datetime".equals(type)) {
+			return val == null ? "无" : DateUtil.formatDate((Date) val, DateUtil.P_DATETIME);
 		} else if (StringUtils.isBlank(val.toString())) {
 			return "无";
 		}
@@ -662,11 +677,13 @@ public class PoiExcelUtils {
 				cellIndex = j * 2;
 				// 字段描述的单元格
 				cell4FiledName = row.createCell(cellIndex);
-				cellValueHandler(cell4FiledName, fieldsArray[0], null);
+				cellValueHandler(cell4FiledName, fieldsArray[0]);
 				cell4FiledName.setCellStyle(cellStyle);
 				// 字段值的单元格
 				cell4Value = row.createCell(cellIndex + 1);
-				cellValueHandler(cell4Value, ReflectUtils.getValueOfGetIncludeObjectFeild(mainData, fieldsArray[1]), fieldsArray.length < 3 ? null : fieldsArray[2]);
+				Object cellValue = ReflectUtils.getValueOfGetIncludeObjectFeild(mainData, fieldsArray[1]);
+				cellValue = changeType(cellValue == null ? "" : cellValue, fieldsArray.length < 3 ? null : fieldsArray[2]);
+				cellValueHandler(cell4Value, cellValue);
 				cell4Value.setCellStyle(cellStyle);
 				// 如果当前行还可以继续写数据，则将导出日期写在该行
 				if (fieldIndex == fieldsSize && needExportDate && filedSizeInOneRow != j + 1) {
@@ -733,11 +750,11 @@ public class PoiExcelUtils {
 		HSSFCellStyle cellStyle = createContentCellStyle(hssfWorkbook);
 		// 导出日期
 		HSSFCell cell4ExortDate = row.createCell(cellIndex);
-		cellValueHandler(cell4ExortDate, "导出日期", null);
+		cellValueHandler(cell4ExortDate, "导出日期");
 		cell4ExortDate.setCellStyle(cellStyle);
 		// 导出日期的值
 		HSSFCell cell4ExportDateValue = row.createCell(cellIndex + 1);
-		cellValueHandler(cell4ExportDateValue, DateUtil.dateToString(new Date(), DateUtil.P_DATETIME), null);
+		cellValueHandler(cell4ExportDateValue, DateUtil.dateToString(new Date(), DateUtil.P_DATETIME));
 		cell4ExportDateValue.setCellStyle(cellStyle);
 	}
 

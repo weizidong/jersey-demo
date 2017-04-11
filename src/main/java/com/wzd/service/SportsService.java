@@ -22,6 +22,8 @@ import com.wzd.model.enums.HistoryType;
 import com.wzd.model.enums.SignType;
 import com.wzd.model.enums.StateType;
 import com.wzd.utils.DateUtil;
+import com.wzd.utils.FileUtil;
+import com.wzd.utils.PoiExcelUtils;
 import com.wzd.web.dto.entryForm.EntryFormDto;
 import com.wzd.web.dto.exception.WebException;
 import com.wzd.web.dto.response.ResponseCode;
@@ -175,6 +177,16 @@ public class SportsService {
 	 */
 	public Sports getById(String id) {
 		return sportsDao.getById(id);
+	}
+
+	/**
+	 * 导出报名表
+	 */
+	public String export(PageParam param, String id) {
+		String[] headers = new String[] { "时间段@start|end@time@6000@--", "预约者姓名@name", "性别@sex@sex","身份证号@idCard", "所属单位@position"};
+		param.setPageSize(null);
+		List<EntryFormDto> dataList = entryformDao.entryList(param, id);
+		return PoiExcelUtils.createExcel2FilePath("应聘名单", "应聘名单", FileUtil.BASE_PATH, headers, dataList);
 	}
 
 }

@@ -76,7 +76,7 @@ public class RecruitService {
 	 * 导出应聘列表
 	 */
 	public String export(PageParam param, String id) {
-		String[] headers = new String[] { "姓名@name", "生日@birthday@bir", "年龄@birthday@age", "性别@sex@sex", "婚姻@marriage@mar", "联系电话@phone", "有无相关工作经验@exp@exp" };
+		String[] headers = new String[] { "姓名@name", "生日@birthday@date", "年龄@birthday@age", "性别@sex@sex", "婚姻@marriage@mar", "联系电话@phone","籍贯@province|city", "有无相关工作经验@exp@exp" };
 		param.setPageSize(null);
 		List<EntryFormDto> dataList = entryformDao.entryList(param, id);
 		return PoiExcelUtils.createExcel2FilePath("应聘名单", "应聘名单", FileUtil.BASE_PATH, headers, dataList);

@@ -17,6 +17,8 @@
 	</resultMap>
 	<resultMap id="EntryFormDtoResultMap" type="com.wzd.web.dto.entryForm.EntryFormDto">
 		<result column="nickname" jdbcType="VARCHAR" property="nickname" />
+		<result column="province" jdbcType="VARCHAR" property="province" />
+		<result column="city" jdbcType="VARCHAR" property="city" />
 		<result column="name" jdbcType="VARCHAR" property="name" />
 		<result column="id_card" jdbcType="VARCHAR" property="idCard" />
 		<result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
@@ -35,7 +37,7 @@
 
 	<select id="getSignList" resultMap="EntryFormDtoResultMap">
 		select
-		u.nickname,u.name,u.id_card,u.birthday,u.sex,u.marriage,u.phone,u.dep_name,u.audit,e.status,e.created,e.activity_id,e.start,e.end,e.exp
+		u.nickname,u.name,u.id_card,u.birthday,u.sex,u.marriage,u.phone,u.dep_name,u.audit,e.status,e.created,e.activity_id,e.start,e.end,e.exp,u.province,u.city
 		from entryform e left join user u on e.open_id = u.openid
 		<trim prefix="WHERE" prefixOverrides="AND|OR">
 			<if test="name != null and name != ''">
