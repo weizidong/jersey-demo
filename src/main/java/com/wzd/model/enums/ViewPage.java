@@ -24,6 +24,10 @@ public abstract class ViewPage {
 	 */
 	public static String login2 = "view/login2/{0}?appType={1}";
 	/**
+	 * 登录页面
+	 */
+	public static String login = "view/zhxt/login";
+	/**
 	 * 登陆失败
 	 */
 	public static String loginError = "view/zhxt/loginError";

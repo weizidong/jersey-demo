@@ -68,12 +68,19 @@ public class SessionFilter implements Filter {
 		log.debug("请求：" + requestUrl);
 		log.debug("appType：" + appType);
 		log.debug("code：" + code);
+		Session session = null;
+		// debug模式
+		if (SessionUtil.isDebug(httpRequest)) {
+			log.debug("开启debug模式！");
+			session = sessionUtil.openDebug(httpRequest);
+		} else {
+			session = SessionUtil.getSession(httpRequest);
+		}
 		// 授权成功，回调,
-		if (!StringUtil.isEmpty(code)) {
+		if (!StringUtil.isEmpty(code) && session == null) {
 			// 授权用时
 			Long time = Long.parseLong(request.getParameter("state"));
 			log.debug("微信授权成功!\t用时：" + (System.currentTimeMillis() - time) + "ms");
-			Session session = null;
 			// 企业号换取Token
 			if (appType.equals(APPType.企业号.getValue())) {
 				session = qyService.getUserInfo(code);
@@ -97,14 +104,6 @@ public class SessionFilter implements Filter {
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
 			return;
 		}
-		Session session = null;
-		// debug模式
-		if (SessionUtil.isDebug(httpRequest)) {
-			log.debug("开启debug模式！");
-			session = sessionUtil.openDebug(httpRequest);
-		} else {
-			session = SessionUtil.getSession(httpRequest);
-		}
 		// 企业号未授权
 		if ((APPType.企业号.getValue().equals(appType) && session == null) || APPType.二维码登录.getValue().equals(appType)) {
 			authorize(QyAPI.AUTHORIZE, Configs.sCorpID, requestUrl, httpResponse);
@@ -126,6 +125,7 @@ public class SessionFilter implements Filter {
 		}
 		// 加载静态文件
 		if (StringUtil.isEmpty(requestUrl) || requestUrl.endsWith(".html") || requestUrl.startsWith("view/")) {
+			log.debug("加载静态页面。。。");
 			request.getRequestDispatcher("/index.html?" + Configs.version).forward(request, response);
 			return;
 		}

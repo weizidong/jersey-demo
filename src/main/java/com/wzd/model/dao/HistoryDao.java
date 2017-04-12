@@ -64,6 +64,7 @@ public class HistoryDao {
 		if (del != DeleteType.全部) {
 			c.andEqualTo("deleled", del.getValue());
 		}
+		PageHelper.startPage(param.getPage(), param.getPageSize());
 		return mapper.selectByExample(e);
 	}
 
